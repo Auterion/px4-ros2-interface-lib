@@ -1,0 +1,59 @@
+name: Build and test
+on:
+  push:
+    branches:
+    - '*'
+  pull_request:
+    branches:
+    - '*'
+defaults:
+  run:
+    shell: bash
+jobs:
+  build_and_test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    container:
+      image: rostooling/setup-ros-docker:ubuntu-jammy-latest
+    steps:
+      - name: Setup ROS 2
+        uses: ros-tooling/setup-ros@v0.3
+        with:
+          required-ros-distributions: humble
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Build and test
+        id: ros-build
+        uses: ros-tooling/action-ros-ci@v0.3
+        with:
+          package-name:
+          import-token: ${{ secrets.GITHUB_TOKEN }}
+          vcs-repo-file-url: |
+            $GITHUB_WORKSPACE/dependencies.repos
+          target-ros2-distro: humble
+          colcon-defaults: |
+            {
+              "build": {
+                "merge-install": true
+              },
+              "test": {
+                "packages-select-regex": [
+                  "px4_sdk_cpp"
+                ],
+                "ctest-args": [
+                  "-R", "unit_tests"
+                ],
+                "merge-install": true
+              }
+            }
+
+      - name: install clang tidy
+        run: |
+          sudo apt install --yes -qq clang-tidy
+      - name: clang tidy
+        run: |
+          ROS_WS_DIR="$(readlink -f ${{ steps.ros-build.outputs.ros-workspace-directory-name }})"
+          cd "$ROS_WS_DIR"
+          cd src
+          cd $(find -name px4_sdk|head -1) # the path looks like this: 'src/zlrido15uw/px4_sdk'
+          ./scripts/run-clang-tidy-on-project.sh "$ROS_WS_DIR"/build
