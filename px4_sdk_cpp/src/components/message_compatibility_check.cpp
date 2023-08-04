@@ -240,7 +240,8 @@ bool messageCompatibilityCheck(
     request.protocol_version = px4_msgs::msg::MessageFormatRequest::LATEST_PROTOCOL_VERSION;
     strncpy(
       reinterpret_cast<char *>(request.topic_name.data()),
-      message_to_check.topic_name.c_str(), request.topic_name.size());
+      message_to_check.topic_name.c_str(), request.topic_name.size() - 1);
+    request.topic_name.back() = '\0';
     request.timestamp = node.get_clock()->now().nanoseconds() / 1000;
     px4_msgs::msg::MessageFormatResponse response;
     if (requestMessageFormat(
