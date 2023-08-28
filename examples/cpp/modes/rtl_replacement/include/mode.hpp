@@ -5,7 +5,9 @@
 #pragma once
 
 #include <px4_sdk/components/mode.hpp>
+#include <px4_sdk/components/health_and_arming_checks.hpp>
 #include <px4_sdk/components/mode_executor.hpp>
+#include <px4_sdk/control/setpoint_types/trajectory.hpp>
 #include <px4_msgs/msg/vehicle_land_detected.hpp>
 
 #include <rclcpp/rclcpp.hpp>
@@ -14,33 +16,33 @@
 
 using namespace std::chrono_literals; // NOLINT
 
-static const char * name = "Custom RTL";
-static const char * node_name = "example_mode_rtl";
+static const std::string kName = "Custom RTL";
+static const std::string kNodeName = "example_mode_rtl";
 
 class FlightModeTest : public px4_sdk::ModeBase
 {
 public:
   explicit FlightModeTest(rclcpp::Node & node)
-  : ModeBase(node, Settings{name, true, ModeBase::kModeIDRtl},
-      px4_sdk::ModeRequirements::autonomous())
+  : ModeBase(node, Settings{kName, true, ModeBase::kModeIDRtl})
   {
     _vehicle_land_detected_sub = node.create_subscription<px4_msgs::msg::VehicleLandDetected>(
       "/fmu/out/vehicle_land_detected", rclcpp::QoS(1).best_effort(),
       [this](px4_msgs::msg::VehicleLandDetected::UniquePtr msg) {
         _landed = msg->landed;
       });
-    setSetpointUpdateRate(30.F);
+    _trajectory_setpoint = addSetpointType(std::make_shared<px4_sdk::TrajectorySetpointType>(node));
+
+    modeRequirements().home_position = true;
   }
 
   void onActivate() override
   {
     _activation_time = node().get_clock()->now();
-    setpoints().configureSetpointsSync(px4_sdk::SetpointSender::SetpointConfiguration{});
   }
 
   void onDeactivate() override {}
 
-  void updateSetpoint() override
+  void updateSetpoint(float dt_s) override
   {
     if (_landed) {
       completed(px4_sdk::Result::Success);
@@ -48,20 +50,21 @@ public:
     }
 
     const Eigen::Vector3f velocity{0.F, 1.F, 5.F};
-    setpoints().sendTrajectorySetpoint(velocity);
+    _trajectory_setpoint->update(velocity);
   }
 
 private:
   rclcpp::Time _activation_time{};
   bool _landed{true};
   rclcpp::Subscription<px4_msgs::msg::VehicleLandDetected>::SharedPtr _vehicle_land_detected_sub;
+  std::shared_ptr<px4_sdk::TrajectorySetpointType> _trajectory_setpoint;
 };
 
 class TestNode : public rclcpp::Node
 {
 public:
   TestNode()
-  : Node(node_name)
+  : Node(kNodeName)
   {
     // Enable debug output
     auto ret =

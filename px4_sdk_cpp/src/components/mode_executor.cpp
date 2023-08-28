@@ -59,10 +59,12 @@ bool ModeExecutorBase::doRegister()
   RegistrationSettings settings = _owned_mode.getRegistrationSettings();
   settings.register_mode_executor = true;
   settings.activate_mode_immediately = _settings.activate_immediately;
-  const bool ret = _registration->doRegister(settings);
+  bool ret = _registration->doRegister(settings);
 
   if (ret) {
-    _owned_mode.onRegistered();
+    if (!_owned_mode.onRegistered()) {
+      ret = false;
+    }
     onRegistered();
   }
 

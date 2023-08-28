@@ -21,26 +21,35 @@ find_package(Eigen3 REQUIRED)
 
 include_directories(include SYSTEM ${Eigen3_INCLUDE_DIRS})
 set(HEADER_FILES
+        include/px4_sdk/common/setpoint_base.hpp
         include/px4_sdk/components/events.hpp
         include/px4_sdk/components/health_and_arming_checks.hpp
+        include/px4_sdk/components/manual_control_input.hpp
         include/px4_sdk/components/message_compatibility_check.hpp
         include/px4_sdk/components/mode.hpp
         include/px4_sdk/components/mode_executor.hpp
         include/px4_sdk/components/overrides.hpp
-        include/px4_sdk/components/setpoints.hpp
         include/px4_sdk/components/wait_for_fmu.hpp
+        include/px4_sdk/control/setpoint_types/attitude.hpp
+        include/px4_sdk/control/setpoint_types/direct_actuators.hpp
+        include/px4_sdk/control/setpoint_types/rates.hpp
+        include/px4_sdk/control/setpoint_types/trajectory.hpp
 )
 
 add_library(px4_sdk_cpp
+        ${HEADER_FILES}
         src/components/health_and_arming_checks.cpp
+        src/components/manual_control_input.cpp
         src/components/message_compatibility_check.cpp
         src/components/mode.cpp
         src/components/mode_executor.cpp
         src/components/overrides.cpp
         src/components/registration.cpp
-        src/components/setpoints.cpp
         src/components/wait_for_fmu.cpp
-        ${HEADER_FILES}
+        src/control/setpoint_types/attitude.cpp
+        src/control/setpoint_types/direct_actuators.cpp
+        src/control/setpoint_types/rates.cpp
+        src/control/setpoint_types/trajectory.cpp
 )
 ament_target_dependencies(px4_sdk_cpp ament_index_cpp Eigen3 rclcpp px4_msgs)
 

@@ -7,6 +7,7 @@
 #include <px4_sdk/components/mode.hpp>
 #include <px4_sdk/components/mode_executor.hpp>
 #include <px4_sdk/components/wait_for_fmu.hpp>
+#include <px4_sdk/control/setpoint_types/trajectory.hpp>
 
 #include <rclcpp/rclcpp.hpp>
 
@@ -14,16 +15,16 @@
 
 using namespace std::chrono_literals; // NOLINT
 
-static const char * name = "Autonomous Executor";
-static const char * node_name = "example_mode_with_executor";
+static const std::string kName = "Autonomous Executor";
+static const std::string kNodeName = "example_mode_with_executor";
 
 class FlightModeTest : public px4_sdk::ModeBase
 {
 public:
   explicit FlightModeTest(rclcpp::Node & node)
-  : ModeBase(node, Settings{name, false}, px4_sdk::ModeRequirements::autonomous())
+  : ModeBase(node, Settings{kName, false})
   {
-    setSetpointUpdateRate(30.F);
+    _trajectory_setpoint = addSetpointType(std::make_shared<px4_sdk::TrajectorySetpointType>(node));
   }
 
   ~FlightModeTest() override = default;
@@ -31,27 +32,27 @@ public:
   void onActivate() override
   {
     _activation_time = node().get_clock()->now();
-    setpoints().configureSetpointsSync(px4_sdk::SetpointSender::SetpointConfiguration{});
   }
 
   void onDeactivate() override {}
 
-  void updateSetpoint() override
+  void updateSetpoint(float dt_s) override
   {
-    rclcpp::Time now = node().get_clock()->now();
+    const rclcpp::Time now = node().get_clock()->now();
 
-    if (now - _activation_time > rclcpp::Duration::from_seconds(5)) {
+    if (now - _activation_time > 5s) {
       completed(px4_sdk::Result::Success);
       return;
     }
 
     const float elapsed_s = (now - _activation_time).seconds();
     const Eigen::Vector3f velocity{10.F, elapsed_s * 2.F, -2.F};
-    setpoints().sendTrajectorySetpoint(velocity);
+    _trajectory_setpoint->update(velocity);
   }
 
 private:
   rclcpp::Time _activation_time{};
+  std::shared_ptr<px4_sdk::TrajectorySetpointType> _trajectory_setpoint;
 };
 
 class ModeExecutorTest : public px4_sdk::ModeExecutorBase
@@ -128,7 +129,7 @@ class TestNode : public rclcpp::Node
 {
 public:
   TestNode()
-  : Node(node_name)
+  : Node(kNodeName)
   {
     // Enable debug output
     auto ret =

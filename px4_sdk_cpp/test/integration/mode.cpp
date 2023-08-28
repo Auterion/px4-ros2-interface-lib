@@ -9,12 +9,13 @@
 
 #include <px4_sdk/components/mode.hpp>
 #include <px4_sdk/components/wait_for_fmu.hpp>
+#include <px4_sdk/control/setpoint_types/trajectory.hpp>
 
 #include <rclcpp/rclcpp.hpp>
 
 using namespace std::chrono_literals;
 
-static const char * name = "Test Descend";
+static const std::string kName = "Test Descend";
 
 
 class Tester : public ::testing::Test
@@ -34,17 +35,19 @@ class FlightModeTest : public px4_sdk::ModeBase
 {
 public:
   explicit FlightModeTest(rclcpp::Node & node)
-  : ModeBase(node, Settings{name, true, ModeBase::kModeIDDescend},
-      px4_sdk::ModeRequirements::none())
+  : ModeBase(node, Settings{kName, true, ModeBase::kModeIDDescend})
   {
-    setSetpointUpdateRate(50.F);
+    _trajectory_setpoint = addSetpointType(std::make_shared<px4_sdk::TrajectorySetpointType>(node));
+
+    EXPECT_TRUE(modeRequirements().attitude);
+    modeRequirements().clearAll();
+    EXPECT_FALSE(modeRequirements().attitude);
   }
 
   ~FlightModeTest() override = default;
 
   void onActivate() override
   {
-    setpoints().configureSetpointsSync(px4_sdk::SetpointSender::SetpointConfiguration{});
     ++num_activations;
   }
 
@@ -66,13 +69,13 @@ public:
     ++num_deactivations;
   }
 
-  void updateSetpoint() override
+  void updateSetpoint(float dt_s) override
   {
     ++num_setpoint_updates;
 
     // Send some random setpoints, make sure it stays in the air, we don't want it to land
     const Eigen::Vector3f velocity{1.F, 0.F, -0.5F};
-    setpoints().sendTrajectorySetpoint(velocity);
+    _trajectory_setpoint->update(velocity);
   }
 
   int num_activations{0};
@@ -82,6 +85,7 @@ public:
   bool check_should_fail{false};
 
 private:
+  std::shared_ptr<px4_sdk::TrajectorySetpointType> _trajectory_setpoint;
 };
 
 

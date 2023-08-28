@@ -8,11 +8,13 @@
 #include <cstdint>
 
 #include <rclcpp/rclcpp.hpp>
-#include <px4_msgs/msg/vehicle_status.hpp>
 #include <px4_msgs/msg/mode_completed.hpp>
+#include <px4_msgs/msg/vehicle_control_mode.hpp>
+#include <px4_msgs/msg/vehicle_status.hpp>
 #include "health_and_arming_checks.hpp"
-#include "setpoints.hpp"
 #include "overrides.hpp"
+#include "manual_control_input.hpp"
+#include <px4_sdk/common/setpoint_base.hpp>
 
 class Registration;
 struct RegistrationSettings;
@@ -75,13 +77,19 @@ public:
 
   struct Settings
   {
+    // NOLINTNEXTLINE allow implicit conversion
+    Settings(
+      std::string mode_name, bool want_activate_even_while_disarmed = false,
+      ModeID request_replace_internal_mode = kModeIDInvalid)
+    : name(std::move(mode_name)), activate_even_while_disarmed(want_activate_even_while_disarmed),
+      replace_internal_mode(request_replace_internal_mode) {}
     std::string name;             ///< Name of the mode with length < 25 characters
     bool activate_even_while_disarmed{true};             ///< If true, the mode is also activated while disarmed if selected
     ModeID replace_internal_mode{kModeIDInvalid};             ///< Can be used to replace an fmu-internal mode
   };
 
   ModeBase(
-    rclcpp::Node & node, Settings settings, const ModeRequirements & requirements,
+    rclcpp::Node & node, Settings settings,
     const std::string & topic_namespace_prefix = "");
   ModeBase(const ModeBase &) = delete;
   virtual ~ModeBase() = default;
@@ -109,12 +117,13 @@ public:
   virtual void onDeactivate() = 0;
 
   /**
-   * Set the update rate when the mode is active. This is disabled by default.
+   * Set the update rate when the mode is active. This is set automatically from the configured setpoints, but can
+   * be set as needed.
    * @param rate_hz set to 0 to disable
    */
   void setSetpointUpdateRate(float rate_hz);
 
-  virtual void updateSetpoint() {}
+  virtual void updateSetpoint(float dt_s) {}
 
   /**
    * Mode completed signal. Call this when the mode is finished. A mode might never call this, but modes like
@@ -134,15 +143,41 @@ public:
 
   rclcpp::Node & node() {return _node;}
 
-  SetpointSender & setpoints() {return _setpoint_sender;}
+  const std::string & topicNamespacePrefix() const {return _topic_namespace_prefix;}
 
   ConfigOverrides & configOverrides() {return _config_overrides;}
+
+  /**
+   * Get / modify mode requirements. These are generally automatically set based on selected setpoint types,
+   * and are used to prevent arming or trigger failsafes.
+   */
+  ModeRequirements & modeRequirements() {return _health_and_arming_checks.modeRequirements();}
+
+  /**
+   * Create instance to get manual control input (RC / joystick)
+   * @param is_optional if true, RC is not required to run the mode
+   */
+  std::shared_ptr<ManualControlInput> createManualControlInput(bool is_optional = false);
+
+  /**
+   * Register a setpoint type. All types must be added before registering the mode.
+   * @tparam T must inherit from SetpointBase
+   * @param setpoint
+   * @return Returns the provided setpoint instance
+   */
+  template<typename T>
+  std::shared_ptr<T> addSetpointType(const std::shared_ptr<T> & setpoint)
+  {
+    static_assert(std::is_base_of<SetpointBase, T>::value);
+    addSetpointTypeImpl(std::dynamic_pointer_cast<SetpointBase>(setpoint));
+    return setpoint;
+  }
 
 private:
   friend class ModeExecutorBase;
   void overrideRegistration(const std::shared_ptr<Registration> & registration);
   RegistrationSettings getRegistrationSettings() const;
-  void onRegistered();
+  bool onRegistered();
 
   void unsubscribeVehicleStatus();
   void vehicleStatusUpdated(
@@ -154,6 +189,11 @@ private:
 
   void updateSetpointUpdateTimer();
 
+  void addSetpointTypeImpl(const std::shared_ptr<SetpointBase> & setpoint);
+  void updateModeRequirementsFromSetpoints();
+  void setSetpointUpdateRateFromSetpointTypes();
+  void activateSetpointType(SetpointBase & setpoint);
+
   rclcpp::Node & _node;
   const std::string _topic_namespace_prefix;
   std::shared_ptr<Registration> _registration;
@@ -164,6 +204,7 @@ private:
 
   rclcpp::Subscription<px4_msgs::msg::VehicleStatus>::SharedPtr _vehicle_status_sub;
   rclcpp::Publisher<px4_msgs::msg::ModeCompleted>::SharedPtr _mode_completed_pub;
+  rclcpp::Publisher<px4_msgs::msg::VehicleControlMode>::SharedPtr _config_control_setpoints_pub;
 
   bool _is_active{false};       ///< Mode is currently selected
   bool _is_armed{false};       ///< Is vehicle armed?
@@ -171,9 +212,12 @@ private:
 
   float _setpoint_update_rate_hz{0.F};
   rclcpp::TimerBase::SharedPtr _setpoint_update_timer;
-  SetpointSender _setpoint_sender;
+  rclcpp::Time _last_setpoint_update{};
 
   ConfigOverrides _config_overrides;
+
+  std::vector<std::shared_ptr<SetpointBase>> _setpoint_types;
+  bool _require_manual_control_input{false};
 };
 
 } // namespace px4_sdk

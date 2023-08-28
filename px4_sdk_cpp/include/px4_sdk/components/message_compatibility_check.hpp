@@ -10,6 +10,8 @@ using namespace std::chrono_literals; // NOLINT
 
 // Set of all messages used by the SDK (<topic_name>[, <topic_type>])
 #define ALL_PX4_SDK_MESSAGES \
+  {"/fmu/in/actuator_motors"}, \
+  {"/fmu/in/actuator_servos"}, \
   {"/fmu/in/arming_check_reply"}, \
   {"/fmu/in/config_control_setpoints", "VehicleControlMode"}, \
   {"/fmu/in/config_overrides_request", "ConfigOverrides"}, \
@@ -17,8 +19,12 @@ using namespace std::chrono_literals; // NOLINT
   {"/fmu/in/register_ext_component_request"}, \
   {"/fmu/in/trajectory_setpoint"}, \
   {"/fmu/in/unregister_ext_component"}, \
+  {"/fmu/in/vehicle_attitude_setpoint"}, \
+  {"/fmu/in/vehicle_command"}, \
   {"/fmu/in/vehicle_command_mode_executor", "VehicleCommand"}, \
+  {"/fmu/in/vehicle_rates_setpoint"}, \
   {"/fmu/out/arming_check_request"}, \
+  {"/fmu/out/manual_control_setpoint"}, \
   {"/fmu/out/mode_completed"}, \
   {"/fmu/out/register_ext_component_reply"}, \
   {"/fmu/out/vehicle_command_ack"}, \

@@ -16,8 +16,7 @@ namespace px4_sdk
 {
 
 ModeBase::ModeBase(
-  rclcpp::Node & node, ModeBase::Settings settings,
-  const ModeRequirements & requirements, const std::string & topic_namespace_prefix)
+  rclcpp::Node & node, ModeBase::Settings settings, const std::string & topic_namespace_prefix)
 : _node(node), _topic_namespace_prefix(topic_namespace_prefix),
   _registration(std::make_shared<Registration>(node, topic_namespace_prefix)),
   _settings(std::move(settings)),
@@ -25,10 +24,7 @@ ModeBase::ModeBase(
     [this](auto && reporter) {
       checkArmingAndRunConditions(std::forward<decltype(reporter)>(reporter));
     },
-    topic_namespace_prefix),
-  _setpoint_sender(node, *this, topic_namespace_prefix), _config_overrides(
-    node,
-    topic_namespace_prefix)
+    topic_namespace_prefix), _config_overrides(node, topic_namespace_prefix)
 {
   _vehicle_status_sub = _node.create_subscription<px4_msgs::msg::VehicleStatus>(
     topic_namespace_prefix + "/fmu/out/vehicle_status", rclcpp::QoS(1).best_effort(),
@@ -39,8 +35,8 @@ ModeBase::ModeBase(
     });
   _mode_completed_pub = _node.create_publisher<px4_msgs::msg::ModeCompleted>(
     topic_namespace_prefix + "/fmu/in/mode_completed", 1);
-
-  _health_and_arming_checks.setModeRequirements(requirements);
+  _config_control_setpoints_pub = node.create_publisher<px4_msgs::msg::VehicleControlMode>(
+    topic_namespace_prefix + "/fmu/in/config_control_setpoints", 1);
 }
 
 ModeBase::ModeID ModeBase::id() const
@@ -65,10 +61,12 @@ bool ModeBase::doRegister()
 
   _health_and_arming_checks.overrideRegistration(_registration);
   const RegistrationSettings settings = getRegistrationSettings();
-  const bool ret = _registration->doRegister(settings);
+  bool ret = _registration->doRegister(settings);
 
   if (ret) {
-    onRegistered();
+    if (!onRegistered()) {
+      ret = false;
+    }
   }
 
   return ret;
@@ -94,10 +92,11 @@ void ModeBase::callOnActivate()
   RCLCPP_DEBUG(_node.get_logger(), "Mode '%s' activated", _registration->name().c_str());
   _is_active = true;
   _completed = false;
+  _last_setpoint_update = _node.get_clock()->now();
   onActivate();
 
   if (_setpoint_update_rate_hz > FLT_EPSILON) {
-    updateSetpoint();             // Immediately update
+    updateSetpoint(1.F / _setpoint_update_rate_hz);             // Immediately update
   }
 
   updateSetpointUpdateTimer();
@@ -120,7 +119,12 @@ void ModeBase::updateSetpointUpdateTimer()
       _setpoint_update_timer = _node.create_wall_timer(
         std::chrono::milliseconds(
           static_cast<int64_t>(1000.F /
-          _setpoint_update_rate_hz)), [this]() {updateSetpoint();});
+          _setpoint_update_rate_hz)), [this]() {
+          const auto now = _node.get_clock()->now();
+          const float dt_s = (now - _last_setpoint_update).seconds();
+          _last_setpoint_update = now;
+          updateSetpoint(dt_s);
+        });
     }
 
   } else {
@@ -179,11 +183,104 @@ void ModeBase::completed(Result result)
   _completed = true;
 }
 
-void ModeBase::onRegistered()
+bool ModeBase::onRegistered()
 {
   _config_overrides.setup(
     px4_msgs::msg::ConfigOverrides::SOURCE_TYPE_MODE,
     _registration->modeId());
+
+  if (_setpoint_types.empty()) {
+    RCLCPP_FATAL(
+      _node.get_logger(), "At least one setpoint type must be added via addSetpointType(...)");
+    return false;
+  }
+
+  // TODO: check setpoint types compatibility with current vehicle type
+
+  activateSetpointType(*_setpoint_types[0]);
+  setSetpointUpdateRateFromSetpointTypes();
+
+  return true;
+}
+
+std::shared_ptr<ManualControlInput> ModeBase::createManualControlInput(bool is_optional)
+{
+  assert(!_registration->registered());
+  if (!is_optional) {
+    _require_manual_control_input = true;
+    updateModeRequirementsFromSetpoints();
+  }
+  return std::shared_ptr<ManualControlInput>(new ManualControlInput(*this));
+}
+
+void ModeBase::addSetpointTypeImpl(const std::shared_ptr<SetpointBase> & setpoint)
+{
+  assert(!_registration->registered());
+  _setpoint_types.push_back(setpoint);
+  setpoint->setShouldActivateCallback(
+    [this, setpoint]() {
+      for (auto & setpoint_type : _setpoint_types) {
+        if (setpoint_type.get() == setpoint.get()) {
+          activateSetpointType(*setpoint);
+          RCLCPP_DEBUG(
+            _node.get_logger(), "Mode '%s': changing setpoint type",
+            _registration->name().c_str());
+        } else {
+          setpoint_type->setActive(false);
+        }
+      }
+    });
+  updateModeRequirementsFromSetpoints();
+}
+
+void ModeBase::updateModeRequirementsFromSetpoints()
+{
+  // Set a mode requirement if at least one setypoint type requires it
+  ModeRequirements requirements{};
+  for (const auto & setpoint_type : _setpoint_types) {
+    const auto config = setpoint_type->getConfiguration();
+
+    requirements.angular_velocity |= config.rates_enabled;
+    requirements.attitude |= config.attitude_enabled;
+    requirements.local_alt |= config.altitude_enabled;
+    requirements.local_position |= config.velocity_enabled;
+    requirements.local_position |= config.position_enabled;
+    requirements.local_alt |= config.climb_rate_enabled;
+  }
+
+  if (_require_manual_control_input) {
+    // Use relaxed local position accuracy if a manual mode
+    if (requirements.local_position) {
+      requirements.local_position = false;
+      requirements.local_position_relaxed = true;
+    }
+    requirements.manual_control = true;
+  }
+  _health_and_arming_checks.setModeRequirements(requirements);
+}
+
+void ModeBase::setSetpointUpdateRateFromSetpointTypes()
+{
+  // Set update rate based on setpoint types
+  float max_update_rate = -1.F;
+  for (const auto & setpoint_type : _setpoint_types) {
+    if (setpoint_type->desiredUpdateRateHz() > max_update_rate) {
+      max_update_rate = setpoint_type->desiredUpdateRateHz();
+    }
+  }
+  if (max_update_rate > 0.F) {
+    setSetpointUpdateRate(max_update_rate);
+  }
+}
+
+void ModeBase::activateSetpointType(SetpointBase & setpoint)
+{
+  setpoint.setActive(true);
+  px4_msgs::msg::VehicleControlMode control_mode{};
+  control_mode.source_id = static_cast<uint8_t>(id());
+  setpoint.getConfiguration().fillControlMode(control_mode);
+  control_mode.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+  _config_control_setpoints_pub->publish(control_mode);
 }
 
 } // namespace px4_sdk

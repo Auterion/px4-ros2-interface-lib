@@ -9,6 +9,7 @@
 
 #include <px4_sdk/components/mode_executor.hpp>
 #include <px4_sdk/components/wait_for_fmu.hpp>
+#include <px4_sdk/control/setpoint_types/trajectory.hpp>
 
 #include <rclcpp/rclcpp.hpp>
 
@@ -16,7 +17,7 @@
 
 using namespace std::chrono_literals;
 
-static const char * name = "Test Flight Mode";
+static const std::string kName = "Test Flight Mode";
 
 
 class Tester : public ::testing::Test
@@ -36,9 +37,9 @@ class FlightModeTest : public px4_sdk::ModeBase
 {
 public:
   explicit FlightModeTest(rclcpp::Node & node)
-  : ModeBase(node, Settings{name, false}, px4_sdk::ModeRequirements::autonomous())
+  : ModeBase(node, Settings{kName, false})
   {
-    setSetpointUpdateRate(30.F);
+    _trajectory_setpoint = addSetpointType(std::make_shared<px4_sdk::TrajectorySetpointType>(node));
   }
 
   ~FlightModeTest() override = default;
@@ -46,7 +47,6 @@ public:
   void onActivate() override
   {
     _activation_time = node().get_clock()->now();
-    setpoints().configureSetpointsSync(px4_sdk::SetpointSender::SetpointConfiguration{});
     ++num_activations;
   }
 
@@ -60,12 +60,12 @@ public:
     ++num_deactivations;
   }
 
-  void updateSetpoint() override
+  void updateSetpoint(float dt_s) override
   {
     ++num_setpoint_updates;
     const rclcpp::Time now = node().get_clock()->now();
 
-    if (now - _activation_time > rclcpp::Duration::from_seconds(8)) {
+    if (now - _activation_time > 8s) {
       completed(px4_sdk::Result::Success);
       return;
     }
@@ -73,7 +73,7 @@ public:
     // Send some random setpoints
     const float elapsed_s = (now - _activation_time).seconds();
     const Eigen::Vector3f velocity{5.F, elapsed_s, 0.F};
-    setpoints().sendTrajectorySetpoint(velocity);
+    _trajectory_setpoint->update(velocity);
   }
 
   int num_activations{0};
@@ -83,6 +83,7 @@ public:
 
 private:
   rclcpp::Time _activation_time{};
+  std::shared_ptr<px4_sdk::TrajectorySetpointType> _trajectory_setpoint;
 };
 
 class ModeExecutorTest : public px4_sdk::ModeExecutorBase

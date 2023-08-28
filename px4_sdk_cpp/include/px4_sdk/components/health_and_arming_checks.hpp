@@ -21,34 +21,10 @@ namespace px4_sdk
 
 struct ModeRequirements
 {
-
-  static ModeRequirements none()
+  void clearAll()
   {
-    // None is the default already
-    return ModeRequirements{};
+    *this = ModeRequirements{};
   }
-  static ModeRequirements autonomous()
-  {
-    ModeRequirements ret{};
-    ret.angular_velocity = true;
-    ret.attitude = true;
-    ret.local_alt = true;
-    ret.local_position = true;
-    ret.global_position = true;
-    ret.home_position = true;
-    return ret;
-  }
-  static ModeRequirements manualControlledPosition()
-  {
-    ModeRequirements ret{};
-    ret.angular_velocity = true;
-    ret.attitude = true;
-    ret.local_alt = true;
-    ret.local_position_relaxed = true;
-    ret.manual_control = true;
-    return ret;
-  }
-
   bool angular_velocity{false};
   bool attitude{false};
   bool local_alt{false};
@@ -152,6 +128,8 @@ public:
   {
     _mode_requirements = mode_requirements;
   }
+
+  ModeRequirements & modeRequirements() {return _mode_requirements;}
 
 private:
   friend class ModeBase;
