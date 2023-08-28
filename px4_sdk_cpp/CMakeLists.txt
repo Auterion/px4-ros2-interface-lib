@@ -30,6 +30,7 @@ set(HEADER_FILES
         include/px4_sdk/components/mode_executor.hpp
         include/px4_sdk/components/overrides.hpp
         include/px4_sdk/components/wait_for_fmu.hpp
+        include/px4_sdk/control/offboard_actuators.hpp
         include/px4_sdk/control/setpoint_types/attitude.hpp
         include/px4_sdk/control/setpoint_types/direct_actuators.hpp
         include/px4_sdk/control/setpoint_types/rates.hpp
@@ -46,6 +47,7 @@ add_library(px4_sdk_cpp
         src/components/overrides.cpp
         src/components/registration.cpp
         src/components/wait_for_fmu.cpp
+        src/control/offboard_actuators.cpp
         src/control/setpoint_types/attitude.cpp
         src/control/setpoint_types/direct_actuators.cpp
         src/control/setpoint_types/rates.cpp

@@ -7,6 +7,7 @@
 #include <px4_sdk/components/mode.hpp>
 #include <px4_sdk/control/setpoint_types/rates.hpp>
 #include <px4_sdk/control/setpoint_types/attitude.hpp>
+#include <px4_sdk/control/offboard_actuators.hpp>
 
 #include <Eigen/Eigen>
 
@@ -42,7 +43,7 @@ public:
     _manual_control_input = createManualControlInput();
     _rates_setpoint = addSetpointType(std::make_shared<px4_sdk::RatesSetpointType>(node));
     _attitude_setpoint = addSetpointType(std::make_shared<px4_sdk::AttitudeSetpointType>(node));
-
+    _offboard_actuator_controls = std::make_shared<px4_sdk::OffboardActuatorControls>(node);
 
   }
 
@@ -78,12 +79,16 @@ public:
       );
       _attitude_setpoint->update(qd, thrust_sp, yaw_rate);
     }
+
+    // Example to control a servo by passing through RC aux1 channel to 'Offboard Actuator Set 1'
+    _offboard_actuator_controls->set(_manual_control_input->aux1());
   }
 
 private:
   std::shared_ptr<px4_sdk::ManualControlInput> _manual_control_input;
   std::shared_ptr<px4_sdk::RatesSetpointType> _rates_setpoint;
   std::shared_ptr<px4_sdk::AttitudeSetpointType> _attitude_setpoint;
+  std::shared_ptr<px4_sdk::OffboardActuatorControls> _offboard_actuator_controls;
   float _yaw{0.F};
 };
 
