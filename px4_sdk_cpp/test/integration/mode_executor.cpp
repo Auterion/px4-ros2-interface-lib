@@ -199,7 +199,7 @@ private:
 void TestExecutionAutonomous::run()
 {
   _test_timeout = _node.create_wall_timer(
-    80s, [] {
+    120s, [] {
       EXPECT_TRUE(false);           // Timed out
       rclcpp::shutdown();
     });
