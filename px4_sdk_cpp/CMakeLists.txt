@@ -35,6 +35,8 @@ set(HEADER_FILES
         include/px4_sdk/control/setpoint_types/direct_actuators.hpp
         include/px4_sdk/control/setpoint_types/rates.hpp
         include/px4_sdk/control/setpoint_types/trajectory.hpp
+        include/px4_sdk/odometry/global_position.hpp
+        include/px4_sdk/odometry/local_position.hpp
 )
 
 add_library(px4_sdk_cpp
@@ -52,6 +54,8 @@ add_library(px4_sdk_cpp
         src/control/setpoint_types/direct_actuators.cpp
         src/control/setpoint_types/rates.cpp
         src/control/setpoint_types/trajectory.cpp
+        src/odometry/global_position.cpp
+        src/odometry/local_position.cpp
 )
 ament_target_dependencies(px4_sdk_cpp ament_index_cpp Eigen3 rclcpp px4_msgs)
 
