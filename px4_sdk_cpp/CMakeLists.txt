@@ -114,8 +114,10 @@ if(BUILD_TESTING)
 
     # Unit tests
     ament_add_gtest(${PROJECT_NAME}_unit_tests
-            test/unit/dummy.cpp
+            test/unit/main.cpp
+            test/unit/modes.cpp
     )
+    target_include_directories(${PROJECT_NAME}_unit_tests PRIVATE ${CMAKE_CURRENT_LIST_DIR})
     target_link_libraries(${PROJECT_NAME}_unit_tests ${PROJECT_NAME})
     ament_target_dependencies(${PROJECT_NAME}_unit_tests
             rclcpp px4_msgs

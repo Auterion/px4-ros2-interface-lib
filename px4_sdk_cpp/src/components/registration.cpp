@@ -167,3 +167,13 @@ void Registration::doUnregister()
     _registered = false;
   }
 }
+
+void Registration::setRegistrationDetails(
+  int arming_check_id, px4_sdk::ModeBase::ModeID mode_id,
+  int mode_executor_id)
+{
+  _unregister_ext_component.arming_check_id = arming_check_id;
+  _unregister_ext_component.mode_id = mode_id;
+  _unregister_ext_component.mode_executor_id = mode_executor_id;
+  _registered = true;
+}

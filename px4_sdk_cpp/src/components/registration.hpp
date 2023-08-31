@@ -31,13 +31,13 @@ class Registration
 {
 public:
   explicit Registration(rclcpp::Node & node, const std::string & topic_namespace_prefix = "");
-  ~Registration()
+  virtual ~Registration()
   {
     doUnregister();
   }
 
-  bool doRegister(const RegistrationSettings & settings);
-  void doUnregister();
+  virtual bool doRegister(const RegistrationSettings & settings);
+  virtual void doUnregister();
 
   bool registered() const {return _registered;}
 
@@ -49,6 +49,11 @@ public:
   {
     return reinterpret_cast<const char *>(_unregister_ext_component.name.data());
   }
+
+protected:
+  void setRegistrationDetails(
+    int arming_check_id, px4_sdk::ModeBase::ModeID mode_id,
+    int mode_executor_id);
 
 private:
   rclcpp::Subscription<px4_msgs::msg::RegisterExtComponentReply>::SharedPtr
