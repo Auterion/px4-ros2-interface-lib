@@ -3,7 +3,12 @@ set -e
 
 THIS_DIR="$(dirname $(readlink -f $0))"
 ROOT_DIR="$(dirname "$THIS_DIR")"
-PACKAGES=(px4_sdk_cpp example_mode_manual_cpp example_mode_with_executor_cpp example_mode_rtl_replacement_cpp)
+# Find all ROS package names in this repo
+PACKAGES=()
+for package_xml in $(find "$ROOT_DIR" -name package.xml); do
+  package_name=$(cat "$package_xml" | sed -n 's/.*<name>\(.*\)<\/name>.*/\1/p')
+  PACKAGES+=($package_name)
+done
 
 if [ "$1" == "--help" -o "$1" == "-h" ]; then
   echo "Usage: $0 [<ros2-build-dir>]"
