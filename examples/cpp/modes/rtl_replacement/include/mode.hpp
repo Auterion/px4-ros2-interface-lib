@@ -30,7 +30,7 @@ public:
       [this](px4_msgs::msg::VehicleLandDetected::UniquePtr msg) {
         _landed = msg->landed;
       });
-    _trajectory_setpoint = addSetpointType(std::make_shared<px4_sdk::TrajectorySetpointType>(node));
+    _trajectory_setpoint = std::make_shared<px4_sdk::TrajectorySetpointType>(*this);
 
     modeRequirements().home_position = true;
   }

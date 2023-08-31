@@ -9,13 +9,11 @@
 namespace px4_sdk
 {
 
-TrajectorySetpointType::TrajectorySetpointType(
-  rclcpp::Node & node,
-  const std::string & topic_namespace_prefix)
-: _node(node)
+TrajectorySetpointType::TrajectorySetpointType(Context & context)
+: SetpointBase(context), _node(context.node())
 {
-  _trajectory_setpoint_pub = node.create_publisher<px4_msgs::msg::TrajectorySetpoint>(
-    topic_namespace_prefix + "/fmu/in/trajectory_setpoint", 1);
+  _trajectory_setpoint_pub = context.node().create_publisher<px4_msgs::msg::TrajectorySetpoint>(
+    context.topicNamespacePrefix() + "/fmu/in/trajectory_setpoint", 1);
 }
 
 void TrajectorySetpointType::update(const Eigen::Vector3f & velocity_setpoint_ned_m_s)

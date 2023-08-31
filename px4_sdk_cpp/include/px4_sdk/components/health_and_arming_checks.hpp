@@ -8,6 +8,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <px4_msgs/msg/arming_check_reply.hpp>
 #include <px4_msgs/msg/arming_check_request.hpp>
+#include <px4_sdk/common/requirement_flags.hpp>
 
 #include "events.hpp"
 
@@ -18,25 +19,6 @@ class Registration;
 
 namespace px4_sdk
 {
-
-struct ModeRequirements
-{
-  void clearAll()
-  {
-    *this = ModeRequirements{};
-  }
-  bool angular_velocity{false};
-  bool attitude{false};
-  bool local_alt{false};
-  bool local_position{false};
-  bool local_position_relaxed{false};
-  bool global_position{false};
-  bool mission{false};
-  bool home_position{false};
-  bool prevent_arming{false};
-  bool manual_control{false};
-};
-
 
 class HealthAndArmingCheckReporter
 {
@@ -124,12 +106,12 @@ public:
    */
   bool doRegister(const std::string & name);
 
-  void setModeRequirements(const ModeRequirements & mode_requirements)
+  void setModeRequirements(const RequirementFlags & mode_requirements)
   {
     _mode_requirements = mode_requirements;
   }
 
-  ModeRequirements & modeRequirements() {return _mode_requirements;}
+  RequirementFlags & modeRequirements() {return _mode_requirements;}
 
 private:
   friend class ModeBase;
@@ -146,7 +128,7 @@ private:
   rclcpp::Subscription<px4_msgs::msg::ArmingCheckRequest>::SharedPtr _arming_check_request_sub;
   rclcpp::Publisher<px4_msgs::msg::ArmingCheckReply>::SharedPtr _arming_check_reply_pub;
 
-  ModeRequirements _mode_requirements{};
+  RequirementFlags _mode_requirements{};
   rclcpp::TimerBase::SharedPtr _watchdog_timer;
   bool _shutdown_on_timeout{true};
 };

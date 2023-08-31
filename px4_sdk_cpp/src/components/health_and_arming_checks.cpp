@@ -41,16 +41,7 @@ HealthAndArmingChecks::HealthAndArmingChecks(
         HealthAndArmingCheckReporter reporter(reply);
         _check_callback(reporter);
 
-        reply.mode_req_angular_velocity = _mode_requirements.angular_velocity;
-        reply.mode_req_attitude = _mode_requirements.attitude;
-        reply.mode_req_local_alt = _mode_requirements.local_alt;
-        reply.mode_req_local_position = _mode_requirements.local_position;
-        reply.mode_req_local_position_relaxed = _mode_requirements.local_position_relaxed;
-        reply.mode_req_global_position = _mode_requirements.global_position;
-        reply.mode_req_mission = _mode_requirements.mission;
-        reply.mode_req_home_position = _mode_requirements.home_position;
-        reply.mode_req_prevent_arming = _mode_requirements.prevent_arming;
-        reply.mode_req_manual_control = _mode_requirements.manual_control;
+        _mode_requirements.fillArmingCheckReply(reply);
 
         reply.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
         _arming_check_reply_pub->publish(reply);

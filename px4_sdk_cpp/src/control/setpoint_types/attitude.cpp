@@ -9,13 +9,12 @@
 namespace px4_sdk
 {
 
-AttitudeSetpointType::AttitudeSetpointType(
-  rclcpp::Node & node,
-  const std::string & topic_namespace_prefix)
-: _node(node)
+AttitudeSetpointType::AttitudeSetpointType(Context & context)
+: SetpointBase(context), _node(context.node())
 {
-  _vehicle_attitude_setpoint_pub = node.create_publisher<px4_msgs::msg::VehicleAttitudeSetpoint>(
-    topic_namespace_prefix + "/fmu/in/vehicle_attitude_setpoint", 1);
+  _vehicle_attitude_setpoint_pub =
+    context.node().create_publisher<px4_msgs::msg::VehicleAttitudeSetpoint>(
+    context.topicNamespacePrefix() + "/fmu/in/vehicle_attitude_setpoint", 1);
 }
 
 void AttitudeSetpointType::update(

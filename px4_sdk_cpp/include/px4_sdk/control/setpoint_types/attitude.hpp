@@ -16,9 +16,7 @@ namespace px4_sdk
 class AttitudeSetpointType : public SetpointBase
 {
 public:
-  explicit AttitudeSetpointType(
-    rclcpp::Node & node,
-    const std::string & topic_namespace_prefix = "");
+  explicit AttitudeSetpointType(Context & context);
 
   ~AttitudeSetpointType() override = default;
 

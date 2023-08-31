@@ -54,6 +54,7 @@ bool ModeExecutorBase::doRegister()
     return false;
   }
 
+  _owned_mode.onAboutToRegister();
   _owned_mode.overrideRegistration(_registration);
   _owned_mode.unsubscribeVehicleStatus();
   RegistrationSettings settings = _owned_mode.getRegistrationSettings();

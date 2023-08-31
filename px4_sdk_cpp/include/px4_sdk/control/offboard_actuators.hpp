@@ -22,9 +22,7 @@ class OffboardActuatorControls
 public:
   static constexpr int kNumActuators = 6;
 
-  explicit OffboardActuatorControls(
-    rclcpp::Node & node,
-    const std::string & topic_namespace_prefix = "");
+  explicit OffboardActuatorControls(Context & context);
 
   /**
    * Control actuators

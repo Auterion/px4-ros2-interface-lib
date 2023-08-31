@@ -7,17 +7,18 @@
 
 #include <px4_msgs/msg/manual_control_setpoint.hpp>
 #include <rclcpp/rclcpp.hpp>
+#include <px4_sdk/common/context.hpp>
 
 using namespace std::chrono_literals; // NOLINT
 
 namespace px4_sdk
 {
 
-class ModeBase;
-
 class ManualControlInput
 {
 public:
+  explicit ManualControlInput(Context & context, bool is_optional = false);
+
   /**
    * Stick position in [-1,1]. Move right, positive roll rotation, right side down
    */
@@ -49,10 +50,6 @@ public:
   }
 
 private:
-  explicit ManualControlInput(ModeBase & mode_base);
-
-  friend class ModeBase;
-
   rclcpp::Subscription<px4_msgs::msg::ManualControlSetpoint>::SharedPtr _manual_control_setpoint_sub;
   px4_msgs::msg::ManualControlSetpoint _manual_control_setpoint{};
   rclcpp::Time _last_manual_control_setpoint{};

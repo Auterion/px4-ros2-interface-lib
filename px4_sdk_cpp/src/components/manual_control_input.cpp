@@ -9,18 +9,25 @@
 namespace px4_sdk
 {
 
-ManualControlInput::ManualControlInput(ModeBase & mode_base)
-: _node(mode_base.node())
+ManualControlInput::ManualControlInput(Context & context, bool is_optional)
+: _node(context.node())
 {
   _manual_control_setpoint.set__valid(false);
 
   _manual_control_setpoint_sub =
-    mode_base.node().create_subscription<px4_msgs::msg::ManualControlSetpoint>(
-    mode_base.topicNamespacePrefix() + "/fmu/out/manual_control_setpoint", rclcpp::QoS(
+    context.node().create_subscription<px4_msgs::msg::ManualControlSetpoint>(
+    context.topicNamespacePrefix() + "/fmu/out/manual_control_setpoint", rclcpp::QoS(
       1).best_effort(),
     [this](px4_msgs::msg::ManualControlSetpoint::UniquePtr msg) {
       _manual_control_setpoint = *msg;
       _last_manual_control_setpoint = _node.get_clock()->now();
     });
+
+  if (!is_optional) {
+    RequirementFlags requirements{};
+    requirements.manual_control = true;
+    context.setRequirement(requirements);
+  }
 }
+
 } // namespace px4_sdk

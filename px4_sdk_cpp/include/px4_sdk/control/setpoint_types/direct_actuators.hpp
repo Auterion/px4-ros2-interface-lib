@@ -17,9 +17,7 @@ namespace px4_sdk
 class DirectActuatorsSetpointType : public SetpointBase
 {
 public:
-  explicit DirectActuatorsSetpointType(
-    rclcpp::Node & node,
-    const std::string & topic_namespace_prefix = "");
+  explicit DirectActuatorsSetpointType(Context & context);
 
   static constexpr int kMaxNumMotors = px4_msgs::msg::ActuatorMotors::NUM_CONTROLS;
   static constexpr int kMaxNumServos = px4_msgs::msg::ActuatorServos::NUM_CONTROLS;

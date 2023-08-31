@@ -16,7 +16,7 @@ namespace px4_sdk
 class RatesSetpointType : public SetpointBase
 {
 public:
-  explicit RatesSetpointType(rclcpp::Node & node, const std::string & topic_namespace_prefix = "");
+  explicit RatesSetpointType(Context & context);
 
   ~RatesSetpointType() override = default;
 

@@ -40,11 +40,10 @@ public:
   explicit FlightModeTest(rclcpp::Node & node)
   : ModeBase(node, kName)
   {
-    _manual_control_input = createManualControlInput();
-    _rates_setpoint = addSetpointType(std::make_shared<px4_sdk::RatesSetpointType>(node));
-    _attitude_setpoint = addSetpointType(std::make_shared<px4_sdk::AttitudeSetpointType>(node));
-    _offboard_actuator_controls = std::make_shared<px4_sdk::OffboardActuatorControls>(node);
-
+    _manual_control_input = std::make_shared<px4_sdk::ManualControlInput>(*this);
+    _rates_setpoint = std::make_shared<px4_sdk::RatesSetpointType>(*this);
+    _attitude_setpoint = std::make_shared<px4_sdk::AttitudeSetpointType>(*this);
+    _offboard_actuator_controls = std::make_shared<px4_sdk::OffboardActuatorControls>(*this);
   }
 
   void onActivate() override {}

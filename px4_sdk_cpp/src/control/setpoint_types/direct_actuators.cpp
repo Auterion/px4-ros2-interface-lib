@@ -9,15 +9,13 @@
 namespace px4_sdk
 {
 
-DirectActuatorsSetpointType::DirectActuatorsSetpointType(
-  rclcpp::Node & node,
-  const std::string & topic_namespace_prefix)
-: _node(node)
+DirectActuatorsSetpointType::DirectActuatorsSetpointType(Context & context)
+: SetpointBase(context), _node(context.node())
 {
-  _actuator_motors_pub = node.create_publisher<px4_msgs::msg::ActuatorMotors>(
-    topic_namespace_prefix + "/fmu/in/actuator_motors", 1);
-  _actuator_servos_pub = node.create_publisher<px4_msgs::msg::ActuatorServos>(
-    topic_namespace_prefix + "/fmu/in/actuator_servos", 1);
+  _actuator_motors_pub = context.node().create_publisher<px4_msgs::msg::ActuatorMotors>(
+    context.topicNamespacePrefix() + "/fmu/in/actuator_motors", 1);
+  _actuator_servos_pub = context.node().create_publisher<px4_msgs::msg::ActuatorServos>(
+    context.topicNamespacePrefix() + "/fmu/in/actuator_servos", 1);
 }
 
 void DirectActuatorsSetpointType::updateMotors(

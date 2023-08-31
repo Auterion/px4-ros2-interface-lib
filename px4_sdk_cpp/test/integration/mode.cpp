@@ -37,11 +37,7 @@ public:
   explicit FlightModeTest(rclcpp::Node & node)
   : ModeBase(node, Settings{kName, true, ModeBase::kModeIDDescend})
   {
-    _trajectory_setpoint = addSetpointType(std::make_shared<px4_sdk::TrajectorySetpointType>(node));
-
-    EXPECT_TRUE(modeRequirements().attitude);
-    modeRequirements().clearAll();
-    EXPECT_FALSE(modeRequirements().attitude);
+    _trajectory_setpoint = std::make_shared<px4_sdk::TrajectorySetpointType>(*this);
   }
 
   ~FlightModeTest() override = default;

@@ -10,13 +10,11 @@ using namespace std::chrono_literals;
 namespace px4_sdk
 {
 
-OffboardActuatorControls::OffboardActuatorControls(
-  rclcpp::Node & node,
-  const std::string & topic_namespace_prefix)
-: _node(node)
+OffboardActuatorControls::OffboardActuatorControls(Context & context)
+: _node(context.node())
 {
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
-    topic_namespace_prefix + "/fmu/in/vehicle_command", 1);
+    context.topicNamespacePrefix() + "/fmu/in/vehicle_command", 1);
   _last_update = _node.get_clock()->now();
 }
 

@@ -7,21 +7,19 @@
 
 #include <cstdint>
 #include <functional>
+#include <memory>
 
 #include <rclcpp/rclcpp.hpp>
 #include <px4_msgs/msg/vehicle_control_mode.hpp>
+#include "context.hpp"
 
 namespace px4_sdk
 {
 
-class ModeBase;
-
-class SetpointBase
+class SetpointBase : public std::enable_shared_from_this<SetpointBase>
 {
 public:
   using ShouldActivateCB = std::function<void ()>;
-
-  virtual ~SetpointBase() = default;
 
   struct Configuration
   {
@@ -48,8 +46,22 @@ public:
     bool climb_rate_enabled{false};
   };
 
-  SetpointBase() = default;
+  explicit SetpointBase(Context & context)
+  {
+    context.addSetpointType(this);
+  }
 
+  virtual ~SetpointBase() = default;
+
+  std::shared_ptr<SetpointBase> getSharedPtr()
+  {
+    try {
+      return shared_from_this();
+    } catch (const std::bad_weak_ptr & exception) {
+      throw std::runtime_error("Setpoint must be instantiated with std::make_shared<>");
+    }
+    return {};
+  }
 
   virtual Configuration getConfiguration() = 0;
 

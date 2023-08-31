@@ -15,6 +15,7 @@
 #include "overrides.hpp"
 #include "manual_control_input.hpp"
 #include <px4_sdk/common/setpoint_base.hpp>
+#include <px4_sdk/common/context.hpp>
 
 class Registration;
 struct RegistrationSettings;
@@ -58,7 +59,7 @@ constexpr inline const char * resultToString(Result result) noexcept
   return "Unknown";
 }
 
-class ModeBase
+class ModeBase : public Context
 {
 public:
   using ModeID = uint8_t;       ///< Mode ID, corresponds to nav_state
@@ -141,42 +142,25 @@ public:
 
   bool isActive() const {return _is_active;}
 
-  rclcpp::Node & node() {return _node;}
-
-  const std::string & topicNamespacePrefix() const {return _topic_namespace_prefix;}
-
   ConfigOverrides & configOverrides() {return _config_overrides;}
 
   /**
    * Get / modify mode requirements. These are generally automatically set based on selected setpoint types,
    * and are used to prevent arming or trigger failsafes.
    */
-  ModeRequirements & modeRequirements() {return _health_and_arming_checks.modeRequirements();}
+  RequirementFlags & modeRequirements() {return _health_and_arming_checks.modeRequirements();}
 
-  /**
-   * Create instance to get manual control input (RC / joystick)
-   * @param is_optional if true, RC is not required to run the mode
-   */
-  std::shared_ptr<ManualControlInput> createManualControlInput(bool is_optional = false);
-
-  /**
-   * Register a setpoint type. All types must be added before registering the mode.
-   * @tparam T must inherit from SetpointBase
-   * @param setpoint
-   * @return Returns the provided setpoint instance
-   */
-  template<typename T>
-  std::shared_ptr<T> addSetpointType(const std::shared_ptr<T> & setpoint)
-  {
-    static_assert(std::is_base_of<SetpointBase, T>::value);
-    addSetpointTypeImpl(std::dynamic_pointer_cast<SetpointBase>(setpoint));
-    return setpoint;
-  }
+protected:
+  void setSkipMessageCompatibilityCheck() {_skip_message_compatibility_check = true;}
+  void overrideRegistration(const std::shared_ptr<Registration> & registration);
 
 private:
+  void addSetpointType(SetpointBase * setpoint) override;
+  void setRequirement(const RequirementFlags & requirement_flags) override;
+
   friend class ModeExecutorBase;
-  void overrideRegistration(const std::shared_ptr<Registration> & registration);
   RegistrationSettings getRegistrationSettings() const;
+  void onAboutToRegister();
   bool onRegistered();
 
   void unsubscribeVehicleStatus();
@@ -189,16 +173,14 @@ private:
 
   void updateSetpointUpdateTimer();
 
-  void addSetpointTypeImpl(const std::shared_ptr<SetpointBase> & setpoint);
   void updateModeRequirementsFromSetpoints();
   void setSetpointUpdateRateFromSetpointTypes();
   void activateSetpointType(SetpointBase & setpoint);
 
-  rclcpp::Node & _node;
-  const std::string _topic_namespace_prefix;
   std::shared_ptr<Registration> _registration;
 
   const Settings _settings;
+  bool _skip_message_compatibility_check{false};
 
   HealthAndArmingChecks _health_and_arming_checks;
 
@@ -217,7 +199,7 @@ private:
   ConfigOverrides _config_overrides;
 
   std::vector<std::shared_ptr<SetpointBase>> _setpoint_types;
-  bool _require_manual_control_input{false};
+  std::vector<SetpointBase *> _new_setpoint_types; ///< This stores new setpoints during initialization, until registration
 };
 
 } // namespace px4_sdk

@@ -16,9 +16,7 @@ namespace px4_sdk
 class TrajectorySetpointType : public SetpointBase
 {
 public:
-  explicit TrajectorySetpointType(
-    rclcpp::Node & node,
-    const std::string & topic_namespace_prefix = "");
+  explicit TrajectorySetpointType(Context & context);
 
   ~TrajectorySetpointType() override = default;
 
