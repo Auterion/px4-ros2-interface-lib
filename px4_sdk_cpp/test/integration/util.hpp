@@ -5,11 +5,26 @@
 
 #pragma once
 
+#include <gtest/gtest.h>
+
 #include <rclcpp/rclcpp.hpp>
 #include <px4_msgs/msg/vehicle_status.hpp>
 #include <px4_msgs/msg/vehicle_command.hpp>
 
 std::shared_ptr<rclcpp::Node> initNode();
+
+class Tester : public ::testing::Test
+{
+public:
+  static void SetUpTestSuite()
+  {
+    rclcpp::init(0, nullptr);
+  }
+  static void TearDownTestSuite()
+  {
+    rclcpp::shutdown();
+  }
+};
 
 class VehicleState
 {

@@ -19,19 +19,8 @@ using namespace std::chrono_literals;
 
 static const std::string kName = "Test Flight Mode";
 
-
-class Tester : public ::testing::Test
+namespace mode_executor_tests
 {
-public:
-  static void SetUpTestSuite()
-  {
-    rclcpp::init(0, nullptr);
-  }
-  static void TearDownTestSuite()
-  {
-    rclcpp::shutdown();
-  }
-};
 
 class FlightModeTest : public px4_sdk::ModeBase
 {
@@ -505,3 +494,4 @@ TEST_F(Tester, runExecutorFailsafe)
   test_execution.run();
   rclcpp::spin(test_node);
 }
+} // namespace mode_executor_tests

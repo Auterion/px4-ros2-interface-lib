@@ -91,28 +91,15 @@ if(BUILD_TESTING)
     include_directories(include)
     ament_target_dependencies(integration_utils rclcpp px4_msgs)
 
-    ament_add_gtest(test_arming_check test/integration/arming_check.cpp)
-    if(TARGET test_arming_check)
-        target_link_libraries(test_arming_check ${PROJECT_NAME} integration_utils)
-        target_include_directories(test_arming_check PRIVATE include)
-    endif()
-
-    ament_add_gtest(test_mode test/integration/mode.cpp)
-    if(TARGET test_mode)
-        target_link_libraries(test_mode ${PROJECT_NAME} integration_utils)
-        target_include_directories(test_mode PRIVATE include)
-    endif()
-
-    ament_add_gtest(test_mode_executor test/integration/mode_executor.cpp)
-    if(TARGET test_mode_executor)
-        target_link_libraries(test_mode_executor ${PROJECT_NAME} integration_utils)
-        target_include_directories(test_mode_executor PRIVATE include)
-    endif()
-
-    ament_add_gtest(test_overrides test/integration/overrides.cpp)
-    if(TARGET test_overrides)
-        target_link_libraries(test_overrides ${PROJECT_NAME} integration_utils)
-        target_include_directories(test_overrides PRIVATE include)
+    ament_add_gtest(integration_tests
+            test/integration/arming_check.cpp
+            test/integration/mode.cpp
+            test/integration/mode_executor.cpp
+            test/integration/overrides.cpp
+    )
+    if(TARGET integration_tests)
+        target_link_libraries(integration_tests ${PROJECT_NAME} integration_utils)
+        target_include_directories(integration_tests PRIVATE include)
     endif()
 
 

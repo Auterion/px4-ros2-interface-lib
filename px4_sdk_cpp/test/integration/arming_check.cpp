@@ -14,18 +14,8 @@
 
 using namespace std::chrono_literals;
 
-class Tester : public ::testing::Test
+namespace arming_check_tests
 {
-public:
-  static void SetUpTestSuite()
-  {
-    rclcpp::init(0, nullptr);
-  }
-  static void TearDownTestSuite()
-  {
-    rclcpp::shutdown();
-  }
-};
 
 class TestExecution
 {
@@ -124,3 +114,4 @@ TEST_F(Tester, denyArming)
   test_execution.run();
   rclcpp::spin(test_node);
 }
+} //namespace arming_check_tests
