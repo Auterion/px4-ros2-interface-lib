@@ -13,6 +13,7 @@
 #include <ament_index_cpp/get_package_share_directory.hpp>
 #include <fstream>
 #include <regex>
+#include <unistd.h>
 
 namespace px4_sdk
 {

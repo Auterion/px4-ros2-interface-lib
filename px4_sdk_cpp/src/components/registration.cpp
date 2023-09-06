@@ -7,6 +7,7 @@
 
 #include <cassert>
 #include <random>
+#include <unistd.h>
 
 static constexpr uint16_t kLatestPX4SdkApiVersion = 1;
 
