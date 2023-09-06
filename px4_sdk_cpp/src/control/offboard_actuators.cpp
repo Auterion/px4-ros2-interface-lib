@@ -18,7 +18,7 @@ OffboardActuatorControls::OffboardActuatorControls(Context & context)
   _last_update = _node.get_clock()->now();
 }
 
-void OffboardActuatorControls::set(const Eigen::Vector<float, kNumActuators> & values)
+void OffboardActuatorControls::set(const Eigen::Matrix<float, kNumActuators, 1> & values)
 {
   // Rate-limit to avoid spamming the FC with commands at high frequency
   const auto now = _node.get_clock()->now();
@@ -43,7 +43,7 @@ void OffboardActuatorControls::set(const Eigen::Vector<float, kNumActuators> & v
 
 void OffboardActuatorControls::set(float value, unsigned int index)
 {
-  Eigen::Vector<float, kNumActuators> values;
+  Eigen::Matrix<float, kNumActuators, 1> values;
   values.setConstant(NAN);
   if (index < kNumActuators) {
     values(index) = value;

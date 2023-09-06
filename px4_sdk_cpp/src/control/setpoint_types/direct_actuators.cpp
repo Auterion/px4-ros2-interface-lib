@@ -19,8 +19,8 @@ DirectActuatorsSetpointType::DirectActuatorsSetpointType(Context & context)
 }
 
 void DirectActuatorsSetpointType::updateMotors(
-  const Eigen::Vector<float,
-  kMaxNumMotors> & motor_commands)
+  const Eigen::Matrix<float,
+  kMaxNumMotors, 1> & motor_commands)
 {
   onUpdate();
 
@@ -33,8 +33,8 @@ void DirectActuatorsSetpointType::updateMotors(
 }
 
 void DirectActuatorsSetpointType::updateServos(
-  const Eigen::Vector<float,
-  kMaxNumServos> & servo_commands)
+  const Eigen::Matrix<float,
+  kMaxNumServos, 1> & servo_commands)
 {
   onUpdate();
 

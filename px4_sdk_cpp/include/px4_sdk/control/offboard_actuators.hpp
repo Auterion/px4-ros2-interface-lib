@@ -28,7 +28,7 @@ public:
    * Control actuators
    * @param values range [-1, 1], NAN=disarmed value
    */
-  void set(const Eigen::Vector<float, kNumActuators> & values);
+  void set(const Eigen::Matrix<float, kNumActuators, 1> & values);
 
   /**
    * Sets a single output (and the rest to disarmed)
