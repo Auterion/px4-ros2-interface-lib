@@ -96,8 +96,8 @@ bool Registration::doRegister(const RegistrationSettings & settings)
       usleep(100000);
     }
 
-    auto start_time = std::chrono::steady_clock::now();
-    auto timeout = 300ms;
+    const auto start_time = std::chrono::steady_clock::now();
+    const auto timeout = 1000ms; // CI simulation tests require this to be quite high
 
     while (!got_reply) {
       auto now = std::chrono::steady_clock::now();
