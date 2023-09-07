@@ -127,7 +127,7 @@ Result ModeExecutorBase::sendCommandSync(
 
   bool got_reply = false;
   auto start_time = std::chrono::steady_clock::now();
-  auto timeout = 200ms;
+  auto timeout = 300ms;
   _vehicle_command_pub->publish(cmd);
 
   while (!got_reply) {

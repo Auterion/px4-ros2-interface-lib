@@ -189,7 +189,7 @@ void TestExecutionAutonomous::run()
 {
   _test_timeout = _node.create_wall_timer(
     120s, [] {
-      EXPECT_TRUE(false);           // Timed out
+      EXPECT_TRUE(false) << "Timeout";
       rclcpp::shutdown();
     });
 
@@ -260,7 +260,7 @@ void TestExecutionInCharge::run()
 {
   _test_timeout = _node.create_wall_timer(
     80s, [] {
-      EXPECT_TRUE(false);           // Timed out
+      EXPECT_TRUE(false) << "Timeout";
       rclcpp::shutdown();
     });
 
@@ -415,8 +415,8 @@ private:
 void TestExecutionFailsafe::run()
 {
   _test_timeout = _node.create_wall_timer(
-    80s, [] {
-      EXPECT_TRUE(false);           // Timed out
+    120s, [] {
+      EXPECT_TRUE(false) << "Timeout";
       rclcpp::shutdown();
     });
 

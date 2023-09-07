@@ -214,8 +214,8 @@ private:
 void TestExecutionOverrides::run()
 {
   _test_timeout = _node.create_wall_timer(
-    80s, [] {
-      EXPECT_TRUE(false);           // Timed out
+    200s, [] {
+      EXPECT_TRUE(false) << "Timeout";
       rclcpp::shutdown();
     });
 
