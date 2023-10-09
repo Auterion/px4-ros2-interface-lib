@@ -109,7 +109,14 @@ static std::string snakeToCamelCase(std::string s) noexcept
   return s;
 }
 
-bool requestMessageFormat(
+enum class RequestMessageFormatReturn
+{
+  GotReply,
+  Timeout,
+  ProtocolVersionMismatch,
+};
+
+static RequestMessageFormatReturn requestMessageFormat(
   rclcpp::Node & node, const px4_msgs::msg::MessageFormatRequest & request,
   const rclcpp::Subscription<px4_msgs::msg::MessageFormatResponse>::SharedPtr & message_format_response_sub,
   const rclcpp::Publisher<px4_msgs::msg::MessageFormatRequest>::SharedPtr & message_format_request_pub,
@@ -130,9 +137,11 @@ bool requestMessageFormat(
     usleep(100000);
   }
 
-  bool got_reply = false;
-  bool had_error = false;
-  for (int retries = 0; retries < 5 && !got_reply && !had_error; ++retries) {
+  RequestMessageFormatReturn request_message_format_return{RequestMessageFormatReturn::Timeout};
+  for (int retries = 0;
+    retries < 5 && request_message_format_return == RequestMessageFormatReturn::Timeout;
+    ++retries)
+  {
     message_format_request_pub->publish(request);
 
     // wait for publisher, it might take a while initially...
@@ -150,7 +159,7 @@ bool requestMessageFormat(
     auto start_time = std::chrono::steady_clock::now();
     auto timeout = 300ms;
 
-    while (!got_reply && !had_error) {
+    while (request_message_format_return == RequestMessageFormatReturn::Timeout) {
       auto now = std::chrono::steady_clock::now();
 
       if (now >= start_time + timeout) {
@@ -172,13 +181,13 @@ bool requestMessageFormat(
                 reinterpret_cast<const char *>(response.topic_name.data()),
                 reinterpret_cast<const char *>(request.topic_name.data())) == 0)
             {
-              got_reply = true;
+              request_message_format_return = RequestMessageFormatReturn::GotReply;
             }                                     // Else: response to a different topic, try again
           } else {
             RCLCPP_ERROR(
               node.get_logger(), "Protocol version mismatch: got %i, expected %i", response.protocol_version,
               px4_msgs::msg::MessageFormatRequest::LATEST_PROTOCOL_VERSION);
-            had_error = true;
+            request_message_format_return = RequestMessageFormatReturn::ProtocolVersionMismatch;
           }
 
         } else {
@@ -191,7 +200,7 @@ bool requestMessageFormat(
     }
   }
   wait_set.remove_subscription(message_format_response_sub);
-  return got_reply;
+  return request_message_format_return;
 }
 
 bool messageCompatibilityCheck(
@@ -245,22 +254,30 @@ bool messageCompatibilityCheck(
     request.topic_name.back() = '\0';
     request.timestamp = node.get_clock()->now().nanoseconds() / 1000;
     px4_msgs::msg::MessageFormatResponse response;
-    if (requestMessageFormat(
+    switch (requestMessageFormat(
         node, request, message_format_response_sub, message_format_request_pub,
         response, first_message))
     {
-      if (response.success) {
-        if (response.message_hash != expected_message_hash) {
-          mismatched_topics += "\n  - " + message_to_check.topic_name;
+      case RequestMessageFormatReturn::Timeout:
+        RCLCPP_FATAL(
+          node.get_logger(),
+          "Timed out waiting for message format. Is the FMU running?");
+        // Do not try to check the other formats
+        return false;
+      case RequestMessageFormatReturn::ProtocolVersionMismatch:
+        // Error already reported
+        return false;
+      case RequestMessageFormatReturn::GotReply:
+        if (response.success) {
+          if (response.message_hash != expected_message_hash) {
+            mismatched_topics += "\n  - " + message_to_check.topic_name;
+            ret = false;
+          }
+        } else {
+          RCLCPP_FATAL(node.get_logger(), "MessageFormatResponse::success == false");
           ret = false;
         }
-      } else {
-        RCLCPP_FATAL(node.get_logger(), "MessageFormatResponse::success == false");
-        ret = false;
-      }
-    } else {
-      RCLCPP_FATAL(node.get_logger(), "No response to MessageFormatResponse");
-      ret = false;
+        break;
     }
     first_message = false;
   }
