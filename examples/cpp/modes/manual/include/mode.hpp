@@ -18,6 +18,10 @@ using namespace std::chrono_literals; // NOLINT
 static const std::string kName = "My Manual Mode";
 static const std::string kNodeName = "example_mode_manual";
 
+#ifndef M_PI_F
+#define M_PI_F static_cast<float>(M_PI)
+#endif
+
 static inline Eigen::Quaternionf quaternionFromEuler(const Eigen::Vector3f & euler)
 {
   // YPR is ZYX axes
@@ -56,24 +60,23 @@ public:
     const bool want_rates = fabsf(_manual_control_input->roll()) > threshold || fabsf(
       _manual_control_input->pitch()) > threshold;
 
-    const float yaw_rate = _manual_control_input->yaw() * 120.F * M_PI / 180.F;
+    const float yaw_rate = _manual_control_input->yaw() * 120.F * M_PI_F / 180.F;
 
     if (want_rates) {
-      Eigen::Vector3f thrust_sp{};
-      thrust_sp(2) = -_manual_control_input->throttle();
-      Eigen::Vector3f rates_sp{};
-      rates_sp(0) = _manual_control_input->roll() * 500.F * M_PI / 180.F;
-      rates_sp(1) = -_manual_control_input->pitch() * 500.F * M_PI / 180.F;
-      rates_sp(2) = yaw_rate;
+      const Eigen::Vector3f thrust_sp{0.F, 0.F, -_manual_control_input->throttle()};
+      const Eigen::Vector3f rates_sp{
+        _manual_control_input->roll() * 500.F * M_PI_F / 180.F,
+        -_manual_control_input->pitch() * 500.F * M_PI_F / 180.F,
+        yaw_rate
+      };
       _rates_setpoint->update(rates_sp, thrust_sp);
 
     } else {
       _yaw += yaw_rate * dt_s;
-      Eigen::Vector3f thrust_sp{};
-      thrust_sp(2) = -_manual_control_input->throttle();
+      const Eigen::Vector3f thrust_sp{0.F, 0.F, -_manual_control_input->throttle()};
       const Eigen::Quaternionf qd = quaternionFromEuler(
-        _manual_control_input->roll() * 55.F * M_PI / 180.F,
-        -_manual_control_input->pitch() * 55.F * M_PI / 180.F,
+        _manual_control_input->roll() * 55.F * M_PI_F / 180.F,
+        -_manual_control_input->pitch() * 55.F * M_PI_F / 180.F,
         _yaw
       );
       _attitude_setpoint->update(qd, thrust_sp, yaw_rate);
