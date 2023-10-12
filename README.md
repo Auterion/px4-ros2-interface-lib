@@ -1,4 +1,4 @@
-# PX4 SDK
+# PX4 ROS 2 SDK
 
 Library to control PX4 from a companion computer using ROS 2.
 It allows to write external modes that are dynamically registered with PX4 and behave the same way as internal ones.
