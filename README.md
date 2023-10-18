@@ -1,7 +1,7 @@
-# PX4 ROS 2 SDK
+# Auterion PX4 ROS2 communication library
 
-Library to control PX4 from a companion computer using ROS 2.
-It allows to write external modes that are dynamically registered with PX4 and behave the same way as internal ones.
+Library to interface with PX4 from a companion computer using ROS 2.
+It provides some tooling to used to write external modes that are dynamically registered with PX4 and behave the same way as internal ones.
 A mode can send different types of setpoints, ranging from high-level navigation tasks all the way down to direct actuator controls.
 
 ## Compatibility with PX4
