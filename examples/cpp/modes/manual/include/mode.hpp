@@ -4,10 +4,10 @@
  ****************************************************************************/
 #pragma once
 
-#include <px4_sdk/components/mode.hpp>
-#include <px4_sdk/control/setpoint_types/rates.hpp>
-#include <px4_sdk/control/setpoint_types/attitude.hpp>
-#include <px4_sdk/control/offboard_actuators.hpp>
+#include <px4_ros2/components/mode.hpp>
+#include <px4_ros2/control/setpoint_types/rates.hpp>
+#include <px4_ros2/control/setpoint_types/attitude.hpp>
+#include <px4_ros2/control/offboard_actuators.hpp>
 
 #include <Eigen/Eigen>
 
@@ -38,16 +38,16 @@ static inline Eigen::Quaternionf quaternionFromEuler(
   return quaternionFromEuler(Eigen::Vector3f(roll, pitch, yaw));
 }
 
-class FlightModeTest : public px4_sdk::ModeBase
+class FlightModeTest : public px4_ros2::ModeBase
 {
 public:
   explicit FlightModeTest(rclcpp::Node & node)
   : ModeBase(node, kName)
   {
-    _manual_control_input = std::make_shared<px4_sdk::ManualControlInput>(*this);
-    _rates_setpoint = std::make_shared<px4_sdk::RatesSetpointType>(*this);
-    _attitude_setpoint = std::make_shared<px4_sdk::AttitudeSetpointType>(*this);
-    _offboard_actuator_controls = std::make_shared<px4_sdk::OffboardActuatorControls>(*this);
+    _manual_control_input = std::make_shared<px4_ros2::ManualControlInput>(*this);
+    _rates_setpoint = std::make_shared<px4_ros2::RatesSetpointType>(*this);
+    _attitude_setpoint = std::make_shared<px4_ros2::AttitudeSetpointType>(*this);
+    _offboard_actuator_controls = std::make_shared<px4_ros2::OffboardActuatorControls>(*this);
   }
 
   void onActivate() override {}
@@ -87,10 +87,10 @@ public:
   }
 
 private:
-  std::shared_ptr<px4_sdk::ManualControlInput> _manual_control_input;
-  std::shared_ptr<px4_sdk::RatesSetpointType> _rates_setpoint;
-  std::shared_ptr<px4_sdk::AttitudeSetpointType> _attitude_setpoint;
-  std::shared_ptr<px4_sdk::OffboardActuatorControls> _offboard_actuator_controls;
+  std::shared_ptr<px4_ros2::ManualControlInput> _manual_control_input;
+  std::shared_ptr<px4_ros2::RatesSetpointType> _rates_setpoint;
+  std::shared_ptr<px4_ros2::AttitudeSetpointType> _attitude_setpoint;
+  std::shared_ptr<px4_ros2::OffboardActuatorControls> _offboard_actuator_controls;
   float _yaw{0.F};
 };
 

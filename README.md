@@ -6,12 +6,12 @@ A mode can send different types of setpoints, ranging from high-level navigation
 
 ## Compatibility with PX4
 The library interacts with PX4 by using its uORB messages, and thus requires a matching set of message definitions on the ROS 2 side.
-Compatibility is only guaranteed if using latest `main` on the PX4 and SDK/px4_msgs side. This might change in the future.
+Compatibility is only guaranteed if using latest `main` on the PX4 and px4_ros2/px4_msgs side. This might change in the future.
 
-The SDK checks for message compatibility on startup when registering a mode.
-`ALL_PX4_SDK_MESSAGES` defines the set of checked messages. If you use other messages, you can check them using:
+The library checks for message compatibility on startup when registering a mode.
+`ALL_PX4_ROS2_MESSAGES` defines the set of checked messages. If you use other messages, you can check them using:
 ```c++
-if (!px4_sdk::messageCompatibilityCheck(node, {{"/fmu/in/vehicle_rates_setpoint"}})) {
+if (!px4_ros2::messageCompatibilityCheck(node, {{"/fmu/in/vehicle_rates_setpoint"}})) {
   throw std::runtime_error("Messages incompatible");
 }
 ```
@@ -37,12 +37,12 @@ Make sure you have the ROS workspace sourced.
 #### Unit tests
 You can either run the unit tests through colcon:
 ```shell
-colcon test --packages-select px4_sdk_cpp --ctest-args -R unit_tests
+colcon test --packages-select px4_ros2_cpp --ctest-args -R unit_tests
 colcon test-result --verbose
 ```
 Or directly from the build directory, which allows to filter by individual tests:
 ```shell
-./build/px4_sdk_cpp/px4_sdk_cpp_unit_tests --gtest_filter='xy*'
+./build/px4_ros2_cpp/px4_ros2_cpp_unit_tests --gtest_filter='xy*'
 ```
 
 #### Linters (code formatting etc)

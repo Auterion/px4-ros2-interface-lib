@@ -4,10 +4,10 @@
  ****************************************************************************/
 #pragma once
 
-#include <px4_sdk/components/mode.hpp>
-#include <px4_sdk/components/mode_executor.hpp>
-#include <px4_sdk/components/wait_for_fmu.hpp>
-#include <px4_sdk/control/setpoint_types/trajectory.hpp>
+#include <px4_ros2/components/mode.hpp>
+#include <px4_ros2/components/mode_executor.hpp>
+#include <px4_ros2/components/wait_for_fmu.hpp>
+#include <px4_ros2/control/setpoint_types/trajectory.hpp>
 
 #include <rclcpp/rclcpp.hpp>
 
@@ -18,13 +18,13 @@ using namespace std::chrono_literals; // NOLINT
 static const std::string kName = "Autonomous Executor";
 static const std::string kNodeName = "example_mode_with_executor";
 
-class FlightModeTest : public px4_sdk::ModeBase
+class FlightModeTest : public px4_ros2::ModeBase
 {
 public:
   explicit FlightModeTest(rclcpp::Node & node)
   : ModeBase(node, Settings{kName, false})
   {
-    _trajectory_setpoint = std::make_shared<px4_sdk::TrajectorySetpointType>(*this);
+    _trajectory_setpoint = std::make_shared<px4_ros2::TrajectorySetpointType>(*this);
   }
 
   ~FlightModeTest() override = default;
@@ -41,7 +41,7 @@ public:
     const rclcpp::Time now = node().get_clock()->now();
 
     if (now - _activation_time > 5s) {
-      completed(px4_sdk::Result::Success);
+      completed(px4_ros2::Result::Success);
       return;
     }
 
@@ -52,14 +52,14 @@ public:
 
 private:
   rclcpp::Time _activation_time{};
-  std::shared_ptr<px4_sdk::TrajectorySetpointType> _trajectory_setpoint;
+  std::shared_ptr<px4_ros2::TrajectorySetpointType> _trajectory_setpoint;
 };
 
-class ModeExecutorTest : public px4_sdk::ModeExecutorBase
+class ModeExecutorTest : public px4_ros2::ModeExecutorBase
 {
 public:
-  ModeExecutorTest(rclcpp::Node & node, px4_sdk::ModeBase & owned_mode)
-  : ModeExecutorBase(node, px4_sdk::ModeExecutorBase::Settings{}, owned_mode),
+  ModeExecutorTest(rclcpp::Node & node, px4_ros2::ModeBase & owned_mode)
+  : ModeExecutorBase(node, px4_ros2::ModeExecutorBase::Settings{}, owned_mode),
     _node(node)
   {
   }
@@ -75,16 +75,16 @@ public:
 
   void onActivate() override
   {
-    runState(State::TakingOff, px4_sdk::Result::Success);
+    runState(State::TakingOff, px4_ros2::Result::Success);
   }
 
   void onDeactivate(DeactivateReason reason) override
   {
   }
 
-  void runState(State state, px4_sdk::Result previous_result)
+  void runState(State state, px4_ros2::Result previous_result)
   {
-    if (previous_result != px4_sdk::Result::Success) {
+    if (previous_result != px4_ros2::Result::Success) {
       RCLCPP_ERROR(
         _node.get_logger(), "State %i: previous state failed: %s", (int)state,
         resultToString(previous_result));
@@ -98,23 +98,23 @@ public:
         break;
 
       case State::TakingOff:
-        takeoff([this](px4_sdk::Result result) {runState(State::MyMode, result);});
+        takeoff([this](px4_ros2::Result result) {runState(State::MyMode, result);});
         break;
 
       case State::MyMode:
         scheduleMode(
-          ownedMode().id(), [this](px4_sdk::Result result) {
+          ownedMode().id(), [this](px4_ros2::Result result) {
             runState(State::RTL, result);
           });
         break;
 
       case State::RTL:
-        rtl([this](px4_sdk::Result result) {runState(State::WaitUntilDisarmed, result);});
+        rtl([this](px4_ros2::Result result) {runState(State::WaitUntilDisarmed, result);});
         break;
 
       case State::WaitUntilDisarmed:
         waitUntilDisarmed(
-          [this](px4_sdk::Result result) {
+          [this](px4_ros2::Result result) {
             RCLCPP_INFO(_node.get_logger(), "All states complete (%s)", resultToString(result));
           });
         break;
@@ -140,7 +140,7 @@ public:
       rcutils_reset_error();
     }
 
-    if (!px4_sdk::waitForFMU(*this)) {
+    if (!px4_ros2::waitForFMU(*this)) {
       throw std::runtime_error("No message from FMU");
     }
 
