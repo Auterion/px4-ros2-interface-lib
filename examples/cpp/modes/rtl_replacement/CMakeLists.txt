@@ -15,12 +15,12 @@ find_package(eigen3_cmake_module REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(px4_sdk_cpp REQUIRED)
+find_package(px4_ros2_cpp REQUIRED)
 
 include_directories(include ${Eigen3_INCLUDE_DIRS})
 add_executable(example_mode_rtl
         src/main.cpp)
-ament_target_dependencies(example_mode_rtl Eigen3 px4_sdk_cpp rclcpp)
+ament_target_dependencies(example_mode_rtl Eigen3 px4_ros2_cpp rclcpp)
 
 install(TARGETS
         example_mode_rtl
