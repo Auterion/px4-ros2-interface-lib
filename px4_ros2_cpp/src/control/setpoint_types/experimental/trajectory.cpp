@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
-#include <px4_ros2/control/setpoint_types/trajectory.hpp>
+#include <px4_ros2/control/setpoint_types/experimental/trajectory.hpp>
 
 
 namespace px4_ros2
