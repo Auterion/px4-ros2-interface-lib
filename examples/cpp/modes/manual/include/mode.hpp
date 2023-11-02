@@ -5,8 +5,8 @@
 #pragma once
 
 #include <px4_ros2/components/mode.hpp>
-#include <px4_ros2/control/setpoint_types/rates.hpp>
-#include <px4_ros2/control/setpoint_types/attitude.hpp>
+#include <px4_ros2/control/setpoint_types/experimental/rates.hpp>
+#include <px4_ros2/control/setpoint_types/experimental/attitude.hpp>
 #include <px4_ros2/control/offboard_actuators.hpp>
 
 #include <Eigen/Eigen>

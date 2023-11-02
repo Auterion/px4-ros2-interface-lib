@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
-#include <px4_ros2/control/setpoint_types/rates.hpp>
+#include <px4_ros2/control/setpoint_types/experimental/rates.hpp>
 
 
 namespace px4_ros2

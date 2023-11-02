@@ -31,10 +31,10 @@ set(HEADER_FILES
         include/px4_ros2/components/overrides.hpp
         include/px4_ros2/components/wait_for_fmu.hpp
         include/px4_ros2/control/offboard_actuators.hpp
-        include/px4_ros2/control/setpoint_types/attitude.hpp
         include/px4_ros2/control/setpoint_types/direct_actuators.hpp
-        include/px4_ros2/control/setpoint_types/rates.hpp
-        include/px4_ros2/control/setpoint_types/trajectory.hpp
+        include/px4_ros2/control/setpoint_types/experimental/attitude.hpp
+        include/px4_ros2/control/setpoint_types/experimental/rates.hpp
+        include/px4_ros2/control/setpoint_types/experimental/trajectory.hpp
         include/px4_ros2/odometry/global_position.hpp
         include/px4_ros2/odometry/local_position.hpp
 )
@@ -50,10 +50,10 @@ add_library(px4_ros2_cpp
         src/components/registration.cpp
         src/components/wait_for_fmu.cpp
         src/control/offboard_actuators.cpp
-        src/control/setpoint_types/attitude.cpp
         src/control/setpoint_types/direct_actuators.cpp
-        src/control/setpoint_types/rates.cpp
-        src/control/setpoint_types/trajectory.cpp
+        src/control/setpoint_types/experimental/attitude.cpp
+        src/control/setpoint_types/experimental/rates.cpp
+        src/control/setpoint_types/experimental/trajectory.cpp
         src/odometry/global_position.cpp
         src/odometry/local_position.cpp
 )

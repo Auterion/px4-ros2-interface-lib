@@ -7,7 +7,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <px4_ros2/components/health_and_arming_checks.hpp>
 #include <px4_ros2/components/mode.hpp>
-#include <px4_ros2/control/setpoint_types/rates.hpp>
+#include <px4_ros2/control/setpoint_types/experimental/rates.hpp>
 #include <px4_ros2/odometry/global_position.hpp>
 #include "fake_registration.hpp"
 

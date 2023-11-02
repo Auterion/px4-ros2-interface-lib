@@ -9,7 +9,7 @@
 
 #include <px4_ros2/components/mode.hpp>
 #include <px4_ros2/components/wait_for_fmu.hpp>
-#include <px4_ros2/control/setpoint_types/trajectory.hpp>
+#include <px4_ros2/control/setpoint_types/experimental/trajectory.hpp>
 
 #include <rclcpp/rclcpp.hpp>
 
