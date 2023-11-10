@@ -30,7 +30,7 @@ set(HEADER_FILES
         include/px4_ros2/components/mode_executor.hpp
         include/px4_ros2/components/overrides.hpp
         include/px4_ros2/components/wait_for_fmu.hpp
-        include/px4_ros2/control/offboard_actuators.hpp
+        include/px4_ros2/control/peripheral_actuators.hpp
         include/px4_ros2/control/setpoint_types/direct_actuators.hpp
         include/px4_ros2/control/setpoint_types/experimental/attitude.hpp
         include/px4_ros2/control/setpoint_types/experimental/rates.hpp
@@ -49,7 +49,7 @@ add_library(px4_ros2_cpp
         src/components/overrides.cpp
         src/components/registration.cpp
         src/components/wait_for_fmu.cpp
-        src/control/offboard_actuators.cpp
+        src/control/peripheral_actuators.cpp
         src/control/setpoint_types/direct_actuators.cpp
         src/control/setpoint_types/experimental/attitude.cpp
         src/control/setpoint_types/experimental/rates.cpp

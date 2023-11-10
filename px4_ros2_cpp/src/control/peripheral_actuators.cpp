@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
-#include <px4_ros2/control/offboard_actuators.hpp>
+#include <px4_ros2/control/peripheral_actuators.hpp>
 
 using namespace std::chrono_literals;
 
 namespace px4_ros2
 {
 
-OffboardActuatorControls::OffboardActuatorControls(Context & context)
+PeripheralActuatorControls::PeripheralActuatorControls(Context & context)
 : _node(context.node())
 {
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
@@ -18,7 +18,7 @@ OffboardActuatorControls::OffboardActuatorControls(Context & context)
   _last_update = _node.get_clock()->now();
 }
 
-void OffboardActuatorControls::set(const Eigen::Matrix<float, kNumActuators, 1> & values)
+void PeripheralActuatorControls::set(const Eigen::Matrix<float, kNumActuators, 1> & values)
 {
   // Rate-limit to avoid spamming the FC with commands at high frequency
   const auto now = _node.get_clock()->now();
@@ -41,7 +41,7 @@ void OffboardActuatorControls::set(const Eigen::Matrix<float, kNumActuators, 1> 
   }
 }
 
-void OffboardActuatorControls::set(float value, unsigned int index)
+void PeripheralActuatorControls::set(float value, unsigned int index)
 {
   Eigen::Matrix<float, kNumActuators, 1> values;
   values.setConstant(NAN);

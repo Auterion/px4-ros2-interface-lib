@@ -14,15 +14,15 @@ namespace px4_ros2
 {
 
 /**
- * Control one or more extra actuators. It maps to the 'Offboard Actuator Set' output functions on the PX4 side.
+ * Control one or more extra actuators. It maps to the 'Peripheral Actuator Set' output functions on the PX4 side.
  * This can be used by a mode independent from the setpoints.
  */
-class OffboardActuatorControls
+class PeripheralActuatorControls
 {
 public:
   static constexpr int kNumActuators = 6;
 
-  explicit OffboardActuatorControls(Context & context);
+  explicit PeripheralActuatorControls(Context & context);
 
   /**
    * Control actuators
