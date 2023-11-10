@@ -7,7 +7,7 @@
 #include <px4_ros2/components/mode.hpp>
 #include <px4_ros2/control/setpoint_types/experimental/rates.hpp>
 #include <px4_ros2/control/setpoint_types/experimental/attitude.hpp>
-#include <px4_ros2/control/offboard_actuators.hpp>
+#include <px4_ros2/control/peripheral_actuators.hpp>
 
 #include <Eigen/Eigen>
 
@@ -47,7 +47,7 @@ public:
     _manual_control_input = std::make_shared<px4_ros2::ManualControlInput>(*this);
     _rates_setpoint = std::make_shared<px4_ros2::RatesSetpointType>(*this);
     _attitude_setpoint = std::make_shared<px4_ros2::AttitudeSetpointType>(*this);
-    _offboard_actuator_controls = std::make_shared<px4_ros2::OffboardActuatorControls>(*this);
+    _peripheral_actuator_controls = std::make_shared<px4_ros2::PeripheralActuatorControls>(*this);
   }
 
   void onActivate() override {}
@@ -82,15 +82,15 @@ public:
       _attitude_setpoint->update(qd, thrust_sp, yaw_rate);
     }
 
-    // Example to control a servo by passing through RC aux1 channel to 'Offboard Actuator Set 1'
-    _offboard_actuator_controls->set(_manual_control_input->aux1());
+    // Example to control a servo by passing through RC aux1 channel to 'Peripheral Actuator Set 1'
+    _peripheral_actuator_controls->set(_manual_control_input->aux1());
   }
 
 private:
   std::shared_ptr<px4_ros2::ManualControlInput> _manual_control_input;
   std::shared_ptr<px4_ros2::RatesSetpointType> _rates_setpoint;
   std::shared_ptr<px4_ros2::AttitudeSetpointType> _attitude_setpoint;
-  std::shared_ptr<px4_ros2::OffboardActuatorControls> _offboard_actuator_controls;
+  std::shared_ptr<px4_ros2::PeripheralActuatorControls> _peripheral_actuator_controls;
   float _yaw{0.F};
 };
 
