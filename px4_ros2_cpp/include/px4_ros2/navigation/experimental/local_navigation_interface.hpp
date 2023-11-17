@@ -9,6 +9,7 @@
 #include <px4_msgs/msg/vehicle_odometry.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <Eigen/Eigen>
+#include <px4_ros2/common/context.hpp>
 
 using namespace Eigen;
 using AuxLocalPosition = px4_msgs::msg::VehicleOdometry;
@@ -37,17 +38,18 @@ struct LocalPositionEstimate
   std::optional<Vector3f> attitude_variance {std::nullopt};
 };
 
-class LocalNavigationInterface : public rclcpp::Node
+class LocalNavigationInterface
 {
 public:
-  explicit LocalNavigationInterface(uint8_t pose_frame, uint8_t velocity_frame);
-  ~LocalNavigationInterface();
+  explicit LocalNavigationInterface(Context & context, uint8_t pose_frame, uint8_t velocity_frame);
+  ~LocalNavigationInterface() = default;
 
   void update(LocalPositionEstimate & local_position_estimate);
 
 private:
   const std::string AUX_LOCAL_POSITION_TOPIC = "/fmu/in/vehicle_odometry";
 
+  rclcpp::Node & _node;
   rclcpp::Publisher<AuxLocalPosition>::SharedPtr _aux_local_position_pub;
 
   uint8_t _pose_frame;

@@ -3,17 +3,24 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
+#include <rclcpp/rclcpp.hpp>
 #include <px4_ros2/navigation/experimental/local_navigation_interface.hpp>
-
 
 namespace px4_ros2
 {
 
-LocalNavigationInterface::LocalNavigationInterface(uint8_t pose_frame, uint8_t velocity_frame)
-: Node("local_navigation_interface_node"),
-  _aux_local_position_pub(create_publisher<AuxLocalPosition>(AUX_LOCAL_POSITION_TOPIC, 10)),
+LocalNavigationInterface::LocalNavigationInterface(
+  Context & context, uint8_t pose_frame,
+  uint8_t velocity_frame)
+: _node(context.node()),
   _pose_frame(pose_frame),
-  _velocity_frame(velocity_frame) {}
+  _velocity_frame(velocity_frame)
+{
+  _aux_local_position_pub =
+    context.node().create_publisher<AuxLocalPosition>(
+    context.topicNamespacePrefix() + AUX_LOCAL_POSITION_TOPIC, 10);
+
+}
 
 void LocalNavigationInterface::update(LocalPositionEstimate & local_position_estimate)
 {
@@ -66,8 +73,10 @@ void LocalNavigationInterface::update(LocalPositionEstimate & local_position_est
     local_position_estimate.velocity_z_variance.value_or(NAN);
 
   // Publish
-  aux_local_position.timestamp = this->now().nanoseconds() * 1e-3;
+  aux_local_position.timestamp = _node.get_clock()->now().nanoseconds() * 1e-3;
   _aux_local_position_pub->publish(aux_local_position);
+
+  std::cout << "Published aux local position!\n";
 }
 
 } // namespace px4_ros2
