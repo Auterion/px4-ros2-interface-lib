@@ -6,7 +6,6 @@
 
 
 #include <rclcpp/rclcpp.hpp>
-#include <px4_ros2/common/context.hpp>
 #include <px4_ros2/navigation/experimental/local_navigation_interface.hpp>
 
 #include <Eigen/Core>

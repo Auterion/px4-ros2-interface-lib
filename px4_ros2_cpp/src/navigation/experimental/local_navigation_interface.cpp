@@ -16,7 +16,7 @@ LocalNavigationInterface::LocalNavigationInterface(
   _pose_frame(pose_frame),
   _velocity_frame(velocity_frame)
 {
-  // Check that pose and velocity reference frames are valid
+  // Check that selected pose and velocity reference frames are valid
   auto it_pose_frame = std::find(
     std::begin(_available_pose_frames), std::end(
       _available_pose_frames), pose_frame);

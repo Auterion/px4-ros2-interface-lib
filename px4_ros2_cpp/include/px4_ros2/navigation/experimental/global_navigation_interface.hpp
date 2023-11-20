@@ -22,12 +22,19 @@ struct GlobalPositionEstimate
 {
   uint64_t timestamp_sample {};
 
+  // Lon lat
+  std::optional<Vector2f> position_lat_lon {std::nullopt};
+  std::optional<float> position_variance {std::nullopt};
+
+  // Altitude (AGL frame)
+  std::optional<float> altitude_agl {std::nullopt};
+  // std::optional<float> altitude_variance {std::nullopt};
 };
 
 class GlobalNavigationInterface
 {
 public:
-  explicit GlobalNavigationInterface(rclcpp::Node & node, uint8_t altitude_frame);
+  explicit GlobalNavigationInterface(rclcpp::Node & node);
   ~GlobalNavigationInterface() = default;
 
   /**
@@ -38,10 +45,25 @@ public:
   const std::string AUX_GLOBAL_POSITION_TOPIC = "/fmu/in/aux_global_position";
 
 private:
+  /**
+   * @brief Check that at least one estimate value is defined.
+   */
+  bool _checkEstimateEmpty(const GlobalPositionEstimate & estimate) const;
+
+  /**
+   * @brief Check that if an estimate value is defined, its variance is also defined and strictly greater than zero.
+   */
+  bool _checkVarianceValid(const GlobalPositionEstimate & estimate) const;
+
+  /**
+   * @brief Check that if an estimate value is defined, its associated frame is not *FRAME_UNKNOWN.
+   */
+  bool _checkFrameValid(const GlobalPositionEstimate & estimate) const;
+
   rclcpp::Node & _node;
   rclcpp::Publisher<AuxGlobalPosition>::SharedPtr _aux_global_position_pub;
 
-  uint8_t _altitude_frame;
+  // uint8_t _altitude_frame;
 };
 
 } // namespace px4_ros2
