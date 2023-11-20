@@ -10,20 +10,59 @@ namespace px4_ros2
 {
 
 LocalNavigationInterface::LocalNavigationInterface(
-  Context & context, uint8_t pose_frame,
-  uint8_t velocity_frame)
-: _node(context.node()),
+  rclcpp::Node & node, const uint8_t pose_frame,
+  const uint8_t velocity_frame)
+: _node(node),
   _pose_frame(pose_frame),
   _velocity_frame(velocity_frame)
 {
-  _aux_local_position_pub =
-    context.node().create_publisher<AuxLocalPosition>(
-    context.topicNamespacePrefix() + AUX_LOCAL_POSITION_TOPIC, 10);
+  // Check that pose and velocity reference frames are valid
+  auto it_pose_frame = std::find(
+    std::begin(_available_pose_frames), std::end(
+      _available_pose_frames), pose_frame);
+  if (it_pose_frame == std::end(_available_pose_frames)) {
+    RCLCPP_ERROR(
+      node.get_logger(), "Failed to initialize LocalNavigationInterface: invalid pose reference frame %i.",
+      pose_frame);
+    rclcpp::shutdown();
+  }
+
+  auto it_vel_frame =
+    std::find(
+    std::begin(_available_velocity_frames), std::end(
+      _available_velocity_frames), velocity_frame);
+  if (it_vel_frame == std::end(_available_velocity_frames)) {
+    RCLCPP_ERROR(
+      node.get_logger(), "Failed to initialize LocalNavigationInterface: invalid velocity reference frame %i.",
+      velocity_frame);
+    rclcpp::shutdown();
+  }
+
+  _aux_local_position_pub = node.create_publisher<AuxLocalPosition>(AUX_LOCAL_POSITION_TOPIC, 10);
 
 }
 
-void LocalNavigationInterface::update(LocalPositionEstimate & local_position_estimate)
+int LocalNavigationInterface::update(const LocalPositionEstimate & local_position_estimate) const
 {
+  // Run basic sanity checks on local position estimate
+  if (_checkEstimateEmpty(local_position_estimate)) {
+    RCLCPP_WARN(_node.get_logger(), "Estimate values are all empty.");
+    return static_cast<int>(NavigationInterfaceCodes::ESTIMATE_EMPTY);
+  }
+
+  if (!_checkVarianceValid(local_position_estimate)) {
+    return static_cast<int>(NavigationInterfaceCodes::ESTIMATE_VARIANCE_INVALID);
+  }
+
+  if (!_checkFrameValid(local_position_estimate)) {
+    return static_cast<int>(NavigationInterfaceCodes::ESTIMATE_FRAME_UNKNOWN);
+  }
+
+  if (local_position_estimate.timestamp_sample == 0) {
+    RCLCPP_WARN(_node.get_logger(), "Estimate sample timestamp is empty.");
+  }
+
+  // Populate aux local position message
   AuxLocalPosition aux_local_position;
 
   aux_local_position.timestamp_sample = local_position_estimate.timestamp_sample;
@@ -72,11 +111,91 @@ void LocalNavigationInterface::update(LocalPositionEstimate & local_position_est
   aux_local_position.velocity_variance[2] =
     local_position_estimate.velocity_z_variance.value_or(NAN);
 
+  // Angular velocity (unused at the moment)
+  aux_local_position.angular_velocity = {NAN, NAN, NAN};
+
   // Publish
   aux_local_position.timestamp = _node.get_clock()->now().nanoseconds() * 1e-3;
   _aux_local_position_pub->publish(aux_local_position);
 
-  std::cout << "Published aux local position!\n";
+  return static_cast<int>(NavigationInterfaceCodes::SUCCESS);
+
+}
+
+bool LocalNavigationInterface::_checkEstimateEmpty(const LocalPositionEstimate & estimate) const
+{
+  return !estimate.position_xy.has_value() &&
+         !estimate.position_z.has_value() &&
+         !estimate.velocity_xy.has_value() &&
+         !estimate.velocity_z.has_value() &&
+         !estimate.attitude_quaternion.has_value();
+}
+
+bool LocalNavigationInterface::_checkVarianceValid(const LocalPositionEstimate & estimate) const
+{
+  if (estimate.position_xy.has_value() &&
+    (!estimate.position_xy_variance.has_value() ||
+    (estimate.position_xy_variance.value().array() <= 0).any()))
+  {
+    RCLCPP_WARN(_node.get_logger(), "Estimate value position_xy has an invalid variance value.");
+    return false;
+  }
+
+  if (estimate.position_z.has_value() &&
+    (!estimate.position_z_variance.has_value() || estimate.position_z_variance <= 0))
+  {
+    RCLCPP_WARN(_node.get_logger(), "Estimate value position_z has an invalid variance value.");
+    return false;
+  }
+
+  if (estimate.velocity_xy.has_value() &&
+    (!estimate.velocity_xy_variance.has_value() ||
+    (estimate.velocity_xy_variance.value().array() <= 0).any()))
+  {
+    RCLCPP_WARN(_node.get_logger(), "Estimate value velocity_xy has an invalid variance value.");
+    return false;
+  }
+
+  if (estimate.velocity_z.has_value() &&
+    (!estimate.velocity_z_variance.has_value() || estimate.velocity_z_variance <= 0))
+  {
+    RCLCPP_WARN(_node.get_logger(), "Estimate value velocity_z has an invalid variance value.");
+    return false;
+  }
+
+  if (estimate.attitude_quaternion.has_value() &&
+    (!estimate.attitude_variance.has_value() ||
+    (estimate.attitude_variance.value().array() <= 0).any()))
+  {
+    RCLCPP_WARN(
+      _node.get_logger(), "Estimate value attitude_quaternion has an invalid variance value.");
+    return false;
+  }
+
+  return true;
+}
+
+bool LocalNavigationInterface::_checkFrameValid(const LocalPositionEstimate & estimate) const
+{
+  if ((estimate.position_xy.has_value() || estimate.position_z.has_value()) &&
+    _pose_frame == AuxLocalPosition::POSE_FRAME_UNKNOWN)
+  {
+    RCLCPP_WARN(
+      _node.get_logger(),
+      "Position estimate update requested but pose reference frame is set to POSE_FRAME_UNKNOWN.");
+    return false;
+  }
+
+  if ((estimate.velocity_xy.has_value() || estimate.velocity_z.has_value()) &&
+    _pose_frame == AuxLocalPosition::VELOCITY_FRAME_UNKNOWN)
+  {
+    RCLCPP_WARN(
+      _node.get_logger(),
+      "Velocity estimate update requested but velocity reference frame is set to VELOCITY_FRAME_UNKNOWN.");
+    return false;
+  }
+
+  return true;
 }
 
 } // namespace px4_ros2

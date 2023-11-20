@@ -6,10 +6,13 @@
 #pragma once
 
 #include <optional>
-#include <px4_msgs/msg/vehicle_odometry.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <Eigen/Eigen>
 #include <px4_ros2/common/context.hpp>
+
+#include <px4_msgs/msg/vehicle_odometry.hpp>
+#include <px4_ros2/common/context.hpp>
+#include <px4_ros2/navigation/experimental/navigation_interface_codes.hpp>
 
 using namespace Eigen;
 using AuxLocalPosition = px4_msgs::msg::VehicleOdometry;
@@ -41,19 +44,53 @@ struct LocalPositionEstimate
 class LocalNavigationInterface
 {
 public:
-  explicit LocalNavigationInterface(Context & context, uint8_t pose_frame, uint8_t velocity_frame);
+  explicit LocalNavigationInterface(
+    rclcpp::Node & node, const uint8_t pose_frame,
+    const uint8_t velocity_frame);
   ~LocalNavigationInterface() = default;
 
-  void update(LocalPositionEstimate & local_position_estimate);
+  /**
+   * @brief Publish local position estimate to FMU.
+   */
+  int update(const LocalPositionEstimate & local_position_estimate) const;
+
+  const std::string AUX_LOCAL_POSITION_TOPIC = "/fmu/in/vehicle_odometry";
 
 private:
-  const std::string AUX_LOCAL_POSITION_TOPIC = "/fmu/in/vehicle_odometry";
+  /**
+   * @brief Check that at least one estimate value is defined.
+   */
+  bool _checkEstimateEmpty(const LocalPositionEstimate & estimate) const;
+
+  /**
+   * @brief Check that if an estimate value is defined, its variance is also defined and strictly greater than zero.
+   */
+  bool _checkVarianceValid(const LocalPositionEstimate & estimate) const;
+
+  /**
+   * @brief Check that if an estimate value is defined, its associated frame is not *FRAME_UNKNOWN.
+   */
+  bool _checkFrameValid(const LocalPositionEstimate & estimate) const;
 
   rclcpp::Node & _node;
   rclcpp::Publisher<AuxLocalPosition>::SharedPtr _aux_local_position_pub;
 
   uint8_t _pose_frame;
   uint8_t _velocity_frame;
+
+  uint8_t _available_pose_frames[3] = {
+    AuxLocalPosition::POSE_FRAME_UNKNOWN,
+    AuxLocalPosition::POSE_FRAME_NED,
+    AuxLocalPosition::POSE_FRAME_FRD
+  };
+
+  uint8_t _available_velocity_frames[4] = {
+    AuxLocalPosition::VELOCITY_FRAME_UNKNOWN,
+    AuxLocalPosition::VELOCITY_FRAME_NED,
+    AuxLocalPosition::VELOCITY_FRAME_FRD,
+    AuxLocalPosition::VELOCITY_FRAME_BODY_FRD
+  };
+
 };
 
 } // namespace px4_ros2

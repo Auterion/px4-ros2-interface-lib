@@ -13,46 +13,11 @@
 
 using namespace std::chrono_literals; // NOLINT
 
-static const std::string kName = "local_navigation_test";
-static const std::string kNodeName = "example_local_navigation_node";
-
-class LocalNavigationTest : public px4_ros2::Context
+class ExampleLocalNavigationNode : public rclcpp::Node
 {
 public:
-  explicit LocalNavigationTest(rclcpp::Node & node)
-  : Context(node), _node(node)
-  {
-    const uint8_t pose_frame = 0;
-    const uint8_t velocity_frame = 0;
-
-    _local_navigation_interface = std::make_shared<px4_ros2::LocalNavigationInterface>(
-      *this,
-      pose_frame,
-      velocity_frame);
-
-  }
-
-  void updateAuxLocalPosition()
-  {
-    px4_ros2::LocalPositionEstimate local_position_estimate {};
-
-    local_position_estimate.timestamp_sample = _node.get_clock()->now().nanoseconds() * 1e-3;
-    local_position_estimate.velocity_xy = Eigen::Vector2f{1.f, 2.f};
-    local_position_estimate.velocity_xy_variance = Eigen::Vector2f{0.3f, 0.4f};
-
-    _local_navigation_interface->update(local_position_estimate);
-  }
-
-private:
-  rclcpp::Node & _node;
-  std::shared_ptr<px4_ros2::LocalNavigationInterface> _local_navigation_interface;
-};
-
-class TestNode : public rclcpp::Node
-{
-public:
-  TestNode()
-  : Node(kNodeName)
+  ExampleLocalNavigationNode()
+  : Node("example_local_navigation_node")
   {
     // Enable debug output
     auto ret =
@@ -63,18 +28,39 @@ public:
       rcutils_reset_error();
     }
 
-    _local_navigation_test = std::make_unique<LocalNavigationTest>(*this);
+    // Instantiate local navigation interface
+    const uint8_t pose_frame = AuxLocalPosition::POSE_FRAME_NED;
+    const uint8_t velocity_frame = AuxLocalPosition::VELOCITY_FRAME_NED;
+    _local_navigation_interface = std::make_shared<px4_ros2::LocalNavigationInterface>(
+      *this,
+      pose_frame,
+      velocity_frame);
 
-    RCLCPP_INFO(get_logger(), "TestNode running!");
+    _timer =
+      create_wall_timer(1s, std::bind(&ExampleLocalNavigationNode::updateAuxLocalPosition, this));
 
-    int counter = 10;
-    while (counter-- > 0) {
-      _local_navigation_test->updateAuxLocalPosition();
-      sleep(1);
-    }
+    RCLCPP_INFO(get_logger(), "example_local_navigation_node running!");
+  }
 
+  void updateAuxLocalPosition()
+  {
+    px4_ros2::LocalPositionEstimate local_position_estimate {};
+
+    local_position_estimate.timestamp_sample = this->now().nanoseconds() * 1e-3;
+
+    local_position_estimate.velocity_xy = Eigen::Vector2f {1.f, 2.f};
+    local_position_estimate.velocity_xy_variance = Eigen::Vector2f {0.3f, 0.4f};
+
+    local_position_estimate.position_z = 12.3f;
+    local_position_estimate.position_z_variance = 0.33f;
+
+    local_position_estimate.attitude_quaternion = Eigen::Quaternionf {0.1, -0.2, 0.3, 0.25};
+    local_position_estimate.attitude_variance = Eigen::Vector3f {0.2, 0.1, 0.05};
+
+    _local_navigation_interface->update(local_position_estimate);
   }
 
 private:
-  std::unique_ptr<LocalNavigationTest> _local_navigation_test;
+  std::shared_ptr<px4_ros2::LocalNavigationInterface> _local_navigation_interface;
+  rclcpp::TimerBase::SharedPtr _timer;
 };
