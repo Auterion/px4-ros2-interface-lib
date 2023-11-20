@@ -6,10 +6,11 @@
 #pragma once
 
 #include <optional>
-#include <px4_msgs/msg/aux_global_position.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <Eigen/Eigen>
 
+#include <px4_msgs/msg/aux_global_position.hpp>
+#include <px4_ros2/navigation/experimental/navigation_interface_codes.hpp>
 
 using namespace Eigen;
 using namespace px4_msgs::msg;
@@ -23,17 +24,21 @@ struct GlobalPositionEstimate
 
 };
 
-class GlobalNavigationInterface : public rclcpp::Node
+class GlobalNavigationInterface
 {
 public:
-  explicit GlobalNavigationInterface(uint8_t altitude_frame);
-  ~GlobalNavigationInterface();
+  explicit GlobalNavigationInterface(rclcpp::Node & node, uint8_t altitude_frame);
+  ~GlobalNavigationInterface() = default;
 
-  void update(GlobalPositionEstimate & global_position_estimate);
+  /**
+   * @brief Publish global position estimate to FMU.
+   */
+  int update(const GlobalPositionEstimate & global_position_estimate) const;
 
-private:
   const std::string AUX_GLOBAL_POSITION_TOPIC = "/fmu/in/aux_global_position";
 
+private:
+  rclcpp::Node & _node;
   rclcpp::Publisher<AuxGlobalPosition>::SharedPtr _aux_global_position_pub;
 
   uint8_t _altitude_frame;
