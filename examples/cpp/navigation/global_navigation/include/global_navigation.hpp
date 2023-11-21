@@ -42,10 +42,9 @@ public:
 
     global_position_estimate.timestamp_sample = this->now().nanoseconds() * 1e-3;
 
-    global_position_estimate.position_lat_lon = Eigen::Vector2f {12.34321, 23.45432};
-    global_position_estimate.position_variance = 0.4f;
-
+    global_position_estimate.lat_lon = Eigen::Vector2f {12.34321, 23.45432};
     global_position_estimate.altitude_agl = 12.4f;
+    global_position_estimate.positional_uncertainty = 0.4f;
 
     _global_navigation_interface->update(global_position_estimate);
   }

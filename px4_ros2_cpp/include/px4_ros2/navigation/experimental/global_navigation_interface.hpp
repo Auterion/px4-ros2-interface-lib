@@ -22,13 +22,14 @@ struct GlobalPositionEstimate
 {
   uint64_t timestamp_sample {};
 
-  // Lon lat
-  std::optional<Vector2f> position_lat_lon {std::nullopt};
-  std::optional<float> position_variance {std::nullopt};
+  // Lat lon
+  std::optional<Vector2f> lat_lon {std::nullopt};
 
   // Altitude (AGL frame)
   std::optional<float> altitude_agl {std::nullopt};
-  // std::optional<float> altitude_variance {std::nullopt};
+
+  // Lat lon alt standard deviation
+  std::optional<float> positional_uncertainty {std::nullopt};
 };
 
 class GlobalNavigationInterface

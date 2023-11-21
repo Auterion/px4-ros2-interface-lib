@@ -34,12 +34,13 @@ int GlobalNavigationInterface::update(const GlobalPositionEstimate & global_posi
   aux_global_position.timestamp_sample = global_position_estimate.timestamp_sample;
 
   // Lat lon
-  const Vector2f position_lat_lon = global_position_estimate.position_lat_lon.value_or(
+  const Vector2f lat_lon = global_position_estimate.lat_lon.value_or(
     Vector2f{NAN,
       NAN});
-  aux_global_position.latitude = position_lat_lon[0];
-  aux_global_position.longitude = position_lat_lon[1];
-  aux_global_position.positional_uncertainty = global_position_estimate.position_variance.value_or(
+  aux_global_position.latitude = lat_lon[0];
+  aux_global_position.longitude = lat_lon[1];
+  aux_global_position.positional_uncertainty =
+    global_position_estimate.positional_uncertainty.value_or(
     NAN);
 
   // Altitude
@@ -57,17 +58,17 @@ int GlobalNavigationInterface::update(const GlobalPositionEstimate & global_posi
 
 bool GlobalNavigationInterface::_checkEstimateEmpty(const GlobalPositionEstimate & estimate) const
 {
-  return !estimate.position_lat_lon.has_value() && !estimate.altitude_agl.has_value();
+  return !estimate.lat_lon.has_value() && !estimate.altitude_agl.has_value();
 }
 
 bool GlobalNavigationInterface::_checkVarianceValid(const GlobalPositionEstimate & estimate) const
 {
-  if (estimate.position_lat_lon.has_value() &&
-    (!estimate.position_variance.has_value() || estimate.position_variance.value() <= 0))
+  if (estimate.lat_lon.has_value() &&
+    (!estimate.positional_uncertainty.has_value() || estimate.positional_uncertainty.value() <= 0))
   {
     RCLCPP_WARN(
       _node.get_logger(),
-      "Estimate value position_lat_lon has an invalid variance value.");
+      "Estimate value lat_lon has an invalid variance value.");
     return false;
   }
 
