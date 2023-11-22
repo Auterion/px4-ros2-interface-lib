@@ -37,6 +37,7 @@ set(HEADER_FILES
         include/px4_ros2/control/setpoint_types/experimental/trajectory.hpp
         include/px4_ros2/navigation/experimental/global_navigation_interface.hpp
         include/px4_ros2/navigation/experimental/local_navigation_interface.hpp
+        include/px4_ros2/navigation/experimental/navigation_interface_base.hpp
         include/px4_ros2/navigation/experimental/navigation_interface_common.hpp
         include/px4_ros2/odometry/global_position.hpp
         include/px4_ros2/odometry/local_position.hpp

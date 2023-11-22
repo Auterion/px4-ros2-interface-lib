@@ -10,6 +10,7 @@
 #include <Eigen/Eigen>
 
 #include <px4_msgs/msg/vehicle_odometry.hpp>
+#include <px4_ros2/navigation/experimental/navigation_interface_base.hpp>
 #include <px4_ros2/navigation/experimental/navigation_interface_common.hpp>
 
 using namespace Eigen;
@@ -39,18 +40,19 @@ struct LocalPositionEstimate
   std::optional<Vector3f> attitude_variance {std::nullopt};
 };
 
-class LocalNavigationInterface
+class LocalNavigationInterface : public NavigationInterfaceBase<LocalPositionEstimate>
 {
 public:
   explicit LocalNavigationInterface(
-    rclcpp::Node & node, const uint8_t pose_frame,
+    Context & context, const uint8_t pose_frame,
     const uint8_t velocity_frame);
-  ~LocalNavigationInterface() = default;
+  ~LocalNavigationInterface() override = default;
 
   /**
    * @brief Publish local position estimate to FMU.
    */
-  NavigationInterfaceReturnCode update(const LocalPositionEstimate & local_position_estimate) const;
+  NavigationInterfaceReturnCode update(const LocalPositionEstimate & local_position_estimate) const
+  override;
 
   const std::string AUX_LOCAL_POSITION_TOPIC = "/fmu/in/vehicle_visual_odometry";
 
@@ -58,22 +60,22 @@ private:
   /**
    * @brief Check that at least one estimate value is defined.
    */
-  bool _checkEstimateEmpty(const LocalPositionEstimate & estimate) const;
+  bool _checkEstimateEmpty(const LocalPositionEstimate & estimate) const override;
 
   /**
    * @brief Check that if an estimate value is defined, its variance is also defined and strictly greater than zero.
    */
-  bool _checkVarianceValid(const LocalPositionEstimate & estimate) const;
+  bool _checkVarianceValid(const LocalPositionEstimate & estimate) const override;
 
   /**
    * @brief Check that if an estimate value is defined, its associated frame is not *FRAME_UNKNOWN.
    */
-  bool _checkFrameValid(const LocalPositionEstimate & estimate) const;
+  bool _checkFrameValid(const LocalPositionEstimate & estimate) const override;
 
   /**
    * @brief Check that if an estimate value is defined, none of its fields are NAN.
    */
-  bool _checkValuesNotNAN(const LocalPositionEstimate & estimate) const;
+  bool _checkValuesNotNAN(const LocalPositionEstimate & estimate) const override;
 
   rclcpp::Node & _node;
   rclcpp::Publisher<AuxLocalPosition>::SharedPtr _aux_local_position_pub;

@@ -12,21 +12,12 @@
 
 using namespace std::chrono_literals; // NOLINT
 
-class ExampleLocalNavigationNode : public rclcpp::Node
+class LocalNavigationTest : public px4_ros2::Context
 {
 public:
-  ExampleLocalNavigationNode()
-  : Node("example_local_navigation_node")
+  LocalNavigationTest(rclcpp::Node & node)
+  : Context(node), _node(node)
   {
-    // Enable debug output
-    auto ret =
-      rcutils_logging_set_logger_level(get_logger().get_name(), RCUTILS_LOG_SEVERITY_DEBUG);
-
-    if (ret != RCUTILS_RET_OK) {
-      RCLCPP_ERROR(get_logger(), "Error setting severity: %s", rcutils_get_error_string().str);
-      rcutils_reset_error();
-    }
-
     // Instantiate local navigation interface
     const uint8_t pose_frame = AuxLocalPosition::POSE_FRAME_NED;
     const uint8_t velocity_frame = AuxLocalPosition::VELOCITY_FRAME_NED;
@@ -36,16 +27,16 @@ public:
       velocity_frame);
 
     _timer =
-      create_wall_timer(1s, std::bind(&ExampleLocalNavigationNode::updateAuxLocalPosition, this));
+      node.create_wall_timer(1s, std::bind(&LocalNavigationTest::updateAuxLocalPosition, this));
 
-    RCLCPP_INFO(get_logger(), "example_local_navigation_node running!");
+    RCLCPP_INFO(node.get_logger(), "example_local_navigation_node running!");
   }
 
   void updateAuxLocalPosition()
   {
     px4_ros2::LocalPositionEstimate local_position_estimate {};
 
-    local_position_estimate.timestamp_sample = this->now().nanoseconds() * 1e-3;
+    local_position_estimate.timestamp_sample = _node.get_clock()->now().nanoseconds() * 1e-3;
 
     local_position_estimate.velocity_xy = Eigen::Vector2f {1.f, 2.f};
     local_position_estimate.velocity_xy_variance = Eigen::Vector2f {0.3f, 0.4f};
@@ -61,31 +52,56 @@ public:
 
     switch (retcode) {
       case NavigationInterfaceReturnCode::SUCCESS:
-        RCLCPP_DEBUG(get_logger(), "Interface returned with: Success.");
+        RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: success.");
         break;
       case NavigationInterfaceReturnCode::ESTIMATE_EMPTY:
-        RCLCPP_DEBUG(get_logger(), "Interface returned with: estimate empty.");
+        RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: estimate empty.");
         break;
       case NavigationInterfaceReturnCode::ESTIMATE_VARIANCE_INVALID:
-        RCLCPP_DEBUG(get_logger(), "Interface returned with: variance invalid.");
+        RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: variance invalid.");
         break;
       case NavigationInterfaceReturnCode::ESTIMATE_FRAME_UNKNOWN:
-        RCLCPP_DEBUG(get_logger(), "Interface returned with: estimate has unknown frame.");
+        RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: estimate has unknown frame.");
         break;
       case NavigationInterfaceReturnCode::ESTIMATE_VALUE_NAN:
-        RCLCPP_DEBUG(get_logger(), "Interface returned with: estimate contains NAN.");
+        RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: estimate contains NAN.");
         break;
       case NavigationInterfaceReturnCode::ESTIMATE_MISSING_TIMESTAMP:
-        RCLCPP_DEBUG(get_logger(), "Interface returned with: estimate missing timestamp.");
+        RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: estimate missing timestamp.");
         break;
       default:
-        RCLCPP_DEBUG(get_logger(), "Interface returned with unknown return code: %i", (int)retcode);
+        RCLCPP_DEBUG(
+          _node.get_logger(), "Interface returned with unknown return code: %i", (int)retcode);
         break;
     }
-
   }
 
 private:
   std::shared_ptr<px4_ros2::LocalNavigationInterface> _local_navigation_interface;
   rclcpp::TimerBase::SharedPtr _timer;
+  rclcpp::Node & _node;
+
+};
+
+class ExampleLocalNavigationNode : public rclcpp::Node
+{
+public:
+  ExampleLocalNavigationNode()
+  : Node("example_local_navigation_node")
+  {
+    // Enable debug output
+    auto ret =
+      rcutils_logging_set_logger_level(get_logger().get_name(), RCUTILS_LOG_SEVERITY_DEBUG);
+
+    if (ret != RCUTILS_RET_OK) {
+      RCLCPP_ERROR(get_logger(), "Error setting severity: %s", rcutils_get_error_string().str);
+      rcutils_reset_error();
+    }
+
+    _interface = std::make_unique<LocalNavigationTest>(*this);
+
+  }
+
+private:
+  std::unique_ptr<LocalNavigationTest> _interface;
 };
