@@ -73,7 +73,7 @@ bool GlobalNavigationInterface::_checkEstimateEmpty(const GlobalPositionEstimate
 
 bool GlobalNavigationInterface::_checkVarianceValid(const GlobalPositionEstimate & estimate) const
 {
-  if (estimate.lat_lon.has_value() &&
+  if ((estimate.lat_lon.has_value() || estimate.altitude_agl.has_value()) &&
     (!estimate.positional_uncertainty.has_value() || estimate.positional_uncertainty.value() <= 0))
   {
     RCLCPP_DEBUG(
