@@ -16,16 +16,26 @@ GlobalNavigationInterface::GlobalNavigationInterface(rclcpp::Node & node)
     node.create_publisher<AuxGlobalPosition>(AUX_GLOBAL_POSITION_TOPIC, 10);
 }
 
-int GlobalNavigationInterface::update(const GlobalPositionEstimate & global_position_estimate) const
+NavigationInterfaceReturnCode GlobalNavigationInterface::update(
+  const GlobalPositionEstimate & global_position_estimate) const
 {
   // Run basic sanity checks on global position estimate
   if (_checkEstimateEmpty(global_position_estimate)) {
-    RCLCPP_WARN(_node.get_logger(), "Estimate values are all empty.");
-    return static_cast<int>(NavigationInterfaceCodes::ESTIMATE_EMPTY);
+    RCLCPP_DEBUG(_node.get_logger(), "Estimate values are all empty.");
+    return NavigationInterfaceReturnCode::ESTIMATE_EMPTY;
   }
 
   if (!_checkVarianceValid(global_position_estimate)) {
-    return static_cast<int>(NavigationInterfaceCodes::ESTIMATE_VARIANCE_INVALID);
+    return NavigationInterfaceReturnCode::ESTIMATE_VARIANCE_INVALID;
+  }
+
+  if (!_checkValuesNotNAN(global_position_estimate)) {
+    return NavigationInterfaceReturnCode::ESTIMATE_VALUE_NAN;
+  }
+
+  if (global_position_estimate.timestamp_sample == 0) {
+    RCLCPP_DEBUG(_node.get_logger(), "Estimate timestamp sample is empty.");
+    return NavigationInterfaceReturnCode::ESTIMATE_MISSING_TIMESTAMP;
   }
 
   // Populate aux global position
@@ -53,7 +63,7 @@ int GlobalNavigationInterface::update(const GlobalPositionEstimate & global_posi
   aux_global_position.timestamp = _node.get_clock()->now().nanoseconds() * 1e-3;
   _aux_global_position_pub->publish(aux_global_position);
 
-  return static_cast<int>(NavigationInterfaceCodes::SUCCESS);
+  return NavigationInterfaceReturnCode::SUCCESS;
 }
 
 bool GlobalNavigationInterface::_checkEstimateEmpty(const GlobalPositionEstimate & estimate) const
@@ -66,7 +76,7 @@ bool GlobalNavigationInterface::_checkVarianceValid(const GlobalPositionEstimate
   if (estimate.lat_lon.has_value() &&
     (!estimate.positional_uncertainty.has_value() || estimate.positional_uncertainty.value() <= 0))
   {
-    RCLCPP_WARN(
+    RCLCPP_DEBUG(
       _node.get_logger(),
       "Estimate value lat_lon has an invalid variance value.");
     return false;
@@ -77,6 +87,29 @@ bool GlobalNavigationInterface::_checkVarianceValid(const GlobalPositionEstimate
 
 bool GlobalNavigationInterface::_checkFrameValid(const GlobalPositionEstimate & estimate) const
 {
+  return true;
+}
+
+bool GlobalNavigationInterface::_checkValuesNotNAN(const GlobalPositionEstimate & estimate) const
+{
+  if (estimate.lat_lon.has_value() && estimate.lat_lon.value().array().isNaN().any()) {
+    RCLCPP_DEBUG(
+      _node.get_logger(),
+      "Estimate value lat_lon is defined but contains a NAN.");
+    return false;
+  }
+  if (estimate.altitude_agl.has_value() && estimate.altitude_agl == NAN) {
+    RCLCPP_DEBUG(
+      _node.get_logger(),
+      "Estimate value altitude_agl is defined but contains a NAN.");
+    return false;
+  }
+  if (estimate.positional_uncertainty.has_value() && estimate.positional_uncertainty == NAN) {
+    RCLCPP_DEBUG(
+      _node.get_logger(),
+      "Estimate value positional_uncertainty is defined but contains a NAN.");
+    return false;
+  }
   return true;
 }
 

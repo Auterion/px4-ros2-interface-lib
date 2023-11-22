@@ -46,7 +46,32 @@ public:
     global_position_estimate.altitude_agl = 12.4f;
     global_position_estimate.positional_uncertainty = 0.4f;
 
-    _global_navigation_interface->update(global_position_estimate);
+    NavigationInterfaceReturnCode retcode;
+    retcode = _global_navigation_interface->update(global_position_estimate);
+
+    switch (retcode) {
+      case NavigationInterfaceReturnCode::SUCCESS:
+        RCLCPP_DEBUG(get_logger(), "Interface returned with: Success.");
+        break;
+      case NavigationInterfaceReturnCode::ESTIMATE_EMPTY:
+        RCLCPP_DEBUG(get_logger(), "Interface returned with: estimate empty.");
+        break;
+      case NavigationInterfaceReturnCode::ESTIMATE_VARIANCE_INVALID:
+        RCLCPP_DEBUG(get_logger(), "Interface returned with: variance invalid.");
+        break;
+      case NavigationInterfaceReturnCode::ESTIMATE_FRAME_UNKNOWN:
+        RCLCPP_DEBUG(get_logger(), "Interface returned with: estimate has unknown frame.");
+        break;
+      case NavigationInterfaceReturnCode::ESTIMATE_VALUE_NAN:
+        RCLCPP_DEBUG(get_logger(), "Interface returned with: estimate contains NAN.");
+        break;
+      case NavigationInterfaceReturnCode::ESTIMATE_MISSING_TIMESTAMP:
+        RCLCPP_DEBUG(get_logger(), "Interface returned with: estimate missing timestamp.");
+        break;
+      default:
+        RCLCPP_DEBUG(get_logger(), "Interface returned with unknown return code: %i", (int)retcode);
+        break;
+    }
   }
 
 private:

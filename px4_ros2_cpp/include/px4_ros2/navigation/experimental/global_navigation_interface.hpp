@@ -10,7 +10,7 @@
 #include <Eigen/Eigen>
 
 #include <px4_msgs/msg/aux_global_position.hpp>
-#include <px4_ros2/navigation/experimental/navigation_interface_codes.hpp>
+#include <px4_ros2/navigation/experimental/navigation_interface_common.hpp>
 
 using namespace Eigen;
 using namespace px4_msgs::msg;
@@ -41,7 +41,8 @@ public:
   /**
    * @brief Publish global position estimate to FMU.
    */
-  int update(const GlobalPositionEstimate & global_position_estimate) const;
+  NavigationInterfaceReturnCode update(const GlobalPositionEstimate & global_position_estimate)
+  const;
 
   const std::string AUX_GLOBAL_POSITION_TOPIC = "/fmu/in/aux_global_position";
 
@@ -60,6 +61,11 @@ private:
    * @brief Check that if an estimate value is defined, its associated frame is not *FRAME_UNKNOWN.
    */
   bool _checkFrameValid(const GlobalPositionEstimate & estimate) const;
+
+  /**
+   * @brief Check that if an estimate value is defined, none of its fields are NAN.
+   */
+  bool _checkValuesNotNAN(const GlobalPositionEstimate & estimate) const;
 
   rclcpp::Node & _node;
   rclcpp::Publisher<AuxGlobalPosition>::SharedPtr _aux_global_position_pub;

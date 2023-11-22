@@ -385,6 +385,3 @@ pyrightconfig.json
 build/
 install/
 log/
-
-# Vscode
-.vscode
