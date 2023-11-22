@@ -207,14 +207,14 @@ bool LocalNavigationInterface::_checkFrameValid(const LocalPositionEstimate & es
 
 bool LocalNavigationInterface::_checkValuesNotNAN(const LocalPositionEstimate & estimate) const
 {
-  if (estimate.position_xy.has_value() && estimate.position_xy.value().array().isNaN().any()) {
+  if (estimate.position_xy.has_value() && estimate.position_xy.value().hasNaN()) {
     RCLCPP_DEBUG(
       _node.get_logger(),
       "Estimate value position_xy is defined but contains a NAN.");
     return false;
   }
   if (estimate.position_xy_variance.has_value() &&
-    estimate.position_xy_variance.value().array().isNaN().any())
+    estimate.position_xy_variance.value().hasNaN())
   {
     RCLCPP_DEBUG(
       _node.get_logger(),
@@ -233,14 +233,14 @@ bool LocalNavigationInterface::_checkValuesNotNAN(const LocalPositionEstimate & 
       "Estimate value position_z_variance is defined but contains a NAN.");
     return false;
   }
-  if (estimate.velocity_xy.has_value() && estimate.velocity_xy.value().array().isNaN().any()) {
+  if (estimate.velocity_xy.has_value() && estimate.velocity_xy.value().hasNaN()) {
     RCLCPP_DEBUG(
       _node.get_logger(),
       "Estimate value velocity_xy is defined but contains a NAN.");
     return false;
   }
   if (estimate.velocity_xy_variance.has_value() &&
-    estimate.velocity_xy_variance.value().array().isNaN().any())
+    estimate.velocity_xy_variance.value().hasNaN())
   {
     RCLCPP_DEBUG(
       _node.get_logger(),

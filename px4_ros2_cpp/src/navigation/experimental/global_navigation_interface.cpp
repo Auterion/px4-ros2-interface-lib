@@ -92,7 +92,7 @@ bool GlobalNavigationInterface::_checkFrameValid(const GlobalPositionEstimate & 
 
 bool GlobalNavigationInterface::_checkValuesNotNAN(const GlobalPositionEstimate & estimate) const
 {
-  if (estimate.lat_lon.has_value() && estimate.lat_lon.value().array().isNaN().any()) {
+  if (estimate.lat_lon.has_value() && estimate.lat_lon.value().hasNaN()) {
     RCLCPP_DEBUG(
       _node.get_logger(),
       "Estimate value lat_lon is defined but contains a NAN.");
