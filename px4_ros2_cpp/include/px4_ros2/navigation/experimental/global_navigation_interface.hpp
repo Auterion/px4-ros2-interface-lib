@@ -21,7 +21,7 @@ namespace px4_ros2
 
 struct GlobalPositionEstimate
 {
-  uint64_t timestamp_sample {};
+  rclcpp::Time timestamp_sample {};
 
   // Lat lon
   std::optional<Vector2f> lat_lon {std::nullopt};

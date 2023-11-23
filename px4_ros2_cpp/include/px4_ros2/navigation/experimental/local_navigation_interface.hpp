@@ -21,7 +21,7 @@ namespace px4_ros2
 
 struct LocalPositionEstimate
 {
-  uint64_t timestamp_sample {};
+  rclcpp::Time timestamp_sample {};
 
   // Position
   std::optional<Vector2f> position_xy {std::nullopt};

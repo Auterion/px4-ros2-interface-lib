@@ -34,7 +34,7 @@ NavigationInterfaceReturnCode GlobalNavigationInterface::update(
     return NavigationInterfaceReturnCode::ESTIMATE_VALUE_NAN;
   }
 
-  if (global_position_estimate.timestamp_sample == 0) {
+  if (global_position_estimate.timestamp_sample.nanoseconds() == 0) {
     RCLCPP_DEBUG(_node.get_logger(), "Estimate timestamp sample is empty.");
     return NavigationInterfaceReturnCode::ESTIMATE_MISSING_TIMESTAMP;
   }
@@ -42,7 +42,8 @@ NavigationInterfaceReturnCode GlobalNavigationInterface::update(
   // Populate aux global position
   px4_msgs::msg::AuxGlobalPosition aux_global_position;
 
-  aux_global_position.timestamp_sample = global_position_estimate.timestamp_sample;
+  aux_global_position.timestamp_sample = global_position_estimate.timestamp_sample.nanoseconds() *
+    1e-3;
 
   // Lat lon
   const Vector2f lat_lon = global_position_estimate.lat_lon.value_or(

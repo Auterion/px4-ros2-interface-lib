@@ -36,7 +36,7 @@ public:
   {
     px4_ros2::LocalPositionEstimate local_position_estimate {};
 
-    local_position_estimate.timestamp_sample = _node.get_clock()->now().nanoseconds() * 1e-3;
+    local_position_estimate.timestamp_sample = _node.get_clock()->now();
 
     local_position_estimate.velocity_xy = Eigen::Vector2f {1.f, 2.f};
     local_position_estimate.velocity_xy_variance = Eigen::Vector2f {0.3f, 0.4f};

@@ -32,7 +32,7 @@ public:
   {
     px4_ros2::GlobalPositionEstimate global_position_estimate {};
 
-    global_position_estimate.timestamp_sample = _node.get_clock()->now().nanoseconds() * 1e-3;
+    global_position_estimate.timestamp_sample = _node.get_clock()->now();
 
     global_position_estimate.lat_lon = Eigen::Vector2f {12.34321, 23.45432};
     global_position_estimate.altitude_agl = 12.4f;

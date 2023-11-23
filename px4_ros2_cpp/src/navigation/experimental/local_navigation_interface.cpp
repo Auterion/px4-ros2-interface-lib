@@ -65,7 +65,7 @@ NavigationInterfaceReturnCode LocalNavigationInterface::update(
     return NavigationInterfaceReturnCode::ESTIMATE_VALUE_NAN;
   }
 
-  if (local_position_estimate.timestamp_sample == 0) {
+  if (local_position_estimate.timestamp_sample.nanoseconds() == 0) {
     RCLCPP_DEBUG(_node.get_logger(), "Estimate timestamp sample is empty.");
     return NavigationInterfaceReturnCode::ESTIMATE_MISSING_TIMESTAMP;
   }
@@ -73,7 +73,8 @@ NavigationInterfaceReturnCode LocalNavigationInterface::update(
   // Populate aux local position message
   AuxLocalPosition aux_local_position;
 
-  aux_local_position.timestamp_sample = local_position_estimate.timestamp_sample;
+  aux_local_position.timestamp_sample = local_position_estimate.timestamp_sample.nanoseconds() *
+    1e-3;
 
   // Position
   aux_local_position.pose_frame = _pose_frame;
