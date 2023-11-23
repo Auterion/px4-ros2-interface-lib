@@ -24,11 +24,11 @@ public:
   virtual NavigationInterfaceReturnCode update(const EstimateType & global_position_estimate) const
   = 0;
 
-private:
-  virtual bool _checkEstimateEmpty(const EstimateType & estimate) const = 0;
-  virtual bool _checkVarianceValid(const EstimateType & estimate) const = 0;
-  virtual bool _checkFrameValid(const EstimateType & estimate) const = 0;
-  virtual bool _checkValuesNotNAN(const EstimateType & estimate) const = 0;
+protected:
+  virtual bool _isEstimateNonEmpty(const EstimateType & estimate) const = 0;
+  virtual bool _isVarianceValid(const EstimateType & estimate) const = 0;
+  virtual bool _isFrameValid(const EstimateType & estimate) const = 0;
+  virtual bool _isValueNotNAN(const EstimateType & estimate) const = 0;
 };
 
 } // namespace px4_ros2

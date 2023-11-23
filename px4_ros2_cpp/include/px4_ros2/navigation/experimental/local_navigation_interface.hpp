@@ -60,22 +60,22 @@ private:
   /**
    * @brief Check that at least one estimate value is defined.
    */
-  bool _checkEstimateEmpty(const LocalPositionEstimate & estimate) const override;
+  bool _isEstimateNonEmpty(const LocalPositionEstimate & estimate) const override;
 
   /**
    * @brief Check that if an estimate value is defined, its variance is also defined and strictly greater than zero.
    */
-  bool _checkVarianceValid(const LocalPositionEstimate & estimate) const override;
+  bool _isVarianceValid(const LocalPositionEstimate & estimate) const override;
 
   /**
    * @brief Check that if an estimate value is defined, its associated frame is not *FRAME_UNKNOWN.
    */
-  bool _checkFrameValid(const LocalPositionEstimate & estimate) const override;
+  bool _isFrameValid(const LocalPositionEstimate & estimate) const override;
 
   /**
    * @brief Check that if an estimate value is defined, none of its fields are NAN.
    */
-  bool _checkValuesNotNAN(const LocalPositionEstimate & estimate) const override;
+  bool _isValueNotNAN(const LocalPositionEstimate & estimate) const override;
 
   rclcpp::Node & _node;
   rclcpp::Publisher<AuxLocalPosition>::SharedPtr _aux_local_position_pub;

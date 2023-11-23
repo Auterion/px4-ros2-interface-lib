@@ -4,7 +4,7 @@
   <name>example_global_navigation_cpp</name>
   <version>0.0.1</version>
   <description>Example navigation: global navigation</description>
-  <maintainer email="beat-kueng@gmx.net">Beat Kueng</maintainer>
+  <maintainer email="guillaume.william1@hotmail.com">Guillaume Laine</maintainer>
   <license>BSD-3-Clause</license>
 
   <buildtool_depend>eigen3_cmake_module</buildtool_depend>

@@ -48,20 +48,20 @@ NavigationInterfaceReturnCode LocalNavigationInterface::update(
   const LocalPositionEstimate & local_position_estimate) const
 {
   // Run basic sanity checks on local position estimate
-  if (_checkEstimateEmpty(local_position_estimate)) {
+  if (!_isEstimateNonEmpty(local_position_estimate)) {
     RCLCPP_DEBUG(_node.get_logger(), "Estimate values are all empty.");
     return NavigationInterfaceReturnCode::ESTIMATE_EMPTY;
   }
 
-  if (!_checkVarianceValid(local_position_estimate)) {
+  if (!_isVarianceValid(local_position_estimate)) {
     return NavigationInterfaceReturnCode::ESTIMATE_VARIANCE_INVALID;
   }
 
-  if (!_checkFrameValid(local_position_estimate)) {
+  if (!_isFrameValid(local_position_estimate)) {
     return NavigationInterfaceReturnCode::ESTIMATE_FRAME_UNKNOWN;
   }
 
-  if (!_checkValuesNotNAN(local_position_estimate)) {
+  if (!_isValueNotNAN(local_position_estimate)) {
     return NavigationInterfaceReturnCode::ESTIMATE_VALUE_NAN;
   }
 
@@ -131,16 +131,16 @@ NavigationInterfaceReturnCode LocalNavigationInterface::update(
 
 }
 
-bool LocalNavigationInterface::_checkEstimateEmpty(const LocalPositionEstimate & estimate) const
+bool LocalNavigationInterface::_isEstimateNonEmpty(const LocalPositionEstimate & estimate) const
 {
-  return !estimate.position_xy.has_value() &&
-         !estimate.position_z.has_value() &&
-         !estimate.velocity_xy.has_value() &&
-         !estimate.velocity_z.has_value() &&
-         !estimate.attitude_quaternion.has_value();
+  return estimate.position_xy.has_value() ||
+         estimate.position_z.has_value() ||
+         estimate.velocity_xy.has_value() ||
+         estimate.velocity_z.has_value() ||
+         estimate.attitude_quaternion.has_value();
 }
 
-bool LocalNavigationInterface::_checkVarianceValid(const LocalPositionEstimate & estimate) const
+bool LocalNavigationInterface::_isVarianceValid(const LocalPositionEstimate & estimate) const
 {
   if (estimate.position_xy.has_value() &&
     (!estimate.position_xy_variance.has_value() ||
@@ -184,7 +184,7 @@ bool LocalNavigationInterface::_checkVarianceValid(const LocalPositionEstimate &
   return true;
 }
 
-bool LocalNavigationInterface::_checkFrameValid(const LocalPositionEstimate & estimate) const
+bool LocalNavigationInterface::_isFrameValid(const LocalPositionEstimate & estimate) const
 {
   if ((estimate.position_xy.has_value() || estimate.position_z.has_value()) &&
     _pose_frame == AuxLocalPosition::POSE_FRAME_UNKNOWN)
@@ -207,7 +207,7 @@ bool LocalNavigationInterface::_checkFrameValid(const LocalPositionEstimate & es
   return true;
 }
 
-bool LocalNavigationInterface::_checkValuesNotNAN(const LocalPositionEstimate & estimate) const
+bool LocalNavigationInterface::_isValueNotNAN(const LocalPositionEstimate & estimate) const
 {
   if (estimate.position_xy.has_value() && estimate.position_xy.value().hasNaN()) {
     RCLCPP_DEBUG(

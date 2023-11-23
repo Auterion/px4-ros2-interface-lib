@@ -51,22 +51,22 @@ private:
   /**
    * @brief Check that at least one estimate value is defined.
    */
-  bool _checkEstimateEmpty(const GlobalPositionEstimate & estimate) const override;
+  bool _isEstimateNonEmpty(const GlobalPositionEstimate & estimate) const override;
 
   /**
    * @brief Check that if an estimate value is defined, its variance is also defined and strictly greater than zero.
    */
-  bool _checkVarianceValid(const GlobalPositionEstimate & estimate) const override;
+  bool _isVarianceValid(const GlobalPositionEstimate & estimate) const override;
 
   /**
    * @brief Check that if an estimate value is defined, its associated frame is not *FRAME_UNKNOWN.
    */
-  bool _checkFrameValid(const GlobalPositionEstimate & estimate) const override;
+  bool _isFrameValid(const GlobalPositionEstimate & estimate) const override;
 
   /**
    * @brief Check that if an estimate value is defined, none of its fields are NAN.
    */
-  bool _checkValuesNotNAN(const GlobalPositionEstimate & estimate) const override;
+  bool _isValueNotNAN(const GlobalPositionEstimate & estimate) const override;
 
   rclcpp::Node & _node;
   rclcpp::Publisher<AuxGlobalPosition>::SharedPtr _aux_global_position_pub;
