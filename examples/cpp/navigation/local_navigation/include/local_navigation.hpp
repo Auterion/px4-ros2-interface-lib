@@ -12,20 +12,14 @@
 
 using namespace std::chrono_literals; // NOLINT
 
-class LocalNavigationTest : public px4_ros2::Context
+class LocalNavigationTest : public px4_ros2::LocalNavigationInterface
 {
 public:
-  LocalNavigationTest(rclcpp::Node & node)
-  : Context(node), _node(node)
+  LocalNavigationTest(
+    rclcpp::Node & node, const uint8_t pose_frame,
+    const uint8_t velocity_frame)
+  : LocalNavigationInterface(node, pose_frame, velocity_frame)
   {
-    // Instantiate local navigation interface
-    const uint8_t pose_frame = AuxLocalPosition::POSE_FRAME_NED;
-    const uint8_t velocity_frame = AuxLocalPosition::VELOCITY_FRAME_NED;
-    _local_navigation_interface = std::make_shared<px4_ros2::LocalNavigationInterface>(
-      *this,
-      pose_frame,
-      velocity_frame);
-
     _timer =
       node.create_wall_timer(1s, std::bind(&LocalNavigationTest::updateAuxLocalPosition, this));
 
@@ -48,16 +42,13 @@ public:
     local_position_estimate.attitude_variance = Eigen::Vector3f {0.2, 0.1, 0.05};
 
     px4_ros2::NavigationInterfaceReturnCode retcode;
-    retcode = _local_navigation_interface->update(local_position_estimate);
+    retcode = update(local_position_estimate);
 
     RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: %s.", resultToString(retcode));
   }
 
 private:
-  std::shared_ptr<px4_ros2::LocalNavigationInterface> _local_navigation_interface;
   rclcpp::TimerBase::SharedPtr _timer;
-  rclcpp::Node & _node;
-
 };
 
 class ExampleLocalNavigationNode : public rclcpp::Node
@@ -75,7 +66,9 @@ public:
       rcutils_reset_error();
     }
 
-    _interface = std::make_unique<LocalNavigationTest>(*this);
+    const uint8_t pose_frame = AuxLocalPosition::POSE_FRAME_NED;
+    const uint8_t velocity_frame = AuxLocalPosition::VELOCITY_FRAME_NED;
+    _interface = std::make_unique<LocalNavigationTest>(*this, pose_frame, velocity_frame);
 
   }
 

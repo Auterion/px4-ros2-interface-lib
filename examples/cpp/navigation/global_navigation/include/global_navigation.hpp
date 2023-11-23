@@ -13,15 +13,12 @@
 
 using namespace std::chrono_literals; // NOLINT
 
-class GlobalNavigationTest : public px4_ros2::Context
+class GlobalNavigationTest : public px4_ros2::GlobalNavigationInterface
 {
 public:
   explicit GlobalNavigationTest(rclcpp::Node & node)
-  : Context(node), _node(node)
+  : GlobalNavigationInterface(node)
   {
-    // Instantiate global navigation interface
-    _global_navigation_interface = std::make_shared<px4_ros2::GlobalNavigationInterface>(*this);
-
     _timer =
       node.create_wall_timer(1s, std::bind(&GlobalNavigationTest::updateAuxGlobalPosition, this));
 
@@ -39,15 +36,13 @@ public:
     global_position_estimate.positional_uncertainty = 0.4f;
 
     px4_ros2::NavigationInterfaceReturnCode retcode;
-    retcode = _global_navigation_interface->update(global_position_estimate);
+    retcode = update(global_position_estimate);
 
     RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: %s.", resultToString(retcode));
   }
 
 private:
-  std::shared_ptr<px4_ros2::GlobalNavigationInterface> _global_navigation_interface;
   rclcpp::TimerBase::SharedPtr _timer;
-  rclcpp::Node & _node;
 };
 
 class ExampleGlobalNavigationNode : public rclcpp::Node

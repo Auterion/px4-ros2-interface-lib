@@ -35,7 +35,7 @@ struct GlobalPositionEstimate
 class GlobalNavigationInterface : public NavigationInterfaceBase<GlobalPositionEstimate>
 {
 public:
-  explicit GlobalNavigationInterface(Context & context);
+  explicit GlobalNavigationInterface(rclcpp::Node & node);
   ~GlobalNavigationInterface() override = default;
 
   /**

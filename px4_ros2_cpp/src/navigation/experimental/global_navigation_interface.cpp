@@ -9,12 +9,12 @@
 namespace px4_ros2
 {
 
-GlobalNavigationInterface::GlobalNavigationInterface(Context & context)
-: NavigationInterfaceBase(context)
+GlobalNavigationInterface::GlobalNavigationInterface(rclcpp::Node & node)
+: NavigationInterfaceBase(node)
 {
   _aux_global_position_pub =
-    context.node().create_publisher<AuxGlobalPosition>(
-    context.topicNamespacePrefix() + AUX_GLOBAL_POSITION_TOPIC, 10);
+    node.create_publisher<AuxGlobalPosition>(
+    topicNamespacePrefix() + AUX_GLOBAL_POSITION_TOPIC, 10);
 }
 
 NavigationInterfaceReturnCode GlobalNavigationInterface::update(

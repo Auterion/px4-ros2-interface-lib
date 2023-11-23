@@ -43,7 +43,7 @@ class LocalNavigationInterface : public NavigationInterfaceBase<LocalPositionEst
 {
 public:
   explicit LocalNavigationInterface(
-    Context & context, const uint8_t pose_frame,
+    rclcpp::Node & node, const uint8_t pose_frame,
     const uint8_t velocity_frame);
   ~LocalNavigationInterface() override = default;
 

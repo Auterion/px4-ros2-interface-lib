@@ -43,11 +43,11 @@ constexpr inline const char * resultToString(NavigationInterfaceReturnCode resul
 }
 
 template<typename EstimateType>
-class NavigationInterfaceBase
+class NavigationInterfaceBase : public Context
 {
 public:
-  explicit NavigationInterfaceBase(Context & context)
-  : _node(context.node()) {}
+  explicit NavigationInterfaceBase(rclcpp::Node & node)
+  : Context(node, ""), _node(node) {}
   virtual ~NavigationInterfaceBase() = default;
 
   /**

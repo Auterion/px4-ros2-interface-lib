@@ -10,9 +10,9 @@ namespace px4_ros2
 {
 
 LocalNavigationInterface::LocalNavigationInterface(
-  Context & context, const uint8_t pose_frame,
+  rclcpp::Node & node, const uint8_t pose_frame,
   const uint8_t velocity_frame)
-: NavigationInterfaceBase(context)
+: NavigationInterfaceBase(node)
 {
   // Check that selected pose and velocity reference frames are valid
   auto it_pose_frame = std::find(
@@ -20,7 +20,7 @@ LocalNavigationInterface::LocalNavigationInterface(
       _available_pose_frames), pose_frame);
   if (it_pose_frame == std::end(_available_pose_frames)) {
     RCLCPP_WARN(
-      context.node().get_logger(), "Failed to initialize LocalNavigationInterface: invalid pose reference frame %i. Setting pose reference frame to POSE_FRAME_UNKNOWN.",
+      node.get_logger(), "Failed to initialize LocalNavigationInterface: invalid pose reference frame %i. Setting pose reference frame to POSE_FRAME_UNKNOWN.",
       pose_frame);
     _pose_frame = AuxLocalPosition::POSE_FRAME_UNKNOWN;
   } else {
@@ -32,16 +32,15 @@ LocalNavigationInterface::LocalNavigationInterface(
       _available_velocity_frames), velocity_frame);
   if (it_vel_frame == std::end(_available_velocity_frames)) {
     RCLCPP_WARN(
-      context.node().get_logger(), "Failed to initialize LocalNavigationInterface: invalid velocity reference frame %i. Setting velocity reference frame to VELOCITY_FRAME_UNKNOWN.",
+      node.get_logger(), "Failed to initialize LocalNavigationInterface: invalid velocity reference frame %i. Setting velocity reference frame to VELOCITY_FRAME_UNKNOWN.",
       velocity_frame);
     _velocity_frame = AuxLocalPosition::VELOCITY_FRAME_UNKNOWN;
   } else {
     _velocity_frame = velocity_frame;
   }
 
-  _aux_local_position_pub = context.node().create_publisher<AuxLocalPosition>(
-    AUX_LOCAL_POSITION_TOPIC, 10);
-
+  _aux_local_position_pub = node.create_publisher<AuxLocalPosition>(
+    topicNamespacePrefix() + AUX_LOCAL_POSITION_TOPIC, 10);
 }
 
 NavigationInterfaceReturnCode LocalNavigationInterface::update(
