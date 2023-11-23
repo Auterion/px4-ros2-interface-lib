@@ -77,7 +77,6 @@ private:
    */
   bool _isValueNotNAN(const LocalPositionEstimate & estimate) const override;
 
-  rclcpp::Node & _node;
   rclcpp::Publisher<AuxLocalPosition>::SharedPtr _aux_local_position_pub;
 
   uint8_t _pose_frame;

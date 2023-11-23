@@ -10,7 +10,7 @@ namespace px4_ros2
 {
 
 GlobalNavigationInterface::GlobalNavigationInterface(Context & context)
-: _node(context.node())
+: NavigationInterfaceBase(context)
 {
   _aux_global_position_pub =
     context.node().create_publisher<AuxGlobalPosition>(

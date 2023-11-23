@@ -15,7 +15,8 @@ template<typename EstimateType>
 class NavigationInterfaceBase
 {
 public:
-  explicit NavigationInterfaceBase() = default;
+  explicit NavigationInterfaceBase(Context & context)
+  : _node(context.node()) {}
   virtual ~NavigationInterfaceBase() = default;
 
   /**
@@ -29,6 +30,8 @@ protected:
   virtual bool _isVarianceValid(const EstimateType & estimate) const = 0;
   virtual bool _isFrameValid(const EstimateType & estimate) const = 0;
   virtual bool _isValueNotNAN(const EstimateType & estimate) const = 0;
+
+  rclcpp::Node & _node;
 };
 
 } // namespace px4_ros2

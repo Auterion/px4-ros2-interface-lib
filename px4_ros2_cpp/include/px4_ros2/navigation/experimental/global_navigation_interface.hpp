@@ -68,7 +68,6 @@ private:
    */
   bool _isValueNotNAN(const GlobalPositionEstimate & estimate) const override;
 
-  rclcpp::Node & _node;
   rclcpp::Publisher<AuxGlobalPosition>::SharedPtr _aux_global_position_pub;
 
   // uint8_t _altitude_frame;

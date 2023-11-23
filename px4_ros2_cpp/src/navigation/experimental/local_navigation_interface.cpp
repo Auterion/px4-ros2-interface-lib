@@ -12,7 +12,7 @@ namespace px4_ros2
 LocalNavigationInterface::LocalNavigationInterface(
   Context & context, const uint8_t pose_frame,
   const uint8_t velocity_frame)
-: _node(context.node())
+: NavigationInterfaceBase(context)
 {
   // Check that selected pose and velocity reference frames are valid
   auto it_pose_frame = std::find(
