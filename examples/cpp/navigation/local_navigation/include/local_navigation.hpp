@@ -47,33 +47,10 @@ public:
     local_position_estimate.attitude_quaternion = Eigen::Quaternionf {0.1, -0.2, 0.3, 0.25};
     local_position_estimate.attitude_variance = Eigen::Vector3f {0.2, 0.1, 0.05};
 
-    NavigationInterfaceReturnCode retcode;
+    px4_ros2::NavigationInterfaceReturnCode retcode;
     retcode = _local_navigation_interface->update(local_position_estimate);
 
-    switch (retcode) {
-      case NavigationInterfaceReturnCode::SUCCESS:
-        RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: success.");
-        break;
-      case NavigationInterfaceReturnCode::ESTIMATE_EMPTY:
-        RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: estimate empty.");
-        break;
-      case NavigationInterfaceReturnCode::ESTIMATE_VARIANCE_INVALID:
-        RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: variance invalid.");
-        break;
-      case NavigationInterfaceReturnCode::ESTIMATE_FRAME_UNKNOWN:
-        RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: estimate has unknown frame.");
-        break;
-      case NavigationInterfaceReturnCode::ESTIMATE_VALUE_NAN:
-        RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: estimate contains NAN.");
-        break;
-      case NavigationInterfaceReturnCode::ESTIMATE_MISSING_TIMESTAMP:
-        RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: estimate missing timestamp.");
-        break;
-      default:
-        RCLCPP_DEBUG(
-          _node.get_logger(), "Interface returned with unknown return code: %i", (int)retcode);
-        break;
-    }
+    RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: %s.", resultToString(retcode));
   }
 
 private:

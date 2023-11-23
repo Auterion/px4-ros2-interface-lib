@@ -11,7 +11,6 @@
 
 #include <px4_msgs/msg/vehicle_odometry.hpp>
 #include <px4_ros2/navigation/experimental/navigation_interface_base.hpp>
-#include <px4_ros2/navigation/experimental/navigation_interface_common.hpp>
 
 using namespace Eigen;
 using AuxLocalPosition = px4_msgs::msg::VehicleOdometry;
