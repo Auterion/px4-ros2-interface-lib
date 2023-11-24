@@ -13,7 +13,7 @@ GlobalNavigationInterface::GlobalNavigationInterface(rclcpp::Node & node)
 : NavigationInterfaceBase(node)
 {
   _aux_global_position_pub =
-    node.create_publisher<AuxGlobalPosition>(
+    node.create_publisher<VehicleGlobalPosition>(
     topicNamespacePrefix() + AUX_GLOBAL_POSITION_TOPIC, 10);
 }
 
@@ -40,7 +40,7 @@ NavigationInterfaceReturnCode GlobalNavigationInterface::update(
   }
 
   // Populate aux global position
-  px4_msgs::msg::AuxGlobalPosition aux_global_position;
+  px4_msgs::msg::VehicleGlobalPosition aux_global_position;
 
   aux_global_position.timestamp_sample = global_position_estimate.timestamp_sample.nanoseconds() *
     1e-3;
@@ -49,17 +49,15 @@ NavigationInterfaceReturnCode GlobalNavigationInterface::update(
   const Vector2d lat_lon = global_position_estimate.lat_lon.value_or(
     Vector2d{NAN,
       NAN});
-  aux_global_position.latitude = lat_lon[0];
-  aux_global_position.longitude = lat_lon[1];
-  aux_global_position.positional_uncertainty =
-    global_position_estimate.positional_uncertainty.value_or(
+  aux_global_position.lat = lat_lon[0];
+  aux_global_position.lon = lat_lon[1];
+  aux_global_position.eph =
+    global_position_estimate.lat_lon_stddev.value_or(
     NAN);
 
   // Altitude
-  aux_global_position.altitude_agl = global_position_estimate.altitude_agl.value_or(NAN);
-
-  // Valid flag
-  aux_global_position.valid = true;
+  aux_global_position.alt = global_position_estimate.altitude_msl.value_or(NAN);
+  aux_global_position.epv = global_position_estimate.altitude_stddev.value_or(NAN);
 
   // Publish
   aux_global_position.timestamp = _node.get_clock()->now().nanoseconds() * 1e-3;
@@ -70,17 +68,25 @@ NavigationInterfaceReturnCode GlobalNavigationInterface::update(
 
 bool GlobalNavigationInterface::_isEstimateNonEmpty(const GlobalPositionEstimate & estimate) const
 {
-  return estimate.lat_lon.has_value() || estimate.altitude_agl.has_value();
+  return estimate.lat_lon.has_value() || estimate.altitude_msl.has_value();
 }
 
 bool GlobalNavigationInterface::_isVarianceValid(const GlobalPositionEstimate & estimate) const
 {
-  if ((estimate.lat_lon.has_value() || estimate.altitude_agl.has_value()) &&
-    (!estimate.positional_uncertainty.has_value() || estimate.positional_uncertainty.value() <= 0))
+  if (estimate.lat_lon.has_value() &&
+    (!estimate.lat_lon_stddev.has_value() || estimate.lat_lon_stddev.value() <= 0))
   {
     RCLCPP_DEBUG(
       _node.get_logger(),
-      "Estimated position has an invalid variance value.");
+      "Estimate lat_lon has an invalid standard deviation value.");
+    return false;
+  }
+  if (estimate.altitude_msl.has_value() &&
+    (!estimate.altitude_stddev.has_value() || estimate.altitude_stddev.value() <= 0))
+  {
+    RCLCPP_DEBUG(
+      _node.get_logger(),
+      "Estimate altitude_msl has an invalid standard deviation value.");
     return false;
   }
 
@@ -100,16 +106,22 @@ bool GlobalNavigationInterface::_isValueNotNAN(const GlobalPositionEstimate & es
       "Estimate value lat_lon is defined but contains a NAN.");
     return false;
   }
-  if (estimate.altitude_agl.has_value() && estimate.altitude_agl == NAN) {
+  if (estimate.lat_lon_stddev.has_value() && estimate.lat_lon_stddev == NAN) {
     RCLCPP_DEBUG(
       _node.get_logger(),
-      "Estimate value altitude_agl is defined but contains a NAN.");
+      "Estimate value lat_lon_stddev is defined but contains a NAN.");
     return false;
   }
-  if (estimate.positional_uncertainty.has_value() && estimate.positional_uncertainty == NAN) {
+  if (estimate.altitude_msl.has_value() && estimate.altitude_msl == NAN) {
     RCLCPP_DEBUG(
       _node.get_logger(),
-      "Estimate value positional_uncertainty is defined but contains a NAN.");
+      "Estimate value altitude_msl is defined but contains a NAN.");
+    return false;
+  }
+  if (estimate.altitude_stddev.has_value() && estimate.altitude_stddev == NAN) {
+    RCLCPP_DEBUG(
+      _node.get_logger(),
+      "Estimate value altitude_stddev is defined but contains a NAN.");
     return false;
   }
   return true;

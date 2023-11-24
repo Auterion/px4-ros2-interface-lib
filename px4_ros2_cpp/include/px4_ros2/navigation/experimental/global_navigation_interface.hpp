@@ -9,7 +9,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <Eigen/Eigen>
 
-#include <px4_msgs/msg/aux_global_position.hpp>
+#include <px4_msgs/msg/vehicle_global_position.hpp>
 #include <px4_ros2/navigation/experimental/navigation_interface_base.hpp>
 
 using namespace Eigen;
@@ -24,12 +24,13 @@ struct GlobalPositionEstimate
 
   // Lat lon
   std::optional<Vector2d> lat_lon {std::nullopt};
+  // Standard deviation of horizontal position error (metres)
+  std::optional<float> lat_lon_stddev {std::nullopt};
 
   // Altitude (AGL frame)
-  std::optional<float> altitude_agl {std::nullopt};
-
-  // Lat lon alt standard deviation
-  std::optional<float> positional_uncertainty {std::nullopt};
+  std::optional<float> altitude_msl {std::nullopt};
+  // Standard deviation of vertical position error (meters)
+  std::optional<float> altitude_stddev {std::nullopt};
 };
 
 class GlobalNavigationInterface : public NavigationInterfaceBase<GlobalPositionEstimate>
@@ -67,7 +68,7 @@ private:
    */
   bool _isValueNotNAN(const GlobalPositionEstimate & estimate) const override;
 
-  rclcpp::Publisher<AuxGlobalPosition>::SharedPtr _aux_global_position_pub;
+  rclcpp::Publisher<VehicleGlobalPosition>::SharedPtr _aux_global_position_pub;
 
   // uint8_t _altitude_frame;
 };
