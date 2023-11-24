@@ -35,8 +35,7 @@ public:
     global_position_estimate.altitude_agl = 12.4f;
     global_position_estimate.positional_uncertainty = 0.4f;
 
-    px4_ros2::NavigationInterfaceReturnCode retcode;
-    retcode = update(global_position_estimate);
+    px4_ros2::NavigationInterfaceReturnCode retcode = update(global_position_estimate);
 
     RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: %s.", resultToString(retcode));
   }
