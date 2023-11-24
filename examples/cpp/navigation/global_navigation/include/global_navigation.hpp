@@ -31,9 +31,9 @@ public:
 
     global_position_estimate.timestamp_sample = _node.get_clock()->now();
 
-    global_position_estimate.lat_lon = Eigen::Vector2f {12.34321, 23.45432};
-    global_position_estimate.altitude_agl = 12.4f;
-    global_position_estimate.positional_uncertainty = 0.4f;
+    global_position_estimate.lat_lon = Eigen::Vector2d {12.34321, 23.45432};
+    global_position_estimate.altitude_agl = 12.4;
+    global_position_estimate.positional_uncertainty = 0.4;
 
     px4_ros2::NavigationInterfaceReturnCode retcode = update(global_position_estimate);
 

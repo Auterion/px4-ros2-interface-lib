@@ -23,7 +23,7 @@ struct GlobalPositionEstimate
   rclcpp::Time timestamp_sample {};
 
   // Lat lon
-  std::optional<Vector2f> lat_lon {std::nullopt};
+  std::optional<Vector2d> lat_lon {std::nullopt};
 
   // Altitude (AGL frame)
   std::optional<float> altitude_agl {std::nullopt};

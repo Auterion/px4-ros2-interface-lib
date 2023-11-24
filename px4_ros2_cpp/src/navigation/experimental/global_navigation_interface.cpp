@@ -46,8 +46,8 @@ NavigationInterfaceReturnCode GlobalNavigationInterface::update(
     1e-3;
 
   // Lat lon
-  const Vector2f lat_lon = global_position_estimate.lat_lon.value_or(
-    Vector2f{NAN,
+  const Vector2d lat_lon = global_position_estimate.lat_lon.value_or(
+    Vector2d{NAN,
       NAN});
   aux_global_position.latitude = lat_lon[0];
   aux_global_position.longitude = lat_lon[1];
