@@ -13,6 +13,7 @@ using namespace std::chrono_literals; // NOLINT
   {"/fmu/in/actuator_motors"}, \
   {"/fmu/in/actuator_servos"}, \
   {"/fmu/in/arming_check_reply"}, \
+  {"/fmu/in/aux_global_position"}, \
   {"/fmu/in/config_control_setpoints", "VehicleControlMode"}, \
   {"/fmu/in/config_overrides_request", "ConfigOverrides"}, \
   {"/fmu/in/mode_completed"}, \
@@ -23,6 +24,7 @@ using namespace std::chrono_literals; // NOLINT
   {"/fmu/in/vehicle_command"}, \
   {"/fmu/in/vehicle_command_mode_executor", "VehicleCommand"}, \
   {"/fmu/in/vehicle_rates_setpoint"}, \
+  {"/fmu/in/vehicle_visual_odometry"}, \
   {"/fmu/out/arming_check_request"}, \
   {"/fmu/out/manual_control_setpoint"}, \
   {"/fmu/out/mode_completed"}, \
