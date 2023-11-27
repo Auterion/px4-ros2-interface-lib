@@ -12,7 +12,7 @@
 #include <px4_msgs/msg/vehicle_odometry.hpp>
 #include <px4_ros2/navigation/experimental/navigation_interface_base.hpp>
 
-using namespace Eigen;
+using Eigen::Vector2f, Eigen::Quaternionf, Eigen::Vector3f;
 using AuxLocalPosition = px4_msgs::msg::VehicleOdometry;
 
 namespace px4_ros2
@@ -43,8 +43,8 @@ class LocalNavigationInterface : public NavigationInterfaceBase<LocalPositionEst
 {
 public:
   explicit LocalNavigationInterface(
-    rclcpp::Node & node, const uint8_t pose_frame,
-    const uint8_t velocity_frame);
+    rclcpp::Node & node, uint8_t pose_frame,
+    uint8_t velocity_frame);
   ~LocalNavigationInterface() override = default;
 
   /**
@@ -57,35 +57,35 @@ private:
   /**
    * @brief Check that at least one estimate value is defined.
    */
-  bool _isEstimateNonEmpty(const LocalPositionEstimate & estimate) const override;
+  bool isEstimateNonEmpty(const LocalPositionEstimate & estimate) const override;
 
   /**
    * @brief Check that if an estimate value is defined, its variance is also defined and strictly greater than zero.
    */
-  bool _isVarianceValid(const LocalPositionEstimate & estimate) const override;
+  bool isVarianceValid(const LocalPositionEstimate & estimate) const override;
 
   /**
    * @brief Check that if an estimate value is defined, its associated frame is not *FRAME_UNKNOWN.
    */
-  bool _isFrameValid(const LocalPositionEstimate & estimate) const override;
+  bool isFrameValid(const LocalPositionEstimate & estimate) const override;
 
   /**
    * @brief Check that if an estimate value is defined, none of its fields are NAN.
    */
-  bool _isValueNotNAN(const LocalPositionEstimate & estimate) const override;
+  bool isValueNotNAN(const LocalPositionEstimate & estimate) const override;
 
   rclcpp::Publisher<AuxLocalPosition>::SharedPtr _aux_local_position_pub;
 
   uint8_t _pose_frame;
   uint8_t _velocity_frame;
 
-  static constexpr uint8_t _available_pose_frames[3] = {
+  static constexpr uint8_t kAvailablePoseFrames[3] = {
     AuxLocalPosition::POSE_FRAME_UNKNOWN,
     AuxLocalPosition::POSE_FRAME_NED,
     AuxLocalPosition::POSE_FRAME_FRD
   };
 
-  static constexpr uint8_t _available_velocity_frames[4] = {
+  static constexpr uint8_t kAvailableVelocityFrames[4] = {
     AuxLocalPosition::VELOCITY_FRAME_UNKNOWN,
     AuxLocalPosition::VELOCITY_FRAME_NED,
     AuxLocalPosition::VELOCITY_FRAME_FRD,

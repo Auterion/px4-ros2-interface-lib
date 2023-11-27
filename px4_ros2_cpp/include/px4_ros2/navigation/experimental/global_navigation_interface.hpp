@@ -12,8 +12,8 @@
 #include <px4_msgs/msg/vehicle_global_position.hpp>
 #include <px4_ros2/navigation/experimental/navigation_interface_base.hpp>
 
-using namespace Eigen;
-using namespace px4_msgs::msg;
+using Eigen::Vector2d;
+using px4_msgs::msg::VehicleGlobalPosition;
 
 namespace px4_ros2
 {
@@ -49,22 +49,22 @@ private:
   /**
    * @brief Check that at least one estimate value is defined.
    */
-  bool _isEstimateNonEmpty(const GlobalPositionEstimate & estimate) const override;
+  bool isEstimateNonEmpty(const GlobalPositionEstimate & estimate) const override;
 
   /**
    * @brief Check that if an estimate value is defined, its variance is also defined and strictly greater than zero.
    */
-  bool _isVarianceValid(const GlobalPositionEstimate & estimate) const override;
+  bool isVarianceValid(const GlobalPositionEstimate & estimate) const override;
 
   /**
    * @brief Check that if an estimate value is defined, its associated frame is not *FRAME_UNKNOWN.
    */
-  bool _isFrameValid(const GlobalPositionEstimate & estimate) const override;
+  bool isFrameValid(const GlobalPositionEstimate & estimate) const override;
 
   /**
    * @brief Check that if an estimate value is defined, none of its fields are NAN.
    */
-  bool _isValueNotNAN(const GlobalPositionEstimate & estimate) const override;
+  bool isValueNotNAN(const GlobalPositionEstimate & estimate) const override;
 
   rclcpp::Publisher<VehicleGlobalPosition>::SharedPtr _aux_global_position_pub;
 

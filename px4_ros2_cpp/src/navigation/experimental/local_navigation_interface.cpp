@@ -15,10 +15,10 @@ LocalNavigationInterface::LocalNavigationInterface(
 : NavigationInterfaceBase(node)
 {
   // Check that selected pose and velocity reference frames are valid
-  auto it_pose_frame = std::find(
-    std::begin(_available_pose_frames), std::end(
-      _available_pose_frames), pose_frame);
-  if (it_pose_frame == std::end(_available_pose_frames)) {
+  const auto * it_pose_frame = std::find(
+    std::begin(kAvailablePoseFrames), std::end(
+      kAvailablePoseFrames), pose_frame);
+  if (it_pose_frame == std::end(kAvailablePoseFrames)) {
     RCLCPP_WARN(
       node.get_logger(), "Failed to initialize LocalNavigationInterface: invalid pose reference frame %i. Setting pose reference frame to POSE_FRAME_UNKNOWN.",
       pose_frame);
@@ -27,10 +27,10 @@ LocalNavigationInterface::LocalNavigationInterface(
     _pose_frame = pose_frame;
   }
 
-  auto it_vel_frame = std::find(
-    std::begin(_available_velocity_frames), std::end(
-      _available_velocity_frames), velocity_frame);
-  if (it_vel_frame == std::end(_available_velocity_frames)) {
+  const auto * it_vel_frame = std::find(
+    std::begin(kAvailableVelocityFrames), std::end(
+      kAvailableVelocityFrames), velocity_frame);
+  if (it_vel_frame == std::end(kAvailableVelocityFrames)) {
     RCLCPP_WARN(
       node.get_logger(), "Failed to initialize LocalNavigationInterface: invalid velocity reference frame %i. Setting velocity reference frame to VELOCITY_FRAME_UNKNOWN.",
       velocity_frame);
@@ -47,26 +47,26 @@ NavigationInterfaceReturnCode LocalNavigationInterface::update(
   const LocalPositionEstimate & local_position_estimate) const
 {
   // Run basic sanity checks on local position estimate
-  if (!_isEstimateNonEmpty(local_position_estimate)) {
+  if (!isEstimateNonEmpty(local_position_estimate)) {
     RCLCPP_DEBUG(_node.get_logger(), "Estimate values are all empty.");
-    return NavigationInterfaceReturnCode::ESTIMATE_EMPTY;
+    return NavigationInterfaceReturnCode::EstimateEmpty;
   }
 
-  if (!_isVarianceValid(local_position_estimate)) {
-    return NavigationInterfaceReturnCode::ESTIMATE_VARIANCE_INVALID;
+  if (!isVarianceValid(local_position_estimate)) {
+    return NavigationInterfaceReturnCode::EstimateVarianceInvalid;
   }
 
-  if (!_isFrameValid(local_position_estimate)) {
-    return NavigationInterfaceReturnCode::ESTIMATE_FRAME_UNKNOWN;
+  if (!isFrameValid(local_position_estimate)) {
+    return NavigationInterfaceReturnCode::EstimateFrameUnknown;
   }
 
-  if (!_isValueNotNAN(local_position_estimate)) {
-    return NavigationInterfaceReturnCode::ESTIMATE_VALUE_NAN;
+  if (!isValueNotNAN(local_position_estimate)) {
+    return NavigationInterfaceReturnCode::EstimateValueNan;
   }
 
   if (local_position_estimate.timestamp_sample.nanoseconds() == 0) {
     RCLCPP_DEBUG(_node.get_logger(), "Estimate timestamp sample is empty.");
-    return NavigationInterfaceReturnCode::ESTIMATE_MISSING_TIMESTAMP;
+    return NavigationInterfaceReturnCode::EstimateMissingTimestamp;
   }
 
   // Populate aux local position message
@@ -126,11 +126,11 @@ NavigationInterfaceReturnCode LocalNavigationInterface::update(
   aux_local_position.timestamp = _node.get_clock()->now().nanoseconds() * 1e-3;
   _aux_local_position_pub->publish(aux_local_position);
 
-  return NavigationInterfaceReturnCode::SUCCESS;
+  return NavigationInterfaceReturnCode::Success;
 
 }
 
-bool LocalNavigationInterface::_isEstimateNonEmpty(const LocalPositionEstimate & estimate) const
+bool LocalNavigationInterface::isEstimateNonEmpty(const LocalPositionEstimate & estimate) const
 {
   return estimate.position_xy.has_value() ||
          estimate.position_z.has_value() ||
@@ -139,7 +139,7 @@ bool LocalNavigationInterface::_isEstimateNonEmpty(const LocalPositionEstimate &
          estimate.attitude_quaternion.has_value();
 }
 
-bool LocalNavigationInterface::_isVarianceValid(const LocalPositionEstimate & estimate) const
+bool LocalNavigationInterface::isVarianceValid(const LocalPositionEstimate & estimate) const
 {
   if (estimate.position_xy.has_value() &&
     (!estimate.position_xy_variance.has_value() ||
@@ -183,7 +183,7 @@ bool LocalNavigationInterface::_isVarianceValid(const LocalPositionEstimate & es
   return true;
 }
 
-bool LocalNavigationInterface::_isFrameValid(const LocalPositionEstimate & estimate) const
+bool LocalNavigationInterface::isFrameValid(const LocalPositionEstimate & estimate) const
 {
   if ((estimate.position_xy.has_value() || estimate.position_z.has_value()) &&
     _pose_frame == AuxLocalPosition::POSE_FRAME_UNKNOWN)
@@ -206,7 +206,7 @@ bool LocalNavigationInterface::_isFrameValid(const LocalPositionEstimate & estim
   return true;
 }
 
-bool LocalNavigationInterface::_isValueNotNAN(const LocalPositionEstimate & estimate) const
+bool LocalNavigationInterface::isValueNotNAN(const LocalPositionEstimate & estimate) const
 {
   if (estimate.position_xy.has_value() && estimate.position_xy.value().hasNaN()) {
     RCLCPP_DEBUG(
