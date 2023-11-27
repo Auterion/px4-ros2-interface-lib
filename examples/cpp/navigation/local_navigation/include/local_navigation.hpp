@@ -65,8 +65,8 @@ public:
       rcutils_reset_error();
     }
 
-    const uint8_t pose_frame = AuxLocalPosition::POSE_FRAME_NED;
-    const uint8_t velocity_frame = AuxLocalPosition::VELOCITY_FRAME_NED;
+    const uint8_t pose_frame = px4_ros2::AuxLocalPosition::POSE_FRAME_NED;
+    const uint8_t velocity_frame = px4_ros2::AuxLocalPosition::VELOCITY_FRAME_NED;
     _interface = std::make_unique<LocalNavigationTest>(*this, pose_frame, velocity_frame);
 
   }
