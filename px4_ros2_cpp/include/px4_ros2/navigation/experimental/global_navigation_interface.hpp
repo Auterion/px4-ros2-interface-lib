@@ -45,8 +45,6 @@ public:
   NavigationInterfaceReturnCode update(const GlobalPositionEstimate & global_position_estimate)
   const override;
 
-  const std::string AUX_GLOBAL_POSITION_TOPIC = "/fmu/in/aux_global_position";
-
 private:
   /**
    * @brief Check that at least one estimate value is defined.

@@ -14,7 +14,7 @@ GlobalNavigationInterface::GlobalNavigationInterface(rclcpp::Node & node)
 {
   _aux_global_position_pub =
     node.create_publisher<VehicleGlobalPosition>(
-    topicNamespacePrefix() + AUX_GLOBAL_POSITION_TOPIC, 10);
+    topicNamespacePrefix() + "/fmu/in/aux_global_position", 10);
 }
 
 NavigationInterfaceReturnCode GlobalNavigationInterface::update(

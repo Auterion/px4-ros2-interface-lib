@@ -53,8 +53,6 @@ public:
   NavigationInterfaceReturnCode update(const LocalPositionEstimate & local_position_estimate) const
   override;
 
-  const std::string AUX_LOCAL_POSITION_TOPIC = "/fmu/in/vehicle_visual_odometry";
-
 private:
   /**
    * @brief Check that at least one estimate value is defined.

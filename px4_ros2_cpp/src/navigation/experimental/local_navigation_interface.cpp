@@ -40,7 +40,7 @@ LocalNavigationInterface::LocalNavigationInterface(
   }
 
   _aux_local_position_pub = node.create_publisher<AuxLocalPosition>(
-    topicNamespacePrefix() + AUX_LOCAL_POSITION_TOPIC, 10);
+    topicNamespacePrefix() + "/fmu/in/vehicle_visual_odometry", 10);
 }
 
 NavigationInterfaceReturnCode LocalNavigationInterface::update(
