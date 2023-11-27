@@ -52,12 +52,13 @@ NavigationInterfaceReturnCode GlobalNavigationInterface::update(
   aux_global_position.lat = lat_lon[0];
   aux_global_position.lon = lat_lon[1];
   aux_global_position.eph =
-    global_position_estimate.lat_lon_stddev.value_or(
-    NAN);
+    sqrt(
+    global_position_estimate.horizontal_variance.value_or(
+      NAN));
 
   // Altitude
   aux_global_position.alt = global_position_estimate.altitude_msl.value_or(NAN);
-  aux_global_position.epv = global_position_estimate.altitude_stddev.value_or(NAN);
+  aux_global_position.epv = sqrt(global_position_estimate.vertical_variance.value_or(NAN));
 
   // Publish
   aux_global_position.timestamp = _node.get_clock()->now().nanoseconds() * 1e-3;
@@ -74,7 +75,7 @@ bool GlobalNavigationInterface::_isEstimateNonEmpty(const GlobalPositionEstimate
 bool GlobalNavigationInterface::_isVarianceValid(const GlobalPositionEstimate & estimate) const
 {
   if (estimate.lat_lon.has_value() &&
-    (!estimate.lat_lon_stddev.has_value() || estimate.lat_lon_stddev.value() <= 0))
+    (!estimate.horizontal_variance.has_value() || estimate.horizontal_variance.value() <= 0))
   {
     RCLCPP_DEBUG(
       _node.get_logger(),
@@ -82,7 +83,7 @@ bool GlobalNavigationInterface::_isVarianceValid(const GlobalPositionEstimate & 
     return false;
   }
   if (estimate.altitude_msl.has_value() &&
-    (!estimate.altitude_stddev.has_value() || estimate.altitude_stddev.value() <= 0))
+    (!estimate.vertical_variance.has_value() || estimate.vertical_variance.value() <= 0))
   {
     RCLCPP_DEBUG(
       _node.get_logger(),
@@ -106,10 +107,10 @@ bool GlobalNavigationInterface::_isValueNotNAN(const GlobalPositionEstimate & es
       "Estimate value lat_lon is defined but contains a NAN.");
     return false;
   }
-  if (estimate.lat_lon_stddev.has_value() && estimate.lat_lon_stddev == NAN) {
+  if (estimate.horizontal_variance.has_value() && estimate.horizontal_variance == NAN) {
     RCLCPP_DEBUG(
       _node.get_logger(),
-      "Estimate value lat_lon_stddev is defined but contains a NAN.");
+      "Estimate value horizontal_variance is defined but contains a NAN.");
     return false;
   }
   if (estimate.altitude_msl.has_value() && estimate.altitude_msl == NAN) {
@@ -118,10 +119,10 @@ bool GlobalNavigationInterface::_isValueNotNAN(const GlobalPositionEstimate & es
       "Estimate value altitude_msl is defined but contains a NAN.");
     return false;
   }
-  if (estimate.altitude_stddev.has_value() && estimate.altitude_stddev == NAN) {
+  if (estimate.vertical_variance.has_value() && estimate.vertical_variance == NAN) {
     RCLCPP_DEBUG(
       _node.get_logger(),
-      "Estimate value altitude_stddev is defined but contains a NAN.");
+      "Estimate value vertical_variance is defined but contains a NAN.");
     return false;
   }
   return true;

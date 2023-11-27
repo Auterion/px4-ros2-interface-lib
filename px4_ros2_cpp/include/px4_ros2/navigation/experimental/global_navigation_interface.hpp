@@ -24,13 +24,13 @@ struct GlobalPositionEstimate
 
   // Lat lon
   std::optional<Vector2d> lat_lon {std::nullopt};
-  // Standard deviation of horizontal position error (metres)
-  std::optional<float> lat_lon_stddev {std::nullopt};
+  // Variance of horizontal position error (metres)
+  std::optional<float> horizontal_variance {std::nullopt};
 
-  // Altitude (AGL frame)
+  // Altitude (MSL frame)
   std::optional<float> altitude_msl {std::nullopt};
-  // Standard deviation of vertical position error (meters)
-  std::optional<float> altitude_stddev {std::nullopt};
+  // Variance of vertical position error (meters)
+  std::optional<float> vertical_variance {std::nullopt};
 };
 
 class GlobalNavigationInterface : public NavigationInterfaceBase<GlobalPositionEstimate>
