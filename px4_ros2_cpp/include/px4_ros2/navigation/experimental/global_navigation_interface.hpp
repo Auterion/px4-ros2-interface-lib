@@ -12,11 +12,11 @@
 #include <px4_msgs/msg/vehicle_global_position.hpp>
 #include <px4_ros2/navigation/experimental/navigation_interface_base.hpp>
 
-using Eigen::Vector2d;
-using px4_msgs::msg::VehicleGlobalPosition;
-
 namespace px4_ros2
 {
+
+using Eigen::Vector2d;
+using px4_msgs::msg::VehicleGlobalPosition;
 
 struct GlobalPositionEstimate
 {
