@@ -21,7 +21,7 @@ public:
   : LocalNavigationInterface(node, pose_frame, velocity_frame)
   {
     _timer =
-      node.create_wall_timer(1s, std::bind(&LocalNavigationTest::updateAuxLocalPosition, this));
+      node.create_wall_timer(1s, [this] {updateAuxLocalPosition();});
 
     RCLCPP_INFO(node.get_logger(), "example_local_navigation_node running!");
   }
@@ -32,11 +32,11 @@ public:
 
     local_position_estimate.timestamp_sample = _node.get_clock()->now();
 
-    local_position_estimate.velocity_xy = Eigen::Vector2f {1.f, 2.f};
-    local_position_estimate.velocity_xy_variance = Eigen::Vector2f {0.3f, 0.4f};
+    local_position_estimate.velocity_xy = Eigen::Vector2f {1.F, 2.F};
+    local_position_estimate.velocity_xy_variance = Eigen::Vector2f {0.3F, 0.4F};
 
-    local_position_estimate.position_z = 12.3f;
-    local_position_estimate.position_z_variance = 0.33f;
+    local_position_estimate.position_z = 12.3F;
+    local_position_estimate.position_z_variance = 0.33F;
 
     local_position_estimate.attitude_quaternion = Eigen::Quaternionf {0.1, -0.2, 0.3, 0.25};
     local_position_estimate.attitude_variance = Eigen::Vector3f {0.2, 0.1, 0.05};

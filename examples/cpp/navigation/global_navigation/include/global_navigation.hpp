@@ -20,7 +20,7 @@ public:
   : GlobalNavigationInterface(node)
   {
     _timer =
-      node.create_wall_timer(1s, std::bind(&GlobalNavigationTest::updateAuxGlobalPosition, this));
+      node.create_wall_timer(1s, [this] {updateAuxGlobalPosition();});
 
     RCLCPP_INFO(node.get_logger(), "example_global_navigation_node running!");
   }
@@ -32,10 +32,10 @@ public:
     global_position_estimate.timestamp_sample = _node.get_clock()->now();
 
     global_position_estimate.lat_lon = Eigen::Vector2d {12.34321, 23.45432};
-    global_position_estimate.horizontal_variance = 0.1f;
+    global_position_estimate.horizontal_variance = 0.1F;
 
-    global_position_estimate.altitude_msl = 12.4f;
-    global_position_estimate.vertical_variance = 0.2f;
+    global_position_estimate.altitude_msl = 12.4F;
+    global_position_estimate.vertical_variance = 0.2F;
 
     px4_ros2::NavigationInterfaceReturnCode retcode = update(global_position_estimate);
 
