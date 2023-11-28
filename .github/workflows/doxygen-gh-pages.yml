@@ -1,0 +1,27 @@
+name: Doxygen GitHub Pages Deploy Action
+
+on:
+  push:
+    branches:
+      - main
+      - doxygen
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install doxygen
+        run: sudo apt update && sudo apt install -y doxygen
+
+      - name: Run doxygen
+        run: ./scripts/run-doxygen.sh
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/html
