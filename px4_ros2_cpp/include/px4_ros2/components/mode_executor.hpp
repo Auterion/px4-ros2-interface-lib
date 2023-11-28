@@ -20,7 +20,13 @@ class Registration;
 
 namespace px4_ros2
 {
+/** \ingroup components
+ *  @{
+ */
 
+/**
+ * Base class for a mode executor
+ */
 class ModeExecutorBase
 {
 public:
@@ -61,8 +67,8 @@ public:
   virtual void onDeactivate(DeactivateReason reason) = 0;
 
   /**
-   * Called when failsafes are currently being deferred (see @deferFailsafes), and the FMU wants to trigger
-   * a failsafe.
+   * Called when failsafes are currently being deferred, and the FMU wants to trigger a failsafe.
+   * @see deferFailsafesSync()
    */
   virtual void onFailsafeDeferred() {}
 
@@ -188,4 +194,5 @@ private:
   ConfigOverrides _config_overrides;
 };
 
+/** @}*/
 } // namespace px4_ros2

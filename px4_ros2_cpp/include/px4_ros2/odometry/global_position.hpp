@@ -10,11 +10,18 @@
 #include <Eigen/Eigen>
 #include <px4_ros2/common/context.hpp>
 
+
 using namespace std::chrono_literals; // NOLINT
 
 namespace px4_ros2
 {
+/** \ingroup odometry
+ *  @{
+ */
 
+/**
+ * Provides access to the vehicle's global position estimate
+ */
 class OdometryGlobalPosition
 {
 public:
@@ -38,4 +45,5 @@ private:
   rclcpp::Time _last_vehicle_global_position;
 };
 
+/** @}*/
 } /* namespace px4_ros2 */

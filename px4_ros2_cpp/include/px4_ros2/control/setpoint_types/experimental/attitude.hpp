@@ -12,6 +12,9 @@
 
 namespace px4_ros2
 {
+/** \ingroup setpoint_types_experimental
+ *  @{
+ */
 
 class AttitudeSetpointType : public SetpointBase
 {
@@ -33,4 +36,5 @@ private:
     _vehicle_attitude_setpoint_pub;
 };
 
+/** @}*/
 } /* namespace px4_ros2 */

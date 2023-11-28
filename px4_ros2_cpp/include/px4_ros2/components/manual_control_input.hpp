@@ -13,6 +13,9 @@ using namespace std::chrono_literals; // NOLINT
 
 namespace px4_ros2
 {
+/** \ingroup components
+ *  @{
+ */
 
 class ManualControlInput
 {
@@ -56,4 +59,5 @@ private:
   rclcpp::Node & _node;
 };
 
+/** @}*/
 } /* namespace px4_ros2 */

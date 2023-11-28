@@ -10,9 +10,16 @@
 #include <Eigen/Eigen>
 #include <px4_ros2/common/context.hpp>
 
+
 namespace px4_ros2
 {
+/** \ingroup odometry
+ *  @{
+ */
 
+/**
+ * Provides access to the vehicle's local position estimate
+ */
 class OdometryLocalPosition
 {
 public:
@@ -57,4 +64,5 @@ private:
   px4_msgs::msg::VehicleLocalPosition _vehicle_local_position;
 };
 
+/** @}*/
 } /* namespace px4_ros2 */

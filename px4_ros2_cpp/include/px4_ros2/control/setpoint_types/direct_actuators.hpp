@@ -13,7 +13,13 @@
 
 namespace px4_ros2
 {
+/** \ingroup setpoint_types
+ *  @{
+ */
 
+/**
+ * Setpoint type for direct actuator control (servos and/or motors)
+ */
 class DirectActuatorsSetpointType : public SetpointBase
 {
 public:
@@ -48,4 +54,5 @@ private:
   rclcpp::Publisher<px4_msgs::msg::ActuatorServos>::SharedPtr _actuator_servos_pub;
 };
 
+/** @}*/
 } /* namespace px4_ros2 */

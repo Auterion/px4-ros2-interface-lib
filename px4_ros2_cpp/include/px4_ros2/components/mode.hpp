@@ -22,6 +22,9 @@ struct RegistrationSettings;
 
 namespace px4_ros2
 {
+/** \ingroup components
+ *  @{
+ */
 
 enum class Result
 {
@@ -59,6 +62,10 @@ constexpr inline const char * resultToString(Result result) noexcept
   return "Unknown";
 }
 
+/**
+ * Base class for a mode
+ * \ingroup components
+ */
 class ModeBase : public Context
 {
 public:
@@ -202,4 +209,5 @@ private:
   std::vector<SetpointBase *> _new_setpoint_types; ///< This stores new setpoints during initialization, until registration
 };
 
+/** @}*/
 } // namespace px4_ros2
