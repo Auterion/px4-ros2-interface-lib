@@ -381,3 +381,4 @@ pyrightconfig.json
 # End of https://www.toptal.com/developers/gitignore/api/c++,meson,sonar,python,sonarqube,visualstudiocode,clion
 .idea
 /docs
+/doxygen-awesome-css
