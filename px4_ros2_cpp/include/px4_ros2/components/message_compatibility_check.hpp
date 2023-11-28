@@ -35,6 +35,9 @@ using namespace std::chrono_literals; // NOLINT
 
 namespace px4_ros2
 {
+/** \ingroup components
+ *  @{
+ */
 
 struct MessageCompatibilityTopic
 {
@@ -45,9 +48,11 @@ struct MessageCompatibilityTopic
 /**
  * Check for a set of messages that the definition matches with the one that PX4 is using.
  * @return true on success
+ * @ingroup components
  */
 bool messageCompatibilityCheck(
   rclcpp::Node & node, const std::vector<MessageCompatibilityTopic> & messages_to_check,
   const std::string & topic_namespace_prefix = "");
 
+/** @}*/
 } // namespace px4_ros2

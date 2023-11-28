@@ -12,6 +12,9 @@
 
 namespace px4_ros2
 {
+/** \ingroup setpoint_types_experimental
+ *  @{
+ */
 
 class RatesSetpointType : public SetpointBase
 {
@@ -32,4 +35,5 @@ private:
   rclcpp::Publisher<px4_msgs::msg::VehicleRatesSetpoint>::SharedPtr _vehicle_rates_setpoint_pub;
 };
 
+/** @}*/
 } /* namespace px4_ros2 */

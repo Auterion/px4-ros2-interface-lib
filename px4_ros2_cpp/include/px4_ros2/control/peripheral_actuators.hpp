@@ -12,6 +12,9 @@
 
 namespace px4_ros2
 {
+/** \ingroup control
+ *  @{
+ */
 
 /**
  * Control one or more extra actuators. It maps to the 'Peripheral Actuator Set' output functions on the PX4 side.
@@ -43,4 +46,5 @@ private:
   rclcpp::Time _last_update{};
 };
 
+/** @}*/
 } /* namespace px4_ros2 */
