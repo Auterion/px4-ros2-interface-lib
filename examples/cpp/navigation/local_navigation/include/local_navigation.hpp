@@ -38,11 +38,8 @@ public:
     local_position_estimate.attitude_quaternion = Eigen::Quaternionf {0.1, -0.2, 0.3, 0.25};
     local_position_estimate.attitude_variance = Eigen::Vector3f {0.2, 0.1, 0.05};
 
-    px4_ros2::NavigationInterfaceReturnCode retcode = update(local_position_estimate);
-
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(),
-      *_node.get_clock(), 1000, "Interface returned with: %s.", resultToString(retcode));
+    update(local_position_estimate);
+    RCLCPP_DEBUG(_node.get_logger(), "Successfully sent position update to navigation interface.");
   }
 
 private:

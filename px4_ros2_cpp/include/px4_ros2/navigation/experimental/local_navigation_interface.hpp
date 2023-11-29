@@ -112,9 +112,8 @@ public:
    * 3. If an estimate value is provided, its associated variance value is well defined.
    * 4. If an estimate value is provided, its associated reference frame is not unknown.
    * @param local_position_estimate The local position estimate to publish.
-   * @return A navigation interface return code `NavigationInterfaceReturnCode`.
    */
-  NavigationInterfaceReturnCode update(const LocalPositionEstimate & local_position_estimate) const;
+  void update(const LocalPositionEstimate & local_position_estimate) const;
 
 private:
   /**

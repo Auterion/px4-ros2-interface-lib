@@ -23,34 +23,29 @@ LocalNavigationInterface::LocalNavigationInterface(
     topicNamespacePrefix() + "/fmu/in/vehicle_visual_odometry", 10);
 }
 
-NavigationInterfaceReturnCode LocalNavigationInterface::update(
+void LocalNavigationInterface::update(
   const LocalPositionEstimate & local_position_estimate) const
 {
   // Run basic sanity checks on local position estimate
   if (!isEstimateNonEmpty(local_position_estimate)) {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(),
-      *_node.get_clock(), 1000, "Estimate values are all empty.");
-    return NavigationInterfaceReturnCode::EstimateEmpty;
+    throw NavigationInterfaceInvalidArgument("Estimate values are all empty.");
   }
 
   if (!isVarianceValid(local_position_estimate)) {
-    return NavigationInterfaceReturnCode::EstimateVarianceInvalid;
+    throw NavigationInterfaceInvalidArgument("Estimate has an invalid variance value.");
   }
 
   if (!isFrameValid(local_position_estimate)) {
-    return NavigationInterfaceReturnCode::EstimateFrameUnknown;
+    throw NavigationInterfaceInvalidArgument(
+            "Estimate update requested but associated reference frame is unknown.");
   }
 
   if (!isValueNotNAN(local_position_estimate)) {
-    return NavigationInterfaceReturnCode::EstimateValueNan;
+    throw NavigationInterfaceInvalidArgument("Estimate value contains a NAN.");
   }
 
   if (local_position_estimate.timestamp_sample.nanoseconds() == 0) {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(),
-      *_node.get_clock(), 1000, "Estimate timestamp sample is empty.");
-    return NavigationInterfaceReturnCode::EstimateMissingTimestamp;
+    throw NavigationInterfaceInvalidArgument("Estimate timestamp sample is empty.");
   }
 
   // Populate aux local position message
@@ -109,9 +104,6 @@ NavigationInterfaceReturnCode LocalNavigationInterface::update(
   // Publish
   aux_local_position.timestamp = _node.get_clock()->now().nanoseconds() * 1e-3;
   _aux_local_position_pub->publish(aux_local_position);
-
-  return NavigationInterfaceReturnCode::Success;
-
 }
 
 bool LocalNavigationInterface::isEstimateNonEmpty(const LocalPositionEstimate & estimate) const
@@ -129,18 +121,14 @@ bool LocalNavigationInterface::isVarianceValid(const LocalPositionEstimate & est
     (!estimate.position_xy_variance.has_value() ||
     (estimate.position_xy_variance.value().array() <= 0).any()))
   {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(),
-      *_node.get_clock(), 1000, "Estimate value position_xy has an invalid variance value.");
+    RCLCPP_ERROR(_node.get_logger(), "Estimate value position_xy has an invalid variance value.");
     return false;
   }
 
   if (estimate.position_z.has_value() &&
     (!estimate.position_z_variance.has_value() || estimate.position_z_variance <= 0))
   {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(),
-      *_node.get_clock(), 1000, "Estimate value position_z has an invalid variance value.");
+    RCLCPP_ERROR(_node.get_logger(), "Estimate value position_z has an invalid variance value.");
     return false;
   }
 
@@ -148,18 +136,14 @@ bool LocalNavigationInterface::isVarianceValid(const LocalPositionEstimate & est
     (!estimate.velocity_xy_variance.has_value() ||
     (estimate.velocity_xy_variance.value().array() <= 0).any()))
   {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(),
-      *_node.get_clock(), 1000, "Estimate value velocity_xy has an invalid variance value.");
+    RCLCPP_ERROR(_node.get_logger(), "Estimate value velocity_xy has an invalid variance value.");
     return false;
   }
 
   if (estimate.velocity_z.has_value() &&
     (!estimate.velocity_z_variance.has_value() || estimate.velocity_z_variance <= 0))
   {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(),
-      *_node.get_clock(), 1000, "Estimate value velocity_z has an invalid variance value.");
+    RCLCPP_ERROR(_node.get_logger(), "Estimate value velocity_z has an invalid variance value.");
     return false;
   }
 
@@ -167,9 +151,8 @@ bool LocalNavigationInterface::isVarianceValid(const LocalPositionEstimate & est
     (!estimate.attitude_variance.has_value() ||
     (estimate.attitude_variance.value().array() <= 0).any()))
   {
-    RCLCPP_DEBUG_THROTTLE(
+    RCLCPP_ERROR(
       _node.get_logger(),
-      *_node.get_clock(), 1000,
       "Estimate value attitude_quaternion has an invalid variance value.");
     return false;
   }
@@ -182,8 +165,8 @@ bool LocalNavigationInterface::isFrameValid(const LocalPositionEstimate & estima
   if ((estimate.position_xy.has_value() || estimate.position_z.has_value()) &&
     _pose_frame == AuxLocalPosition::POSE_FRAME_UNKNOWN)
   {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
+    RCLCPP_ERROR(
+      _node.get_logger(),
       "Position estimate update requested but pose reference frame is set to POSE_FRAME_UNKNOWN.");
     return false;
   }
@@ -191,9 +174,8 @@ bool LocalNavigationInterface::isFrameValid(const LocalPositionEstimate & estima
   if ((estimate.velocity_xy.has_value() || estimate.velocity_z.has_value()) &&
     _pose_frame == AuxLocalPosition::VELOCITY_FRAME_UNKNOWN)
   {
-    RCLCPP_DEBUG_THROTTLE(
+    RCLCPP_ERROR(
       _node.get_logger(),
-      *_node.get_clock(), 1000,
       "Velocity estimate update requested but velocity reference frame is set to VELOCITY_FRAME_UNKNOWN.");
     return false;
   }
@@ -204,69 +186,55 @@ bool LocalNavigationInterface::isFrameValid(const LocalPositionEstimate & estima
 bool LocalNavigationInterface::isValueNotNAN(const LocalPositionEstimate & estimate) const
 {
   if (estimate.position_xy.has_value() && estimate.position_xy.value().hasNaN()) {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate value position_xy is defined but contains a NAN.");
+    RCLCPP_ERROR(_node.get_logger(), "Estimate value position_xy is defined but contains a NAN.");
     return false;
   }
   if (estimate.position_xy_variance.has_value() &&
     estimate.position_xy_variance.value().hasNaN())
   {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate value position_xy_variance is defined but contains a NAN.");
+    RCLCPP_ERROR(
+      _node.get_logger(), "Estimate value position_xy_variance is defined but contains a NAN.");
     return false;
   }
   if (estimate.position_z.has_value() && estimate.position_z == NAN) {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate value position_z is defined but contains a NAN.");
+    RCLCPP_ERROR(_node.get_logger(), "Estimate value position_z is defined but contains a NAN.");
     return false;
   }
   if (estimate.position_z_variance.has_value() && estimate.position_z_variance == NAN) {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate value position_z_variance is defined but contains a NAN.");
+    RCLCPP_ERROR(
+      _node.get_logger(), "Estimate value position_z_variance is defined but contains a NAN.");
     return false;
   }
   if (estimate.velocity_xy.has_value() && estimate.velocity_xy.value().hasNaN()) {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate value velocity_xy is defined but contains a NAN.");
+    RCLCPP_ERROR(_node.get_logger(), "Estimate value velocity_xy is defined but contains a NAN.");
     return false;
   }
   if (estimate.velocity_xy_variance.has_value() &&
     estimate.velocity_xy_variance.value().hasNaN())
   {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate value velocity_xy_variance is defined but contains a NAN.");
+    RCLCPP_ERROR(
+      _node.get_logger(), "Estimate value velocity_xy_variance is defined but contains a NAN.");
     return false;
   }
   if (estimate.velocity_z.has_value() && estimate.velocity_z == NAN) {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate value velocity_z is defined but contains a NAN.");
+    RCLCPP_ERROR(_node.get_logger(), "Estimate value velocity_z is defined but contains a NAN.");
     return false;
   }
   if (estimate.velocity_z_variance.has_value() && estimate.velocity_z_variance == NAN) {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate value velocity_z_variance is defined but contains a NAN.");
+    RCLCPP_ERROR(
+      _node.get_logger(), "Estimate value velocity_z_variance is defined but contains a NAN.");
     return false;
   }
   if (estimate.attitude_quaternion.has_value() &&
     estimate.attitude_quaternion.value().coeffs().hasNaN())
   {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate value attitude_quaternion is defined but contains a NAN.");
+    RCLCPP_ERROR(
+      _node.get_logger(), "Estimate value attitude_quaternion is defined but contains a NAN.");
     return false;
   }
   if (estimate.attitude_variance.has_value() && estimate.attitude_variance.value().hasNaN()) {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate value attitude_variance is defined but contains a NAN.");
+    RCLCPP_ERROR(
+      _node.get_logger(), "Estimate value attitude_variance is defined but contains a NAN.");
     return false;
   }
   return true;

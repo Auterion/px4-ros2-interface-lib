@@ -9,38 +9,12 @@
 
 namespace px4_ros2
 {
-
-// Define navigation interface return codes
-enum class NavigationInterfaceReturnCode : int
+class NavigationInterfaceInvalidArgument : public std::invalid_argument
 {
-  Success = 0,
-  EstimateEmpty = 1,
-  EstimateVarianceInvalid = 2,
-  EstimateFrameUnknown = 3,
-  EstimateValueNan = 4,
-  EstimateMissingTimestamp = 5
+public:
+  NavigationInterfaceInvalidArgument(const std::string & message)
+  : std::invalid_argument("PX4 ROS2 navigation interface: invalid argument: " + message) {}
 };
-
-constexpr inline const char * resultToString(NavigationInterfaceReturnCode result) noexcept
-{
-  switch (result) {
-    case NavigationInterfaceReturnCode::Success: return "Success";
-
-    case NavigationInterfaceReturnCode::EstimateEmpty: return "EstimateEmpty";
-
-    case NavigationInterfaceReturnCode::EstimateVarianceInvalid: return
-        "EstimateVarianceInvalid";
-
-    case NavigationInterfaceReturnCode::EstimateFrameUnknown: return "EstimateFrameUnknown";
-
-    case NavigationInterfaceReturnCode::EstimateValueNan: return "EstimateValueNan";
-
-    case NavigationInterfaceReturnCode::EstimateMissingTimestamp: return
-        "EstimateMissingTimestamp ";
-  }
-
-  return "Unknown";
-}
 
 class NavigationInterfaceBase : public Context
 {

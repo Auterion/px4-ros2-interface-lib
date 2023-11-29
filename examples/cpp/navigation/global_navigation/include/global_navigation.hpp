@@ -34,12 +34,8 @@ public:
     global_position_estimate.altitude_msl = 12.4F;
     global_position_estimate.vertical_variance = 0.2F;
 
-    px4_ros2::NavigationInterfaceReturnCode retcode = update(global_position_estimate);
-
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(),
-      *_node.get_clock(), 1000, "Interface returned with: %s.", resultToString(retcode));
-
+    update(global_position_estimate);
+    RCLCPP_DEBUG(_node.get_logger(), "Successfully sent position update to navigation interface.");
   }
 
 private:

@@ -51,10 +51,8 @@ public:
    * 2. Values do not have a NAN.
    * 3. If an estimate value is provided, its associated variance value is well defined.
    * @param global_position_estimate The global position estimate to publish.
-   * @return A navigation interface return code `NavigationInterfaceReturnCode`.
    */
-  NavigationInterfaceReturnCode update(const GlobalPositionEstimate & global_position_estimate)
-  const;
+  void update(const GlobalPositionEstimate & global_position_estimate) const;
 
 private:
   /**

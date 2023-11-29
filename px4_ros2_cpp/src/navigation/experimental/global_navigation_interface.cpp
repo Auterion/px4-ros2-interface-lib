@@ -19,30 +19,24 @@ GlobalNavigationInterface::GlobalNavigationInterface(rclcpp::Node & node)
     topicNamespacePrefix() + "/fmu/in/aux_global_position", 10);
 }
 
-NavigationInterfaceReturnCode GlobalNavigationInterface::update(
+void GlobalNavigationInterface::update(
   const GlobalPositionEstimate & global_position_estimate) const
 {
   // Run basic sanity checks on global position estimate
   if (!isEstimateNonEmpty(global_position_estimate)) {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(),
-      *_node.get_clock(), 1000, "Estimate values are all empty.");
-    return NavigationInterfaceReturnCode::EstimateEmpty;
+    throw NavigationInterfaceInvalidArgument("Estimate values are all empty.");
   }
 
   if (!isVarianceValid(global_position_estimate)) {
-    return NavigationInterfaceReturnCode::EstimateVarianceInvalid;
+    throw NavigationInterfaceInvalidArgument("Estimate has an invalid variance value.");
   }
 
   if (!isValueNotNAN(global_position_estimate)) {
-    return NavigationInterfaceReturnCode::EstimateValueNan;
+    throw NavigationInterfaceInvalidArgument("Estimate value contains a NAN.");
   }
 
   if (global_position_estimate.timestamp_sample.nanoseconds() == 0) {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(),
-      *_node.get_clock(), 1000, "Estimate timestamp sample is empty.");
-    return NavigationInterfaceReturnCode::EstimateMissingTimestamp;
+    throw NavigationInterfaceInvalidArgument("Estimate timestamp sample is empty.");
   }
 
   // Populate aux global position
@@ -69,8 +63,6 @@ NavigationInterfaceReturnCode GlobalNavigationInterface::update(
   // Publish
   aux_global_position.timestamp = _node.get_clock()->now().nanoseconds() * 1e-3;
   _aux_global_position_pub->publish(aux_global_position);
-
-  return NavigationInterfaceReturnCode::Success;
 }
 
 bool GlobalNavigationInterface::isEstimateNonEmpty(const GlobalPositionEstimate & estimate) const
@@ -83,17 +75,13 @@ bool GlobalNavigationInterface::isVarianceValid(const GlobalPositionEstimate & e
   if (estimate.lat_lon.has_value() &&
     (!estimate.horizontal_variance.has_value() || estimate.horizontal_variance.value() <= 0))
   {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate lat_lon has an invalid standard deviation value.");
+    RCLCPP_ERROR(_node.get_logger(), "Estimate lat_lon has an invalid variance value.");
     return false;
   }
   if (estimate.altitude_msl.has_value() &&
     (!estimate.vertical_variance.has_value() || estimate.vertical_variance.value() <= 0))
   {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate altitude_msl has an invalid standard deviation value.");
+    RCLCPP_ERROR(_node.get_logger(), "Estimate altitude_msl has an invalid variance value.");
     return false;
   }
 
@@ -108,27 +96,21 @@ bool GlobalNavigationInterface::isFrameValid(const GlobalPositionEstimate & esti
 bool GlobalNavigationInterface::isValueNotNAN(const GlobalPositionEstimate & estimate) const
 {
   if (estimate.lat_lon.has_value() && estimate.lat_lon.value().hasNaN()) {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate value lat_lon is defined but contains a NAN.");
+    RCLCPP_ERROR(_node.get_logger(), "Estimate value lat_lon is defined but contains a NAN.");
     return false;
   }
   if (estimate.horizontal_variance.has_value() && estimate.horizontal_variance == NAN) {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate value horizontal_variance is defined but contains a NAN.");
+    RCLCPP_ERROR(
+      _node.get_logger(), "Estimate value horizontal_variance is defined but contains a NAN.");
     return false;
   }
   if (estimate.altitude_msl.has_value() && estimate.altitude_msl == NAN) {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate value altitude_msl is defined but contains a NAN.");
+    RCLCPP_ERROR(_node.get_logger(), "Estimate value altitude_msl is defined but contains a NAN.");
     return false;
   }
   if (estimate.vertical_variance.has_value() && estimate.vertical_variance == NAN) {
-    RCLCPP_DEBUG_THROTTLE(
-      _node.get_logger(), *_node.get_clock(), 1000,
-      "Estimate value vertical_variance is defined but contains a NAN.");
+    RCLCPP_ERROR(
+      _node.get_logger(), "Estimate value vertical_variance is defined but contains a NAN.");
     return false;
   }
   return true;
