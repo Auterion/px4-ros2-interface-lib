@@ -37,7 +37,7 @@ void LocalNavigationInterface::update(
 
   if (!isFrameValid(local_position_estimate)) {
     throw NavigationInterfaceInvalidArgument(
-            "Estimate update requested but associated reference frame is unknown.");
+            "Estimate has an unknown reference frame.");
   }
 
   if (!isValueNotNAN(local_position_estimate)) {
@@ -167,7 +167,7 @@ bool LocalNavigationInterface::isFrameValid(const LocalPositionEstimate & estima
   {
     RCLCPP_ERROR(
       _node.get_logger(),
-      "Position estimate update requested but pose reference frame is set to POSE_FRAME_UNKNOWN.");
+      "Position estimate has unknown pose frame.");
     return false;
   }
 
@@ -176,7 +176,7 @@ bool LocalNavigationInterface::isFrameValid(const LocalPositionEstimate & estima
   {
     RCLCPP_ERROR(
       _node.get_logger(),
-      "Velocity estimate update requested but velocity reference frame is set to VELOCITY_FRAME_UNKNOWN.");
+      "Velocity estimate has unknown velocity frame.");
     return false;
   }
 
