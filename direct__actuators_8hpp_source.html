@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PX4 ROS 2 communication library: px4_ros2_cpp/include/px4_ros2/control/setpoint_types/direct_actuators.hpp Source File</title>
+<title>PX4 ROS 2 Interface Library: px4_ros2_cpp/include/px4_ros2/control/setpoint_types/direct_actuators.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">PX4 ROS 2 communication library
+   <div id="projectname">PX4 ROS 2 Interface Library
    </div>
    <div id="projectbrief">Library to interface with PX4 from a companion computer using ROS 2</div>
   </td>
@@ -102,33 +102,32 @@ $(document).ready(function(){initNavTree('direct__actuators_8hpp_source.html',''
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>px4_ros2</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html">   20</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html">DirectActuatorsSetpointType</a> : <span class="keyword">public</span> <a class="code" href="classpx4__ros2_1_1SetpointBase.html">SetpointBase</a></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html">DirectActuatorsSetpointType</a>(<a class="code" href="classpx4__ros2_1_1Context.html">Context</a> &amp; context);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> kMaxNumMotors = px4_msgs::msg::ActuatorMotors::NUM_CONTROLS;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> kMaxNumServos = px4_msgs::msg::ActuatorServos::NUM_CONTROLS;</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html">   23</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html">DirectActuatorsSetpointType</a> : <span class="keyword">public</span> <a class="code" href="classpx4__ros2_1_1SetpointBase.html">SetpointBase</a></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html">DirectActuatorsSetpointType</a>(<a class="code" href="classpx4__ros2_1_1Context.html">Context</a> &amp; context);</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  ~<a class="code" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html">DirectActuatorsSetpointType</a>() <span class="keyword">override</span> = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a> getConfiguration() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordtype">float</span> desiredUpdateRateHz()<span class="keyword"> override </span>{<span class="keywordflow">return</span> 500.F;}</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> kMaxNumMotors = px4_msgs::msg::ActuatorMotors::NUM_CONTROLS;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> kMaxNumServos = px4_msgs::msg::ActuatorServos::NUM_CONTROLS;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  ~<a class="code" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html">DirectActuatorsSetpointType</a>() <span class="keyword">override</span> = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html#a61a798f80721433dbafd15e629eea448">   38</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html#a61a798f80721433dbafd15e629eea448">updateServos</a>(<span class="keyword">const</span> Eigen::Matrix&lt;float, kMaxNumServos, 1&gt; &amp; servo_commands);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html#a021774ee25cb884530284e4899edde90">   46</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html#a021774ee25cb884530284e4899edde90">updateMotors</a>(<span class="keyword">const</span> Eigen::Matrix&lt;float, kMaxNumMotors, 1&gt; &amp; motor_commands);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  rclcpp::Node &amp; _node;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::ActuatorMotors&gt;::SharedPtr _actuator_motors_pub;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::ActuatorServos&gt;::SharedPtr _actuator_servos_pub;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;};</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;} <span class="comment">/* namespace px4_ros2 */</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <a class="code" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a> getConfiguration() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keywordtype">float</span> desiredUpdateRateHz()<span class="keyword"> override </span>{<span class="keywordflow">return</span> 500.F;}</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html#a61a798f80721433dbafd15e629eea448">   41</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html#a61a798f80721433dbafd15e629eea448">updateServos</a>(<span class="keyword">const</span> Eigen::Matrix&lt;float, kMaxNumServos, 1&gt; &amp; servo_commands);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html#a021774ee25cb884530284e4899edde90">   49</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html#a021774ee25cb884530284e4899edde90">updateMotors</a>(<span class="keyword">const</span> Eigen::Matrix&lt;float, kMaxNumMotors, 1&gt; &amp; motor_commands);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  rclcpp::Node &amp; _node;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::ActuatorMotors&gt;::SharedPtr _actuator_motors_pub;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::ActuatorServos&gt;::SharedPtr _actuator_servos_pub;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;};</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition:</b> context.hpp:20</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1DirectActuatorsSetpointType_html"><div class="ttname"><a href="classpx4__ros2_1_1DirectActuatorsSetpointType.html">px4_ros2::DirectActuatorsSetpointType</a></div><div class="ttdef"><b>Definition:</b> direct_actuators.hpp:21</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1DirectActuatorsSetpointType_html"><div class="ttname"><a href="classpx4__ros2_1_1DirectActuatorsSetpointType.html">px4_ros2::DirectActuatorsSetpointType</a></div><div class="ttdef"><b>Definition:</b> direct_actuators.hpp:24</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1DirectActuatorsSetpointType_html_a021774ee25cb884530284e4899edde90"><div class="ttname"><a href="classpx4__ros2_1_1DirectActuatorsSetpointType.html#a021774ee25cb884530284e4899edde90">px4_ros2::DirectActuatorsSetpointType::updateMotors</a></div><div class="ttdeci">void updateMotors(const Eigen::Matrix&lt; float, kMaxNumMotors, 1 &gt; &amp;motor_commands)</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1DirectActuatorsSetpointType_html_a61a798f80721433dbafd15e629eea448"><div class="ttname"><a href="classpx4__ros2_1_1DirectActuatorsSetpointType.html#a61a798f80721433dbafd15e629eea448">px4_ros2::DirectActuatorsSetpointType::updateServos</a></div><div class="ttdeci">void updateServos(const Eigen::Matrix&lt; float, kMaxNumServos, 1 &gt; &amp;servo_commands)</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1SetpointBase_html"><div class="ttname"><a href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a></div><div class="ttdef"><b>Definition:</b> setpoint_base.hpp:20</div></div>

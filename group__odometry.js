@@ -1,4 +1,4 @@
-var group__Odometry =
+var group__odometry =
 [
     [ "OdometryGlobalPosition", "classpx4__ros2_1_1OdometryGlobalPosition.html", [
       [ "OdometryGlobalPosition", "classpx4__ros2_1_1OdometryGlobalPosition.html#af93f45a0250d991156e6fad22f451333", null ],

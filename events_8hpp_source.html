@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PX4 ROS 2 communication library: px4_ros2_cpp/include/px4_ros2/components/events.hpp Source File</title>
+<title>PX4 ROS 2 Interface Library: px4_ros2_cpp/include/px4_ros2/components/events.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">PX4 ROS 2 communication library
+   <div id="projectname">PX4 ROS 2 Interface Library
    </div>
    <div id="projectbrief">Library to interface with PX4 from a companion computer using ROS 2</div>
   </td>
@@ -96,7 +96,7 @@ $(document).ready(function(){initNavTree('events_8hpp_source.html',''); initResi
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;px4_msgs/msg/arming_check_reply.hpp&gt;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>events</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>px4_ros2::events</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">using</span> EventType = px4_msgs::msg::Event;</div>
@@ -136,12 +136,12 @@ $(document).ready(function(){initNavTree('events_8hpp_source.html',''); initResi
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">using</span> Log = LogLevel;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">using</span> LogInternal = LogLevelInternal;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="structevents_1_1LogLevels.html">   50</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structevents_1_1LogLevels.html">LogLevels</a></div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1events_1_1LogLevels.html">   50</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structpx4__ros2_1_1events_1_1LogLevels.html">LogLevels</a></div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <a class="code" href="structevents_1_1LogLevels.html">LogLevels</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <a class="code" href="structevents_1_1LogLevels.html">LogLevels</a>(Log external_level) <span class="comment">// NOLINT</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <a class="code" href="structpx4__ros2_1_1events_1_1LogLevels.html">LogLevels</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <a class="code" href="structpx4__ros2_1_1events_1_1LogLevels.html">LogLevels</a>(Log external_level) <span class="comment">// NOLINT</span></div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  : external(external_level), <span class="keyword">internal</span>(<span class="keyword">static_cast&lt;</span>LogInternal<span class="keyword">&gt;</span>(external_level)) {}</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <a class="code" href="structevents_1_1LogLevels.html">LogLevels</a>(Log external_level, LogInternal internal_level)</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <a class="code" href="structpx4__ros2_1_1events_1_1LogLevels.html">LogLevels</a>(Log external_level, LogInternal internal_level)</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  : external(external_level), <span class="keyword">internal</span>(internal_level) {}</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  Log external{Log::Info};</div>
@@ -196,8 +196,8 @@ $(document).ready(function(){initNavTree('events_8hpp_source.html',''); initResi
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;}</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;} <span class="comment">// namespace events</span></div>
-<div class="ttc" id="astructevents_1_1LogLevels_html"><div class="ttname"><a href="structevents_1_1LogLevels.html">events::LogLevels</a></div><div class="ttdef"><b>Definition:</b> events.hpp:51</div></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;} <span class="comment">// namespace px4_ros2::events</span></div>
+<div class="ttc" id="astructpx4__ros2_1_1events_1_1LogLevels_html"><div class="ttname"><a href="structpx4__ros2_1_1events_1_1LogLevels.html">px4_ros2::events::LogLevels</a></div><div class="ttdef"><b>Definition:</b> events.hpp:51</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

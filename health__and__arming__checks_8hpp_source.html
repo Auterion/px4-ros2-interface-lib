@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PX4 ROS 2 communication library: px4_ros2_cpp/include/px4_ros2/components/health_and_arming_checks.hpp Source File</title>
+<title>PX4 ROS 2 Interface Library: px4_ros2_cpp/include/px4_ros2/components/health_and_arming_checks.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">PX4 ROS 2 communication library
+   <div id="projectname">PX4 ROS 2 Interface Library
    </div>
    <div id="projectbrief">Library to interface with PX4 from a companion computer using ROS 2</div>
   </td>
@@ -138,7 +138,7 @@ $(document).ready(function(){initNavTree('health__and__arming__checks_8hpp_sourc
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ... Args&gt;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordtype">bool</span> addEvent(</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    uint32_t event_id, <span class="keyword">const</span> <a class="code" href="structevents_1_1LogLevels.html">events::LogLevels</a> &amp; log_levels, <span class="keyword">const</span> <span class="keywordtype">char</span> * message,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    uint32_t event_id, <span class="keyword">const</span> <a class="code" href="structpx4__ros2_1_1events_1_1LogLevels.html">events::LogLevels</a> &amp; log_levels, <span class="keyword">const</span> <span class="keywordtype">char</span> * message,</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    Args... args);</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  px4_msgs::msg::ArmingCheckReply &amp; _arming_check_reply;</div>
@@ -147,7 +147,7 @@ $(document).ready(function(){initNavTree('health__and__arming__checks_8hpp_sourc
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ... Args&gt;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keywordtype">bool</span> HealthAndArmingCheckReporter::addEvent(</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  uint32_t event_id, <span class="keyword">const</span> <a class="code" href="structevents_1_1LogLevels.html">events::LogLevels</a> &amp; log_levels,</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  uint32_t event_id, <span class="keyword">const</span> <a class="code" href="structpx4__ros2_1_1events_1_1LogLevels.html">events::LogLevels</a> &amp; log_levels,</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> * message, Args... args)</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;{</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keywordflow">if</span> (_arming_check_reply.num_events &gt;= _arming_check_reply.events.size()) {</div>
@@ -221,8 +221,8 @@ $(document).ready(function(){initNavTree('health__and__arming__checks_8hpp_sourc
 <div class="ttc" id="aclasspx4__ros2_1_1HealthAndArmingCheckReporter_html"><div class="ttname"><a href="classpx4__ros2_1_1HealthAndArmingCheckReporter.html">px4_ros2::HealthAndArmingCheckReporter</a></div><div class="ttdef"><b>Definition:</b> health_and_arming_checks.hpp:24</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1HealthAndArmingChecks_html"><div class="ttname"><a href="classpx4__ros2_1_1HealthAndArmingChecks.html">px4_ros2::HealthAndArmingChecks</a></div><div class="ttdef"><b>Definition:</b> health_and_arming_checks.hpp:93</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1HealthAndArmingChecks_html_adfb1a7c2edbec730f4385b74028a70ef"><div class="ttname"><a href="classpx4__ros2_1_1HealthAndArmingChecks.html#adfb1a7c2edbec730f4385b74028a70ef">px4_ros2::HealthAndArmingChecks::doRegister</a></div><div class="ttdeci">bool doRegister(const std::string &amp;name)</div></div>
-<div class="ttc" id="astructevents_1_1LogLevels_html"><div class="ttname"><a href="structevents_1_1LogLevels.html">events::LogLevels</a></div><div class="ttdef"><b>Definition:</b> events.hpp:51</div></div>
 <div class="ttc" id="astructpx4__ros2_1_1RequirementFlags_html"><div class="ttname"><a href="structpx4__ros2_1_1RequirementFlags.html">px4_ros2::RequirementFlags</a></div><div class="ttdef"><b>Definition:</b> requirement_flags.hpp:17</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1events_1_1LogLevels_html"><div class="ttname"><a href="structpx4__ros2_1_1events_1_1LogLevels.html">px4_ros2::events::LogLevels</a></div><div class="ttdef"><b>Definition:</b> events.hpp:51</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

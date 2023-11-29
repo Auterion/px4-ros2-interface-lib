@@ -24,16 +24,14 @@
 */
 var NAVTREE =
 [
-  [ "PX4 ROS 2 communication library", "index.html", [
-    [ "Auterion PX4 ROS2 communication library", "index.html", [
-      [ "Compatibility with PX4", "index.html#autotoc_md1", null ],
-      [ "Examples", "index.html#autotoc_md2", null ],
-      [ "Development", "index.html#autotoc_md3", [
-        [ "CI", "index.html#autotoc_md4", [
-          [ "clang-tidy", "index.html#autotoc_md5", null ],
-          [ "Unit tests", "index.html#autotoc_md6", null ],
-          [ "Linters (code formatting etc)", "index.html#autotoc_md7", null ]
-        ] ]
+  [ "PX4 ROS 2 Interface Library", "index.html", [
+    [ "Compatibility with PX4", "index.html#autotoc_md1", null ],
+    [ "Examples", "index.html#autotoc_md2", null ],
+    [ "Development", "index.html#autotoc_md3", [
+      [ "CI", "index.html#autotoc_md4", [
+        [ "clang-tidy", "index.html#autotoc_md5", null ],
+        [ "Unit tests", "index.html#autotoc_md6", null ],
+        [ "Linters (code formatting etc)", "index.html#autotoc_md7", null ]
       ] ]
     ] ],
     [ "Modules", "modules.html", "modules" ],

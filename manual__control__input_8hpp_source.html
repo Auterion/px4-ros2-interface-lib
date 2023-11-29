@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PX4 ROS 2 communication library: px4_ros2_cpp/include/px4_ros2/components/manual_control_input.hpp Source File</title>
+<title>PX4 ROS 2 Interface Library: px4_ros2_cpp/include/px4_ros2/components/manual_control_input.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">PX4 ROS 2 communication library
+   <div id="projectname">PX4 ROS 2 Interface Library
    </div>
    <div id="projectbrief">Library to interface with PX4 from a companion computer using ROS 2</div>
   </td>
@@ -102,44 +102,43 @@ $(document).ready(function(){initNavTree('manual__control__input_8hpp_source.htm
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>px4_ros2</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1ManualControlInput.html">   17</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1ManualControlInput.html">ManualControlInput</a></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpx4__ros2_1_1ManualControlInput.html">ManualControlInput</a>(<a class="code" href="classpx4__ros2_1_1Context.html">Context</a> &amp; context, <span class="keywordtype">bool</span> is_optional = <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1ManualControlInput.html#a377da17ccfb46fc042d5b1a98f9e4398">   25</a></span>&#160;  <span class="keywordtype">float</span> <a class="code" href="classpx4__ros2_1_1ManualControlInput.html#a377da17ccfb46fc042d5b1a98f9e4398">roll</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.roll;}</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1ManualControlInput.html#adcdf54f3694dc4f46e7767f8a89c9199">   29</a></span>&#160;  <span class="keywordtype">float</span> <a class="code" href="classpx4__ros2_1_1ManualControlInput.html#adcdf54f3694dc4f46e7767f8a89c9199">pitch</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.pitch;}</div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1ManualControlInput.html#a25981f81f34574e6ddf243f14510361e">   33</a></span>&#160;  <span class="keywordtype">float</span> <a class="code" href="classpx4__ros2_1_1ManualControlInput.html#a25981f81f34574e6ddf243f14510361e">yaw</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.yaw;}</div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1ManualControlInput.html#ae00e8a8a0b226a0fb1e7644f8b38b5bc">   37</a></span>&#160;  <span class="keywordtype">float</span> <a class="code" href="classpx4__ros2_1_1ManualControlInput.html#ae00e8a8a0b226a0fb1e7644f8b38b5bc">throttle</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.throttle;}</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordtype">float</span> aux1()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.aux1;}</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordtype">float</span> aux2()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.aux2;}</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keywordtype">float</span> aux3()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.aux3;}</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keywordtype">float</span> aux4()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.aux4;}</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordtype">float</span> aux5()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.aux5;}</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordtype">float</span> aux6()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.aux6;}</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordtype">bool</span> isValid()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">  </span>{</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">return</span> _manual_control_setpoint.valid &amp;&amp;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;           _node.get_clock()-&gt;now() - _last_manual_control_setpoint &lt; 500ms;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  }</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  rclcpp::Subscription&lt;px4_msgs::msg::ManualControlSetpoint&gt;::SharedPtr _manual_control_setpoint_sub;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  px4_msgs::msg::ManualControlSetpoint _manual_control_setpoint{};</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  rclcpp::Time _last_manual_control_setpoint{};</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  rclcpp::Node &amp; _node;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;};</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;} <span class="comment">/* namespace px4_ros2 */</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1ManualControlInput.html">   20</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1ManualControlInput.html">ManualControlInput</a></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpx4__ros2_1_1ManualControlInput.html">ManualControlInput</a>(<a class="code" href="classpx4__ros2_1_1Context.html">Context</a> &amp; context, <span class="keywordtype">bool</span> is_optional = <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1ManualControlInput.html#a377da17ccfb46fc042d5b1a98f9e4398">   28</a></span>&#160;  <span class="keywordtype">float</span> <a class="code" href="classpx4__ros2_1_1ManualControlInput.html#a377da17ccfb46fc042d5b1a98f9e4398">roll</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.roll;}</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1ManualControlInput.html#adcdf54f3694dc4f46e7767f8a89c9199">   32</a></span>&#160;  <span class="keywordtype">float</span> <a class="code" href="classpx4__ros2_1_1ManualControlInput.html#adcdf54f3694dc4f46e7767f8a89c9199">pitch</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.pitch;}</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1ManualControlInput.html#a25981f81f34574e6ddf243f14510361e">   36</a></span>&#160;  <span class="keywordtype">float</span> <a class="code" href="classpx4__ros2_1_1ManualControlInput.html#a25981f81f34574e6ddf243f14510361e">yaw</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.yaw;}</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1ManualControlInput.html#ae00e8a8a0b226a0fb1e7644f8b38b5bc">   40</a></span>&#160;  <span class="keywordtype">float</span> <a class="code" href="classpx4__ros2_1_1ManualControlInput.html#ae00e8a8a0b226a0fb1e7644f8b38b5bc">throttle</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.throttle;}</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keywordtype">float</span> aux1()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.aux1;}</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordtype">float</span> aux2()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.aux2;}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordtype">float</span> aux3()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.aux3;}</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">float</span> aux4()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.aux4;}</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordtype">float</span> aux5()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.aux5;}</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">float</span> aux6()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _manual_control_setpoint.aux6;}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordtype">bool</span> isValid()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">  </span>{</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">return</span> _manual_control_setpoint.valid &amp;&amp;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;           _node.get_clock()-&gt;now() - _last_manual_control_setpoint &lt; 500ms;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  }</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  rclcpp::Subscription&lt;px4_msgs::msg::ManualControlSetpoint&gt;::SharedPtr _manual_control_setpoint_sub;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  px4_msgs::msg::ManualControlSetpoint _manual_control_setpoint{};</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  rclcpp::Time _last_manual_control_setpoint{};</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  rclcpp::Node &amp; _node;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;};</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition:</b> context.hpp:20</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1ManualControlInput_html"><div class="ttname"><a href="classpx4__ros2_1_1ManualControlInput.html">px4_ros2::ManualControlInput</a></div><div class="ttdef"><b>Definition:</b> manual_control_input.hpp:18</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1ManualControlInput_html_a25981f81f34574e6ddf243f14510361e"><div class="ttname"><a href="classpx4__ros2_1_1ManualControlInput.html#a25981f81f34574e6ddf243f14510361e">px4_ros2::ManualControlInput::yaw</a></div><div class="ttdeci">float yaw() const</div><div class="ttdef"><b>Definition:</b> manual_control_input.hpp:33</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1ManualControlInput_html_a377da17ccfb46fc042d5b1a98f9e4398"><div class="ttname"><a href="classpx4__ros2_1_1ManualControlInput.html#a377da17ccfb46fc042d5b1a98f9e4398">px4_ros2::ManualControlInput::roll</a></div><div class="ttdeci">float roll() const</div><div class="ttdef"><b>Definition:</b> manual_control_input.hpp:25</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1ManualControlInput_html_adcdf54f3694dc4f46e7767f8a89c9199"><div class="ttname"><a href="classpx4__ros2_1_1ManualControlInput.html#adcdf54f3694dc4f46e7767f8a89c9199">px4_ros2::ManualControlInput::pitch</a></div><div class="ttdeci">float pitch() const</div><div class="ttdef"><b>Definition:</b> manual_control_input.hpp:29</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1ManualControlInput_html_ae00e8a8a0b226a0fb1e7644f8b38b5bc"><div class="ttname"><a href="classpx4__ros2_1_1ManualControlInput.html#ae00e8a8a0b226a0fb1e7644f8b38b5bc">px4_ros2::ManualControlInput::throttle</a></div><div class="ttdeci">float throttle() const</div><div class="ttdef"><b>Definition:</b> manual_control_input.hpp:37</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1ManualControlInput_html"><div class="ttname"><a href="classpx4__ros2_1_1ManualControlInput.html">px4_ros2::ManualControlInput</a></div><div class="ttdef"><b>Definition:</b> manual_control_input.hpp:21</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1ManualControlInput_html_a25981f81f34574e6ddf243f14510361e"><div class="ttname"><a href="classpx4__ros2_1_1ManualControlInput.html#a25981f81f34574e6ddf243f14510361e">px4_ros2::ManualControlInput::yaw</a></div><div class="ttdeci">float yaw() const</div><div class="ttdef"><b>Definition:</b> manual_control_input.hpp:36</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1ManualControlInput_html_a377da17ccfb46fc042d5b1a98f9e4398"><div class="ttname"><a href="classpx4__ros2_1_1ManualControlInput.html#a377da17ccfb46fc042d5b1a98f9e4398">px4_ros2::ManualControlInput::roll</a></div><div class="ttdeci">float roll() const</div><div class="ttdef"><b>Definition:</b> manual_control_input.hpp:28</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1ManualControlInput_html_adcdf54f3694dc4f46e7767f8a89c9199"><div class="ttname"><a href="classpx4__ros2_1_1ManualControlInput.html#adcdf54f3694dc4f46e7767f8a89c9199">px4_ros2::ManualControlInput::pitch</a></div><div class="ttdeci">float pitch() const</div><div class="ttdef"><b>Definition:</b> manual_control_input.hpp:32</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1ManualControlInput_html_ae00e8a8a0b226a0fb1e7644f8b38b5bc"><div class="ttname"><a href="classpx4__ros2_1_1ManualControlInput.html#ae00e8a8a0b226a0fb1e7644f8b38b5bc">px4_ros2::ManualControlInput::throttle</a></div><div class="ttdeci">float throttle() const</div><div class="ttdef"><b>Definition:</b> manual_control_input.hpp:40</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

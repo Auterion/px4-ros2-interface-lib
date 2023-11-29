@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['auterion_20px4_20ros2_20communication_20library_109',['Auterion PX4 ROS2 communication library',['../index.html',1,'']]]
+  ['px4_20ros_202_20interface_20library_115',['PX4 ROS 2 Interface Library',['../index.html',1,'']]]
 ];

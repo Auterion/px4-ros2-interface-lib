@@ -1,6 +1,6 @@
-var group__Control =
+var group__control =
 [
-    [ "Setpoint Types", "group__Setpoints.html", "group__Setpoints" ],
+    [ "Setpoint Types", "group__setpoint__types.html", "group__setpoint__types" ],
     [ "PeripheralActuatorControls", "classpx4__ros2_1_1PeripheralActuatorControls.html", [
       [ "PeripheralActuatorControls", "classpx4__ros2_1_1PeripheralActuatorControls.html#af71884e01f54e61cc64a17b8200cbb01", null ],
       [ "set", "classpx4__ros2_1_1PeripheralActuatorControls.html#aa290a7d4d1221c8d184752890bae88a3", null ],

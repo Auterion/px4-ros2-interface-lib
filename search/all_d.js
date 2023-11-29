@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['updatemotors_52',['updateMotors',['../classpx4__ros2_1_1DirectActuatorsSetpointType.html#a021774ee25cb884530284e4899edde90',1,'px4_ros2::DirectActuatorsSetpointType']]],
-  ['updateservos_53',['updateServos',['../classpx4__ros2_1_1DirectActuatorsSetpointType.html#a61a798f80721433dbafd15e629eea448',1,'px4_ros2::DirectActuatorsSetpointType']]]
+  ['throttle_50',['throttle',['../classpx4__ros2_1_1ManualControlInput.html#ae00e8a8a0b226a0fb1e7644f8b38b5bc',1,'px4_ros2::ManualControlInput']]],
+  ['topic_5fname_51',['topic_name',['../structpx4__ros2_1_1MessageCompatibilityTopic.html#a8b09af8673cb3ee37e23cf87a5eadd45',1,'px4_ros2::MessageCompatibilityTopic']]],
+  ['topic_5ftype_52',['topic_type',['../structpx4__ros2_1_1MessageCompatibilityTopic.html#a06daee8ae5be471400bb598e5a1b9ced',1,'px4_ros2::MessageCompatibilityTopic']]],
+  ['trajectorysetpointtype_53',['TrajectorySetpointType',['../classpx4__ros2_1_1TrajectorySetpointType.html',1,'px4_ros2']]]
 ];

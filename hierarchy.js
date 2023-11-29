@@ -15,7 +15,7 @@ var hierarchy =
     ] ],
     [ "px4_ros2::HealthAndArmingCheckReporter", "classpx4__ros2_1_1HealthAndArmingCheckReporter.html", null ],
     [ "px4_ros2::HealthAndArmingChecks", "classpx4__ros2_1_1HealthAndArmingChecks.html", null ],
-    [ "events::LogLevels", "structevents_1_1LogLevels.html", null ],
+    [ "px4_ros2::events::LogLevels", "structpx4__ros2_1_1events_1_1LogLevels.html", null ],
     [ "px4_ros2::ManualControlInput", "classpx4__ros2_1_1ManualControlInput.html", null ],
     [ "px4_ros2::MessageCompatibilityTopic", "structpx4__ros2_1_1MessageCompatibilityTopic.html", null ],
     [ "px4_ros2::ModeExecutorBase", "classpx4__ros2_1_1ModeExecutorBase.html", null ],

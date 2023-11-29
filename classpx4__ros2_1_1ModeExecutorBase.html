@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PX4 ROS 2 communication library: px4_ros2::ModeExecutorBase Class Reference</title>
+<title>PX4 ROS 2 Interface Library: px4_ros2::ModeExecutorBase Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">PX4 ROS 2 communication library
+   <div id="projectname">PX4 ROS 2 Interface Library
    </div>
    <div id="projectbrief">Library to interface with PX4 from a companion computer using ROS 2</div>
   </td>
@@ -89,9 +89,11 @@ $(document).ready(function(){initNavTree('classpx4__ros2_1_1ModeExecutorBase.htm
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classpx4__ros2_1_1ModeExecutorBase-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">px4_ros2::ModeExecutorBase Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">px4_ros2::ModeExecutorBase Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span><div class="ingroups"><a class="el" href="group__components.html">Components</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="mode__executor_8hpp_source.html">px4_ros2/components/mode_executor.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -105,7 +107,7 @@ Public Types</h2></td></tr>
  }</td></tr>
 <tr class="separator:a13e655844fcada243b50dc35c249605b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a393bd12468b70d8b6c68c0accdbf5f2c"><td class="memItemLeft" align="right" valign="top"><a id="a393bd12468b70d8b6c68c0accdbf5f2c"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>CompletedCallback</b> = std::function&lt; void(<a class="el" href="group__Components.html#ga0d5805242f91956fd51e243091367f77">Result</a>)&gt;</td></tr>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>CompletedCallback</b> = std::function&lt; void(<a class="el" href="group__components.html#ga0d5805242f91956fd51e243091367f77">Result</a>)&gt;</td></tr>
 <tr class="separator:a393bd12468b70d8b6c68c0accdbf5f2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -124,7 +126,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a130be86de12e870743799902744dbba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad80a234c8cb2f4c186fa2b7bffd1a1dd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1ModeExecutorBase.html#ad80a234c8cb2f4c186fa2b7bffd1a1dd">onFailsafeDeferred</a> ()</td></tr>
 <tr class="separator:ad80a234c8cb2f4c186fa2b7bffd1a1dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a332cb775e0543155595c51bbc4052522"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Components.html#ga0d5805242f91956fd51e243091367f77">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1ModeExecutorBase.html#a332cb775e0543155595c51bbc4052522">sendCommandSync</a> (uint32_t command, float param1=NAN, float param2=NAN, float param3=NAN, float param4=NAN, float param5=NAN, float param6=NAN, float param7=NAN)</td></tr>
+<tr class="memitem:a332cb775e0543155595c51bbc4052522"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__components.html#ga0d5805242f91956fd51e243091367f77">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1ModeExecutorBase.html#a332cb775e0543155595c51bbc4052522">sendCommandSync</a> (uint32_t command, float param1=NAN, float param2=NAN, float param3=NAN, float param4=NAN, float param5=NAN, float param6=NAN, float param7=NAN)</td></tr>
 <tr class="separator:a332cb775e0543155595c51bbc4052522"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94f2c1e3dd07b3b58d78b94ebb3615a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1ModeExecutorBase.html#a94f2c1e3dd07b3b58d78b94ebb3615a3">scheduleMode</a> (<a class="el" href="classpx4__ros2_1_1ModeBase.html#a49de7d1d3872f1c7531abfe870483fb2">ModeBase::ModeID</a> mode_id, const CompletedCallback &amp;on_completed)</td></tr>
 <tr class="separator:a94f2c1e3dd07b3b58d78b94ebb3615a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,7 +169,9 @@ rclcpp::Node &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>node</b
 <tr class="memitem:a16ec5be6ebe70e1d0625bf696c3e29ae"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1ModeExecutorBase.html#a16ec5be6ebe70e1d0625bf696c3e29ae">deferFailsafesSync</a> (bool enabled, int timeout_s=0)</td></tr>
 <tr class="separator:a16ec5be6ebe70e1d0625bf696c3e29ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Base class for a mode executor </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a16ec5be6ebe70e1d0625bf696c3e29ae"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a16ec5be6ebe70e1d0625bf696c3e29ae">&#9670;&nbsp;</a></span>deferFailsafesSync()</h2>
 
@@ -301,7 +305,7 @@ rclcpp::Node &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>node</b
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Called when failsafes are currently being deferred (see @deferFailsafes), and the FMU wants to trigger a failsafe. </p>
+<p>Called when failsafes are currently being deferred, and the FMU wants to trigger a failsafe. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="classpx4__ros2_1_1ModeExecutorBase.html#a16ec5be6ebe70e1d0625bf696c3e29ae">deferFailsafesSync()</a> </dd></dl>
 
 </div>
 </div>
@@ -341,7 +345,7 @@ rclcpp::Node &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>node</b
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__Components.html#ga0d5805242f91956fd51e243091367f77">Result</a> px4_ros2::ModeExecutorBase::sendCommandSync </td>
+          <td class="memname"><a class="el" href="group__components.html#ga0d5805242f91956fd51e243091367f77">Result</a> px4_ros2::ModeExecutorBase::sendCommandSync </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>command</em>, </td>

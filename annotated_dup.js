@@ -1,9 +1,9 @@
 var annotated_dup =
 [
-    [ "events", null, [
-      [ "LogLevels", "structevents_1_1LogLevels.html", "structevents_1_1LogLevels" ]
-    ] ],
     [ "px4_ros2", null, [
+      [ "events", null, [
+        [ "LogLevels", "structpx4__ros2_1_1events_1_1LogLevels.html", "structpx4__ros2_1_1events_1_1LogLevels" ]
+      ] ],
       [ "Context", "classpx4__ros2_1_1Context.html", "classpx4__ros2_1_1Context" ],
       [ "RequirementFlags", "structpx4__ros2_1_1RequirementFlags.html", "structpx4__ros2_1_1RequirementFlags" ],
       [ "SetpointBase", "classpx4__ros2_1_1SetpointBase.html", "classpx4__ros2_1_1SetpointBase" ],
