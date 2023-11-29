@@ -12,7 +12,7 @@ namespace px4_ros2
 class NavigationInterfaceInvalidArgument : public std::invalid_argument
 {
 public:
-  NavigationInterfaceInvalidArgument(const std::string & message)
+  explicit NavigationInterfaceInvalidArgument(const std::string & message)
   : std::invalid_argument("PX4 ROS2 navigation interface: invalid argument: " + message) {}
 };
 
