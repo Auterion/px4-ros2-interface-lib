@@ -7,9 +7,6 @@
 
 #include <rclcpp/rclcpp.hpp>
 #include <px4_ros2/navigation/experimental/global_navigation_interface.hpp>
-#include <px4_ros2/common/context.hpp>
-
-#include <Eigen/Core>
 
 using namespace std::chrono_literals; // NOLINT
 
@@ -20,12 +17,12 @@ public:
   : GlobalNavigationInterface(node)
   {
     _timer =
-      node.create_wall_timer(1s, [this] {updateAuxGlobalPosition();});
+      node.create_wall_timer(1s, [this] {updateGlobalPosition();});
 
     RCLCPP_INFO(node.get_logger(), "example_global_navigation_node running!");
   }
 
-  void updateAuxGlobalPosition()
+  void updateGlobalPosition()
   {
     px4_ros2::GlobalPositionEstimate global_position_estimate {};
 
@@ -39,7 +36,10 @@ public:
 
     px4_ros2::NavigationInterfaceReturnCode retcode = update(global_position_estimate);
 
-    RCLCPP_DEBUG(_node.get_logger(), "Interface returned with: %s.", resultToString(retcode));
+    RCLCPP_DEBUG_THROTTLE(
+      _node.get_logger(),
+      *_node.get_clock(), 1000, "Interface returned with: %s.", resultToString(retcode));
+
   }
 
 private:
@@ -62,6 +62,10 @@ public:
     }
 
     _interface = std::make_unique<GlobalNavigationTest>(*this);
+
+    if (!_interface->doRegister()) {
+      throw std::runtime_error("Registration failed");
+    }
   }
 
 private:

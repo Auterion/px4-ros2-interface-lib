@@ -42,26 +42,23 @@ constexpr inline const char * resultToString(NavigationInterfaceReturnCode resul
   return "Unknown";
 }
 
-template<typename EstimateType>
 class NavigationInterfaceBase : public Context
 {
 public:
-  explicit NavigationInterfaceBase(rclcpp::Node & node)
-  : Context(node, ""), _node(node) {}
+  explicit NavigationInterfaceBase(rclcpp::Node & node, std::string topic_namespace_prefix = "")
+  : Context(node, topic_namespace_prefix), _node(node) {}
   virtual ~NavigationInterfaceBase() = default;
 
   /**
-   * @brief Publish position estimate to FMU.
+   * Register the interface.
+   * @return true on success
    */
-  virtual NavigationInterfaceReturnCode update(const EstimateType & global_position_estimate) const
-  = 0;
+  bool doRegister()
+  {
+    return true;
+  }
 
 protected:
-  virtual bool isEstimateNonEmpty(const EstimateType & estimate) const = 0;
-  virtual bool isVarianceValid(const EstimateType & estimate) const = 0;
-  virtual bool isFrameValid(const EstimateType & estimate) const = 0;
-  virtual bool isValueNotNAN(const EstimateType & estimate) const = 0;
-
   rclcpp::Node & _node;
 };
 

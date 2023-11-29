@@ -5,6 +5,8 @@
 
 #include <px4_ros2/navigation/experimental/global_navigation_interface.hpp>
 
+using Eigen::Vector2d;
+using px4_msgs::msg::VehicleGlobalPosition;
 
 namespace px4_ros2
 {
@@ -22,7 +24,9 @@ NavigationInterfaceReturnCode GlobalNavigationInterface::update(
 {
   // Run basic sanity checks on global position estimate
   if (!isEstimateNonEmpty(global_position_estimate)) {
-    RCLCPP_DEBUG(_node.get_logger(), "Estimate values are all empty.");
+    RCLCPP_DEBUG_THROTTLE(
+      _node.get_logger(),
+      *_node.get_clock(), 1000, "Estimate values are all empty.");
     return NavigationInterfaceReturnCode::EstimateEmpty;
   }
 
@@ -35,12 +39,14 @@ NavigationInterfaceReturnCode GlobalNavigationInterface::update(
   }
 
   if (global_position_estimate.timestamp_sample.nanoseconds() == 0) {
-    RCLCPP_DEBUG(_node.get_logger(), "Estimate timestamp sample is empty.");
+    RCLCPP_DEBUG_THROTTLE(
+      _node.get_logger(),
+      *_node.get_clock(), 1000, "Estimate timestamp sample is empty.");
     return NavigationInterfaceReturnCode::EstimateMissingTimestamp;
   }
 
   // Populate aux global position
-  px4_msgs::msg::VehicleGlobalPosition aux_global_position;
+  VehicleGlobalPosition aux_global_position;
 
   aux_global_position.timestamp_sample = global_position_estimate.timestamp_sample.nanoseconds() *
     1e-3;
@@ -77,16 +83,16 @@ bool GlobalNavigationInterface::isVarianceValid(const GlobalPositionEstimate & e
   if (estimate.lat_lon.has_value() &&
     (!estimate.horizontal_variance.has_value() || estimate.horizontal_variance.value() <= 0))
   {
-    RCLCPP_DEBUG(
-      _node.get_logger(),
+    RCLCPP_DEBUG_THROTTLE(
+      _node.get_logger(), *_node.get_clock(), 1000,
       "Estimate lat_lon has an invalid standard deviation value.");
     return false;
   }
   if (estimate.altitude_msl.has_value() &&
     (!estimate.vertical_variance.has_value() || estimate.vertical_variance.value() <= 0))
   {
-    RCLCPP_DEBUG(
-      _node.get_logger(),
+    RCLCPP_DEBUG_THROTTLE(
+      _node.get_logger(), *_node.get_clock(), 1000,
       "Estimate altitude_msl has an invalid standard deviation value.");
     return false;
   }
@@ -102,26 +108,26 @@ bool GlobalNavigationInterface::isFrameValid(const GlobalPositionEstimate & esti
 bool GlobalNavigationInterface::isValueNotNAN(const GlobalPositionEstimate & estimate) const
 {
   if (estimate.lat_lon.has_value() && estimate.lat_lon.value().hasNaN()) {
-    RCLCPP_DEBUG(
-      _node.get_logger(),
+    RCLCPP_DEBUG_THROTTLE(
+      _node.get_logger(), *_node.get_clock(), 1000,
       "Estimate value lat_lon is defined but contains a NAN.");
     return false;
   }
   if (estimate.horizontal_variance.has_value() && estimate.horizontal_variance == NAN) {
-    RCLCPP_DEBUG(
-      _node.get_logger(),
+    RCLCPP_DEBUG_THROTTLE(
+      _node.get_logger(), *_node.get_clock(), 1000,
       "Estimate value horizontal_variance is defined but contains a NAN.");
     return false;
   }
   if (estimate.altitude_msl.has_value() && estimate.altitude_msl == NAN) {
-    RCLCPP_DEBUG(
-      _node.get_logger(),
+    RCLCPP_DEBUG_THROTTLE(
+      _node.get_logger(), *_node.get_clock(), 1000,
       "Estimate value altitude_msl is defined but contains a NAN.");
     return false;
   }
   if (estimate.vertical_variance.has_value() && estimate.vertical_variance == NAN) {
-    RCLCPP_DEBUG(
-      _node.get_logger(),
+    RCLCPP_DEBUG_THROTTLE(
+      _node.get_logger(), *_node.get_clock(), 1000,
       "Estimate value vertical_variance is defined but contains a NAN.");
     return false;
   }
