@@ -12,14 +12,14 @@ namespace px4_ros2
 CruiseControlSetpointType::CruiseControlSetpointType(Context & context)
 : SetpointBase(context), _node(context.node())
 {
-  _cruise_control_velocity_pub =
-    context.node().create_publisher<px4_msgs::msg::RoverCruiseControlVelocity>(
-    context.topicNamespacePrefix() + "/fmu/in/rover_cruise_control_velocity", 1);
+  _differential_drive_setpoint_pub =
+    context.node().create_publisher<px4_msgs::msg::DifferentialDriveSetpoint>(
+    context.topicNamespacePrefix() + "/fmu/in/differential_drive_setpoint", 1);
 
   _rover_cruise_control =
     context.node().create_subscription<px4_msgs::msg::RoverCruiseControlState>(
     "/fmu/out/rover_cruise_control_state", rclcpp::QoS(
-      0).best_effort(),
+      1).best_effort(),
     [this](const px4_msgs::msg::RoverCruiseControlState::SharedPtr msg) {
       _max_linear_velocity_x = msg->parameters[0];
       _max_angular_velocity_z = msg->parameters[1];
@@ -42,18 +42,17 @@ px4_msgs::msg::RoverCruiseControlState CruiseControlSetpointType::initialize_sta
   return state;
 }
 
-
 void CruiseControlSetpointType::update(float linear_velocity_x, float angular_velocity_z)
 {
   onUpdate();
 
-  px4_msgs::msg::RoverCruiseControlVelocity vel{};
+  px4_msgs::msg::DifferentialDriveSetpoint vel{};
 
   vel.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
-  vel.cruise_velocity[0] = linear_velocity_x;
-  vel.cruise_velocity[1] = angular_velocity_z;
+  vel.velocity = linear_velocity_x;
+  vel.yaw = angular_velocity_z;
 
-  _cruise_control_velocity_pub->publish(vel);
+  _differential_drive_setpoint_pub->publish(vel);
 }
 
 SetpointBase::Configuration CruiseControlSetpointType::getConfiguration()
@@ -65,6 +64,7 @@ SetpointBase::Configuration CruiseControlSetpointType::getConfiguration()
   config.acceleration_enabled = false;
   config.velocity_enabled = false;
   config.position_enabled = false;
+
   return config;
 }
 } // namespace px4_ros2

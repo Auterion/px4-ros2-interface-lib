@@ -6,7 +6,7 @@
 #pragma once
 
 #include <px4_msgs/msg/rover_cruise_control_state.hpp>
-#include <px4_msgs/msg/rover_cruise_control_velocity.hpp>
+#include <px4_msgs/msg/differential_drive_setpoint.hpp>
 #include <Eigen/Core>
 
 #include <px4_ros2/common/setpoint_base.hpp>
@@ -35,8 +35,8 @@ public:
 
 private:
   rclcpp::Node & _node;
-  rclcpp::Publisher<px4_msgs::msg::RoverCruiseControlVelocity>::SharedPtr
-    _cruise_control_velocity_pub;
+  rclcpp::Publisher<px4_msgs::msg::DifferentialDriveSetpoint>::SharedPtr
+    _differential_drive_setpoint_pub;
   rclcpp::Subscription<px4_msgs::msg::RoverCruiseControlState>::SharedPtr _rover_cruise_control;
 };
 
