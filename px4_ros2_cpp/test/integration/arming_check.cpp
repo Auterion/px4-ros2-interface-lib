@@ -97,8 +97,8 @@ void TestExecution::run()
         /* EVENT
                  */
         reporter.armingCheckFailureExt(
-          events::ID("check_unit_test_failure"),
-          events::Log::Error, "Test Failure");
+          px4_ros2::events::ID("check_unit_test_failure"),
+          px4_ros2::events::Log::Error, "Test Failure");
         ++_num_failures_reported;
       }
     });
