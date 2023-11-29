@@ -13,7 +13,7 @@ using namespace std::chrono_literals; // NOLINT
 class LocalNavigationTest : public px4_ros2::LocalNavigationInterface
 {
 public:
-  LocalNavigationTest(rclcpp::Node & node)
+  explicit LocalNavigationTest(rclcpp::Node & node)
   : LocalNavigationInterface(node, px4_ros2::PoseFrame::NED,
       px4_ros2::VelocityFrame::NED)
   {

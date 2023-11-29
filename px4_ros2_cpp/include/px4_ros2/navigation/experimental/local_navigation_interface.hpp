@@ -32,7 +32,7 @@ enum class VelocityFrame
   BodyFRD
 };
 
-constexpr inline uint8_t PoseFrameToMessageFrame(px4_ros2::PoseFrame frame) noexcept
+constexpr inline uint8_t poseFrameToMessageFrame(px4_ros2::PoseFrame frame) noexcept
 {
   switch (frame) {
     case PoseFrame::Unknown: return AuxLocalPosition::POSE_FRAME_UNKNOWN;
@@ -45,7 +45,7 @@ constexpr inline uint8_t PoseFrameToMessageFrame(px4_ros2::PoseFrame frame) noex
   return AuxLocalPosition::POSE_FRAME_UNKNOWN;
 }
 
-constexpr inline uint8_t VelocityFrameToMessageFrame(px4_ros2::VelocityFrame frame) noexcept
+constexpr inline uint8_t velocityFrameToMessageFrame(px4_ros2::VelocityFrame frame) noexcept
 {
   switch (frame) {
     case VelocityFrame::Unknown: return AuxLocalPosition::VELOCITY_FRAME_UNKNOWN;

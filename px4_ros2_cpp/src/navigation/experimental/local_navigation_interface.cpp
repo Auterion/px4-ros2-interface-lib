@@ -16,8 +16,8 @@ LocalNavigationInterface::LocalNavigationInterface(
   const VelocityFrame velocity_frame)
 : NavigationInterfaceBase(node)
 {
-  _pose_frame = PoseFrameToMessageFrame(pose_frame);
-  _velocity_frame = VelocityFrameToMessageFrame(velocity_frame);
+  _pose_frame = poseFrameToMessageFrame(pose_frame);
+  _velocity_frame = velocityFrameToMessageFrame(velocity_frame);
 
   _aux_local_position_pub = node.create_publisher<AuxLocalPosition>(
     topicNamespacePrefix() + "/fmu/in/vehicle_visual_odometry", 10);

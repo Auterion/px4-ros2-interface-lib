@@ -46,7 +46,7 @@ class NavigationInterfaceBase : public Context
 {
 public:
   explicit NavigationInterfaceBase(rclcpp::Node & node, std::string topic_namespace_prefix = "")
-  : Context(node, topic_namespace_prefix), _node(node) {}
+  : Context(node, std::move(topic_namespace_prefix)), _node(node) {}
   virtual ~NavigationInterfaceBase() = default;
 
   /**
