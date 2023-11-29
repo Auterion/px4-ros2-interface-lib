@@ -42,8 +42,8 @@ public:
       /* EVENT
                  */
       reporter.armingCheckFailureExt(
-        events::ID("check_custom_mode_test_failure"),
-        events::Log::Error, "Custom check failed");
+        px4_ros2::events::ID("check_custom_mode_test_failure"),
+        px4_ros2::events::Log::Error, "Custom check failed");
     }
 
     ++num_arming_check_updates;

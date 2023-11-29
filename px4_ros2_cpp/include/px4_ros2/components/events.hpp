@@ -7,7 +7,7 @@
 
 #include <px4_msgs/msg/arming_check_reply.hpp>
 
-namespace events
+namespace px4_ros2::events
 {
 
 using EventType = px4_msgs::msg::Event;
@@ -110,4 +110,4 @@ constexpr uint32_t ID(const char (& name)[N]) // NOLINT(readability-identifier-n
 }
 
 
-} // namespace events
+} // namespace px4_ros2::events
