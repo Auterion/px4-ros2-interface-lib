@@ -196,11 +196,13 @@ bool LocalNavigationInterface::isValueNotNAN(const LocalPositionEstimate & estim
       _node.get_logger(), "Estimate value position_xy_variance is defined but contains a NAN.");
     return false;
   }
-  if (estimate.position_z.has_value() && estimate.position_z == NAN) {
+  if (estimate.position_z.has_value() && std::isnan(estimate.position_z.value())) {
     RCLCPP_ERROR(_node.get_logger(), "Estimate value position_z is defined but contains a NAN.");
     return false;
   }
-  if (estimate.position_z_variance.has_value() && estimate.position_z_variance == NAN) {
+  if (estimate.position_z_variance.has_value() &&
+    std::isnan(estimate.position_z_variance.value()))
+  {
     RCLCPP_ERROR(
       _node.get_logger(), "Estimate value position_z_variance is defined but contains a NAN.");
     return false;
@@ -216,11 +218,13 @@ bool LocalNavigationInterface::isValueNotNAN(const LocalPositionEstimate & estim
       _node.get_logger(), "Estimate value velocity_xy_variance is defined but contains a NAN.");
     return false;
   }
-  if (estimate.velocity_z.has_value() && estimate.velocity_z == NAN) {
+  if (estimate.velocity_z.has_value() && std::isnan(estimate.velocity_z.value())) {
     RCLCPP_ERROR(_node.get_logger(), "Estimate value velocity_z is defined but contains a NAN.");
     return false;
   }
-  if (estimate.velocity_z_variance.has_value() && estimate.velocity_z_variance == NAN) {
+  if (estimate.velocity_z_variance.has_value() &&
+    std::isnan(estimate.velocity_z_variance.value()))
+  {
     RCLCPP_ERROR(
       _node.get_logger(), "Estimate value velocity_z_variance is defined but contains a NAN.");
     return false;

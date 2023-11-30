@@ -99,16 +99,18 @@ bool GlobalNavigationInterface::isValueNotNAN(const GlobalPositionEstimate & est
     RCLCPP_ERROR(_node.get_logger(), "Estimate value lat_lon is defined but contains a NAN.");
     return false;
   }
-  if (estimate.horizontal_variance.has_value() && estimate.horizontal_variance == NAN) {
+  if (estimate.horizontal_variance.has_value() &&
+    std::isnan(estimate.horizontal_variance.value()))
+  {
     RCLCPP_ERROR(
       _node.get_logger(), "Estimate value horizontal_variance is defined but contains a NAN.");
     return false;
   }
-  if (estimate.altitude_msl.has_value() && estimate.altitude_msl == NAN) {
+  if (estimate.altitude_msl.has_value() && std::isnan(estimate.altitude_msl.value())) {
     RCLCPP_ERROR(_node.get_logger(), "Estimate value altitude_msl is defined but contains a NAN.");
     return false;
   }
-  if (estimate.vertical_variance.has_value() && estimate.vertical_variance == NAN) {
+  if (estimate.vertical_variance.has_value() && std::isnan(estimate.vertical_variance.value())) {
     RCLCPP_ERROR(
       _node.get_logger(), "Estimate value vertical_variance is defined but contains a NAN.");
     return false;
