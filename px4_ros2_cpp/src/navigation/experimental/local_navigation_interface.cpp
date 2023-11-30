@@ -172,7 +172,7 @@ bool LocalNavigationInterface::isFrameValid(const LocalPositionEstimate & estima
   }
 
   if ((estimate.velocity_xy.has_value() || estimate.velocity_z.has_value()) &&
-    _pose_frame == AuxLocalPosition::VELOCITY_FRAME_UNKNOWN)
+    _velocity_frame == AuxLocalPosition::VELOCITY_FRAME_UNKNOWN)
   {
     RCLCPP_ERROR(
       _node.get_logger(),
