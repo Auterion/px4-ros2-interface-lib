@@ -25,20 +25,20 @@ public:
 
   void updateLocalPosition()
   {
-    px4_ros2::LocalPositionMeasurement local_position_estimate {};
+    px4_ros2::LocalPositionMeasurement local_position_measurement {};
 
-    local_position_estimate.timestamp_sample = _node.get_clock()->now();
+    local_position_measurement.timestamp_sample = _node.get_clock()->now();
 
-    local_position_estimate.velocity_xy = Eigen::Vector2f {1.F, 2.F};
-    local_position_estimate.velocity_xy_variance = Eigen::Vector2f {0.3F, 0.4F};
+    local_position_measurement.velocity_xy = Eigen::Vector2f {1.F, 2.F};
+    local_position_measurement.velocity_xy_variance = Eigen::Vector2f {0.3F, 0.4F};
 
-    local_position_estimate.position_z = 12.3F;
-    local_position_estimate.position_z_variance = 0.33F;
+    local_position_measurement.position_z = 12.3F;
+    local_position_measurement.position_z_variance = 0.33F;
 
-    local_position_estimate.attitude_quaternion = Eigen::Quaternionf {0.1, -0.2, 0.3, 0.25};
-    local_position_estimate.attitude_variance = Eigen::Vector3f {0.2, 0.1, 0.05};
+    local_position_measurement.attitude_quaternion = Eigen::Quaternionf {0.1, -0.2, 0.3, 0.25};
+    local_position_measurement.attitude_variance = Eigen::Vector3f {0.2, 0.1, 0.05};
 
-    update(local_position_estimate);
+    update(local_position_measurement);
     RCLCPP_DEBUG(_node.get_logger(), "Successfully sent position update to navigation interface.");
   }
 
