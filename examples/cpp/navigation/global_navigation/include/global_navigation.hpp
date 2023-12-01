@@ -24,7 +24,7 @@ public:
 
   void updateGlobalPosition()
   {
-    px4_ros2::GlobalPositionEstimate global_position_estimate {};
+    px4_ros2::GlobalPositionMeasurement global_position_estimate {};
 
     global_position_estimate.timestamp_sample = _node.get_clock()->now();
 

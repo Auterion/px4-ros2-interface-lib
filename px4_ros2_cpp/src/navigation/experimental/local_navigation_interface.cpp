@@ -24,7 +24,7 @@ LocalNavigationInterface::LocalNavigationInterface(
 }
 
 void LocalNavigationInterface::update(
-  const LocalPositionEstimate & local_position_estimate) const
+  const LocalPositionMeasurement & local_position_estimate) const
 {
   // Run basic sanity checks on local position estimate
   if (!isEstimateNonEmpty(local_position_estimate)) {
@@ -106,7 +106,7 @@ void LocalNavigationInterface::update(
   _aux_local_position_pub->publish(aux_local_position);
 }
 
-bool LocalNavigationInterface::isEstimateNonEmpty(const LocalPositionEstimate & estimate) const
+bool LocalNavigationInterface::isEstimateNonEmpty(const LocalPositionMeasurement & estimate) const
 {
   return estimate.position_xy.has_value() ||
          estimate.position_z.has_value() ||
@@ -115,7 +115,7 @@ bool LocalNavigationInterface::isEstimateNonEmpty(const LocalPositionEstimate & 
          estimate.attitude_quaternion.has_value();
 }
 
-bool LocalNavigationInterface::isVarianceValid(const LocalPositionEstimate & estimate) const
+bool LocalNavigationInterface::isVarianceValid(const LocalPositionMeasurement & estimate) const
 {
   if (estimate.position_xy.has_value() &&
     (!estimate.position_xy_variance.has_value() ||
@@ -160,7 +160,7 @@ bool LocalNavigationInterface::isVarianceValid(const LocalPositionEstimate & est
   return true;
 }
 
-bool LocalNavigationInterface::isFrameValid(const LocalPositionEstimate & estimate) const
+bool LocalNavigationInterface::isFrameValid(const LocalPositionMeasurement & estimate) const
 {
   if ((estimate.position_xy.has_value() || estimate.position_z.has_value()) &&
     _pose_frame == AuxLocalPosition::POSE_FRAME_UNKNOWN)
@@ -183,7 +183,7 @@ bool LocalNavigationInterface::isFrameValid(const LocalPositionEstimate & estima
   return true;
 }
 
-bool LocalNavigationInterface::isValueNotNAN(const LocalPositionEstimate & estimate) const
+bool LocalNavigationInterface::isValueNotNAN(const LocalPositionMeasurement & estimate) const
 {
   if (estimate.position_xy.has_value() && estimate.position_xy.value().hasNaN()) {
     RCLCPP_ERROR(_node.get_logger(), "Estimate value position_xy is defined but contains a NAN.");

@@ -16,13 +16,13 @@ namespace px4_ros2
 {
 
 /**
- * @struct GlobalPositionEstimate
+ * @struct GlobalPositionMeasurement
  * @brief Represents a global position estimate to be passed to `GlobalNavigationInterface::update`.
  *
  * This struct holds information about the global position estimate, including: the timestamp of the sample, latitude and longitude, altitude in the MSL frame, and their associated variances.
  * @see GlobalNavigationInterface::update
  */
-struct GlobalPositionEstimate
+struct GlobalPositionMeasurement
 {
   /** @brief Timestamp of the sample. */
   rclcpp::Time timestamp_sample {};
@@ -52,28 +52,28 @@ public:
    * 3. If an estimate value is provided, its associated variance value is well defined.
    * @param global_position_estimate The global position estimate to publish.
    */
-  void update(const GlobalPositionEstimate & global_position_estimate) const;
+  void update(const GlobalPositionMeasurement & global_position_estimate) const;
 
 private:
   /**
    * @brief Check that at least one estimate value is defined.
    */
-  bool isEstimateNonEmpty(const GlobalPositionEstimate & estimate) const;
+  bool isEstimateNonEmpty(const GlobalPositionMeasurement & estimate) const;
 
   /**
    * @brief Check that if an estimate value is defined, its variance is also defined and strictly greater than zero.
    */
-  bool isVarianceValid(const GlobalPositionEstimate & estimate) const;
+  bool isVarianceValid(const GlobalPositionMeasurement & estimate) const;
 
   /**
    * @brief Check that if an estimate value is defined, its associated frame is not *FRAME_UNKNOWN.
    */
-  bool isFrameValid(const GlobalPositionEstimate & estimate) const;
+  bool isFrameValid(const GlobalPositionMeasurement & estimate) const;
 
   /**
    * @brief Check that if an estimate value is defined, none of its fields are NAN.
    */
-  bool isValueNotNAN(const GlobalPositionEstimate & estimate) const;
+  bool isValueNotNAN(const GlobalPositionMeasurement & estimate) const;
 
   rclcpp::Publisher<px4_msgs::msg::VehicleGlobalPosition>::SharedPtr _aux_global_position_pub;
 

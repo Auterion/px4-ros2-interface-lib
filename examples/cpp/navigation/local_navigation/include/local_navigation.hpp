@@ -15,7 +15,7 @@ class LocalNavigationTest : public px4_ros2::LocalNavigationInterface
 public:
   explicit LocalNavigationTest(rclcpp::Node & node)
   : LocalNavigationInterface(node, px4_ros2::PoseFrame::NED,
-      px4_ros2::VelocityFrame::NED)
+      px4_ros2::VelocityFrame::LocalNED)
   {
     _timer =
       node.create_wall_timer(1s, [this] {updateLocalPosition();});
@@ -25,7 +25,7 @@ public:
 
   void updateLocalPosition()
   {
-    px4_ros2::LocalPositionEstimate local_position_estimate {};
+    px4_ros2::LocalPositionMeasurement local_position_estimate {};
 
     local_position_estimate.timestamp_sample = _node.get_clock()->now();
 

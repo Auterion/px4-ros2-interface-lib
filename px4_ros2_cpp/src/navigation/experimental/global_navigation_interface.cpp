@@ -20,7 +20,7 @@ GlobalNavigationInterface::GlobalNavigationInterface(rclcpp::Node & node)
 }
 
 void GlobalNavigationInterface::update(
-  const GlobalPositionEstimate & global_position_estimate) const
+  const GlobalPositionMeasurement & global_position_estimate) const
 {
   // Run basic sanity checks on global position estimate
   if (!isEstimateNonEmpty(global_position_estimate)) {
@@ -65,12 +65,12 @@ void GlobalNavigationInterface::update(
   _aux_global_position_pub->publish(aux_global_position);
 }
 
-bool GlobalNavigationInterface::isEstimateNonEmpty(const GlobalPositionEstimate & estimate) const
+bool GlobalNavigationInterface::isEstimateNonEmpty(const GlobalPositionMeasurement & estimate) const
 {
   return estimate.lat_lon.has_value() || estimate.altitude_msl.has_value();
 }
 
-bool GlobalNavigationInterface::isVarianceValid(const GlobalPositionEstimate & estimate) const
+bool GlobalNavigationInterface::isVarianceValid(const GlobalPositionMeasurement & estimate) const
 {
   if (estimate.lat_lon.has_value() &&
     (!estimate.horizontal_variance.has_value() || estimate.horizontal_variance.value() <= 0))
@@ -88,12 +88,12 @@ bool GlobalNavigationInterface::isVarianceValid(const GlobalPositionEstimate & e
   return true;
 }
 
-bool GlobalNavigationInterface::isFrameValid(const GlobalPositionEstimate & estimate) const
+bool GlobalNavigationInterface::isFrameValid(const GlobalPositionMeasurement & estimate) const
 {
   return true;
 }
 
-bool GlobalNavigationInterface::isValueNotNAN(const GlobalPositionEstimate & estimate) const
+bool GlobalNavigationInterface::isValueNotNAN(const GlobalPositionMeasurement & estimate) const
 {
   if (estimate.lat_lon.has_value() && estimate.lat_lon.value().hasNaN()) {
     RCLCPP_ERROR(_node.get_logger(), "Estimate value lat_lon is defined but contains a NAN.");

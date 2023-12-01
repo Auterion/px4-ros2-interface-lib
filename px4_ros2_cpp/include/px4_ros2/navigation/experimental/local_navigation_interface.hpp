@@ -27,8 +27,8 @@ enum class PoseFrame
 enum class VelocityFrame
 {
   Unknown,
-  NED,
-  FRD,
+  LocalNED,
+  LocalFRD,
   BodyFRD
 };
 
@@ -50,9 +50,9 @@ constexpr inline uint8_t velocityFrameToMessageFrame(px4_ros2::VelocityFrame fra
   switch (frame) {
     case VelocityFrame::Unknown: return AuxLocalPosition::VELOCITY_FRAME_UNKNOWN;
 
-    case VelocityFrame::NED: return AuxLocalPosition::VELOCITY_FRAME_NED;
+    case VelocityFrame::LocalNED: return AuxLocalPosition::VELOCITY_FRAME_NED;
 
-    case VelocityFrame::FRD: return AuxLocalPosition::VELOCITY_FRAME_FRD;
+    case VelocityFrame::LocalFRD: return AuxLocalPosition::VELOCITY_FRAME_FRD;
 
     case VelocityFrame::BodyFRD: return AuxLocalPosition::VELOCITY_FRAME_BODY_FRD;
   }
@@ -61,13 +61,13 @@ constexpr inline uint8_t velocityFrameToMessageFrame(px4_ros2::VelocityFrame fra
 }
 
 /**
- * @struct LocalPositionEstimate
+ * @struct LocalPositionMeasurement
  * @brief Represents a local position estimate to be passed to `LocalNavigationInterface::update`.
  *
  * This struct holds information about the local position estimate, including: the timestamp of the sample, vertical and horizontal postion and velocity, attitude, and their associated variances.
  * @see LocalNavigationInterface::update
  */
-struct LocalPositionEstimate
+struct LocalPositionMeasurement
 {
   /** @brief Timestamp of the sample. */
   rclcpp::Time timestamp_sample {};
@@ -90,9 +90,9 @@ struct LocalPositionEstimate
   /** @brief Variance of velocity error in the z-axis. */
   std::optional<float> velocity_z_variance {std::nullopt};
 
-  /** @brief Attitude quaternion. */
+  /** @brief Attitude quaternion [w, x, y, z], Hamiltonian convention. */
   std::optional<Eigen::Quaternionf> attitude_quaternion {std::nullopt};
-  /** @brief Variance of attitude error. */
+  /** @brief Variance of attitude error in body frame. */
   std::optional<Eigen::Vector3f> attitude_variance {std::nullopt};
 };
 
@@ -113,28 +113,28 @@ public:
    * 4. If an estimate value is provided, its associated reference frame is not unknown.
    * @param local_position_estimate The local position estimate to publish.
    */
-  void update(const LocalPositionEstimate & local_position_estimate) const;
+  void update(const LocalPositionMeasurement & local_position_estimate) const;
 
 private:
   /**
    * @brief Check that at least one estimate value is defined.
    */
-  bool isEstimateNonEmpty(const LocalPositionEstimate & estimate) const;
+  bool isEstimateNonEmpty(const LocalPositionMeasurement & estimate) const;
 
   /**
    * @brief Check that if an estimate value is defined, its variance is also defined and strictly greater than zero.
    */
-  bool isVarianceValid(const LocalPositionEstimate & estimate) const;
+  bool isVarianceValid(const LocalPositionMeasurement & estimate) const;
 
   /**
    * @brief Check that if an estimate value is defined, its associated frame is not *FRAME_UNKNOWN.
    */
-  bool isFrameValid(const LocalPositionEstimate & estimate) const;
+  bool isFrameValid(const LocalPositionMeasurement & estimate) const;
 
   /**
    * @brief Check that if an estimate value is defined, none of its fields are NAN.
    */
-  bool isValueNotNAN(const LocalPositionEstimate & estimate) const;
+  bool isValueNotNAN(const LocalPositionMeasurement & estimate) const;
 
   rclcpp::Publisher<AuxLocalPosition>::SharedPtr _aux_local_position_pub;
 
