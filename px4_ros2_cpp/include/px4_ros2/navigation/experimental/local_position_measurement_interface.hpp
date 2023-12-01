@@ -62,10 +62,10 @@ constexpr inline uint8_t velocityFrameToMessageFrame(px4_ros2::VelocityFrame fra
 
 /**
  * @struct LocalPositionMeasurement
- * @brief Represents a local position estimate to be passed to `LocalNavigationInterface::update`.
+ * @brief Represents a local position measurement to be passed to `LocalPositionMeasurementInterface::update`.
  *
- * This struct holds information about the local position estimate, including: the timestamp of the sample, vertical and horizontal postion and velocity, attitude, and their associated variances.
- * @see LocalNavigationInterface::update
+ * This struct holds information about the local position measurement, including: the timestamp of the sample, vertical and horizontal postion and velocity, attitude, and their associated variances.
+ * @see LocalPositionMeasurementInterface::update
  */
 struct LocalPositionMeasurement
 {
@@ -96,45 +96,45 @@ struct LocalPositionMeasurement
   std::optional<Eigen::Vector3f> attitude_variance {std::nullopt};
 };
 
-class LocalNavigationInterface : public NavigationInterfaceBase
+class LocalPositionMeasurementInterface : public NavigationInterfaceBase
 {
 public:
-  explicit LocalNavigationInterface(
+  explicit LocalPositionMeasurementInterface(
     rclcpp::Node & node, PoseFrame pose_frame,
     VelocityFrame velocity_frame);
-  ~LocalNavigationInterface() override = default;
+  ~LocalPositionMeasurementInterface() override = default;
 
   /**
-   * @brief Publishes a local position estimate to the FMU.
-   * The following are checked about the given local position estimate:
+   * @brief Publishes a local position measurement to the FMU.
+   * The following are checked about the given local position measurement:
    * 1. The sample timestamp is defined.
    * 2. Values do not have a NAN.
-   * 3. If an estimate value is provided, its associated variance value is well defined.
-   * 4. If an estimate value is provided, its associated reference frame is not unknown.
-   * @param local_position_estimate The local position estimate to publish.
+   * 3. If an measurement value is provided, its associated variance value is well defined.
+   * 4. If an measurement value is provided, its associated reference frame is not unknown.
+   * @param local_position_measurement The local position measurement to publish.
    */
-  void update(const LocalPositionMeasurement & local_position_estimate) const;
+  void update(const LocalPositionMeasurement & local_position_measurement) const;
 
 private:
   /**
-   * @brief Check that at least one estimate value is defined.
+   * @brief Check that at least one measurement value is defined.
    */
-  bool isEstimateNonEmpty(const LocalPositionMeasurement & estimate) const;
+  bool isMeasurementNonEmpty(const LocalPositionMeasurement & measurement) const;
 
   /**
-   * @brief Check that if an estimate value is defined, its variance is also defined and strictly greater than zero.
+   * @brief Check that if an measurement value is defined, its variance is also defined and strictly greater than zero.
    */
-  bool isVarianceValid(const LocalPositionMeasurement & estimate) const;
+  bool isVarianceValid(const LocalPositionMeasurement & measurement) const;
 
   /**
-   * @brief Check that if an estimate value is defined, its associated frame is not *FRAME_UNKNOWN.
+   * @brief Check that if an measurement value is defined, its associated frame is not *FRAME_UNKNOWN.
    */
-  bool isFrameValid(const LocalPositionMeasurement & estimate) const;
+  bool isFrameValid(const LocalPositionMeasurement & measurement) const;
 
   /**
-   * @brief Check that if an estimate value is defined, none of its fields are NAN.
+   * @brief Check that if an measurement value is defined, none of its fields are NAN.
    */
-  bool isValueNotNAN(const LocalPositionMeasurement & estimate) const;
+  bool isValueNotNAN(const LocalPositionMeasurement & measurement) const;
 
   rclcpp::Publisher<AuxLocalPosition>::SharedPtr _aux_local_position_pub;
 

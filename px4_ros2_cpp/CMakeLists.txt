@@ -35,8 +35,8 @@ set(HEADER_FILES
         include/px4_ros2/control/setpoint_types/experimental/attitude.hpp
         include/px4_ros2/control/setpoint_types/experimental/rates.hpp
         include/px4_ros2/control/setpoint_types/experimental/trajectory.hpp
-        include/px4_ros2/navigation/experimental/global_navigation_interface.hpp
-        include/px4_ros2/navigation/experimental/local_navigation_interface.hpp
+        include/px4_ros2/navigation/experimental/global_position_measurement_interface.hpp
+        include/px4_ros2/navigation/experimental/local_position_measurement_interface.hpp
         include/px4_ros2/navigation/experimental/navigation_interface_base.hpp
         include/px4_ros2/odometry/global_position.hpp
         include/px4_ros2/odometry/local_position.hpp
@@ -57,10 +57,10 @@ add_library(px4_ros2_cpp
         src/control/setpoint_types/experimental/attitude.cpp
         src/control/setpoint_types/experimental/rates.cpp
         src/control/setpoint_types/experimental/trajectory.cpp
+        src/navigation/experimental/global_position_measurement_interface.cpp
+        src/navigation/experimental/local_position_measurement_interface.cpp
         src/odometry/global_position.cpp
         src/odometry/local_position.cpp
-        src/navigation/experimental/local_navigation_interface.cpp
-        src/navigation/experimental/global_navigation_interface.cpp
 )
 ament_target_dependencies(px4_ros2_cpp ament_index_cpp Eigen3 rclcpp px4_msgs)
 

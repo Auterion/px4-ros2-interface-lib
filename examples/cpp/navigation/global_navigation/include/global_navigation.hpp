@@ -6,15 +6,15 @@
 
 
 #include <rclcpp/rclcpp.hpp>
-#include <px4_ros2/navigation/experimental/global_navigation_interface.hpp>
+#include <px4_ros2/navigation/experimental/global_position_measurement_interface.hpp>
 
 using namespace std::chrono_literals; // NOLINT
 
-class GlobalNavigationTest : public px4_ros2::GlobalNavigationInterface
+class GlobalNavigationTest : public px4_ros2::GlobalPositionMeasurementInterface
 {
 public:
   explicit GlobalNavigationTest(rclcpp::Node & node)
-  : GlobalNavigationInterface(node)
+  : GlobalPositionMeasurementInterface(node)
   {
     _timer =
       node.create_wall_timer(1s, [this] {updateGlobalPosition();});
@@ -24,17 +24,17 @@ public:
 
   void updateGlobalPosition()
   {
-    px4_ros2::GlobalPositionMeasurement global_position_estimate {};
+    px4_ros2::GlobalPositionMeasurement global_position_measurement {};
 
-    global_position_estimate.timestamp_sample = _node.get_clock()->now();
+    global_position_measurement.timestamp_sample = _node.get_clock()->now();
 
-    global_position_estimate.lat_lon = Eigen::Vector2d {12.34321, 23.45432};
-    global_position_estimate.horizontal_variance = 0.1F;
+    global_position_measurement.lat_lon = Eigen::Vector2d {12.34321, 23.45432};
+    global_position_measurement.horizontal_variance = 0.1F;
 
-    global_position_estimate.altitude_msl = 12.4F;
-    global_position_estimate.vertical_variance = 0.2F;
+    global_position_measurement.altitude_msl = 12.4F;
+    global_position_measurement.vertical_variance = 0.2F;
 
-    update(global_position_estimate);
+    update(global_position_measurement);
     RCLCPP_DEBUG(_node.get_logger(), "Successfully sent position update to navigation interface.");
   }
 

@@ -6,15 +6,15 @@
 
 
 #include <rclcpp/rclcpp.hpp>
-#include <px4_ros2/navigation/experimental/local_navigation_interface.hpp>
+#include <px4_ros2/navigation/experimental/local_position_measurement_interface.hpp>
 
 using namespace std::chrono_literals; // NOLINT
 
-class LocalNavigationTest : public px4_ros2::LocalNavigationInterface
+class LocalNavigationTest : public px4_ros2::LocalPositionMeasurementInterface
 {
 public:
   explicit LocalNavigationTest(rclcpp::Node & node)
-  : LocalNavigationInterface(node, px4_ros2::PoseFrame::NED,
+  : LocalPositionMeasurementInterface(node, px4_ros2::PoseFrame::NED,
       px4_ros2::VelocityFrame::LocalNED)
   {
     _timer =
