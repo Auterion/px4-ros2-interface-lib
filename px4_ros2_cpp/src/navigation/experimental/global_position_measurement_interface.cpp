@@ -12,7 +12,7 @@ namespace px4_ros2
 {
 
 GlobalPositionMeasurementInterface::GlobalPositionMeasurementInterface(rclcpp::Node & node)
-: NavigationInterfaceBase(node)
+: PositionMeasurementInterfaceBase(node)
 {
   _aux_global_position_pub =
     node.create_publisher<VehicleGlobalPosition>(

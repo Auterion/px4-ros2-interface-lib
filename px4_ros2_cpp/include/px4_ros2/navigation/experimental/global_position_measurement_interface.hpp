@@ -38,7 +38,7 @@ struct GlobalPositionMeasurement
   std::optional<float> vertical_variance {std::nullopt};
 };
 
-class GlobalPositionMeasurementInterface : public NavigationInterfaceBase
+class GlobalPositionMeasurementInterface : public PositionMeasurementInterfaceBase
 {
 public:
   explicit GlobalPositionMeasurementInterface(rclcpp::Node & node);

@@ -96,7 +96,7 @@ struct LocalPositionMeasurement
   std::optional<Eigen::Vector3f> attitude_variance {std::nullopt};
 };
 
-class LocalPositionMeasurementInterface : public NavigationInterfaceBase
+class LocalPositionMeasurementInterface : public PositionMeasurementInterfaceBase
 {
 public:
   explicit LocalPositionMeasurementInterface(

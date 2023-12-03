@@ -16,12 +16,14 @@ public:
   : std::invalid_argument("PX4 ROS2 navigation interface: invalid argument: " + message) {}
 };
 
-class NavigationInterfaceBase : public Context
+class PositionMeasurementInterfaceBase : public Context
 {
 public:
-  explicit NavigationInterfaceBase(rclcpp::Node & node, std::string topic_namespace_prefix = "")
+  explicit PositionMeasurementInterfaceBase(
+    rclcpp::Node & node,
+    std::string topic_namespace_prefix = "")
   : Context(node, std::move(topic_namespace_prefix)), _node(node) {}
-  virtual ~NavigationInterfaceBase() = default;
+  virtual ~PositionMeasurementInterfaceBase() = default;
 
   /**
    * Register the interface.
