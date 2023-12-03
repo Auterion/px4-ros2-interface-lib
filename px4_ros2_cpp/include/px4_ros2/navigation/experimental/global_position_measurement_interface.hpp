@@ -49,7 +49,7 @@ public:
    * The following are checked about the given global position measurement:
    * 1. The sample timestamp is defined.
    * 2. Values do not have a NAN.
-   * 3. If an measurement value is provided, its associated variance value is well defined.
+   * 3. If a measurement value is provided, its associated variance value is well defined.
    * @param global_position_measurement The global position measurement to publish.
    */
   void update(const GlobalPositionMeasurement & global_position_measurement) const;
@@ -61,17 +61,17 @@ private:
   bool isMeasurementNonEmpty(const GlobalPositionMeasurement & measurement) const;
 
   /**
-   * @brief Check that if an measurement value is defined, its variance is also defined and strictly greater than zero.
+   * @brief Check that if a measurement value is defined, its variance is also defined and strictly greater than zero.
    */
   bool isVarianceValid(const GlobalPositionMeasurement & measurement) const;
 
   /**
-   * @brief Check that if an measurement value is defined, its associated frame is not *FRAME_UNKNOWN.
+   * @brief Check that if a measurement value is defined, its associated frame is not *FRAME_UNKNOWN.
    */
   bool isFrameValid(const GlobalPositionMeasurement & measurement) const;
 
   /**
-   * @brief Check that if an measurement value is defined, none of its fields are NAN.
+   * @brief Check that if a measurement value is defined, none of its fields are NAN.
    */
   bool isValueNotNAN(const GlobalPositionMeasurement & measurement) const;
 

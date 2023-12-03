@@ -109,8 +109,8 @@ public:
    * The following are checked about the given local position measurement:
    * 1. The sample timestamp is defined.
    * 2. Values do not have a NAN.
-   * 3. If an measurement value is provided, its associated variance value is well defined.
-   * 4. If an measurement value is provided, its associated reference frame is not unknown.
+   * 3. If a measurement value is provided, its associated variance value is well defined.
+   * 4. If a measurement value is provided, its associated reference frame is not unknown.
    * @param local_position_measurement The local position measurement to publish.
    */
   void update(const LocalPositionMeasurement & local_position_measurement) const;
@@ -122,17 +122,17 @@ private:
   bool isMeasurementNonEmpty(const LocalPositionMeasurement & measurement) const;
 
   /**
-   * @brief Check that if an measurement value is defined, its variance is also defined and strictly greater than zero.
+   * @brief Check that if a measurement value is defined, its variance is also defined and strictly greater than zero.
    */
   bool isVarianceValid(const LocalPositionMeasurement & measurement) const;
 
   /**
-   * @brief Check that if an measurement value is defined, its associated frame is not *FRAME_UNKNOWN.
+   * @brief Check that if a measurement value is defined, its associated frame is not *FRAME_UNKNOWN.
    */
   bool isFrameValid(const LocalPositionMeasurement & measurement) const;
 
   /**
-   * @brief Check that if an measurement value is defined, none of its fields are NAN.
+   * @brief Check that if a measurement value is defined, none of its fields are NAN.
    */
   bool isValueNotNAN(const LocalPositionMeasurement & measurement) const;
 
