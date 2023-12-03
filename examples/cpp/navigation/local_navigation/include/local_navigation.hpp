@@ -14,7 +14,7 @@ class LocalNavigationTest : public px4_ros2::LocalPositionMeasurementInterface
 {
 public:
   explicit LocalNavigationTest(rclcpp::Node & node)
-  : LocalPositionMeasurementInterface(node, px4_ros2::PoseFrame::NED,
+  : LocalPositionMeasurementInterface(node, px4_ros2::PoseFrame::LocalNED,
       px4_ros2::VelocityFrame::LocalNED)
   {
     _timer =

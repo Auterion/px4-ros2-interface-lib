@@ -20,8 +20,8 @@ using AuxLocalPosition = px4_msgs::msg::VehicleOdometry;
 enum class PoseFrame
 {
   Unknown,
-  NED,
-  FRD
+  LocalNED,
+  LocalFRD
 };
 
 enum class VelocityFrame
@@ -37,9 +37,9 @@ constexpr inline uint8_t poseFrameToMessageFrame(px4_ros2::PoseFrame frame) noex
   switch (frame) {
     case PoseFrame::Unknown: return AuxLocalPosition::POSE_FRAME_UNKNOWN;
 
-    case PoseFrame::NED: return AuxLocalPosition::POSE_FRAME_NED;
+    case PoseFrame::LocalNED: return AuxLocalPosition::POSE_FRAME_NED;
 
-    case PoseFrame::FRD: return AuxLocalPosition::POSE_FRAME_FRD;
+    case PoseFrame::LocalFRD: return AuxLocalPosition::POSE_FRAME_FRD;
   }
 
   return AuxLocalPosition::POSE_FRAME_UNKNOWN;
