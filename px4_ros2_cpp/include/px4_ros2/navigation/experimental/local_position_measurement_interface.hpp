@@ -64,12 +64,13 @@ public:
 
   /**
    * @brief Publishes a local position measurement to the FMU.
-   * The following are checked about the given local position measurement:
+   * Throws an exception if the following conditions are not met:
    * 1. The sample timestamp is defined.
    * 2. Values do not have a NAN.
    * 3. If a measurement value is provided, its associated variance value is well defined.
    * 4. If a measurement value is provided, its associated reference frame is not unknown.
    * @param local_position_measurement The local position measurement to publish.
+   * @throws px4_ros2::NavigationInterfaceInvalidArgument if the conditions above are not met.
    */
   void update(const LocalPositionMeasurement & local_position_measurement) const;
 
@@ -96,8 +97,8 @@ private:
 
   rclcpp::Publisher<AuxLocalPosition>::SharedPtr _aux_local_position_pub;
 
-  uint8_t _pose_frame;
-  uint8_t _velocity_frame;
+  const uint8_t _pose_frame;
+  const uint8_t _velocity_frame;
 };
 
 } // namespace px4_ros2

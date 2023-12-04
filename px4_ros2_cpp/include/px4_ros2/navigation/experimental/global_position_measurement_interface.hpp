@@ -46,11 +46,12 @@ public:
 
   /**
    * @brief Publishes a global position measurement to the FMU.
-   * The following are checked about the given global position measurement:
+   * Throws an exception if the following conditions are not met:
    * 1. The sample timestamp is defined.
    * 2. Values do not have a NAN.
    * 3. If a measurement value is provided, its associated variance value is well defined.
    * @param global_position_measurement The global position measurement to publish.
+   * @throws px4_ros2::NavigationInterfaceInvalidArgument if the conditions above are not met.
    */
   void update(const GlobalPositionMeasurement & global_position_measurement) const;
 

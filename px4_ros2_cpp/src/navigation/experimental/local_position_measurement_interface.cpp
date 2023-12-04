@@ -14,11 +14,10 @@ namespace px4_ros2
 LocalPositionMeasurementInterface::LocalPositionMeasurementInterface(
   rclcpp::Node & node, const PoseFrame pose_frame,
   const VelocityFrame velocity_frame)
-: PositionMeasurementInterfaceBase(node)
+: PositionMeasurementInterfaceBase(node),
+  _pose_frame(poseFrameToMessageFrame(pose_frame)),
+  _velocity_frame(velocityFrameToMessageFrame(velocity_frame))
 {
-  _pose_frame = poseFrameToMessageFrame(pose_frame);
-  _velocity_frame = velocityFrameToMessageFrame(velocity_frame);
-
   _aux_local_position_pub = node.create_publisher<AuxLocalPosition>(
     topicNamespacePrefix() + "/fmu/in/vehicle_visual_odometry", 10);
 }
