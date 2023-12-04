@@ -3,7 +3,11 @@ var hierarchy =
     [ "px4_ros2::ConfigOverrides", "classpx4__ros2_1_1ConfigOverrides.html", null ],
     [ "px4_ros2::SetpointBase::Configuration", "structpx4__ros2_1_1SetpointBase_1_1Configuration.html", null ],
     [ "px4_ros2::Context", "classpx4__ros2_1_1Context.html", [
-      [ "px4_ros2::ModeBase", "classpx4__ros2_1_1ModeBase.html", null ]
+      [ "px4_ros2::ModeBase", "classpx4__ros2_1_1ModeBase.html", null ],
+      [ "px4_ros2::PositionMeasurementInterfaceBase", "classpx4__ros2_1_1PositionMeasurementInterfaceBase.html", [
+        [ "px4_ros2::GlobalPositionMeasurementInterface", "classpx4__ros2_1_1GlobalPositionMeasurementInterface.html", null ],
+        [ "px4_ros2::LocalPositionMeasurementInterface", "classpx4__ros2_1_1LocalPositionMeasurementInterface.html", null ]
+      ] ]
     ] ],
     [ "std::enable_shared_from_this", null, [
       [ "px4_ros2::SetpointBase", "classpx4__ros2_1_1SetpointBase.html", [
@@ -13,8 +17,13 @@ var hierarchy =
         [ "px4_ros2::TrajectorySetpointType", "classpx4__ros2_1_1TrajectorySetpointType.html", null ]
       ] ]
     ] ],
+    [ "px4_ros2::GlobalPositionMeasurement", "structpx4__ros2_1_1GlobalPositionMeasurement.html", null ],
     [ "px4_ros2::HealthAndArmingCheckReporter", "classpx4__ros2_1_1HealthAndArmingCheckReporter.html", null ],
     [ "px4_ros2::HealthAndArmingChecks", "classpx4__ros2_1_1HealthAndArmingChecks.html", null ],
+    [ "std::invalid_argument", null, [
+      [ "px4_ros2::NavigationInterfaceInvalidArgument", "classpx4__ros2_1_1NavigationInterfaceInvalidArgument.html", null ]
+    ] ],
+    [ "px4_ros2::LocalPositionMeasurement", "structpx4__ros2_1_1LocalPositionMeasurement.html", null ],
     [ "px4_ros2::events::LogLevels", "structpx4__ros2_1_1events_1_1LogLevels.html", null ],
     [ "px4_ros2::ManualControlInput", "classpx4__ros2_1_1ManualControlInput.html", null ],
     [ "px4_ros2::MessageCompatibilityTopic", "structpx4__ros2_1_1MessageCompatibilityTopic.html", null ],

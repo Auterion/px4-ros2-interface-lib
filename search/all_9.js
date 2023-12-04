@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['odometry_27',['Odometry',['../group__odometry.html',1,'']]],
-  ['odometryglobalposition_28',['OdometryGlobalPosition',['../classpx4__ros2_1_1OdometryGlobalPosition.html',1,'px4_ros2']]],
-  ['odometrylocalposition_29',['OdometryLocalPosition',['../classpx4__ros2_1_1OdometryLocalPosition.html',1,'px4_ros2']]],
-  ['onactivate_30',['onActivate',['../classpx4__ros2_1_1ModeBase.html#ad9a3fc2b28fc79dfe469244a4df1f14d',1,'px4_ros2::ModeBase::onActivate()'],['../classpx4__ros2_1_1ModeExecutorBase.html#afbe189b02346968da5a15c8fbdba0a95',1,'px4_ros2::ModeExecutorBase::onActivate()']]],
-  ['ondeactivate_31',['onDeactivate',['../classpx4__ros2_1_1ModeBase.html#a7c52ee6ef9afc418b0b063983107f0fb',1,'px4_ros2::ModeBase::onDeactivate()'],['../classpx4__ros2_1_1ModeExecutorBase.html#a130be86de12e870743799902744dbba8',1,'px4_ros2::ModeExecutorBase::onDeactivate(DeactivateReason reason)=0']]],
-  ['onfailsafedeferred_32',['onFailsafeDeferred',['../classpx4__ros2_1_1ModeExecutorBase.html#ad80a234c8cb2f4c186fa2b7bffd1a1dd',1,'px4_ros2::ModeExecutorBase']]]
+  ['name_35',['name',['../structpx4__ros2_1_1ModeBase_1_1Settings.html#a52d24121ecefb1aa62d4c18d3f37dc19',1,'px4_ros2::ModeBase::Settings']]],
+  ['navigationinterfaceinvalidargument_36',['NavigationInterfaceInvalidArgument',['../classpx4__ros2_1_1NavigationInterfaceInvalidArgument.html',1,'px4_ros2']]]
 ];

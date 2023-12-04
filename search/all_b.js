@@ -1,9 +1,12 @@
 var searchData=
 [
-  ['ratessetpointtype_37',['RatesSetpointType',['../classpx4__ros2_1_1RatesSetpointType.html',1,'px4_ros2']]],
-  ['rejected_38',['Rejected',['../group__components.html#gga0d5805242f91956fd51e243091367f77ad37b1f6c0512e2118cee17fea015b699',1,'px4_ros2']]],
-  ['replace_5finternal_5fmode_39',['replace_internal_mode',['../structpx4__ros2_1_1ModeBase_1_1Settings.html#af61499f0183e347cb580407d64b4c3cd',1,'px4_ros2::ModeBase::Settings']]],
-  ['requirementflags_40',['RequirementFlags',['../structpx4__ros2_1_1RequirementFlags.html',1,'px4_ros2']]],
-  ['result_41',['Result',['../group__components.html#ga0d5805242f91956fd51e243091367f77',1,'px4_ros2']]],
-  ['roll_42',['roll',['../classpx4__ros2_1_1ManualControlInput.html#a377da17ccfb46fc042d5b1a98f9e4398',1,'px4_ros2::ManualControlInput']]]
+  ['peripheralactuatorcontrols_43',['PeripheralActuatorControls',['../classpx4__ros2_1_1PeripheralActuatorControls.html',1,'px4_ros2']]],
+  ['pitch_44',['pitch',['../classpx4__ros2_1_1ManualControlInput.html#adcdf54f3694dc4f46e7767f8a89c9199',1,'px4_ros2::ManualControlInput']]],
+  ['position_5fxy_45',['position_xy',['../structpx4__ros2_1_1LocalPositionMeasurement.html#a6e78832418253ba6b2b2810924a7317c',1,'px4_ros2::LocalPositionMeasurement']]],
+  ['position_5fxy_5fvariance_46',['position_xy_variance',['../structpx4__ros2_1_1LocalPositionMeasurement.html#adc0536a3ad46002c0b22dc78adb2cf8c',1,'px4_ros2::LocalPositionMeasurement']]],
+  ['position_5fz_47',['position_z',['../structpx4__ros2_1_1LocalPositionMeasurement.html#ad36330e09dfe3c6b7199ffa745f26f17',1,'px4_ros2::LocalPositionMeasurement']]],
+  ['position_5fz_5fvariance_48',['position_z_variance',['../structpx4__ros2_1_1LocalPositionMeasurement.html#aaa49a96aac2b172e49c2036424422b6e',1,'px4_ros2::LocalPositionMeasurement']]],
+  ['positionmeasurementinterfacebase_49',['PositionMeasurementInterfaceBase',['../classpx4__ros2_1_1PositionMeasurementInterfaceBase.html',1,'px4_ros2']]],
+  ['prevent_5farming_50',['prevent_arming',['../structpx4__ros2_1_1RequirementFlags.html#a08776821d767a93f5b0677f5122a6e33',1,'px4_ros2::RequirementFlags']]],
+  ['px4_20ros_202_20interface_20library_51',['PX4 ROS 2 Interface Library',['../index.html',1,'']]]
 ];
