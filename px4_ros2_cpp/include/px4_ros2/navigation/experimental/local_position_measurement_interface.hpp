@@ -10,55 +10,13 @@
 #include <Eigen/Eigen>
 
 #include <px4_msgs/msg/vehicle_odometry.hpp>
+#include <px4_ros2/common/frame.hpp>
 #include <px4_ros2/navigation/experimental/navigation_interface_base.hpp>
 
 namespace px4_ros2
 {
 
 using AuxLocalPosition = px4_msgs::msg::VehicleOdometry;
-
-enum class PoseFrame
-{
-  Unknown,
-  LocalNED,
-  LocalFRD
-};
-
-enum class VelocityFrame
-{
-  Unknown,
-  LocalNED,
-  LocalFRD,
-  BodyFRD
-};
-
-constexpr inline uint8_t poseFrameToMessageFrame(px4_ros2::PoseFrame frame) noexcept
-{
-  switch (frame) {
-    case PoseFrame::Unknown: return AuxLocalPosition::POSE_FRAME_UNKNOWN;
-
-    case PoseFrame::LocalNED: return AuxLocalPosition::POSE_FRAME_NED;
-
-    case PoseFrame::LocalFRD: return AuxLocalPosition::POSE_FRAME_FRD;
-  }
-
-  return AuxLocalPosition::POSE_FRAME_UNKNOWN;
-}
-
-constexpr inline uint8_t velocityFrameToMessageFrame(px4_ros2::VelocityFrame frame) noexcept
-{
-  switch (frame) {
-    case VelocityFrame::Unknown: return AuxLocalPosition::VELOCITY_FRAME_UNKNOWN;
-
-    case VelocityFrame::LocalNED: return AuxLocalPosition::VELOCITY_FRAME_NED;
-
-    case VelocityFrame::LocalFRD: return AuxLocalPosition::VELOCITY_FRAME_FRD;
-
-    case VelocityFrame::BodyFRD: return AuxLocalPosition::VELOCITY_FRAME_BODY_FRD;
-  }
-
-  return AuxLocalPosition::POSE_FRAME_UNKNOWN;
-}
 
 /**
  * @struct LocalPositionMeasurement
