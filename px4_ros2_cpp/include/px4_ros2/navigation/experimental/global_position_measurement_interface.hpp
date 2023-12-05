@@ -14,6 +14,9 @@
 
 namespace px4_ros2
 {
+/** \ingroup navigation_experimental
+ *  @{
+ */
 
 /**
  * @struct GlobalPositionMeasurement
@@ -38,6 +41,10 @@ struct GlobalPositionMeasurement
   std::optional<float> vertical_variance {std::nullopt};
 };
 
+/**
+ * @brief Base class for a global position measurement provider
+ * @ingroup navigation_experimental
+ */
 class GlobalPositionMeasurementInterface : public PositionMeasurementInterfaceBase
 {
 public:
@@ -81,4 +88,5 @@ private:
   // uint8_t _altitude_frame;
 };
 
+/** @}*/
 } // namespace px4_ros2
