@@ -18,6 +18,10 @@ namespace px4_ros2
 
 using AuxLocalPosition = px4_msgs::msg::VehicleOdometry;
 
+/** \ingroup navigation_experimental
+ *  @{
+ */
+
 /**
  * @struct LocalPositionMeasurement
  * @brief Represents a local position measurement to be passed to `LocalPositionMeasurementInterface::update`.
@@ -54,6 +58,10 @@ struct LocalPositionMeasurement
   std::optional<Eigen::Vector3f> attitude_variance {std::nullopt};
 };
 
+/**
+ * @brief Base class for a local position measurement provider
+ * @ingroup navigation_experimental
+ */
 class LocalPositionMeasurementInterface : public PositionMeasurementInterfaceBase
 {
 public:
@@ -101,4 +109,5 @@ private:
   const uint8_t _velocity_frame;
 };
 
+/** @}*/
 } // namespace px4_ros2
