@@ -307,7 +307,7 @@ void ModeExecutorBase::vehicleStatusUpdated(const px4_msgs::msg::VehicleStatus::
 
   if (!got_activated && _is_in_charge && _current_scheduled_mode.active() &&
     _current_scheduled_mode.modeId() == _prev_nav_state &&
-    current_mode == _owned_mode.id() && _prev_nav_state != current_mode)
+    current_mode == _owned_mode.id() && _prev_nav_state != current_mode && _is_armed)
   {
     // If the user switched from the currently scheduled mode to the owned mode, the executor stays in charge.
     // In order for the executor to restore the correct state, we re-activate it (which also cancels the scheduled
