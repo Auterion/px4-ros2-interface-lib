@@ -75,10 +75,9 @@ void HealthAndArmingChecks::watchdogTimerUpdate()
 {
   if (_registration->registered()) {
     if (!_check_triggered && _shutdown_on_timeout) {
-      RCLCPP_FATAL(
-        _node.get_logger(),
-        "Timeout, no request received from FMU, exiting (this can happen on FMU reboots)");
       rclcpp::shutdown();
+      throw std::runtime_error(
+              "Timeout, no request received from FMU, exiting (this can happen on FMU reboots)");
     }
 
     _check_triggered = false;
