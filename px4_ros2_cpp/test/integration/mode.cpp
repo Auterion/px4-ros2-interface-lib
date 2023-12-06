@@ -9,7 +9,7 @@
 
 #include <px4_ros2/components/mode.hpp>
 #include <px4_ros2/components/wait_for_fmu.hpp>
-#include <px4_ros2/control/setpoint_types/experimental/trajectory.hpp>
+#include <px4_ros2/control/setpoint_types/experimental/attitude.hpp>
 
 #include <rclcpp/rclcpp.hpp>
 
@@ -26,7 +26,7 @@ public:
   explicit FlightModeTest(rclcpp::Node & node)
   : ModeBase(node, Settings{kName, true, ModeBase::kModeIDDescend})
   {
-    _trajectory_setpoint = std::make_shared<px4_ros2::TrajectorySetpointType>(*this);
+    _attitude_setpoint = std::make_shared<px4_ros2::AttitudeSetpointType>(*this);
   }
 
   ~FlightModeTest() override = default;
@@ -59,8 +59,9 @@ public:
     ++num_setpoint_updates;
 
     // Send some random setpoints, make sure it stays in the air, we don't want it to land
-    const Eigen::Vector3f velocity{1.F, 0.F, -0.5F};
-    _trajectory_setpoint->update(velocity);
+    const Eigen::Vector3f thrust{0.F, 0.F, -0.6F};
+    const Eigen::Quaternionf attitude{1.f, 0.f, 0.f, 0.f};
+    _attitude_setpoint->update(attitude, thrust);
   }
 
   int num_activations{0};
@@ -70,7 +71,7 @@ public:
   bool check_should_fail{false};
 
 private:
-  std::shared_ptr<px4_ros2::TrajectorySetpointType> _trajectory_setpoint;
+  std::shared_ptr<px4_ros2::AttitudeSetpointType> _attitude_setpoint;
 };
 
 
