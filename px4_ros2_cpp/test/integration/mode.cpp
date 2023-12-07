@@ -60,7 +60,7 @@ public:
 
     // Send some random setpoints, make sure it stays in the air, we don't want it to land
     const Eigen::Vector3f thrust{0.F, 0.F, -0.6F};
-    const Eigen::Quaternionf attitude{1.f, 0.f, 0.f, 0.f};
+    const Eigen::Quaternionf attitude{1.F, 0.F, 0.F, 0.F};
     _attitude_setpoint->update(attitude, thrust);
   }
 
