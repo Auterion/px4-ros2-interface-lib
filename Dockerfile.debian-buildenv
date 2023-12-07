@@ -1,0 +1,40 @@
+# Dockerfile for a build environment to build Debian packages
+
+ARG ROS2_DISTRO
+ARG UBUNTU_DISTRO
+
+FROM ros:${ROS2_DISTRO}-ros-base-${UBUNTU_DISTRO}
+
+# Re-request ARGs to make them available in this stage
+ARG ROS2_DISTRO
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 4B63CF8FDE49746E98FA01DDAD19BAB3CBF125EA
+RUN apt update && apt install -y \
+    dh-make \
+    python3-bloom \
+    python3-rosdep \
+    fakeroot \
+    dh-python
+
+# Add auterion cloudsmith
+RUN curl -1sLf \
+  'https://dl.cloudsmith.io/public/auterion/public/setup.deb.sh' \
+  | bash
+
+RUN echo "yaml file:///work/rosdep-${ROS2_DISTRO}.yaml" > /etc/ros/rosdep/sources.list.d/99-local.list
+
+RUN echo "#!/bin/bash" > /build_package.sh && \
+    echo "cd /work" >> /build_package.sh && \
+    echo "rosdep init" >> /build_package.sh && \
+    echo "rosdep update --rosdistro=$ROS2_DISTRO" >> /build_package.sh && \
+    echo "rosdep install --from-paths ." >> /build_package.sh && \
+    echo "bloom-generate rosdebian" >> /build_package.sh && \
+    echo "fakeroot debian/rules binary" >> /build_package.sh && \
+    echo "mkdir -p /work/output" >> /build_package.sh && \
+    echo "cp ../*.deb /work/output" >> /build_package.sh && \
+    chmod +x /build_package.sh
+
+WORKDIR /work
+
+CMD [ "/ros_entrypoint.sh", "/build_package.sh" ]
