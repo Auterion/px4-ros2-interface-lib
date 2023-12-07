@@ -1,0 +1,3 @@
+px4_msgs:
+  ubuntu:
+    - ros-rolling-px4-msgs
