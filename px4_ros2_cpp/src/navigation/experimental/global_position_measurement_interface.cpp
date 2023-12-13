@@ -79,13 +79,15 @@ const
   if (measurement.lat_lon.has_value() &&
     (!measurement.horizontal_variance.has_value() || measurement.horizontal_variance.value() <= 0))
   {
-    RCLCPP_ERROR(_node.get_logger(), "Measurement lat_lon has an invalid variance value.");
+    RCLCPP_ERROR_ONCE(_node.get_logger(), "Measurement lat_lon has an invalid variance value.");
     return false;
   }
   if (measurement.altitude_msl.has_value() &&
     (!measurement.vertical_variance.has_value() || measurement.vertical_variance.value() <= 0))
   {
-    RCLCPP_ERROR(_node.get_logger(), "Measurement altitude_msl has an invalid variance value.");
+    RCLCPP_ERROR_ONCE(
+      _node.get_logger(),
+      "Measurement altitude_msl has an invalid variance value.");
     return false;
   }
 
@@ -103,18 +105,20 @@ bool GlobalPositionMeasurementInterface::isValueNotNAN(
 const
 {
   if (measurement.lat_lon.has_value() && measurement.lat_lon.value().hasNaN()) {
-    RCLCPP_ERROR(_node.get_logger(), "Measurement value lat_lon is defined but contains a NAN.");
+    RCLCPP_ERROR_ONCE(
+      _node.get_logger(),
+      "Measurement value lat_lon is defined but contains a NAN.");
     return false;
   }
   if (measurement.horizontal_variance.has_value() &&
     std::isnan(measurement.horizontal_variance.value()))
   {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(), "Measurement value horizontal_variance is defined but contains a NAN.");
     return false;
   }
   if (measurement.altitude_msl.has_value() && std::isnan(measurement.altitude_msl.value())) {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(),
       "Measurement value altitude_msl is defined but contains a NAN.");
     return false;
@@ -122,7 +126,7 @@ const
   if (measurement.vertical_variance.has_value() &&
     std::isnan(measurement.vertical_variance.value()))
   {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(), "Measurement value vertical_variance is defined but contains a NAN.");
     return false;
   }
