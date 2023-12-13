@@ -110,6 +110,8 @@ if(BUILD_TESTING)
 
     # Unit tests
     ament_add_gtest(${PROJECT_NAME}_unit_tests
+            test/unit/global_navigation.cpp
+            test/unit/local_navigation.cpp
             test/unit/main.cpp
             test/unit/modes.cpp
     )
