@@ -106,7 +106,7 @@ void TestExecution::run()
 }
 
 
-TEST_F(Tester, denyArming)
+TEST_F(ModesTest, denyArming)
 {
   auto test_node = initNode();
   ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s));
