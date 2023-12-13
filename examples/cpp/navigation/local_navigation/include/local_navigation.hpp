@@ -38,8 +38,16 @@ public:
     local_position_measurement.attitude_quaternion = Eigen::Quaternionf {0.1, -0.2, 0.3, 0.25};
     local_position_measurement.attitude_variance = Eigen::Vector3f {0.2, 0.1, 0.05};
 
-    update(local_position_measurement);
-    RCLCPP_DEBUG(_node.get_logger(), "Successfully sent position update to navigation interface.");
+    try {
+      update(local_position_measurement);
+      RCLCPP_DEBUG(
+        _node.get_logger(),
+        "Successfully sent position update to navigation interface.");
+    } catch (const px4_ros2::NavigationInterfaceInvalidArgument & e) {
+      RCLCPP_ERROR_THROTTLE(
+        _node.get_logger(),
+        *_node.get_clock(), 1000, "Exception caught: %s", e.what());
+    }
   }
 
 private:

@@ -123,7 +123,7 @@ const
     (!measurement.position_xy_variance.has_value() ||
     (measurement.position_xy_variance.value().array() <= 0).any()))
   {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(),
       "Measurement value position_xy has an invalid variance value.");
     return false;
@@ -132,7 +132,8 @@ const
   if (measurement.position_z.has_value() &&
     (!measurement.position_z_variance.has_value() || measurement.position_z_variance <= 0))
   {
-    RCLCPP_ERROR(_node.get_logger(), "Measurement value position_z has an invalid variance value.");
+    RCLCPP_ERROR_ONCE(
+      _node.get_logger(), "Measurement value position_z has an invalid variance value.");
     return false;
   }
 
@@ -140,7 +141,7 @@ const
     (!measurement.velocity_xy_variance.has_value() ||
     (measurement.velocity_xy_variance.value().array() <= 0).any()))
   {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(),
       "Measurement value velocity_xy has an invalid variance value.");
     return false;
@@ -149,7 +150,8 @@ const
   if (measurement.velocity_z.has_value() &&
     (!measurement.velocity_z_variance.has_value() || measurement.velocity_z_variance <= 0))
   {
-    RCLCPP_ERROR(_node.get_logger(), "Measurement value velocity_z has an invalid variance value.");
+    RCLCPP_ERROR_ONCE(
+      _node.get_logger(), "Measurement value velocity_z has an invalid variance value.");
     return false;
   }
 
@@ -157,7 +159,7 @@ const
     (!measurement.attitude_variance.has_value() ||
     (measurement.attitude_variance.value().array() <= 0).any()))
   {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(),
       "Measurement value attitude_quaternion has an invalid variance value.");
     return false;
@@ -172,7 +174,7 @@ const
   if ((measurement.position_xy.has_value() || measurement.position_z.has_value()) &&
     _pose_frame == AuxLocalPosition::POSE_FRAME_UNKNOWN)
   {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(),
       "Position measurement has unknown pose frame.");
     return false;
@@ -181,7 +183,7 @@ const
   if ((measurement.velocity_xy.has_value() || measurement.velocity_z.has_value()) &&
     _velocity_frame == AuxLocalPosition::VELOCITY_FRAME_UNKNOWN)
   {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(),
       "Velocity measurement has unknown velocity frame.");
     return false;
@@ -194,7 +196,7 @@ bool LocalPositionMeasurementInterface::isValueNotNAN(const LocalPositionMeasure
 const
 {
   if (measurement.position_xy.has_value() && measurement.position_xy.value().hasNaN()) {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(),
       "Measurement value position_xy is defined but contains a NAN.");
     return false;
@@ -202,23 +204,24 @@ const
   if (measurement.position_xy_variance.has_value() &&
     measurement.position_xy_variance.value().hasNaN())
   {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(), "Measurement value position_xy_variance is defined but contains a NAN.");
     return false;
   }
   if (measurement.position_z.has_value() && std::isnan(measurement.position_z.value())) {
-    RCLCPP_ERROR(_node.get_logger(), "Measurement value position_z is defined but contains a NAN.");
+    RCLCPP_ERROR_ONCE(
+      _node.get_logger(), "Measurement value position_z is defined but contains a NAN.");
     return false;
   }
   if (measurement.position_z_variance.has_value() &&
     std::isnan(measurement.position_z_variance.value()))
   {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(), "Measurement value position_z_variance is defined but contains a NAN.");
     return false;
   }
   if (measurement.velocity_xy.has_value() && measurement.velocity_xy.value().hasNaN()) {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(),
       "Measurement value velocity_xy is defined but contains a NAN.");
     return false;
@@ -226,30 +229,31 @@ const
   if (measurement.velocity_xy_variance.has_value() &&
     measurement.velocity_xy_variance.value().hasNaN())
   {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(), "Measurement value velocity_xy_variance is defined but contains a NAN.");
     return false;
   }
   if (measurement.velocity_z.has_value() && std::isnan(measurement.velocity_z.value())) {
-    RCLCPP_ERROR(_node.get_logger(), "Measurement value velocity_z is defined but contains a NAN.");
+    RCLCPP_ERROR_ONCE(
+      _node.get_logger(), "Measurement value velocity_z is defined but contains a NAN.");
     return false;
   }
   if (measurement.velocity_z_variance.has_value() &&
     std::isnan(measurement.velocity_z_variance.value()))
   {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(), "Measurement value velocity_z_variance is defined but contains a NAN.");
     return false;
   }
   if (measurement.attitude_quaternion.has_value() &&
     measurement.attitude_quaternion.value().coeffs().hasNaN())
   {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(), "Measurement value attitude_quaternion is defined but contains a NAN.");
     return false;
   }
   if (measurement.attitude_variance.has_value() && measurement.attitude_variance.value().hasNaN()) {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(), "Measurement value attitude_variance is defined but contains a NAN.");
     return false;
   }
