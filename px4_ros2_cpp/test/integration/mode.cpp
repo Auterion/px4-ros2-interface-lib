@@ -271,7 +271,7 @@ void TestExecution::run()
     });
 }
 
-TEST_F(Tester, runModeTests)
+TEST_F(ModesTest, runModeTests)
 {
   auto test_node = initNode();
   ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s));

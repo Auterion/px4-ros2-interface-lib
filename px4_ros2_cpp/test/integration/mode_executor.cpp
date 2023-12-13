@@ -214,7 +214,7 @@ void TestExecutionAutonomous::run()
   ASSERT_TRUE(_mode_executor->doRegister());
 }
 
-TEST_F(Tester, runExecutorAutonomous)
+TEST_F(ModesTest, runExecutorAutonomous)
 {
   auto test_node = initNode();
   ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s));
@@ -385,7 +385,7 @@ void TestExecutionInCharge::run()
   ASSERT_TRUE(_mode_executor->doRegister());
 }
 
-TEST_F(Tester, runExecutorInCharge)
+TEST_F(ModesTest, runExecutorInCharge)
 {
   auto test_node = initNode();
   ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s));
@@ -488,7 +488,7 @@ void TestExecutionFailsafe::run()
   ASSERT_TRUE(_mode_executor->doRegister());
 }
 
-TEST_F(Tester, runExecutorFailsafe)
+TEST_F(ModesTest, runExecutorFailsafe)
 {
   auto test_node = initNode();
   ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s));

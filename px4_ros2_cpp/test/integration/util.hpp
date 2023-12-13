@@ -13,7 +13,7 @@
 
 std::shared_ptr<rclcpp::Node> initNode();
 
-class Tester : public ::testing::Test
+class BaseTest : public ::testing::Test
 {
 public:
   static void SetUpTestSuite()
@@ -24,6 +24,10 @@ public:
   {
     rclcpp::shutdown();
   }
+};
+
+class ModesTest : public BaseTest
+{
 };
 
 class VehicleState
