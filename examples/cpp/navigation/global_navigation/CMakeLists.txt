@@ -18,12 +18,12 @@ find_package(rclcpp REQUIRED)
 find_package(px4_ros2_cpp REQUIRED)
 
 include_directories(include ${Eigen3_INCLUDE_DIRS})
-add_executable(example_global_navigation_cpp
+add_executable(example_global_navigation
         src/main.cpp)
-ament_target_dependencies(example_global_navigation_cpp Eigen3 px4_ros2_cpp rclcpp)
+ament_target_dependencies(example_global_navigation Eigen3 px4_ros2_cpp rclcpp)
 
 install(TARGETS
-        example_global_navigation_cpp
+        example_global_navigation
         DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
