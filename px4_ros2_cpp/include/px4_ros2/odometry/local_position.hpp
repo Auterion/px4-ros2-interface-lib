@@ -5,12 +5,10 @@
 
 #pragma once
 
-#include <px4_msgs/msg/vehicle_local_position.hpp>
-#include <rclcpp/rclcpp.hpp>
 #include <Eigen/Eigen>
+#include <px4_msgs/msg/vehicle_local_position.hpp>
 #include <px4_ros2/common/context.hpp>
 #include <px4_ros2/odometry/subscription.hpp>
-
 
 namespace px4_ros2
 {
@@ -61,7 +59,7 @@ public:
   }
 
 private:
-  rclcpp::Subscription<px4_msgs::msg::VehicleLocalPosition>::SharedPtr _vehicle_local_position_sub;
+  Subscription<px4_msgs::msg::VehicleLocalPosition> _vehicle_local_position_sub;
   px4_msgs::msg::VehicleLocalPosition _vehicle_local_position;
 };
 

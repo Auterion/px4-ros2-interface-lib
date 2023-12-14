@@ -5,11 +5,10 @@
 
 #pragma once
 
-#include <px4_msgs/msg/vehicle_global_position.hpp>
-#include <rclcpp/rclcpp.hpp>
 #include <Eigen/Eigen>
+#include <px4_msgs/msg/vehicle_global_position.hpp>
 #include <px4_ros2/common/context.hpp>
-
+#include <px4_ros2/odometry/subscription.hpp>
 
 using namespace std::chrono_literals; // NOLINT
 
@@ -40,7 +39,7 @@ public:
 
 private:
   rclcpp::Node & _node;
-  rclcpp::Subscription<px4_msgs::msg::VehicleGlobalPosition>::SharedPtr _vehicle_global_position_sub;
+  Subscription<px4_msgs::msg::VehicleGlobalPosition> _vehicle_global_position_sub;
   px4_msgs::msg::VehicleGlobalPosition _vehicle_global_position;
   rclcpp::Time _last_vehicle_global_position;
 };
