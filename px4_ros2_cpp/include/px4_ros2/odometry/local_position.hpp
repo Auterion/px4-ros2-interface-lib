@@ -9,6 +9,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <Eigen/Eigen>
 #include <px4_ros2/common/context.hpp>
+#include <px4_ros2/odometry/subscription.hpp>
 
 
 namespace px4_ros2
