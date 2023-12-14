@@ -5,18 +5,15 @@
 
 #include <px4_ros2/odometry/local_position.hpp>
 
-
 namespace px4_ros2
 {
 
 OdometryLocalPosition::OdometryLocalPosition(Context & context)
+: _vehicle_local_position_sub(context, "/fmu/out/vehicle_local_position")
 {
-  _vehicle_local_position_sub =
-    context.node().create_subscription<px4_msgs::msg::VehicleLocalPosition>(
-    context.topicNamespacePrefix() + "/fmu/out/vehicle_local_position", rclcpp::QoS(
-      1).best_effort(),
-    [this](px4_msgs::msg::VehicleLocalPosition::UniquePtr msg) {
-      _vehicle_local_position = *msg;
+  _vehicle_local_position_sub.subscribe(
+    [this](const px4_msgs::msg::VehicleLocalPosition msg) {
+      _vehicle_local_position = msg;
     });
 
   RequirementFlags requirements{};
@@ -24,4 +21,5 @@ OdometryLocalPosition::OdometryLocalPosition(Context & context)
   requirements.local_alt = true;
   context.setRequirement(requirements);
 }
+
 } // namespace px4_ros2

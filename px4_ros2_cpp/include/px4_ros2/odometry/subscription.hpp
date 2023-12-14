@@ -7,28 +7,51 @@
 
 #include <px4_ros2/common/context.hpp>
 
-namespace px4_ros2 {
+namespace px4_ros2
+{
+/** \ingroup odometry
+ *  @{
+ */
 
-template <typename RosMessageType> class Subscription {
+/**
+ * Provides a subscription to arbitrary ROS topics.
+ */
+template<typename RosMessageType>
+class Subscription
+{
 public:
-  Subscription(Context &context, const std::string &topic)
-      : _node(context.node()), _topic(context.topicNamespacePrefix() + topic) {
+  Subscription(Context & context, const std::string & topic)
+  : _node(context.node()), _topic(context.topicNamespacePrefix() + topic)
+  {
     _subscription = _node.create_subscription<RosMessageType>(
-        _topic, rclcpp::QoS(1).best_effort(),
-        [this](const typename RosMessageType::UniquePtr msg) {
-          _last = *msg;
-          _last_message_time = _node.get_clock()->now();
-          for (const auto& callback : _callbacks) {
-            callback(_last);
-          }
-        });
+      _topic, rclcpp::QoS(1).best_effort(),
+      [this](const typename RosMessageType::UniquePtr msg) {
+        _last = *msg;
+        _last_message_time = _node.get_clock()->now();
+        for (const auto & callback : _callbacks) {
+          callback(_last);
+        }
+      });
   }
 
-  void subscribe(std::function<void(RosMessageType)> callback) {
+  /**
+   * @brief Register a callback to be executed for each message.
+   *
+   * @param callback the callback function
+   */
+  void subscribe(std::function<void(RosMessageType)> callback)
+  {
     _callbacks.push_back(callback);
   }
 
-  RosMessageType last() const {
+  /**
+   * @brief Get the last-received message.
+   *
+   * @returns the last-received ROS message
+   * @throws std::runtime_error when no messages have been received
+   */
+  RosMessageType last() const
+  {
     if (_last_message_time.seconds() == 0) {
       throw std::runtime_error("No messages received.");
     }
@@ -36,11 +59,10 @@ public:
   }
 
 private:
-  rclcpp::Node &_node;
+  rclcpp::Node & _node;
   std::string _topic;
 
-  typename rclcpp::Subscription<RosMessageType>::SharedPtr _subscription{
-      nullptr};
+  typename rclcpp::Subscription<RosMessageType>::SharedPtr _subscription{nullptr};
 
   RosMessageType _last;
   rclcpp::Time _last_message_time;
@@ -48,4 +70,5 @@ private:
   std::vector<std::function<void(RosMessageType)>> _callbacks{};
 };
 
+/** @}*/
 } // namespace px4_ros2
