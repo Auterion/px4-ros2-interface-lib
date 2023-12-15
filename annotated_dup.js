@@ -19,6 +19,7 @@ var annotated_dup =
       [ "AttitudeSetpointType", "classpx4__ros2_1_1AttitudeSetpointType.html", "classpx4__ros2_1_1AttitudeSetpointType" ],
       [ "RatesSetpointType", "classpx4__ros2_1_1RatesSetpointType.html", "classpx4__ros2_1_1RatesSetpointType" ],
       [ "TrajectorySetpointType", "classpx4__ros2_1_1TrajectorySetpointType.html", "classpx4__ros2_1_1TrajectorySetpointType" ],
+      [ "GotoSetpointType", "classpx4__ros2_1_1GotoSetpointType.html", "classpx4__ros2_1_1GotoSetpointType" ],
       [ "GlobalPositionMeasurement", "structpx4__ros2_1_1GlobalPositionMeasurement.html", "structpx4__ros2_1_1GlobalPositionMeasurement" ],
       [ "GlobalPositionMeasurementInterface", "classpx4__ros2_1_1GlobalPositionMeasurementInterface.html", "classpx4__ros2_1_1GlobalPositionMeasurementInterface" ],
       [ "LocalPositionMeasurement", "structpx4__ros2_1_1LocalPositionMeasurement.html", "structpx4__ros2_1_1LocalPositionMeasurement" ],

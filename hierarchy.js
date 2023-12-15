@@ -13,6 +13,7 @@ var hierarchy =
       [ "px4_ros2::SetpointBase", "classpx4__ros2_1_1SetpointBase.html", [
         [ "px4_ros2::AttitudeSetpointType", "classpx4__ros2_1_1AttitudeSetpointType.html", null ],
         [ "px4_ros2::DirectActuatorsSetpointType", "classpx4__ros2_1_1DirectActuatorsSetpointType.html", null ],
+        [ "px4_ros2::GotoSetpointType", "classpx4__ros2_1_1GotoSetpointType.html", null ],
         [ "px4_ros2::RatesSetpointType", "classpx4__ros2_1_1RatesSetpointType.html", null ],
         [ "px4_ros2::TrajectorySetpointType", "classpx4__ros2_1_1TrajectorySetpointType.html", null ]
       ] ]
