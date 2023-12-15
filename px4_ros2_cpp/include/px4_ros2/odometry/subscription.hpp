@@ -7,6 +7,8 @@
 
 #include <px4_ros2/common/context.hpp>
 
+using namespace std::chrono_literals; // NOLINT
+
 namespace px4_ros2
 {
 /** \ingroup odometry
@@ -21,10 +23,11 @@ class Subscription
 {
 public:
   Subscription(Context & context, const std::string & topic)
-  : _node(context.node()), _topic(context.topicNamespacePrefix() + topic)
+  : _node(context.node())
   {
+    const std::string namespaced_topic = context.topicNamespacePrefix() + topic;
     _subscription = _node.create_subscription<RosMessageType>(
-      _topic, rclcpp::QoS(1).best_effort(),
+      namespaced_topic, rclcpp::QoS(1).best_effort(),
       [this](const typename RosMessageType::UniquePtr msg) {
         _last = *msg;
         _last_message_time = _node.get_clock()->now();
@@ -35,11 +38,11 @@ public:
   }
 
   /**
-   * @brief Register a callback to be executed for each message.
+   * @brief Add a callback to execute when receiving a new message.
    *
    * @param callback the callback function
    */
-  void subscribe(std::function<void(RosMessageType)> callback)
+  void onUpdate(std::function<void(RosMessageType)> callback)
   {
     _callbacks.push_back(callback);
   }
@@ -50,7 +53,7 @@ public:
    * @returns the last-received ROS message
    * @throws std::runtime_error when no messages have been received
    */
-  RosMessageType last() const
+  const RosMessageType & last() const
   {
     if (_last_message_time.seconds() == 0) {
       throw std::runtime_error("No messages received.");
@@ -58,16 +61,38 @@ public:
     return _last;
   }
 
+  /**
+   * @brief Get the receive-time of the last message.
+   *
+   * @returns the time at which the last ROS message was received
+   */
+  const rclcpp::Time & lastTime() const
+  {
+    return _last_message_time;
+  }
+
+  /**
+   * @brief Check whether the last message is still valid.
+   * To be valid, the message must have been received within a given time of the current time.
+   *
+   * @param max_delay the maximum delay between the current time and when the message was received
+   * @return true if the last message was received within the maximum delay
+   */
+  template<typename DurationT = std::milli>
+  bool lastValid(const std::chrono::duration<int64_t, DurationT> max_delay = 500ms) const
+  {
+    return _node.get_clock()->now() - _last_message_time < max_delay;
+  }
+
 private:
   rclcpp::Node & _node;
-  std::string _topic;
 
   typename rclcpp::Subscription<RosMessageType>::SharedPtr _subscription{nullptr};
 
   RosMessageType _last;
   rclcpp::Time _last_message_time;
 
-  std::vector<std::function<void(RosMessageType)>> _callbacks{};
+  std::vector<std::function<void(const RosMessageType &)>> _callbacks{};
 };
 
 /** @}*/

@@ -10,8 +10,6 @@
 #include <px4_ros2/common/context.hpp>
 #include <px4_ros2/odometry/subscription.hpp>
 
-using namespace std::chrono_literals; // NOLINT
-
 namespace px4_ros2
 {
 /** \ingroup odometry
@@ -21,27 +19,16 @@ namespace px4_ros2
 /**
  * Provides access to the vehicle's global position estimate
  */
-class OdometryGlobalPosition
+class OdometryGlobalPosition : public Subscription<px4_msgs::msg::VehicleGlobalPosition>
 {
 public:
   explicit OdometryGlobalPosition(Context & context);
 
-  bool valid()
-  {
-    return _node.get_clock()->now() - _last_vehicle_global_position < 500ms;
-  }
-
   Eigen::Vector3d position() const
   {
-    return {_vehicle_global_position.lat, _vehicle_global_position.lon,
-      _vehicle_global_position.alt};
+    const px4_msgs::msg::VehicleGlobalPosition pos = last();
+    return {pos.lat, pos.lon, pos.alt};
   }
-
-private:
-  rclcpp::Node & _node;
-  Subscription<px4_msgs::msg::VehicleGlobalPosition> _vehicle_global_position_sub;
-  px4_msgs::msg::VehicleGlobalPosition _vehicle_global_position;
-  rclcpp::Time _last_vehicle_global_position;
 };
 
 /** @}*/

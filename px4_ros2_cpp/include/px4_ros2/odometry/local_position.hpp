@@ -19,48 +19,47 @@ namespace px4_ros2
 /**
  * Provides access to the vehicle's local position estimate
  */
-class OdometryLocalPosition
+class OdometryLocalPosition : public Subscription<px4_msgs::msg::VehicleLocalPosition>
 {
 public:
   explicit OdometryLocalPosition(Context & context);
 
-  bool positionXyValid() const
+  bool positionXYValid() const
   {
-    return _vehicle_local_position.xy_valid;
+    return last().xy_valid;
   }
 
   bool positionZValid() const
   {
-    return _vehicle_local_position.z_valid;
+    return last().z_valid;
   }
 
   Eigen::Vector3f position() const
   {
-    return {_vehicle_local_position.x, _vehicle_local_position.y, _vehicle_local_position.z};
+    const px4_msgs::msg::VehicleLocalPosition pos = last();
+    return {pos.x, pos.y, pos.z};
   }
 
   bool velocityXYValid() const
   {
-    return _vehicle_local_position.v_xy_valid;
+    return last().v_xy_valid;
   }
 
   bool velocityZValid() const
   {
-    return _vehicle_local_position.v_z_valid;
+    return last().v_z_valid;
   }
   Eigen::Vector3f velocity() const
   {
-    return {_vehicle_local_position.vx, _vehicle_local_position.vy, _vehicle_local_position.vz};
+    const px4_msgs::msg::VehicleLocalPosition pos = last();
+    return {pos.vx, pos.vy, pos.vz};
   }
 
   Eigen::Vector3f acceleration() const
   {
-    return {_vehicle_local_position.ax, _vehicle_local_position.ay, _vehicle_local_position.az};
+    const px4_msgs::msg::VehicleLocalPosition pos = last();
+    return {pos.ax, pos.ay, pos.az};
   }
-
-private:
-  Subscription<px4_msgs::msg::VehicleLocalPosition> _vehicle_local_position_sub;
-  px4_msgs::msg::VehicleLocalPosition _vehicle_local_position;
 };
 
 /** @}*/
