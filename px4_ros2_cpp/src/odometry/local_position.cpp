@@ -9,13 +9,8 @@ namespace px4_ros2
 {
 
 OdometryLocalPosition::OdometryLocalPosition(Context & context)
-: _vehicle_local_position_sub(context, "/fmu/out/vehicle_local_position")
+: Subscription<px4_msgs::msg::VehicleLocalPosition>(context, "/fmu/out/vehicle_local_position")
 {
-  _vehicle_local_position_sub.subscribe(
-    [this](const px4_msgs::msg::VehicleLocalPosition msg) {
-      _vehicle_local_position = msg;
-    });
-
   RequirementFlags requirements{};
   requirements.local_position = true;
   requirements.local_alt = true;
