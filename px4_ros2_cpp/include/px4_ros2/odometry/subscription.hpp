@@ -21,6 +21,8 @@ namespace px4_ros2
 template<typename RosMessageType>
 class Subscription
 {
+  using UpdateCallback = std::function<void (const RosMessageType &)>;
+
 public:
   Subscription(Context & context, const std::string & topic)
   : _node(context.node())
@@ -42,7 +44,7 @@ public:
    *
    * @param callback the callback function
    */
-  void onUpdate(std::function<void(RosMessageType)> callback)
+  void onUpdate(const UpdateCallback & callback)
   {
     _callbacks.push_back(callback);
   }
