@@ -24,9 +24,14 @@ class OdometryGlobalPosition : public Subscription<px4_msgs::msg::VehicleGlobalP
 public:
   explicit OdometryGlobalPosition(Context & context);
 
+  /**
+   * @brief Get the vehicle's global position.
+   *
+   * @returns a vector of (latitude [°], longitude [°], altitude [m AMSL])
+   */
   Eigen::Vector3d position() const
   {
-    const px4_msgs::msg::VehicleGlobalPosition pos = last();
+    const px4_msgs::msg::VehicleGlobalPosition & pos = last();
     return {pos.lat, pos.lon, pos.alt};
   }
 };

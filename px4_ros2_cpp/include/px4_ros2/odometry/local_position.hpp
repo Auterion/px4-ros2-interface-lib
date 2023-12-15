@@ -26,38 +26,38 @@ public:
 
   bool positionXYValid() const
   {
-    return last().xy_valid;
+    return lastValid() && last().xy_valid;
   }
 
   bool positionZValid() const
   {
-    return last().z_valid;
+    return lastValid() && last().z_valid;
   }
 
-  Eigen::Vector3f position() const
+  Eigen::Vector3f positionNed() const
   {
-    const px4_msgs::msg::VehicleLocalPosition pos = last();
+    const px4_msgs::msg::VehicleLocalPosition & pos = last();
     return {pos.x, pos.y, pos.z};
   }
 
   bool velocityXYValid() const
   {
-    return last().v_xy_valid;
+    return lastValid() && last().v_xy_valid;
   }
 
   bool velocityZValid() const
   {
-    return last().v_z_valid;
+    return lastValid() && last().v_z_valid;
   }
-  Eigen::Vector3f velocity() const
+  Eigen::Vector3f velocityNed() const
   {
-    const px4_msgs::msg::VehicleLocalPosition pos = last();
+    const px4_msgs::msg::VehicleLocalPosition & pos = last();
     return {pos.vx, pos.vy, pos.vz};
   }
 
-  Eigen::Vector3f acceleration() const
+  Eigen::Vector3f accelerationNed() const
   {
-    const px4_msgs::msg::VehicleLocalPosition pos = last();
+    const px4_msgs::msg::VehicleLocalPosition & pos = last();
     return {pos.ax, pos.ay, pos.az};
   }
 };
