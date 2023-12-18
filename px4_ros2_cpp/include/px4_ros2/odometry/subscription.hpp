@@ -57,7 +57,7 @@ public:
    */
   const RosMessageType & last() const
   {
-    if (_last_message_time.seconds() == 0) {
+    if (!hasReceivedMessages()) {
       throw std::runtime_error("No messages received.");
     }
     return _last;
@@ -83,7 +83,7 @@ public:
   template<typename DurationT = std::milli>
   bool lastValid(const std::chrono::duration<int64_t, DurationT> max_delay = 500ms) const
   {
-    return _node.get_clock()->now() - _last_message_time < max_delay;
+    return hasReceivedMessages() && _node.get_clock()->now() - _last_message_time < max_delay;
   }
 
 private:
@@ -95,6 +95,11 @@ private:
   rclcpp::Time _last_message_time;
 
   std::vector<std::function<void(const RosMessageType &)>> _callbacks{};
+
+  bool hasReceivedMessages() const
+  {
+    return _last_message_time.seconds() != 0;
+  }
 };
 
 /** @}*/
