@@ -48,7 +48,7 @@ public:
   void updateSetpoint(float dt_s) override
   {
     if (!_start_position_set) {
-      _start_position_m = _vehicle_local_position->position();
+      _start_position_m = _vehicle_local_position->positionNed();
       _start_position_set = true;
     }
 
@@ -68,7 +68,7 @@ public:
             Eigen::Vector3f{kTriangleHeight, 0.F, 0.F};
 
           const Eigen::Vector2f vehicle_to_target_xy = target_position_m.head(2) -
-            _vehicle_local_position->position().head(2);
+            _vehicle_local_position->positionNed().head(2);
           const float heading_target_rad = atan2f(vehicle_to_target_xy(1), vehicle_to_target_xy(0));
 
           if (vehicle_to_target_xy.norm() < 0.1F) {
@@ -91,7 +91,7 @@ public:
 
           // scale the speed limits by distance to the target
           const Eigen::Vector2f vehicle_to_target_xy = target_position_m.head(2) -
-            _vehicle_local_position->position().head(2);
+            _vehicle_local_position->positionNed().head(2);
           const float speed_scale = std::min(vehicle_to_target_xy.norm() / kTriangleWidth, 1.F);
 
           const float max_horizontal_velocity_m_s = 5.F * speed_scale + (1.F - speed_scale) * 1.F;
@@ -128,7 +128,7 @@ public:
           const Eigen::Vector2f position_of_interest_m = _start_position_m.head(2) +
             Eigen::Vector2f{kTriangleHeight, 0.F};
           const Eigen::Vector2f vehicle_to_poi_xy = position_of_interest_m -
-            _vehicle_local_position->position().head(2);
+            _vehicle_local_position->positionNed().head(2);
           const float heading_target_rad = atan2f(vehicle_to_poi_xy(1), vehicle_to_poi_xy(0));
 
           _goto_setpoint->update(_start_position_m, heading_target_rad);
@@ -182,9 +182,9 @@ private:
     static constexpr float kPositionErrorThreshold = 0.5F; // [m]
     static constexpr float kVelocityErrorThreshold = 0.3F; // [m/s]
     const Eigen::Vector3f position_error_m = target_position_m -
-      _vehicle_local_position->position();
+      _vehicle_local_position->positionNed();
     return (position_error_m.norm() < kPositionErrorThreshold) &&
-           (_vehicle_local_position->velocity().norm() < kVelocityErrorThreshold);
+           (_vehicle_local_position->velocityNed().norm() < kVelocityErrorThreshold);
   }
 
   bool headingReached(float target_heading_rad) const
