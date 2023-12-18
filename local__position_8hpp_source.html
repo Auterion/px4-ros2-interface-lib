@@ -94,61 +94,62 @@ $(document).ready(function(){initNavTree('local__position_8hpp_source.html','');
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;px4_msgs/msg/vehicle_local_position.hpp&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;rclcpp/rclcpp.hpp&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;Eigen/Eigen&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;px4_ros2/common/context.hpp&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;Eigen/Eigen&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;px4_msgs/msg/vehicle_local_position.hpp&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;px4_ros2/common/context.hpp&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;px4_ros2/odometry/subscription.hpp&gt;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>px4_ros2</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1OdometryLocalPosition.html">   23</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1OdometryLocalPosition.html">OdometryLocalPosition</a></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpx4__ros2_1_1OdometryLocalPosition.html">OdometryLocalPosition</a>(<a class="code" href="classpx4__ros2_1_1Context.html">Context</a> &amp; context);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordtype">bool</span> positionXyValid()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">  </span>{</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordflow">return</span> _vehicle_local_position.xy_valid;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  }</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordtype">bool</span> positionZValid()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">  </span>{</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">return</span> _vehicle_local_position.z_valid;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  Eigen::Vector3f position()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">  </span>{</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">return</span> {_vehicle_local_position.x, _vehicle_local_position.y, _vehicle_local_position.z};</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span>px4_ros2</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1OdometryLocalPosition.html">   22</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1OdometryLocalPosition.html">OdometryLocalPosition</a> : <span class="keyword">public</span> <a class="code" href="classpx4__ros2_1_1Subscription.html">Subscription</a>&lt;px4_msgs::msg::VehicleLocalPosition&gt;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpx4__ros2_1_1OdometryLocalPosition.html">OdometryLocalPosition</a>(<a class="code" href="classpx4__ros2_1_1Context.html">Context</a> &amp; context);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordtype">bool</span> positionXYValid()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">  </span>{</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classpx4__ros2_1_1Subscription.html#a720ef682a71cefa9f7da922a7f189e32">lastValid</a>() &amp;&amp; <a class="code" href="classpx4__ros2_1_1Subscription.html#ad7c00cb35e75b7468155c313307178d1">last</a>().xy_valid;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  }</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">bool</span> positionZValid()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">  </span>{</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classpx4__ros2_1_1Subscription.html#a720ef682a71cefa9f7da922a7f189e32">lastValid</a>() &amp;&amp; <a class="code" href="classpx4__ros2_1_1Subscription.html#ad7c00cb35e75b7468155c313307178d1">last</a>().z_valid;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  }</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  Eigen::Vector3f positionNed()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">  </span>{</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">const</span> px4_msgs::msg::VehicleLocalPosition &amp; pos = <a class="code" href="classpx4__ros2_1_1Subscription.html#ad7c00cb35e75b7468155c313307178d1">last</a>();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">return</span> {pos.x, pos.y, pos.z};</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  }</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordtype">bool</span> velocityXYValid()<span class="keyword"> const</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">  </span>{</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">return</span> _vehicle_local_position.v_xy_valid;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classpx4__ros2_1_1Subscription.html#a720ef682a71cefa9f7da922a7f189e32">lastValid</a>() &amp;&amp; <a class="code" href="classpx4__ros2_1_1Subscription.html#ad7c00cb35e75b7468155c313307178d1">last</a>().v_xy_valid;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  }</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordtype">bool</span> velocityZValid()<span class="keyword"> const</span></div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">  </span>{</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">return</span> _vehicle_local_position.v_z_valid;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classpx4__ros2_1_1Subscription.html#a720ef682a71cefa9f7da922a7f189e32">lastValid</a>() &amp;&amp; <a class="code" href="classpx4__ros2_1_1Subscription.html#ad7c00cb35e75b7468155c313307178d1">last</a>().v_z_valid;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  Eigen::Vector3f velocity()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  Eigen::Vector3f velocityNed()<span class="keyword"> const</span></div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">  </span>{</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">return</span> {_vehicle_local_position.vx, _vehicle_local_position.vy, _vehicle_local_position.vz};</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  Eigen::Vector3f acceleration()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">  </span>{</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">return</span> {_vehicle_local_position.ax, _vehicle_local_position.ay, _vehicle_local_position.az};</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  rclcpp::Subscription&lt;px4_msgs::msg::VehicleLocalPosition&gt;::SharedPtr _vehicle_local_position_sub;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  px4_msgs::msg::VehicleLocalPosition _vehicle_local_position;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;};</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;} <span class="comment">/* namespace px4_ros2 */</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">const</span> px4_msgs::msg::VehicleLocalPosition &amp; pos = <a class="code" href="classpx4__ros2_1_1Subscription.html#ad7c00cb35e75b7468155c313307178d1">last</a>();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">return</span> {pos.vx, pos.vy, pos.vz};</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  Eigen::Vector3f accelerationNed()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">  </span>{</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">const</span> px4_msgs::msg::VehicleLocalPosition &amp; pos = <a class="code" href="classpx4__ros2_1_1Subscription.html#ad7c00cb35e75b7468155c313307178d1">last</a>();</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordflow">return</span> {pos.ax, pos.ay, pos.az};</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;};</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition:</b> context.hpp:20</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1OdometryLocalPosition_html"><div class="ttname"><a href="classpx4__ros2_1_1OdometryLocalPosition.html">px4_ros2::OdometryLocalPosition</a></div><div class="ttdef"><b>Definition:</b> local_position.hpp:24</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1OdometryLocalPosition_html"><div class="ttname"><a href="classpx4__ros2_1_1OdometryLocalPosition.html">px4_ros2::OdometryLocalPosition</a></div><div class="ttdef"><b>Definition:</b> local_position.hpp:23</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1Subscription_html"><div class="ttname"><a href="classpx4__ros2_1_1Subscription.html">px4_ros2::Subscription</a></div><div class="ttdef"><b>Definition:</b> subscription.hpp:23</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1Subscription_html_a720ef682a71cefa9f7da922a7f189e32"><div class="ttname"><a href="classpx4__ros2_1_1Subscription.html#a720ef682a71cefa9f7da922a7f189e32">px4_ros2::Subscription&lt; px4_msgs::msg::VehicleLocalPosition &gt;::lastValid</a></div><div class="ttdeci">bool lastValid(const std::chrono::duration&lt; int64_t, DurationT &gt; max_delay=500ms) const</div><div class="ttdoc">Check whether the last message is still valid. To be valid, the message must have been received withi...</div><div class="ttdef"><b>Definition:</b> subscription.hpp:84</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1Subscription_html_ad7c00cb35e75b7468155c313307178d1"><div class="ttname"><a href="classpx4__ros2_1_1Subscription.html#ad7c00cb35e75b7468155c313307178d1">px4_ros2::Subscription&lt; px4_msgs::msg::VehicleLocalPosition &gt;::last</a></div><div class="ttdeci">const px4_msgs::msg::VehicleLocalPosition &amp; last() const</div><div class="ttdoc">Get the last-received message.</div><div class="ttdef"><b>Definition:</b> subscription.hpp:58</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

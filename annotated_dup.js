@@ -27,6 +27,7 @@ var annotated_dup =
       [ "NavigationInterfaceInvalidArgument", "classpx4__ros2_1_1NavigationInterfaceInvalidArgument.html", "classpx4__ros2_1_1NavigationInterfaceInvalidArgument" ],
       [ "PositionMeasurementInterfaceBase", "classpx4__ros2_1_1PositionMeasurementInterfaceBase.html", "classpx4__ros2_1_1PositionMeasurementInterfaceBase" ],
       [ "OdometryGlobalPosition", "classpx4__ros2_1_1OdometryGlobalPosition.html", "classpx4__ros2_1_1OdometryGlobalPosition" ],
-      [ "OdometryLocalPosition", "classpx4__ros2_1_1OdometryLocalPosition.html", "classpx4__ros2_1_1OdometryLocalPosition" ]
+      [ "OdometryLocalPosition", "classpx4__ros2_1_1OdometryLocalPosition.html", "classpx4__ros2_1_1OdometryLocalPosition" ],
+      [ "Subscription", "classpx4__ros2_1_1Subscription.html", "classpx4__ros2_1_1Subscription" ]
     ] ]
 ];
