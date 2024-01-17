@@ -140,7 +140,8 @@ TEST_F(LocalPositionInterfaceTest, fuseEvVel) {
 
 TEST_F(LocalPositionInterfaceTest, fuseEvYaw) {
   auto measurement = std::make_unique<LocalPositionMeasurement>();
-  measurement->attitude_quaternion = Eigen::Quaternionf {1.0F, 0.0F, 0.0F, 0.0F};
+  measurement->attitude_quaternion =
+    Eigen::Quaternionf(Eigen::AngleAxisf(M_PI_2, Eigen::Vector3f::UnitZ()));  // East
   measurement->attitude_variance = Eigen::Vector3f {0.1F, 0.1F, 0.1F};
 
   waitForMeasurementUpdate(
@@ -159,7 +160,8 @@ TEST_F(LocalPositionInterfaceTest, fuseAll) {
   measurement->velocity_xy_variance = Eigen::Vector2f {0.1F, 0.1F};
   measurement->velocity_z = 0.0F;
   measurement->velocity_z_variance = 0.1F;
-  measurement->attitude_quaternion = Eigen::Quaternionf {1.0F, 0.0F, 0.0F, 0.0F};
+  measurement->attitude_quaternion =
+    Eigen::Quaternionf(Eigen::AngleAxisf(M_PI_2, Eigen::Vector3f::UnitZ()));  // East
   measurement->attitude_variance = Eigen::Vector3f {0.1F, 0.1F, 0.1F};
 
   waitForMeasurementUpdate(
