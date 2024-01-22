@@ -27,3 +27,4 @@ jobs:
       ubuntu-distro: ${{ matrix.distro.ubuntu }}
       ros2-distro: ${{ matrix.distro.ros2 }}
       source-prefix: px4_ros2_cpp
+    secrets: inherit
