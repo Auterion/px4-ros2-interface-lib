@@ -10,63 +10,21 @@ on:
 jobs:
   build:
     name: Build debian packages
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         platform: [linux/amd64, linux/arm64]
         distro:
-        - ubuntu: jammy
-          ros2: humble
-        - ubuntu: jammy
-          ros2: rolling
-        - ubuntu: focal
-          ros2: foxy
+          - ubuntu: jammy
+            ros2: humble
+          - ubuntu: jammy
+            ros2: rolling
+          - ubuntu: focal
+            ros2: foxy
 
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set version
-        if: ${{ github.event_name == 'release' }}
-        run: sed -i "s/<version>.*<\/version>/<version>${{ github.event.release.tag_name }}<\/version>/" px4_ros2_cpp/package.xml
-
-      - name: Build build environment
-        run: |
-          docker build . -f Dockerfile.debian-buildenv \
-            --platform ${{ matrix.platform }} \
-            --build-arg="ROS2_DISTRO=${{ matrix.distro.ros2 }}" \
-            --build-arg="UBUNTU_DISTRO=${{ matrix.distro.ubuntu }}" \
-            -t buildenv:current
-
-      - name: Build debian packages
-        working-directory: px4_ros2_cpp
-        run: |
-          docker run --rm -v .:/work --platform ${{ matrix.platform }} buildenv:current
-
-      - name: Upload artifacts to github actions
-        uses: actions/upload-artifact@v3
-        with:
-          name: debian-packages
-          path: px4_ros2_cpp/output/*.deb
-
-
-      - name: Generate upload information
-        run: |
-          echo "DEBIAN_PACKAGE=$(ls px4_ros2_cpp/output/ | grep '\.deb')" >> $GITHUB_ENV
-
-      - run: |
-          echo "DEBIAN PACKAGE FILE: ${{ env.DEBIAN_PACKAGE }}"
-
-      - name: Push package to cloudsmith
-        if: ${{ github.event_name == 'release' }}
-        uses: cloudsmith-io/action@master
-        with:
-          api-key: ${{ secrets.AUTERION_CI_CLOUDSMITH_API_KEY }}
-          command: 'push'
-          format: 'deb'
-          owner: auterion
-          repo: public
-          distro: ubuntu
-          release: ${{ matrix.distro.ubuntu }}
-          file: px4_ros2_cpp/output/${{ env.DEBIAN_PACKAGE }}
+    uses: Auterion/ros-debian-workflow/.github/workflows/build-ros-debian.yml@main
+    with:
+      platform: ${{ matrix.platform }}
+      ubuntu-distro: ${{ matrix.distro.ubuntu }}
+      ros2-distro: ${{ matrix.distro.ros2 }}
+      source-prefix: px4_ros2_cpp
+    secrets: inherit
