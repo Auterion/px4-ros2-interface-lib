@@ -55,7 +55,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html"
+"structpx4__ros2_1_1ModeBase_1_1Settings.html#ab9b70687e48871121d6e239e6c52c8f0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
