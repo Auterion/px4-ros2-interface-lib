@@ -19,7 +19,7 @@ AttitudeSetpointType::AttitudeSetpointType(Context & context)
 
 void AttitudeSetpointType::update(
   const Eigen::Quaternionf & attidude_setpoint,
-  const Eigen::Vector3f & thrust_setpoint_ned,
+  const Eigen::Vector3f & thrust_setpoint_frd,
   float yaw_sp_move_rate_rad_s)
 {
   onUpdate();
@@ -29,9 +29,9 @@ void AttitudeSetpointType::update(
   sp.q_d[1] = attidude_setpoint.x();
   sp.q_d[2] = attidude_setpoint.y();
   sp.q_d[3] = attidude_setpoint.z();
-  sp.thrust_body[0] = thrust_setpoint_ned(0);
-  sp.thrust_body[1] = thrust_setpoint_ned(1);
-  sp.thrust_body[2] = thrust_setpoint_ned(2);
+  sp.thrust_body[0] = thrust_setpoint_frd(0);
+  sp.thrust_body[1] = thrust_setpoint_frd(1);
+  sp.thrust_body[2] = thrust_setpoint_frd(2);
   sp.yaw_sp_move_rate = yaw_sp_move_rate_rad_s;
   sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
   _vehicle_attitude_setpoint_pub->publish(sp);

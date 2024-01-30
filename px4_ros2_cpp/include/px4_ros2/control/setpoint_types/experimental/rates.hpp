@@ -28,7 +28,7 @@ public:
 
   void update(
     const Eigen::Vector3f & rate_setpoints_ned_rad,
-    const Eigen::Vector3f & thrust_setpoint_ned);
+    const Eigen::Vector3f & thrust_setpoint_frd);
 
 private:
   rclcpp::Node & _node;

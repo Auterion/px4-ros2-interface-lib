@@ -28,7 +28,7 @@ public:
 
   void update(
     const Eigen::Quaternionf & attidude_setpoint,
-    const Eigen::Vector3f & thrust_setpoint_ned, float yaw_sp_move_rate_rad_s = 0.F);
+    const Eigen::Vector3f & thrust_setpoint_frd, float yaw_sp_move_rate_rad_s = 0.F);
 
 private:
   rclcpp::Node & _node;

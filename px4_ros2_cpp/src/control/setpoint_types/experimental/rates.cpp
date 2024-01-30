@@ -19,7 +19,7 @@ RatesSetpointType::RatesSetpointType(Context & context)
 
 void RatesSetpointType::update(
   const Eigen::Vector3f & rate_setpoints_ned_rad,
-  const Eigen::Vector3f & thrust_setpoint_ned)
+  const Eigen::Vector3f & thrust_setpoint_frd)
 {
   onUpdate();
 
@@ -27,9 +27,9 @@ void RatesSetpointType::update(
   sp.roll = rate_setpoints_ned_rad(0);
   sp.pitch = rate_setpoints_ned_rad(1);
   sp.yaw = rate_setpoints_ned_rad(2);
-  sp.thrust_body[0] = thrust_setpoint_ned(0);
-  sp.thrust_body[1] = thrust_setpoint_ned(1);
-  sp.thrust_body[2] = thrust_setpoint_ned(2);
+  sp.thrust_body[0] = thrust_setpoint_frd(0);
+  sp.thrust_body[1] = thrust_setpoint_frd(1);
+  sp.thrust_body[2] = thrust_setpoint_frd(2);
   sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
   _vehicle_rates_setpoint_pub->publish(sp);
 }
