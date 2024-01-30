@@ -43,6 +43,8 @@ set(HEADER_FILES
         include/px4_ros2/navigation/experimental/navigation_interface_base.hpp
         include/px4_ros2/odometry/global_position.hpp
         include/px4_ros2/odometry/local_position.hpp
+        include/px4_ros2/utils/frame_conversion.hpp
+        include/px4_ros2/utils/geometry.hpp
 )
 
 add_library(px4_ros2_cpp
@@ -115,14 +117,22 @@ if(BUILD_TESTING)
 
 
     # Unit tests
+    add_library(unit_utils
+            test/unit/utils/util.cpp
+    )
+    include_directories(include)
+    ament_target_dependencies(unit_utils Eigen3)
+
     ament_add_gtest(${PROJECT_NAME}_unit_tests
             test/unit/global_navigation.cpp
             test/unit/local_navigation.cpp
             test/unit/main.cpp
             test/unit/modes.cpp
+            test/unit/utils/frame_conversion.cpp
+            test/unit/utils/geometry.cpp
     )
     target_include_directories(${PROJECT_NAME}_unit_tests PRIVATE ${CMAKE_CURRENT_LIST_DIR})
-    target_link_libraries(${PROJECT_NAME}_unit_tests ${PROJECT_NAME})
+    target_link_libraries(${PROJECT_NAME}_unit_tests ${PROJECT_NAME} unit_utils)
     ament_target_dependencies(${PROJECT_NAME}_unit_tests
             rclcpp px4_msgs
     )
