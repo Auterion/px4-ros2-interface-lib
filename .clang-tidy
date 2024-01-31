@@ -17,6 +17,7 @@ Checks: >
   -misc-unused-parameters,
   -misc-no-recursion,
   -misc-confusable-identifiers,
+  -misc-include-cleaner,
   -modernize-return-braced-init-list,
   -modernize-use-trailing-return-type,
   -modernize-avoid-c-arrays,
