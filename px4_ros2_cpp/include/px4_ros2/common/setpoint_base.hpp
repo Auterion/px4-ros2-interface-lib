@@ -65,7 +65,7 @@ public:
 
   virtual Configuration getConfiguration() = 0;
 
-  virtual float desiredUpdateRateHz() {return 50.F;}
+  virtual float desiredUpdateRateHz() {return 50.f;}
 
 
   void setShouldActivateCallback(const ShouldActivateCB & should_activate_cb)

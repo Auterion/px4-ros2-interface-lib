@@ -29,10 +29,10 @@ public:
 
     local_position_measurement.timestamp_sample = _node.get_clock()->now();
 
-    local_position_measurement.velocity_xy = Eigen::Vector2f {1.F, 2.F};
-    local_position_measurement.velocity_xy_variance = Eigen::Vector2f {0.3F, 0.4F};
+    local_position_measurement.velocity_xy = Eigen::Vector2f {1.f, 2.f};
+    local_position_measurement.velocity_xy_variance = Eigen::Vector2f {0.3f, 0.4f};
 
-    local_position_measurement.position_z = 12.3F;
+    local_position_measurement.position_z = 12.3f;
     local_position_measurement.position_z_variance = 0.33F;
 
     local_position_measurement.attitude_quaternion = Eigen::Quaternionf {0.1, -0.2, 0.3, 0.25};

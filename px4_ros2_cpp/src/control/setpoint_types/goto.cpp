@@ -32,15 +32,15 @@ void GotoSetpointType::update(
   sp.position[0] = position(0);
   sp.position[1] = position(1);
   sp.position[2] = position(2);
-  sp.heading = heading.value_or(0.F);
+  sp.heading = heading.value_or(0.f);
 
   // setpoint flags
   sp.flag_control_heading = heading.has_value();
 
   // constraints
-  sp.max_horizontal_speed = max_horizontal_speed.value_or(0.F);
-  sp.max_vertical_speed = max_vertical_speed.value_or(0.F);
-  sp.max_heading_rate = max_heading_rate.value_or(0.F);
+  sp.max_horizontal_speed = max_horizontal_speed.value_or(0.f);
+  sp.max_vertical_speed = max_vertical_speed.value_or(0.f);
+  sp.max_heading_rate = max_heading_rate.value_or(0.f);
 
   // constraint flags
   sp.flag_set_max_horizontal_speed = max_horizontal_speed.has_value();

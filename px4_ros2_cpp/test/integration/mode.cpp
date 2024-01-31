@@ -59,8 +59,8 @@ public:
     ++num_setpoint_updates;
 
     // Send some random setpoints, make sure it stays in the air, we don't want it to land
-    const Eigen::Vector3f thrust{0.F, 0.F, -0.6F};
-    const Eigen::Quaternionf attitude{1.F, 0.F, 0.F, 0.F};
+    const Eigen::Vector3f thrust{0.f, 0.f, -0.6f};
+    const Eigen::Quaternionf attitude{1.f, 0.f, 0.f, 0.f};
     _attitude_setpoint->update(attitude, thrust);
   }
 
@@ -184,7 +184,7 @@ void TestExecution::run()
           _mode->check_should_fail = true;
           _vehicle_state.sendCommand(
             px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
-            1.F);
+            1.f);
           _testing_timer = _node.create_wall_timer(
             5s, [this] {
               EXPECT_TRUE(_was_armed);

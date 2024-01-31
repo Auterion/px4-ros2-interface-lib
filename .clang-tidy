@@ -88,3 +88,5 @@ CheckOptions:
     value:           lower_case
   - key:             readability-identifier-naming.IgnoreMainLikeFunctions
     value:           1
+  - key:             readability-uppercase-literal-suffix.NewSuffixes
+    value:           'L;LL;LU;LLU;U;UL;ULL'

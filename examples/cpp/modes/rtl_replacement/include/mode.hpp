@@ -49,7 +49,7 @@ public:
       return;
     }
 
-    const Eigen::Vector3f velocity{0.F, 1.F, 5.F};
+    const Eigen::Vector3f velocity{0.f, 1.f, 5.f};
     _trajectory_setpoint->update(velocity);
   }
 

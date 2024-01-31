@@ -109,7 +109,7 @@ TEST_F(GlobalPositionInterfaceTest, fuseAll) {
   auto measurement = std::make_unique<GlobalPositionMeasurement>();
   measurement->lat_lon = Eigen::Vector2d {12.34567, 23.45678};
   measurement->horizontal_variance = 0.01F;
-  measurement->altitude_msl = 123.F;
+  measurement->altitude_msl = 123.f;
   measurement->vertical_variance = 0.01F;
   waitForMeasurementUpdate(
     std::move(measurement), [](const EstimatorStatusFlags::UniquePtr & flags) {

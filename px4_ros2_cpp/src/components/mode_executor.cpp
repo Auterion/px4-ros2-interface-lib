@@ -245,7 +245,7 @@ void ModeExecutorBase::arm(const CompletedCallback & on_completed)
 
   const Result result = sendCommandSync(
     px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
-    1.F);
+    1.f);
 
   if (result != Result::Success) {
     on_completed(result);
