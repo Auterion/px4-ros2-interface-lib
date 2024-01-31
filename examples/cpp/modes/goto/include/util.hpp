@@ -39,7 +39,7 @@ static inline float wrapPi(const float angle)
   }
 
   const float range = 2 * m_pi_f;
-  const float inv_range = 1.F / range;
+  const float inv_range = 1.f / range;
   const float num_wraps = std::floor((angle + m_pi_f) * inv_range);
   return angle - range * num_wraps;
 }

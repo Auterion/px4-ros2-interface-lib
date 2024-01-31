@@ -199,7 +199,7 @@ private:
   bool _is_armed{false};       ///< Is vehicle armed?
   bool _completed{false};       ///< Is mode completed?
 
-  float _setpoint_update_rate_hz{0.F};
+  float _setpoint_update_rate_hz{0.f};
   rclcpp::TimerBase::SharedPtr _setpoint_update_timer;
   rclcpp::Time _last_setpoint_update{};
 

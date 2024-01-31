@@ -45,7 +45,7 @@ public:
     const std::optional<float> & max_heading_rate = {}
   );
 
-  float desiredUpdateRateHz() override {return 30.F;}
+  float desiredUpdateRateHz() override {return 30.f;}
 
 private:
   rclcpp::Node & _node;

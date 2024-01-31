@@ -100,7 +100,7 @@ void ModeBase::callOnActivate()
   onActivate();
 
   if (_setpoint_update_rate_hz > FLT_EPSILON) {
-    updateSetpoint(1.F / _setpoint_update_rate_hz);             // Immediately update
+    updateSetpoint(1.f / _setpoint_update_rate_hz);             // Immediately update
   }
 
   updateSetpointUpdateTimer();
@@ -122,7 +122,7 @@ void ModeBase::updateSetpointUpdateTimer()
     if (!_setpoint_update_timer) {
       _setpoint_update_timer = node().create_wall_timer(
         std::chrono::milliseconds(
-          static_cast<int64_t>(1000.F /
+          static_cast<int64_t>(1000.f /
           _setpoint_update_rate_hz)), [this]() {
           const auto now = node().get_clock()->now();
           const float dt_s = (now - _last_setpoint_update).seconds();
@@ -260,13 +260,13 @@ void ModeBase::updateModeRequirementsFromSetpoints()
 void ModeBase::setSetpointUpdateRateFromSetpointTypes()
 {
   // Set update rate based on setpoint types
-  float max_update_rate = -1.F;
+  float max_update_rate = -1.f;
   for (const auto & setpoint_type : _setpoint_types) {
     if (setpoint_type->desiredUpdateRateHz() > max_update_rate) {
       max_update_rate = setpoint_type->desiredUpdateRateHz();
     }
   }
-  if (max_update_rate > 0.F) {
+  if (max_update_rate > 0.f) {
     setSetpointUpdateRate(max_update_rate);
   }
 }

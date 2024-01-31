@@ -114,9 +114,9 @@ protected:
 
 TEST_F(LocalPositionInterfaceTest, fuseEvPos) {
   auto measurement = std::make_unique<LocalPositionMeasurement>();
-  measurement->position_xy = Eigen::Vector2f {0.F, 0.F};
-  measurement->position_xy_variance = Eigen::Vector2f {0.1F, 0.1F};
-  measurement->position_z = 0.F;
+  measurement->position_xy = Eigen::Vector2f {0.f, 0.f};
+  measurement->position_xy_variance = Eigen::Vector2f {0.1f, 0.1f};
+  measurement->position_z = 0.f;
   measurement->position_z_variance = 0.01F;
 
   waitForMeasurementUpdate(
@@ -127,10 +127,10 @@ TEST_F(LocalPositionInterfaceTest, fuseEvPos) {
 
 TEST_F(LocalPositionInterfaceTest, fuseEvVel) {
   auto measurement = std::make_unique<LocalPositionMeasurement>();
-  measurement->velocity_xy = Eigen::Vector2f {0.F, 0.F};
-  measurement->velocity_xy_variance = Eigen::Vector2f {0.1F, 0.1F};
-  measurement->velocity_z = 0.0F;
-  measurement->velocity_z_variance = 0.1F;
+  measurement->velocity_xy = Eigen::Vector2f {0.f, 0.f};
+  measurement->velocity_xy_variance = Eigen::Vector2f {0.1f, 0.1f};
+  measurement->velocity_z = 0.0f;
+  measurement->velocity_z_variance = 0.1f;
 
   waitForMeasurementUpdate(
     std::move(measurement), [](const EstimatorStatusFlags::UniquePtr & flags) {
@@ -142,7 +142,7 @@ TEST_F(LocalPositionInterfaceTest, fuseEvYaw) {
   auto measurement = std::make_unique<LocalPositionMeasurement>();
   measurement->attitude_quaternion =
     Eigen::Quaternionf(Eigen::AngleAxisf(M_PI_2, Eigen::Vector3f::UnitZ()));  // East
-  measurement->attitude_variance = Eigen::Vector3f {0.1F, 0.1F, 0.1F};
+  measurement->attitude_variance = Eigen::Vector3f {0.1f, 0.1f, 0.1f};
 
   waitForMeasurementUpdate(
     std::move(measurement), [](const EstimatorStatusFlags::UniquePtr & flags) {
@@ -152,17 +152,17 @@ TEST_F(LocalPositionInterfaceTest, fuseEvYaw) {
 
 TEST_F(LocalPositionInterfaceTest, fuseAll) {
   auto measurement = std::make_unique<LocalPositionMeasurement>();
-  measurement->position_xy = Eigen::Vector2f {0.F, 0.F};
-  measurement->position_xy_variance = Eigen::Vector2f {0.1F, 0.1F};
-  measurement->position_z = 0.F;
-  measurement->position_z_variance = 0.1F;
-  measurement->velocity_xy = Eigen::Vector2f {0.F, 0.F};
-  measurement->velocity_xy_variance = Eigen::Vector2f {0.1F, 0.1F};
-  measurement->velocity_z = 0.0F;
-  measurement->velocity_z_variance = 0.1F;
+  measurement->position_xy = Eigen::Vector2f {0.f, 0.f};
+  measurement->position_xy_variance = Eigen::Vector2f {0.1f, 0.1f};
+  measurement->position_z = 0.f;
+  measurement->position_z_variance = 0.1f;
+  measurement->velocity_xy = Eigen::Vector2f {0.f, 0.f};
+  measurement->velocity_xy_variance = Eigen::Vector2f {0.1f, 0.1f};
+  measurement->velocity_z = 0.0f;
+  measurement->velocity_z_variance = 0.1f;
   measurement->attitude_quaternion =
     Eigen::Quaternionf(Eigen::AngleAxisf(M_PI_2, Eigen::Vector3f::UnitZ()));  // East
-  measurement->attitude_variance = Eigen::Vector3f {0.1F, 0.1F, 0.1F};
+  measurement->attitude_variance = Eigen::Vector3f {0.1f, 0.1f, 0.1f};
 
   waitForMeasurementUpdate(
     std::move(measurement), [](const EstimatorStatusFlags::UniquePtr & flags) {

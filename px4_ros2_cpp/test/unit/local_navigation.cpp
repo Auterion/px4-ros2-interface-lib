@@ -113,8 +113,8 @@ TEST_F(LocalPositionInterfaceTest, MeasurementEmpty) {
 TEST_F(LocalPositionInterfaceTest, TimestampMissing) {
   LocalPositionMeasurement measurement{};
 
-  measurement.position_xy = Eigen::Vector2f {1.F, 2.F};
-  measurement.position_xy_variance = Eigen::Vector2f {0.2F, 0.1F};
+  measurement.position_xy = Eigen::Vector2f {1.f, 2.f};
+  measurement.position_xy_variance = Eigen::Vector2f {0.2f, 0.1f};
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -127,7 +127,7 @@ TEST_F(LocalPositionInterfaceTest, VarianceInvalid) {
 
   // Send position_xy without variance
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.position_xy = Eigen::Vector2f {1.F, 2.F};
+  measurement.position_xy = Eigen::Vector2f {1.f, 2.f};
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -136,7 +136,7 @@ TEST_F(LocalPositionInterfaceTest, VarianceInvalid) {
   // Send position_z without variance
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.position_z = 12.3F;
+  measurement.position_z = 12.3f;
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -145,7 +145,7 @@ TEST_F(LocalPositionInterfaceTest, VarianceInvalid) {
   // Send velocity_xy without variance
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.velocity_xy = Eigen::Vector2f {1.F, 2.F};
+  measurement.velocity_xy = Eigen::Vector2f {1.f, 2.f};
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -154,7 +154,7 @@ TEST_F(LocalPositionInterfaceTest, VarianceInvalid) {
   // Send velocity_z without variance
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.velocity_z = 12.3F;
+  measurement.velocity_z = 12.3f;
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -163,7 +163,7 @@ TEST_F(LocalPositionInterfaceTest, VarianceInvalid) {
   // Send attitude without variance
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.attitude_quaternion = Eigen::Quaternionf {0.1F, -0.2F, 0.3F, 0.25F};
+  measurement.attitude_quaternion = Eigen::Quaternionf {0.1f, -0.2f, 0.3f, 0.25F};
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -176,8 +176,8 @@ TEST_F(LocalPositionInterfaceTest, ContainsNAN) {
 
   // Send position_xy with NAN
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.position_xy = Eigen::Vector2f {NAN, 2.F};
-  measurement.position_xy_variance = Eigen::Vector2f {0.2F, 0.1F};
+  measurement.position_xy = Eigen::Vector2f {NAN, 2.f};
+  measurement.position_xy_variance = Eigen::Vector2f {0.2f, 0.1f};
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -185,8 +185,8 @@ TEST_F(LocalPositionInterfaceTest, ContainsNAN) {
 
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.position_xy = Eigen::Vector2f {1.F, 2.F};
-  measurement.position_xy_variance = Eigen::Vector2f {NAN, 0.1F};
+  measurement.position_xy = Eigen::Vector2f {1.f, 2.f};
+  measurement.position_xy_variance = Eigen::Vector2f {NAN, 0.1f};
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -204,7 +204,7 @@ TEST_F(LocalPositionInterfaceTest, ContainsNAN) {
 
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.position_z = 12.3F;
+  measurement.position_z = 12.3f;
   measurement.position_z_variance = NAN;
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
@@ -214,8 +214,8 @@ TEST_F(LocalPositionInterfaceTest, ContainsNAN) {
   // Send velocity_xy with NAN
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.velocity_xy = Eigen::Vector2f {NAN, 2.F};
-  measurement.velocity_xy_variance = Eigen::Vector2f {0.3F, 0.4F};
+  measurement.velocity_xy = Eigen::Vector2f {NAN, 2.f};
+  measurement.velocity_xy_variance = Eigen::Vector2f {0.3f, 0.4f};
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -223,8 +223,8 @@ TEST_F(LocalPositionInterfaceTest, ContainsNAN) {
 
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.velocity_xy = Eigen::Vector2f {1.F, 2.F};
-  measurement.velocity_xy_variance = Eigen::Vector2f {NAN, 0.4F};
+  measurement.velocity_xy = Eigen::Vector2f {1.f, 2.f};
+  measurement.velocity_xy_variance = Eigen::Vector2f {NAN, 0.4f};
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -242,7 +242,7 @@ TEST_F(LocalPositionInterfaceTest, ContainsNAN) {
 
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.velocity_z = 12.3F;
+  measurement.velocity_z = 12.3f;
   measurement.velocity_z_variance = NAN;
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
@@ -252,8 +252,8 @@ TEST_F(LocalPositionInterfaceTest, ContainsNAN) {
   // Send attitude with NAN
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.attitude_quaternion = Eigen::Quaternionf {NAN, -0.2F, 0.3F, 0.25F};
-  measurement.attitude_variance = Eigen::Vector3f {0.2F, 0.1F, 0.05F};
+  measurement.attitude_quaternion = Eigen::Quaternionf {NAN, -0.2f, 0.3f, 0.25F};
+  measurement.attitude_variance = Eigen::Vector3f {0.2f, 0.1f, 0.05F};
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -261,8 +261,8 @@ TEST_F(LocalPositionInterfaceTest, ContainsNAN) {
 
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.attitude_quaternion = Eigen::Quaternionf {0.1F, -0.2F, 0.3F, 0.25F};
-  measurement.attitude_variance = Eigen::Vector3f {NAN, 0.1F, 0.05F};
+  measurement.attitude_quaternion = Eigen::Quaternionf {0.1f, -0.2f, 0.3f, 0.25F};
+  measurement.attitude_variance = Eigen::Vector3f {NAN, 0.1f, 0.05F};
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -276,8 +276,8 @@ TEST_F(LocalPositionInterfacePoseTest, PoseFrameUnknown) {
   // Send position_xy and variance
   // Expects success
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.position_xy = Eigen::Vector2f {1.F, 2.F};
-  measurement.position_xy_variance = Eigen::Vector2f {0.2F, 0.1F};
+  measurement.position_xy = Eigen::Vector2f {1.f, 2.f};
+  measurement.position_xy_variance = Eigen::Vector2f {0.2f, 0.1f};
   EXPECT_NO_THROW(_local_navigation_interface->update(measurement)) <<
     "Failed to send position update (position_xy) with known pose frame and unknown velocity frame.";
 
@@ -285,7 +285,7 @@ TEST_F(LocalPositionInterfacePoseTest, PoseFrameUnknown) {
   // Expects success
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.position_z = 12.3F;
+  measurement.position_z = 12.3f;
   measurement.position_z_variance = 0.33F;
   EXPECT_NO_THROW(_local_navigation_interface->update(measurement)) <<
     "Failed to send position update (position_z) with known pose frame and unknown velocity frame.";
@@ -294,8 +294,8 @@ TEST_F(LocalPositionInterfacePoseTest, PoseFrameUnknown) {
   // Expects exception
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.velocity_xy = Eigen::Vector2f {1.F, 2.F};
-  measurement.velocity_xy_variance = Eigen::Vector2f {0.3F, 0.4F};
+  measurement.velocity_xy = Eigen::Vector2f {1.f, 2.f};
+  measurement.velocity_xy_variance = Eigen::Vector2f {0.3f, 0.4f};
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -305,7 +305,7 @@ TEST_F(LocalPositionInterfacePoseTest, PoseFrameUnknown) {
   // Expects exception
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.velocity_z = 12.3F;
+  measurement.velocity_z = 12.3f;
   measurement.velocity_z_variance = 0.33F;
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
@@ -320,8 +320,8 @@ TEST_F(LocalPositionInterfaceVelocityTest, VelocityFrameUnknown) {
   // Send position_xy and variance
   // Expects exception
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.position_xy = Eigen::Vector2f {1.F, 2.F};
-  measurement.position_xy_variance = Eigen::Vector2f {0.2F, 0.1F};
+  measurement.position_xy = Eigen::Vector2f {1.f, 2.f};
+  measurement.position_xy_variance = Eigen::Vector2f {0.2f, 0.1f};
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -331,7 +331,7 @@ TEST_F(LocalPositionInterfaceVelocityTest, VelocityFrameUnknown) {
   // Expects exception
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.position_z = 12.3F;
+  measurement.position_z = 12.3f;
   measurement.position_z_variance = 0.33F;
   EXPECT_THROW(
     _local_navigation_interface->update(measurement),
@@ -342,8 +342,8 @@ TEST_F(LocalPositionInterfaceVelocityTest, VelocityFrameUnknown) {
   // Expects success
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.velocity_xy = Eigen::Vector2f {1.F, 2.F};
-  measurement.velocity_xy_variance = Eigen::Vector2f {0.3F, 0.4F};
+  measurement.velocity_xy = Eigen::Vector2f {1.f, 2.f};
+  measurement.velocity_xy_variance = Eigen::Vector2f {0.3f, 0.4f};
   EXPECT_NO_THROW(_local_navigation_interface->update(measurement)) <<
     "Failed to send velocity update (velocity_xy) with known velocity frame and unknown pose frame.";
 
@@ -351,7 +351,7 @@ TEST_F(LocalPositionInterfaceVelocityTest, VelocityFrameUnknown) {
   // Expects success
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.velocity_z = 12.3F;
+  measurement.velocity_z = 12.3f;
   measurement.velocity_z_variance = 0.33F;
   EXPECT_NO_THROW(_local_navigation_interface->update(measurement)) <<
     "Failed to send velocity update (velocity_z) with known velocity frame and unknown pose frame.";

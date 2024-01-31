@@ -56,27 +56,27 @@ public:
 
   void updateSetpoint(float dt_s) override
   {
-    const float threshold = 0.9F;
+    const float threshold = 0.9f;
     const bool want_rates = fabsf(_manual_control_input->roll()) > threshold || fabsf(
       _manual_control_input->pitch()) > threshold;
 
-    const float yaw_rate = _manual_control_input->yaw() * 120.F * M_PI_F / 180.F;
+    const float yaw_rate = _manual_control_input->yaw() * 120.f * M_PI_F / 180.f;
 
     if (want_rates) {
-      const Eigen::Vector3f thrust_sp{0.F, 0.F, -_manual_control_input->throttle()};
+      const Eigen::Vector3f thrust_sp{0.f, 0.f, -_manual_control_input->throttle()};
       const Eigen::Vector3f rates_sp{
-        _manual_control_input->roll() * 500.F * M_PI_F / 180.F,
-        -_manual_control_input->pitch() * 500.F * M_PI_F / 180.F,
+        _manual_control_input->roll() * 500.f * M_PI_F / 180.f,
+        -_manual_control_input->pitch() * 500.f * M_PI_F / 180.f,
         yaw_rate
       };
       _rates_setpoint->update(rates_sp, thrust_sp);
 
     } else {
       _yaw += yaw_rate * dt_s;
-      const Eigen::Vector3f thrust_sp{0.F, 0.F, -_manual_control_input->throttle()};
+      const Eigen::Vector3f thrust_sp{0.f, 0.f, -_manual_control_input->throttle()};
       const Eigen::Quaternionf qd = quaternionFromEuler(
-        _manual_control_input->roll() * 55.F * M_PI_F / 180.F,
-        -_manual_control_input->pitch() * 55.F * M_PI_F / 180.F,
+        _manual_control_input->roll() * 55.f * M_PI_F / 180.f,
+        -_manual_control_input->pitch() * 55.f * M_PI_F / 180.f,
         _yaw
       );
       _attitude_setpoint->update(qd, thrust_sp, yaw_rate);
@@ -91,7 +91,7 @@ private:
   std::shared_ptr<px4_ros2::RatesSetpointType> _rates_setpoint;
   std::shared_ptr<px4_ros2::AttitudeSetpointType> _attitude_setpoint;
   std::shared_ptr<px4_ros2::PeripheralActuatorControls> _peripheral_actuator_controls;
-  float _yaw{0.F};
+  float _yaw{0.f};
 };
 
 class TestNode : public rclcpp::Node

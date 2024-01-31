@@ -24,11 +24,11 @@ public:
   ~AttitudeSetpointType() override = default;
 
   Configuration getConfiguration() override;
-  float desiredUpdateRateHz() override {return 200.F;}
+  float desiredUpdateRateHz() override {return 200.f;}
 
   void update(
     const Eigen::Quaternionf & attidude_setpoint,
-    const Eigen::Vector3f & thrust_setpoint_frd, float yaw_sp_move_rate_rad_s = 0.F);
+    const Eigen::Vector3f & thrust_setpoint_frd, float yaw_sp_move_rate_rad_s = 0.f);
 
 private:
   rclcpp::Node & _node;

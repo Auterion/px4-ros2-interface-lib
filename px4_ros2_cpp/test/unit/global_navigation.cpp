@@ -62,7 +62,7 @@ TEST_F(GlobalPositionInterfaceTest, TimestampMissing) {
   GlobalPositionMeasurement measurement{};
 
   measurement.lat_lon = Eigen::Vector2d {12.34567, 23.45678};
-  measurement.horizontal_variance = 0.1F;
+  measurement.horizontal_variance = 0.1f;
   EXPECT_THROW(
     _global_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -84,7 +84,7 @@ TEST_F(GlobalPositionInterfaceTest, VarianceInvalid) {
   // Send altitude without variance
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.altitude_msl = 123.F;
+  measurement.altitude_msl = 123.f;
   EXPECT_THROW(
     _global_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -98,7 +98,7 @@ TEST_F(GlobalPositionInterfaceTest, ContainsNAN) {
   // Send lat lon with NAN
   measurement.timestamp_sample = _node->get_clock()->now();
   measurement.lat_lon = Eigen::Vector2d {NAN, 23.45678};
-  measurement.horizontal_variance = 0.1F;
+  measurement.horizontal_variance = 0.1f;
   EXPECT_THROW(
     _global_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -117,7 +117,7 @@ TEST_F(GlobalPositionInterfaceTest, ContainsNAN) {
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
   measurement.altitude_msl = NAN;
-  measurement.vertical_variance = 0.1F;
+  measurement.vertical_variance = 0.1f;
   EXPECT_THROW(
     _global_navigation_interface->update(measurement),
     NavigationInterfaceInvalidArgument) <<
@@ -125,7 +125,7 @@ TEST_F(GlobalPositionInterfaceTest, ContainsNAN) {
 
   measurement = {};
   measurement.timestamp_sample = _node->get_clock()->now();
-  measurement.altitude_msl = 123.F;
+  measurement.altitude_msl = 123.f;
   measurement.vertical_variance = NAN;
   EXPECT_THROW(
     _global_navigation_interface->update(measurement),

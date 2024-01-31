@@ -61,7 +61,7 @@ public:
 
     // Send some random setpoints
     const float elapsed_s = (now - _activation_time).seconds();
-    const Eigen::Vector3f velocity{5.F, elapsed_s, 0.F};
+    const Eigen::Vector3f velocity{5.f, elapsed_s, 0.f};
     _trajectory_setpoint->update(velocity);
   }
 
