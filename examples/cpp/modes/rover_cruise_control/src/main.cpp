@@ -11,7 +11,7 @@
 int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<rover_cruise_control_node>());
+  rclcpp::spin(std::make_shared<manual_rover_control_mode_node>());
   rclcpp::shutdown();
   return 0;
 }

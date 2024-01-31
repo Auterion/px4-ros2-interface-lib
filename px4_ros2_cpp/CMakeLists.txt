@@ -37,7 +37,7 @@ set(HEADER_FILES
         include/px4_ros2/control/setpoint_types/goto.hpp
         include/px4_ros2/control/setpoint_types/experimental/attitude.hpp
         include/px4_ros2/control/setpoint_types/experimental/rates.hpp
-        include/px4_ros2/control/setpoint_types/experimental/rover_cruise_control.hpp
+        include/px4_ros2/control/setpoint_types/experimental/manual_rover_control_mode.hpp
         include/px4_ros2/control/setpoint_types/experimental/trajectory.hpp
         include/px4_ros2/navigation/experimental/global_position_measurement_interface.hpp
         include/px4_ros2/navigation/experimental/local_position_measurement_interface.hpp
@@ -63,7 +63,7 @@ add_library(px4_ros2_cpp
         src/control/setpoint_types/goto.cpp
         src/control/setpoint_types/experimental/attitude.cpp
         src/control/setpoint_types/experimental/rates.cpp
-        src/control/setpoint_types/experimental/rover_cruise_control.cpp
+        src/control/setpoint_types/experimental/manual_rover_control_mode.cpp
         src/control/setpoint_types/experimental/trajectory.cpp
         src/navigation/experimental/global_position_measurement_interface.cpp
         src/navigation/experimental/local_position_measurement_interface.cpp

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(rover_cruise_control_mode_cpp)
+project(manual_rover_control_mode_cpp)
 
 if(NOT CMAKE_CXX_STANDARD)
     set(CMAKE_CXX_STANDARD 17)
@@ -18,12 +18,12 @@ find_package(rclcpp REQUIRED)
 find_package(px4_ros2_cpp REQUIRED)
 
 include_directories(include ${Eigen3_INCLUDE_DIRS})
-add_executable(rover_cruise_control_mode
+add_executable(manual_rover_control_mode
         src/main.cpp)
-ament_target_dependencies(rover_cruise_control_mode Eigen3 px4_ros2_cpp rclcpp)
+ament_target_dependencies(manual_rover_control_mode Eigen3 px4_ros2_cpp rclcpp)
 
 install(TARGETS
-        rover_cruise_control_mode
+        manual_rover_control_mode
         DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
