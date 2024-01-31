@@ -15,10 +15,9 @@
 #include <regex>
 #include <unistd.h>
 
-namespace px4_ros2
+namespace
 {
-
-static std::string messageFieldsStrForMessageHash(
+std::string messageFieldsStrForMessageHash(
   rclcpp::Node & node,
   const std::string & topic_type,
   const std::string & msgs_dir)
@@ -38,9 +37,21 @@ static std::string messageFieldsStrForMessageHash(
     R"((?:^|\n)\s*([a-zA-Z0-9_/]+)(\[[^\]]*\])?\s+(\w+)[ \t]*(=)?)"};
 
   static const std::set<std::string> kBasicTypes{
-    {"bool"}, {"byte"}, {"char"}, {"float32"}, {"float64"}, {"int8"},
-    {"uint8"}, {"int16"}, {"uint16"}, {"int32"}, {"uint32"}, {"int64"},
-    {"uint64"}, {"string"}, {"wstring"}};
+    {"bool"},
+    {"byte"},
+    {"char"},
+    {"float32"},
+    {"float64"},
+    {"int8"},
+    {"uint8"},
+    {"int16"},
+    {"uint16"},
+    {"int32"},
+    {"uint32"},
+    {"int64"},
+    {"uint64"},
+    {"string"},
+    {"wstring"}};
 
   for (std::sregex_iterator iter(text.begin(), text.end(), kMsgFieldTypeRegex);
     iter != std::sregex_iterator(); ++iter)
@@ -74,6 +85,7 @@ static std::string messageFieldsStrForMessageHash(
 // source: https://gist.github.com/ruby0x1/81308642d0325fd386237cfa3b44785c
 constexpr uint32_t kVal32Const = 0x811c9dc5;
 constexpr uint32_t kPrime32Const = 0x1000193;
+
 inline constexpr uint32_t hash32Fnv1aConst(
   const char * const str,
   const uint32_t value = kVal32Const) noexcept
@@ -83,7 +95,7 @@ inline constexpr uint32_t hash32Fnv1aConst(
       str[0])) * kPrime32Const);
 }
 
-static uint32_t messageHash(
+uint32_t messageHash(
   rclcpp::Node & node, const std::string & topic_type,
   const std::string & msgs_dir)
 {
@@ -91,11 +103,11 @@ static uint32_t messageHash(
   return hash32Fnv1aConst(message_fields_str.c_str());
 }
 
-static std::string snakeToCamelCase(std::string s) noexcept
+std::string snakeToCamelCase(std::string s) noexcept
 {
   bool tail = false;
   std::size_t n = 0;
-  for (const unsigned char c : s) {
+  for (const unsigned char c: s) {
     if (c == '-' || c == '_') {
       tail = false;
     } else if (tail) {
@@ -116,7 +128,7 @@ enum class RequestMessageFormatReturn
   ProtocolVersionMismatch,
 };
 
-static RequestMessageFormatReturn requestMessageFormat(
+RequestMessageFormatReturn requestMessageFormat(
   rclcpp::Node & node, const px4_msgs::msg::MessageFormatRequest & request,
   const rclcpp::Subscription<px4_msgs::msg::MessageFormatResponse>::SharedPtr & message_format_response_sub,
   const rclcpp::Publisher<px4_msgs::msg::MessageFormatRequest>::SharedPtr & message_format_request_pub,
@@ -202,6 +214,11 @@ static RequestMessageFormatReturn requestMessageFormat(
   wait_set.remove_subscription(message_format_response_sub);
   return request_message_format_return;
 }
+
+} // namespace
+
+namespace px4_ros2
+{
 
 bool messageCompatibilityCheck(
   rclcpp::Node & node, const std::vector<MessageCompatibilityTopic> & messages_to_check,
