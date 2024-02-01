@@ -109,11 +109,11 @@ $(document).ready(function(){initNavTree('attitude_8hpp_source.html',''); initRe
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  ~<a class="code" href="classpx4__ros2_1_1AttitudeSetpointType.html">AttitudeSetpointType</a>() <span class="keyword">override</span> = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <a class="code" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a> getConfiguration() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordtype">float</span> desiredUpdateRateHz()<span class="keyword"> override </span>{<span class="keywordflow">return</span> 200.F;}</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordtype">float</span> desiredUpdateRateHz()<span class="keyword"> override </span>{<span class="keywordflow">return</span> 200.f;}</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keywordtype">void</span> update(</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">const</span> Eigen::Quaternionf &amp; attidude_setpoint,</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">const</span> Eigen::Vector3f &amp; thrust_setpoint_frd, <span class="keywordtype">float</span> yaw_sp_move_rate_rad_s = 0.F);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">const</span> Eigen::Vector3f &amp; thrust_setpoint_frd, <span class="keywordtype">float</span> yaw_sp_move_rate_rad_s = 0.f);</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  rclcpp::Node &amp; _node;</div>
