@@ -43,6 +43,7 @@ void PeripheralActuatorControls::set(const Eigen::Matrix<float, kNumActuators, 1
 
 void PeripheralActuatorControls::set(float value, unsigned int index)
 {
+  if (std::isnan(value)) {return;}
   Eigen::Matrix<float, kNumActuators, 1> values;
   values.setConstant(NAN);
   if (index < kNumActuators) {
