@@ -29,13 +29,13 @@ public:
 
   /**
    * Control actuators
-   * @param values range [-1, 1], NAN=disarmed value
+   * @param values range [-1, 1], NAN=ignore value
    */
   void set(const Eigen::Matrix<float, kNumActuators, 1> & values);
 
   /**
-   * Sets a single output (and the rest to disarmed)
-   * @param value range [-1, 1], NAN=disarmed value
+   * Sets a single actuator output
+   * @param value range [-1, 1]
    * @param index range [0, kNumActuators)
    */
   void set(float value, unsigned index = 0);
