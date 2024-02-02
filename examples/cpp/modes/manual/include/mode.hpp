@@ -8,6 +8,7 @@
 #include <px4_ros2/control/setpoint_types/experimental/rates.hpp>
 #include <px4_ros2/control/setpoint_types/experimental/attitude.hpp>
 #include <px4_ros2/control/peripheral_actuators.hpp>
+#include <px4_ros2/utils/geometry.hpp>
 
 #include <Eigen/Eigen>
 
@@ -21,22 +22,6 @@ static const std::string kNodeName = "example_mode_manual";
 #ifndef M_PI_F
 #define M_PI_F static_cast<float>(M_PI)
 #endif
-
-static inline Eigen::Quaternionf quaternionFromEuler(const Eigen::Vector3f & euler)
-{
-  // YPR is ZYX axes
-  return Eigen::Quaternionf(
-    Eigen::AngleAxisf(euler.z(), Eigen::Vector3f::UnitZ()) *
-    Eigen::AngleAxisf(euler.y(), Eigen::Vector3f::UnitY()) *
-    Eigen::AngleAxisf(euler.x(), Eigen::Vector3f::UnitX()));
-}
-
-static inline Eigen::Quaternionf quaternionFromEuler(
-  const float roll, const float pitch,
-  const float yaw)
-{
-  return quaternionFromEuler(Eigen::Vector3f(roll, pitch, yaw));
-}
 
 class FlightModeTest : public px4_ros2::ModeBase
 {
@@ -74,7 +59,7 @@ public:
     } else {
       _yaw += yaw_rate * dt_s;
       const Eigen::Vector3f thrust_sp{0.f, 0.f, -_manual_control_input->throttle()};
-      const Eigen::Quaternionf qd = quaternionFromEuler(
+      const Eigen::Quaternionf qd = px4_ros2::eulerRpyToQuaternion(
         _manual_control_input->roll() * 55.f * M_PI_F / 180.f,
         -_manual_control_input->pitch() * 55.f * M_PI_F / 180.f,
         _yaw

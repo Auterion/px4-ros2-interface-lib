@@ -4,11 +4,10 @@
  ****************************************************************************/
 #pragma once
 
-#include "util.hpp"
-
 #include <px4_ros2/components/mode.hpp>
 #include <px4_ros2/control/setpoint_types/goto.hpp>
 #include <px4_ros2/odometry/local_position.hpp>
+#include <px4_ros2/utils/geometry.hpp>
 #include <px4_msgs/msg/vehicle_attitude.hpp>
 
 #include <rclcpp/rclcpp.hpp>
@@ -190,7 +189,7 @@ private:
   bool headingReached(float target_heading_rad) const
   {
     static constexpr float kHeadingErrorThreshold = 7.f * static_cast<float>(M_PI) / 180.f; // [rad]
-    const float heading_error_wrapped = wrapPi(target_heading_rad - _vehicle_heading_rad);
+    const float heading_error_wrapped = px4_ros2::wrapPi(target_heading_rad - _vehicle_heading_rad);
     return fabsf(heading_error_wrapped) < kHeadingErrorThreshold;
   }
 };
