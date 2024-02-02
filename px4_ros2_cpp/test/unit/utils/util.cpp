@@ -35,7 +35,7 @@ void vectorsApproxEqualTest(
 
 void quaternionToEulerReconstructionTest(const Eigen::Quaternionf & q, const std::string & msg)
 {
-  Eigen::Vector3f v_euler = px4_ros2::quaternionToEulerRPY(q);
+  Eigen::Vector3f v_euler = px4_ros2::quaternionToEulerRpy(q);
   Eigen::Quaternionf reconstructed_quaternion =
     Eigen::AngleAxisf(v_euler.z(), Eigen::Vector3f::UnitZ()) *
     Eigen::AngleAxisf(v_euler.y(), Eigen::Vector3f::UnitY()) *

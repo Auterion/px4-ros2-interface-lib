@@ -173,7 +173,7 @@ private:
   void updateVehicleHeading(const px4_msgs::msg::VehicleAttitude::UniquePtr & msg)
   {
     const Eigen::Quaternionf q = Eigen::Quaternionf(msg->q[0], msg->q[1], msg->q[2], msg->q[3]);
-    const Eigen::Vector3f rpy = quaternionToEuler(q);
+    const Eigen::Vector3f rpy = px4_ros2::quaternionToEulerRpy(q);
     _vehicle_heading_rad = rpy(2);
   }
 

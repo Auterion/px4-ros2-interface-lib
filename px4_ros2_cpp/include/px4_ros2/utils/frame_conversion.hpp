@@ -22,7 +22,7 @@ template<typename Type>
 Eigen::Quaternion<Type> attitudeNedToEnu(const Eigen::Quaternion<Type> & q_ned)
 {
   static constexpr Type kHalfSqrt2 = static_cast<Type>(0.7071067811865476);
-  const Eigen::Quaternion<Type> q_ned_to_enu {0.0, kHalfSqrt2, kHalfSqrt2, 0.0};  // 180 deg along X, -90 deg along Z
+  const Eigen::Quaternion<Type> q_ned_to_enu {0.0, kHalfSqrt2, kHalfSqrt2, 0.0};  // 180 deg along X, -90 deg along Z (intrinsic)
   const Eigen::Quaternion<Type> q_yaw_minus_pi_2{kHalfSqrt2, 0.0, 0.0, -kHalfSqrt2};  // -90 deg along Z
 
   return q_ned_to_enu * q_ned * q_yaw_minus_pi_2 * q_ned_to_enu.inverse();
@@ -39,7 +39,7 @@ template<typename Type>
 Eigen::Quaternion<Type> attitudeEnuToNed(const Eigen::Quaternion<Type> & q_enu)
 {
   static constexpr Type kHalfSqrt2 = static_cast<Type>(0.7071067811865476);
-  const Eigen::Quaternion<Type> q_enu_to_ned {0.0, kHalfSqrt2, kHalfSqrt2, 0.0};  // 180 deg along X, -90 deg along Z
+  const Eigen::Quaternion<Type> q_enu_to_ned {0.0, kHalfSqrt2, kHalfSqrt2, 0.0};  // 180 deg along X, -90 deg along Z (intrinsic)
   const Eigen::Quaternion<Type> q_yaw_minus_pi_2{kHalfSqrt2, 0.0, 0.0, -kHalfSqrt2};  // -90 deg along Z
 
   return q_enu_to_ned * q_enu * q_yaw_minus_pi_2 * q_enu_to_ned.inverse();
