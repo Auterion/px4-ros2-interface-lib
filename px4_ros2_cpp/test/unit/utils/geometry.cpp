@@ -20,33 +20,33 @@ TEST(Geometry, wrapPi) {
   EXPECT_NEAR(M_PI, std::fabs(px4_ros2::wrapPi(-11.0 * M_PI)), 1e-3);
 }
 
-TEST(Geometry, quaternionToEulerRPY) {
+TEST(Geometry, quaternionToEulerRpy) {
   Eigen::Quaternionf q;
   Eigen::Vector3f v_euler;
 
   // Roll
   q = Eigen::AngleAxisf(M_PI_2, Eigen::Vector3f::UnitX());
   v_euler = Eigen::Vector3f{M_PI_2, 0.f, 0.f};
-  vectorsApproxEqualTest(v_euler, px4_ros2::quaternionToEulerRPY(q), "roll pi/2");
+  vectorsApproxEqualTest(v_euler, px4_ros2::quaternionToEulerRpy(q), "roll pi/2");
 
   // Pitch
   q = Eigen::AngleAxisf(-M_PI / 4.f, Eigen::Vector3f::UnitY());
   v_euler = Eigen::Vector3f{0.f, -M_PI / 4.f, 0.f};
-  vectorsApproxEqualTest(v_euler, px4_ros2::quaternionToEulerRPY(q), "pitch -pi/4");
+  vectorsApproxEqualTest(v_euler, px4_ros2::quaternionToEulerRpy(q), "pitch -pi/4");
 
   // Yaw
   q = Eigen::AngleAxisf(3.f * M_PI / 4.f, Eigen::Vector3f::UnitZ());
   v_euler = Eigen::Vector3f{0.f, 0.f, 3.f * M_PI / 4.f};
-  vectorsApproxEqualTest(v_euler, px4_ros2::quaternionToEulerRPY(q), "yaw 3pi/4");
+  vectorsApproxEqualTest(v_euler, px4_ros2::quaternionToEulerRpy(q), "yaw 3pi/4");
 
   // Gimbal lock cases
   q = Eigen::AngleAxisf(-M_PI_2, Eigen::Vector3f::UnitY());
   v_euler = Eigen::Vector3f{0.f, -M_PI_2, 0.f};
-  vectorsApproxEqualTest(v_euler, px4_ros2::quaternionToEulerRPY(q), "gimbal lock: pitch -pi/2");
+  vectorsApproxEqualTest(v_euler, px4_ros2::quaternionToEulerRpy(q), "gimbal lock: pitch -pi/2");
 
   q = Eigen::AngleAxisf(M_PI_2, Eigen::Vector3f::UnitY());
   v_euler = Eigen::Vector3f{0.f, M_PI_2, 0.f};
-  vectorsApproxEqualTest(v_euler, px4_ros2::quaternionToEulerRPY(q), "gimbal lock: pitch pi/2");
+  vectorsApproxEqualTest(v_euler, px4_ros2::quaternionToEulerRpy(q), "gimbal lock: pitch pi/2");
 
   // Multi-axis rotations have multiple euler angle representations
   // Therefore we convert euler angle back to quaternion and compare to that
@@ -90,6 +90,104 @@ TEST(Geometry, quaternionToEulerRPY) {
     Eigen::AngleAxisf(0.1f, Eigen::Vector3f::UnitY()) *
     Eigen::AngleAxisf(-0.1f, Eigen::Vector3f::UnitZ());
   quaternionToEulerReconstructionTest(q);
+}
+
+TEST(Geometry, eulerRpyToQuaternion) {
+  Eigen::Quaternionf q;
+  Eigen::Vector3f v_euler;
+
+  // Roll
+  q = Eigen::AngleAxisf(M_PI_2, Eigen::Vector3f::UnitX());
+  v_euler = Eigen::Vector3f{M_PI_2, 0.f, 0.f};
+  quaternionsApproxEqualTest(q, px4_ros2::eulerRpyToQuaternion(v_euler), "roll pi/2");
+  quaternionsApproxEqualTest(
+    q, px4_ros2::eulerRpyToQuaternion(
+      v_euler.x(), v_euler.y(),
+      v_euler.z()), "roll pi/2");
+
+  // Pitch
+  q = Eigen::AngleAxisf(-M_PI / 4.f, Eigen::Vector3f::UnitY());
+  v_euler = Eigen::Vector3f{0.f, -M_PI / 4.f, 0.f};
+  quaternionsApproxEqualTest(q, px4_ros2::eulerRpyToQuaternion(v_euler), "pitch -pi/4");
+  quaternionsApproxEqualTest(
+    q, px4_ros2::eulerRpyToQuaternion(
+      v_euler.x(), v_euler.y(),
+      v_euler.z()), "pitch -pi/4");
+
+  // Yaw
+  q = Eigen::AngleAxisf(3.f * M_PI / 4.f, Eigen::Vector3f::UnitZ());
+  v_euler = Eigen::Vector3f{0.f, 0.f, 3.f * M_PI / 4.f};
+  quaternionsApproxEqualTest(q, px4_ros2::eulerRpyToQuaternion(v_euler), "yaw 3pi/4");
+  quaternionsApproxEqualTest(
+    q, px4_ros2::eulerRpyToQuaternion(
+      v_euler.x(), v_euler.y(),
+      v_euler.z()), "yaw 3pi/4");
+
+  // Multi-axis rotations
+  q = Eigen::Quaternionf{0.99638f, 0.04736f, 0.05235f, 0.04736f};
+  v_euler = Eigen::Vector3f{0.1f, 0.1f, 0.1f};
+  quaternionsApproxEqualTest(q, px4_ros2::eulerRpyToQuaternion(v_euler));
+  quaternionsApproxEqualTest(
+    q, px4_ros2::eulerRpyToQuaternion(
+      v_euler.x(), v_euler.y(),
+      v_euler.z()));
+
+  q = Eigen::Quaternionf{0.05235f, -0.04736f, 0.05235f, 0.99613f};
+  v_euler = Eigen::Vector3f{0.1f, 0.1f, M_PI - 0.1f};
+  quaternionsApproxEqualTest(q, px4_ros2::eulerRpyToQuaternion(v_euler));
+  quaternionsApproxEqualTest(
+    q, px4_ros2::eulerRpyToQuaternion(
+      v_euler.x(), v_euler.y(),
+      v_euler.z()));
+
+  q = Eigen::Quaternionf{-0.05235f, 0.04736f, 0.05235f, 0.99613f};
+  v_euler = Eigen::Vector3f{0.1f, -0.1f, M_PI + 0.1f};
+  quaternionsApproxEqualTest(q, px4_ros2::eulerRpyToQuaternion(v_euler));
+  quaternionsApproxEqualTest(
+    q, px4_ros2::eulerRpyToQuaternion(
+      v_euler.x(), v_euler.y(),
+      v_euler.z()));
+
+  q = Eigen::Quaternionf{0.99638f, -0.04736f, 0.05235f, -0.04736f};
+  v_euler = Eigen::Vector3f{-0.1f, 0.1f, -0.1f};
+  quaternionsApproxEqualTest(q, px4_ros2::eulerRpyToQuaternion(v_euler));
+  quaternionsApproxEqualTest(
+    q, px4_ros2::eulerRpyToQuaternion(
+      v_euler.x(), v_euler.y(),
+      v_euler.z()));
+
+  q = Eigen::Quaternionf{0.99638f, -0.04736f, -0.05235f, 0.04736f};
+  v_euler = Eigen::Vector3f{-0.1f, -0.1f, 0.1f};
+  quaternionsApproxEqualTest(q, px4_ros2::eulerRpyToQuaternion(v_euler));
+  quaternionsApproxEqualTest(
+    q, px4_ros2::eulerRpyToQuaternion(
+      v_euler.x(), v_euler.y(),
+      v_euler.z()));
+
+  q = Eigen::Quaternionf{0.05235f, 0.04736f, 0.05235f, -0.99613f};
+  v_euler = Eigen::Vector3f{-0.1f, 0.1f, -M_PI + 0.1f};
+  quaternionsApproxEqualTest(q, px4_ros2::eulerRpyToQuaternion(v_euler));
+  quaternionsApproxEqualTest(
+    q, px4_ros2::eulerRpyToQuaternion(
+      v_euler.x(), v_euler.y(),
+      v_euler.z()));
+
+  q = Eigen::Quaternionf{-0.04736f, -0.05235f, -0.04736f, -0.99638f};
+  v_euler = Eigen::Vector3f{0.1f, -0.1f, -M_PI - 0.1f};
+  quaternionsApproxEqualTest(q, px4_ros2::eulerRpyToQuaternion(v_euler));
+  quaternionsApproxEqualTest(
+    q, px4_ros2::eulerRpyToQuaternion(
+      v_euler.x(), v_euler.y(),
+      v_euler.z()));
+
+  q = Eigen::Quaternionf{0.99613f, 0.05235f, 0.04736f, -0.05235f};
+  v_euler = Eigen::Vector3f{0.1f, 0.1f, -0.1f};
+  quaternionsApproxEqualTest(q, px4_ros2::eulerRpyToQuaternion(v_euler));
+  quaternionsApproxEqualTest(
+    q, px4_ros2::eulerRpyToQuaternion(
+      v_euler.x(), v_euler.y(),
+      v_euler.z()));
+
 }
 
 TEST(Geometry, quaternionToRoll) {
