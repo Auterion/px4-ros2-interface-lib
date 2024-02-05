@@ -4,6 +4,7 @@
  ****************************************************************************/
 
 #include <px4_ros2/control/setpoint_types/experimental/attitude.hpp>
+#include <px4_ros2/utils/geometry.hpp>
 
 
 namespace px4_ros2
@@ -34,6 +35,40 @@ void AttitudeSetpointType::update(
   sp.thrust_body[2] = thrust_setpoint_frd(2);
   sp.yaw_sp_move_rate = yaw_sp_move_rate_rad_s;
   sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+  _vehicle_attitude_setpoint_pub->publish(sp);
+}
+
+void AttitudeSetpointType::update(
+  const float roll,
+  const float pitch,
+  const float yaw,
+  const Eigen::Vector3f & thrust_setpoint_body,
+  const float yaw_sp_move_rate_rad_s)
+{
+  onUpdate();
+
+  px4_msgs::msg::VehicleAttitudeSetpoint sp{};
+  sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+
+  sp.roll_body = roll;
+  sp.pitch_body = pitch;
+  sp.yaw_body = yaw;
+
+  sp.yaw_sp_move_rate = yaw_sp_move_rate_rad_s;
+
+  Eigen::Quaternionf att_setpoint_q{px4_ros2::eulerRpyToQuaternion(
+      Eigen::Vector3f{roll, pitch,
+        yaw})};
+
+  sp.q_d[0] = att_setpoint_q.w();
+  sp.q_d[1] = att_setpoint_q.x();
+  sp.q_d[2] = att_setpoint_q.y();
+  sp.q_d[3] = att_setpoint_q.z();
+
+  sp.thrust_body[0] = thrust_setpoint_body(0);
+  sp.thrust_body[1] = thrust_setpoint_body(1);
+  sp.thrust_body[2] = thrust_setpoint_body(2);
+
   _vehicle_attitude_setpoint_pub->publish(sp);
 }
 
