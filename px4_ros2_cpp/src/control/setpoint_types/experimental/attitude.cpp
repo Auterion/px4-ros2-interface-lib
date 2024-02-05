@@ -18,17 +18,17 @@ AttitudeSetpointType::AttitudeSetpointType(Context & context)
 }
 
 void AttitudeSetpointType::update(
-  const Eigen::Quaternionf & attidude_setpoint,
+  const Eigen::Quaternionf & attitude_setpoint,
   const Eigen::Vector3f & thrust_setpoint_frd,
   float yaw_sp_move_rate_rad_s)
 {
   onUpdate();
 
   px4_msgs::msg::VehicleAttitudeSetpoint sp{};
-  sp.q_d[0] = attidude_setpoint.w();
-  sp.q_d[1] = attidude_setpoint.x();
-  sp.q_d[2] = attidude_setpoint.y();
-  sp.q_d[3] = attidude_setpoint.z();
+  sp.q_d[0] = attitude_setpoint.w();
+  sp.q_d[1] = attitude_setpoint.x();
+  sp.q_d[2] = attitude_setpoint.y();
+  sp.q_d[3] = attitude_setpoint.z();
   sp.thrust_body[0] = thrust_setpoint_frd(0);
   sp.thrust_body[1] = thrust_setpoint_frd(1);
   sp.thrust_body[2] = thrust_setpoint_frd(2);
