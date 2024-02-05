@@ -30,6 +30,20 @@ public:
     const Eigen::Quaternionf & attitude_setpoint,
     const Eigen::Vector3f & thrust_setpoint_frd, float yaw_sp_move_rate_rad_s = 0.f);
 
+  /**
+   * @brief Send an attitude setpoint to the flight controller.
+   * Euler angles follow the RPY extrinsic Tait-Bryan convention (equiv. YPR intrinsic)
+   *
+   * @param roll Attitude setpoint roll angle [rad]
+   * @param pitch Attitude setpoint pitch angle [rad]
+   * @param yaw Attitude setpoint yaw angle [rad]
+   * @param thrust_setpoint_body Throttle demand [-1, 1]^3
+   * @param yaw_sp_move_rate_rad_s Yaw setpoint move rate [rad/s]
+  */
+  void update(
+    float roll, float pitch, float yaw,
+    const Eigen::Vector3f & thrust_setpoint_body, float yaw_sp_move_rate_rad_s = 0.f);
+
 private:
   rclcpp::Node & _node;
   rclcpp::Publisher<px4_msgs::msg::VehicleAttitudeSetpoint>::SharedPtr

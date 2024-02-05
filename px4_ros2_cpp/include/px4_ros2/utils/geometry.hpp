@@ -51,7 +51,7 @@ Type wrapPi(Type angle)
  * XYZ axes correspond to RPY angles respectively.
  *
  * @param q The input quaternion.
- * @return Euler angles corresponding to the given quaternion in range R, P, Y = [-pi, pi], [-pi/2, pi], [-pi, pi].
+ * @return Euler angles corresponding to the given quaternion in range R, P, Y = [-pi, pi], [-pi/2, pi/2], [-pi, pi].
  */
 template<typename Type>
 Eigen::Matrix<Type, 3, 1> quaternionToEulerRpy(const Eigen::Quaternion<Type> & q)
