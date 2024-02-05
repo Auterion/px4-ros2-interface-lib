@@ -130,7 +130,7 @@ static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>kNumA
 </div><div class="memdoc">
 <p>Control actuators </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">values</td><td>range [-1, 1], NAN=disarmed value </td></tr>
+    <tr><td class="paramname">values</td><td>range [-1, 1], NAN=ignore value </td></tr>
   </table>
   </dd>
 </dl>
@@ -162,9 +162,9 @@ static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>kNumA
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sets a single output (and the rest to disarmed) </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Sets a single actuator output </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">value</td><td>range [-1, 1], NAN=disarmed value </td></tr>
+    <tr><td class="paramname">value</td><td>range [-1, 1] </td></tr>
     <tr><td class="paramname">index</td><td>range [0, kNumActuators) </td></tr>
   </table>
   </dd>
