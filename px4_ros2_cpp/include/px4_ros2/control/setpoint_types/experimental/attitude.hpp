@@ -27,7 +27,7 @@ public:
   float desiredUpdateRateHz() override {return 200.f;}
 
   void update(
-    const Eigen::Quaternionf & attidude_setpoint,
+    const Eigen::Quaternionf & attitude_setpoint,
     const Eigen::Vector3f & thrust_setpoint_frd, float yaw_sp_move_rate_rad_s = 0.f);
 
 private:
