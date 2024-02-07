@@ -4,7 +4,8 @@ var NAVTREEINDEX0 =
 "attitude_8hpp_source.html":[5,0,0,0,0,2,0,0,0],
 "classes.html":[4,1],
 "classpx4__ros2_1_1AttitudeSetpointType.html":[3,1,0,0,0],
-"classpx4__ros2_1_1AttitudeSetpointType.html#a16b30bd9486c97fd64b6555bff958d98":[3,1,0,0,0,4],
+"classpx4__ros2_1_1AttitudeSetpointType.html#a0fca5b3e9e692a9697b4c312fa8ba1a3":[3,1,0,0,0,4],
+"classpx4__ros2_1_1AttitudeSetpointType.html#a25fa251a0d840678570d6c9bc9e4a732":[3,1,0,0,0,5],
 "classpx4__ros2_1_1AttitudeSetpointType.html#a666ce9f420176e601256c397c90bb886":[3,1,0,0,0,2],
 "classpx4__ros2_1_1AttitudeSetpointType.html#a8589be88a1f7b08a59a27921d43a1871":[3,1,0,0,0,1],
 "classpx4__ros2_1_1AttitudeSetpointType.html#aa1e01a708a2de026cd114db77c269b17":[3,1,0,0,0,3],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "structpx4__ros2_1_1LocalPositionMeasurement.html#a6e78832418253ba6b2b2810924a7317c":[3,2,0,3,2],
 "structpx4__ros2_1_1LocalPositionMeasurement.html#a9319a5f75957b3389a0fd1f67bd19fa0":[3,2,0,3,10],
 "structpx4__ros2_1_1LocalPositionMeasurement.html#a99ff8a89d9ddcf8614541182459690dd":[3,2,0,3,8],
-"structpx4__ros2_1_1LocalPositionMeasurement.html#aa4fcd4167d7592932a00afdc67859cd9":[3,2,0,3,9],
-"structpx4__ros2_1_1LocalPositionMeasurement.html#aaa49a96aac2b172e49c2036424422b6e":[3,2,0,3,5]
+"structpx4__ros2_1_1LocalPositionMeasurement.html#aa4fcd4167d7592932a00afdc67859cd9":[3,2,0,3,9]
 };
