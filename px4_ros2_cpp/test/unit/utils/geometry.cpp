@@ -8,6 +8,23 @@
 #include <gtest/gtest.h>
 #include <px4_ros2/utils/geometry.hpp>
 
+using namespace px4_ros2::literals; // NOLINT
+
+TEST(Geometry, radToDeg) {
+  EXPECT_NEAR(180.f, px4_ros2::radToDeg(M_PI), 1e-3);
+  EXPECT_NEAR(-720.f, px4_ros2::radToDeg(-4.f * M_PI), 1e-3);
+  EXPECT_NEAR(60.f, px4_ros2::radToDeg(M_PI / 3.f), 1e-3);
+
+  // Test literals
+  EXPECT_NEAR(90.f, px4_ros2::radToDeg(90.0_deg), 1e-3);
+  EXPECT_NEAR(90.f, px4_ros2::radToDeg(1.57079_rad), 1e-3);
+}
+
+TEST(Geometry, degToRad) {
+  EXPECT_NEAR(M_PI, px4_ros2::degToRad(180.f), 1e-3);
+  EXPECT_NEAR(-4.f * M_PI, px4_ros2::degToRad(-720.f), 1e-3);
+  EXPECT_NEAR(M_PI / 3.f, px4_ros2::degToRad(60.f), 1e-3);
+}
 
 TEST(Geometry, wrapPi) {
   EXPECT_NEAR(M_PI_2, px4_ros2::wrapPi(M_PI_2), 1e-3);

@@ -219,7 +219,7 @@ TEST(FrameConversion, varianceEnuToNed) {
   vectorsApproxEqualTest(v_ned, px4_ros2::varianceEnuToNed(v_enu));
 }
 
-TEST(Geometry, yawBodyToWorld) {
+TEST(FrameConversion, yawBodyToWorld) {
   float yaw;
   Eigen::Vector3f point_body;
   Eigen::Vector3f point_world;
