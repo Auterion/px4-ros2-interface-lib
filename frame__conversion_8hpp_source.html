@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('frame__conversion_8hpp_source.html',''
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;Eigen/Eigen&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;px4_ros2/utils/geometry.hpp&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="geometry_8hpp.html">px4_ros2/utils/geometry.hpp</a>&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span>px4_ros2</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('frame__conversion_8hpp_source.html',''
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;Eigen::Quaternion&lt;Type&gt; attitudeNedToEnu(<span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; &amp; q_ned)</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keyword">static</span> constexpr Type kHalfSqrt2 = <span class="keyword">static_cast&lt;</span>Type<span class="keyword">&gt;</span>(0.7071067811865476);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; q_ned_to_enu {0.0, kHalfSqrt2, kHalfSqrt2, 0.0};  <span class="comment">// 180 deg along X, -90 deg along Z</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; q_ned_to_enu {0.0, kHalfSqrt2, kHalfSqrt2, 0.0};  <span class="comment">// 180 deg along X, -90 deg along Z (intrinsic)</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; q_yaw_minus_pi_2{kHalfSqrt2, 0.0, 0.0, -kHalfSqrt2};  <span class="comment">// -90 deg along Z</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordflow">return</span> q_ned_to_enu * q_ned * q_yaw_minus_pi_2 * q_ned_to_enu.inverse();</div>
@@ -114,7 +114,7 @@ $(document).ready(function(){initNavTree('frame__conversion_8hpp_source.html',''
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;Eigen::Quaternion&lt;Type&gt; attitudeEnuToNed(<span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; &amp; q_enu)</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;{</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keyword">static</span> constexpr Type kHalfSqrt2 = <span class="keyword">static_cast&lt;</span>Type<span class="keyword">&gt;</span>(0.7071067811865476);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; q_enu_to_ned {0.0, kHalfSqrt2, kHalfSqrt2, 0.0};  <span class="comment">// 180 deg along X, -90 deg along Z</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; q_enu_to_ned {0.0, kHalfSqrt2, kHalfSqrt2, 0.0};  <span class="comment">// 180 deg along X, -90 deg along Z (intrinsic)</span></div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; q_yaw_minus_pi_2{kHalfSqrt2, 0.0, 0.0, -kHalfSqrt2};  <span class="comment">// -90 deg along Z</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordflow">return</span> q_enu_to_ned * q_enu * q_yaw_minus_pi_2 * q_enu_to_ned.inverse();</div>
@@ -133,13 +133,13 @@ $(document).ready(function(){initNavTree('frame__conversion_8hpp_source.html',''
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> T yawNedToEnu(<span class="keyword">const</span> T yaw_ned_rad)</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;{</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordflow">return</span> wrapPi(<span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(M_PI / 2.0) - yaw_ned_rad);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="geometry_8hpp.html#ab49f39205924f2c49455ebe42b1ac5a3">wrapPi</a>(<span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(M_PI / 2.0) - yaw_ned_rad);</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> T yawEnuToNed(<span class="keyword">const</span> T yaw_enu_rad)</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;{</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordflow">return</span> wrapPi(<span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(M_PI / 2.0) - yaw_enu_rad);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="geometry_8hpp.html#ab49f39205924f2c49455ebe42b1ac5a3">wrapPi</a>(<span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(M_PI / 2.0) - yaw_enu_rad);</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
@@ -185,6 +185,8 @@ $(document).ready(function(){initNavTree('frame__conversion_8hpp_source.html',''
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;}</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;}  <span class="comment">// namespace px4_ros2</span></div>
+<div class="ttc" id="ageometry_8hpp_html"><div class="ttname"><a href="geometry_8hpp.html">geometry.hpp</a></div></div>
+<div class="ttc" id="ageometry_8hpp_html_ab49f39205924f2c49455ebe42b1ac5a3"><div class="ttname"><a href="geometry_8hpp.html#ab49f39205924f2c49455ebe42b1ac5a3">px4_ros2::wrapPi</a></div><div class="ttdeci">Type wrapPi(Type angle)</div><div class="ttdoc">Wraps an angle to the range [-pi, pi).</div><div class="ttdef"><b>Definition:</b> geometry.hpp:38</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

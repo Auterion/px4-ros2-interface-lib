@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['update_141',['update',['../classpx4__ros2_1_1GotoSetpointType.html#a2117abf2c58b3909776bef70338c42be',1,'px4_ros2::GotoSetpointType::update()'],['../classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#a1a183b595ef7f6a22f3a83ba543fe86d',1,'px4_ros2::GlobalPositionMeasurementInterface::update()'],['../classpx4__ros2_1_1LocalPositionMeasurementInterface.html#a6fd180b944710716d418b2cfe1c0c8e3',1,'px4_ros2::LocalPositionMeasurementInterface::update()']]],
-  ['updatemotors_142',['updateMotors',['../classpx4__ros2_1_1DirectActuatorsSetpointType.html#a021774ee25cb884530284e4899edde90',1,'px4_ros2::DirectActuatorsSetpointType']]],
-  ['updateservos_143',['updateServos',['../classpx4__ros2_1_1DirectActuatorsSetpointType.html#a61a798f80721433dbafd15e629eea448',1,'px4_ros2::DirectActuatorsSetpointType']]]
+  ['schedulemode_149',['scheduleMode',['../classpx4__ros2_1_1ModeExecutorBase.html#a94f2c1e3dd07b3b58d78b94ebb3615a3',1,'px4_ros2::ModeExecutorBase']]],
+  ['sendcommandsync_150',['sendCommandSync',['../classpx4__ros2_1_1ModeExecutorBase.html#a332cb775e0543155595c51bbc4052522',1,'px4_ros2::ModeExecutorBase']]],
+  ['set_151',['set',['../classpx4__ros2_1_1PeripheralActuatorControls.html#aa290a7d4d1221c8d184752890bae88a3',1,'px4_ros2::PeripheralActuatorControls::set(const Eigen::Matrix&lt; float, kNumActuators, 1 &gt; &amp;values)'],['../classpx4__ros2_1_1PeripheralActuatorControls.html#a59753e650558081296ec4ef83de00181',1,'px4_ros2::PeripheralActuatorControls::set(float value, unsigned index=0)']]],
+  ['setsetpointupdaterate_152',['setSetpointUpdateRate',['../classpx4__ros2_1_1ModeBase.html#a3d8ba94373de2a1c5bf0edaac7263ab1',1,'px4_ros2::ModeBase']]]
 ];
