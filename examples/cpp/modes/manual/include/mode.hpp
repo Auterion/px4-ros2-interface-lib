@@ -19,10 +19,6 @@ using namespace std::chrono_literals; // NOLINT
 static const std::string kName = "My Manual Mode";
 static const std::string kNodeName = "example_mode_manual";
 
-#ifndef M_PI_F
-#define M_PI_F static_cast<float>(M_PI)
-#endif
-
 class FlightModeTest : public px4_ros2::ModeBase
 {
 public:
@@ -45,13 +41,13 @@ public:
     const bool want_rates = fabsf(_manual_control_input->roll()) > threshold || fabsf(
       _manual_control_input->pitch()) > threshold;
 
-    const float yaw_rate = _manual_control_input->yaw() * 120.f * M_PI_F / 180.f;
+    const float yaw_rate = px4_ros2::degToRad(_manual_control_input->yaw() * 120.f);
 
     if (want_rates) {
       const Eigen::Vector3f thrust_sp{0.f, 0.f, -_manual_control_input->throttle()};
       const Eigen::Vector3f rates_sp{
-        _manual_control_input->roll() * 500.f * M_PI_F / 180.f,
-        -_manual_control_input->pitch() * 500.f * M_PI_F / 180.f,
+        px4_ros2::degToRad(_manual_control_input->roll() * 500.f),
+        px4_ros2::degToRad(-_manual_control_input->pitch() * 500.f),
         yaw_rate
       };
       _rates_setpoint->update(rates_sp, thrust_sp);
@@ -60,8 +56,8 @@ public:
       _yaw += yaw_rate * dt_s;
       const Eigen::Vector3f thrust_sp{0.f, 0.f, -_manual_control_input->throttle()};
       const Eigen::Quaternionf qd = px4_ros2::eulerRpyToQuaternion(
-        _manual_control_input->roll() * 55.f * M_PI_F / 180.f,
-        -_manual_control_input->pitch() * 55.f * M_PI_F / 180.f,
+        px4_ros2::degToRad(_manual_control_input->roll() * 55.f),
+        px4_ros2::degToRad(-_manual_control_input->pitch() * 55.f),
         _yaw
       );
       _attitude_setpoint->update(qd, thrust_sp, yaw_rate);

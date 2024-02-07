@@ -17,6 +17,8 @@
 static const std::string kName = "Go-to Example";
 static const std::string kNodeName = "example_mode_goto";
 
+using namespace px4_ros2::literals; // NOLINT
+
 class FlightModeTest : public px4_ros2::ModeBase
 {
 public:
@@ -95,10 +97,10 @@ public:
 
           const float max_horizontal_velocity_m_s = 5.f * speed_scale + (1.f - speed_scale) * 1.f;
           const float max_vertical_velocity_m_s = 3.f * speed_scale + (1.f - speed_scale) * 0.5f;
-          const float max_heading_rate_rad_s = (45.f * speed_scale + (1.f - speed_scale) * 25.f) *
-            static_cast<float>(M_PI) / 180.f;
+          const float max_heading_rate_rad_s =
+            px4_ros2::degToRad(45.f * speed_scale + (1.f - speed_scale) * 25.f);
           const float heading_setpoint_rate_of_change =
-            (40.f * speed_scale + (1.f - speed_scale) * 20.f) * static_cast<float>(M_PI) / 180.f;
+            px4_ros2::degToRad(40.f * speed_scale + (1.f - speed_scale) * 20.f);
 
           if (!_start_heading_set) {
             _spinning_heading_rad = _vehicle_heading_rad;
@@ -188,7 +190,7 @@ private:
 
   bool headingReached(float target_heading_rad) const
   {
-    static constexpr float kHeadingErrorThreshold = 7.f * static_cast<float>(M_PI) / 180.f; // [rad]
+    static constexpr float kHeadingErrorThreshold = 7.0_deg;
     const float heading_error_wrapped = px4_ros2::wrapPi(target_heading_rad - _vehicle_heading_rad);
     return fabsf(heading_error_wrapped) < kHeadingErrorThreshold;
   }
