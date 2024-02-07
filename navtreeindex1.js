@@ -1,5 +1,7 @@
 var NAVTREEINDEX1 =
 {
+"structpx4__ros2_1_1LocalPositionMeasurement.html#a99ff8a89d9ddcf8614541182459690dd":[3,2,0,3,8],
+"structpx4__ros2_1_1LocalPositionMeasurement.html#aa4fcd4167d7592932a00afdc67859cd9":[3,2,0,3,9],
 "structpx4__ros2_1_1LocalPositionMeasurement.html#aaa49a96aac2b172e49c2036424422b6e":[3,2,0,3,5],
 "structpx4__ros2_1_1LocalPositionMeasurement.html#ad36330e09dfe3c6b7199ffa745f26f17":[3,2,0,3,4],
 "structpx4__ros2_1_1LocalPositionMeasurement.html#adc0536a3ad46002c0b22dc78adb2cf8c":[3,2,0,3,3],
