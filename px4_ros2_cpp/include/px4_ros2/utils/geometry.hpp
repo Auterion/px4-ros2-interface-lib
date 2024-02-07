@@ -29,6 +29,36 @@ namespace px4_ros2
 {
 
 /**
+ * @brief Converts radians to degrees
+ */
+template<typename Type>
+Type radToDeg(Type rad)
+{
+  return rad * static_cast<Type>(180.0 / M_PI);
+}
+
+/**
+ * @brief Converts degrees to radians
+ */
+template<typename Type>
+Type degToRad(Type deg)
+{
+  return deg * static_cast<Type>(M_PI / 180.0);
+}
+
+namespace literals
+{
+static inline constexpr float operator"" _deg(long double degrees)
+{
+  return static_cast<float>(degrees * M_PI / 180.0);
+}
+static inline constexpr float operator"" _rad(long double radians)
+{
+  return static_cast<float>(radians);
+}
+}
+
+/**
  * @brief Wraps an angle to the range [-pi, pi).
  *
  * @param angle The input angle [rad].
