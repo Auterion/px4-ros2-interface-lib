@@ -25,7 +25,11 @@ public:
 
   Configuration getConfiguration() override;
 
-  void update(const Eigen::Vector3f & velocity_setpoint_ned_m_s);
+  void update(
+    const Eigen::Vector3f & velocity_ned_m_s,
+    const std::optional<Eigen::Vector3f> & acceleration_ned_m_s2 = {},
+    std::optional<float> yaw_ned_rad = {},
+    std::optional<float> yaw_rate_ned_rad_s = {});
 
 private:
   rclcpp::Node & _node;
