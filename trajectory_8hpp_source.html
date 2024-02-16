@@ -110,14 +110,18 @@ $(document).ready(function(){initNavTree('trajectory_8hpp_source.html',''); init
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <a class="code" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a> getConfiguration() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordtype">void</span> update(<span class="keyword">const</span> Eigen::Vector3f &amp; velocity_setpoint_ned_m_s);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  rclcpp::Node &amp; _node;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::TrajectorySetpoint&gt;::SharedPtr _trajectory_setpoint_pub;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;};</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;} <span class="comment">/* namespace px4_ros2 */</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordtype">void</span> update(</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">const</span> Eigen::Vector3f &amp; velocity_ned_m_s,</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">const</span> std::optional&lt;Eigen::Vector3f&gt; &amp; acceleration_ned_m_s2 = {},</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    std::optional&lt;float&gt; yaw_ned_rad = {},</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    std::optional&lt;float&gt; yaw_rate_ned_rad_s = {});</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  rclcpp::Node &amp; _node;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::TrajectorySetpoint&gt;::SharedPtr _trajectory_setpoint_pub;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;};</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition:</b> context.hpp:20</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1SetpointBase_html"><div class="ttname"><a href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a></div><div class="ttdef"><b>Definition:</b> setpoint_base.hpp:20</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1TrajectorySetpointType_html"><div class="ttname"><a href="classpx4__ros2_1_1TrajectorySetpointType.html">px4_ros2::TrajectorySetpointType</a></div><div class="ttdef"><b>Definition:</b> trajectory.hpp:20</div></div>
