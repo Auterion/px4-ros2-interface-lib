@@ -1,21 +1,22 @@
 /****************************************************************************
- * Copyright (c) 2023 PX4 Development Team.
+ * Copyright (c) 2024 PX4 Development Team.
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 #pragma once
 
 #include <px4_ros2/components/mode.hpp>
 #include <px4_ros2/control/setpoint_types/goto.hpp>
-#include <px4_ros2/odometry/local_position.hpp>
+#include <px4_ros2/odometry/global_position.hpp>
 #include <px4_ros2/utils/geometry.hpp>
+#include <px4_ros2/utils/geodesic.hpp>
 #include <px4_msgs/msg/vehicle_attitude.hpp>
 
 #include <rclcpp/rclcpp.hpp>
 #include <Eigen/Core>
 #include <algorithm>
 
-static const std::string kName = "Go-to Example";
-static const std::string kNodeName = "example_mode_goto";
+static const std::string kName = "Go-to Global Example";
+static const std::string kNodeName = "example_mode_goto_global";
 
 using namespace px4_ros2::literals; // NOLINT
 
@@ -25,9 +26,9 @@ public:
   explicit FlightModeTest(rclcpp::Node & node)
   : ModeBase(node, kName)
   {
-    _goto_setpoint = std::make_shared<px4_ros2::GotoSetpointType>(*this);
+    _goto_setpoint = std::make_shared<px4_ros2::GotoGlobalSetpointType>(*this);
 
-    _vehicle_local_position = std::make_shared<px4_ros2::OdometryLocalPosition>(*this);
+    _vehicle_global_position = std::make_shared<px4_ros2::OdometryGlobalPosition>(*this);
 
     _vehicle_attitude_sub = node.create_subscription<px4_msgs::msg::VehicleAttitude>(
       "/fmu/out/vehicle_attitude", rclcpp::QoS(1).best_effort(),
@@ -49,7 +50,7 @@ public:
   void updateSetpoint(float dt_s) override
   {
     if (!_start_position_set) {
-      _start_position_m = _vehicle_local_position->positionNed();
+      _start_position_m = _vehicle_global_position->position();
       _start_position_set = true;
     }
 
@@ -65,14 +66,16 @@ public:
 
       case State::GoingNorth: {
           // go north to the northwest corner facing in direction of travel
-          const Eigen::Vector3f target_position_m = _start_position_m +
-            Eigen::Vector3f{kTriangleHeight, 0.f, 0.f};
+          const Eigen::Vector3d target_position_m = px4_ros2::addVectorToGlobalPosition(
+            _start_position_m, Eigen::Vector3f{kTriangleHeight, 0.f, 0.f});
 
-          const Eigen::Vector2f vehicle_to_target_xy = target_position_m.head(2) -
-            _vehicle_local_position->positionNed().head(2);
-          const float heading_target_rad = atan2f(vehicle_to_target_xy(1), vehicle_to_target_xy(0));
+          const float heading_target_rad = px4_ros2::headingToGlobalPosition(
+            _vehicle_global_position->position(), target_position_m);
 
-          if (vehicle_to_target_xy.norm() < 0.1f) {
+          if (px4_ros2::horizontalDistanceToGlobalPosition(
+              _vehicle_global_position->position(),
+              target_position_m) < 0.1f)
+          {
             // stop caring about heading (the arctangent becomes undefined)
             _goto_setpoint->update(target_position_m);
           } else {
@@ -87,13 +90,13 @@ public:
 
       case State::GoingEast: {
           // go to the northeast corner while spinning
-          const Eigen::Vector3f target_position_m = _start_position_m +
-            Eigen::Vector3f{kTriangleHeight, kTriangleWidth, 0.f};
+          const Eigen::Vector3d target_position_m = px4_ros2::addVectorToGlobalPosition(
+            _start_position_m, Eigen::Vector3f{kTriangleHeight, kTriangleWidth, 0.f});
 
           // scale the speed limits by distance to the target
-          const Eigen::Vector2f vehicle_to_target_xy = target_position_m.head(2) -
-            _vehicle_local_position->positionNed().head(2);
-          const float speed_scale = std::min(vehicle_to_target_xy.norm() / kTriangleWidth, 1.f);
+          const float distance_to_target = px4_ros2::horizontalDistanceToGlobalPosition(
+            _vehicle_global_position->position(), target_position_m);
+          const float speed_scale = std::min(distance_to_target / kTriangleWidth, 1.f);
 
           const float max_horizontal_velocity_m_s = 5.f * speed_scale + (1.f - speed_scale) * 1.f;
           const float max_vertical_velocity_m_s = 3.f * speed_scale + (1.f - speed_scale) * 0.5f;
@@ -126,11 +129,11 @@ public:
 
       case State::GoingSouthwest: {
           // go to southwest corner while facing the northwestern corner
-          const Eigen::Vector2f position_of_interest_m = _start_position_m.head(2) +
-            Eigen::Vector2f{kTriangleHeight, 0.f};
-          const Eigen::Vector2f vehicle_to_poi_xy = position_of_interest_m -
-            _vehicle_local_position->positionNed().head(2);
-          const float heading_target_rad = atan2f(vehicle_to_poi_xy(1), vehicle_to_poi_xy(0));
+          const Eigen::Vector2d position_of_interest_m = px4_ros2::addVectorToGlobalPosition(
+            _start_position_m.head(
+              2), Eigen::Vector2f{kTriangleHeight, 0.f});
+          const float heading_target_rad = px4_ros2::headingToGlobalPosition(
+            _vehicle_global_position->position().head(2), position_of_interest_m);
 
           _goto_setpoint->update(_start_position_m, heading_target_rad);
           if (positionReached(_start_position_m)) {
@@ -155,7 +158,7 @@ private:
   } _state;
 
   // NED earth-fixed frame. box pattern starting corner (first position the mode sees on activation)
-  Eigen::Vector3f _start_position_m;
+  Eigen::Vector3d _start_position_m;
   bool _start_position_set{false};
 
   // [-pi, pi] current vehicle heading from VehicleAttitude subscription
@@ -167,8 +170,8 @@ private:
   // used for heading initialization when dynamically updating heading setpoints
   bool _start_heading_set{false};
 
-  std::shared_ptr<px4_ros2::GotoSetpointType> _goto_setpoint;
-  std::shared_ptr<px4_ros2::OdometryLocalPosition> _vehicle_local_position;
+  std::shared_ptr<px4_ros2::GotoGlobalSetpointType> _goto_setpoint;
+  std::shared_ptr<px4_ros2::OdometryGlobalPosition> _vehicle_global_position;
   rclcpp::Subscription<px4_msgs::msg::VehicleAttitude>::SharedPtr _vehicle_attitude_sub;
 
   void updateVehicleHeading(const px4_msgs::msg::VehicleAttitude::UniquePtr & msg)
@@ -178,14 +181,12 @@ private:
     _vehicle_heading_rad = rpy(2);
   }
 
-  bool positionReached(const Eigen::Vector3f & target_position_m) const
+  bool positionReached(const Eigen::Vector3d & target_position_m) const
   {
     static constexpr float kPositionErrorThreshold = 0.5f; // [m]
-    static constexpr float kVelocityErrorThreshold = 0.3f; // [m/s]
-    const Eigen::Vector3f position_error_m = target_position_m -
-      _vehicle_local_position->positionNed();
-    return (position_error_m.norm() < kPositionErrorThreshold) &&
-           (_vehicle_local_position->velocityNed().norm() < kVelocityErrorThreshold);
+    const float position_error = px4_ros2::distanceToGlobalPosition(
+      _vehicle_global_position->position(), target_position_m);
+    return position_error < kPositionErrorThreshold;
   }
 
   bool headingReached(float target_heading_rad) const
