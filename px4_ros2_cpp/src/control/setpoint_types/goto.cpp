@@ -64,4 +64,34 @@ SetpointBase::Configuration GotoSetpointType::getConfiguration()
   config.climb_rate_enabled = true;
   return config;
 }
+
+GotoGlobalSetpointType::GotoGlobalSetpointType(Context & context)
+: _node(context.node()), _map_projection(std::make_shared<MapProjection>(context)),
+  _goto_setpoint(std::make_shared<GotoSetpointType>(context))
+{
+  RequirementFlags requirements{};
+  requirements.global_position = true;
+  context.setRequirement(requirements);
+}
+
+void GotoGlobalSetpointType::update(
+  const Eigen::Vector3d & global_position,
+  const std::optional<float> & heading,
+  const std::optional<float> & max_horizontal_speed,
+  const std::optional<float> & max_vertical_speed,
+  const std::optional<float> & max_heading_rate)
+{
+  if (!_map_projection->isInitialized()) {
+    RCLCPP_ERROR(
+      _node.get_logger(),
+      "Goto global setpoint update failed: map projection is uninitialized. Is /fmu/out/vehicle_local_position published?");
+    return;
+  }
+
+  Eigen::Vector3f local_position = _map_projection->globalToLocal(global_position);
+  _goto_setpoint->update(
+    local_position, heading, max_horizontal_speed, max_vertical_speed,
+    max_heading_rate);
+}
+
 } // namespace px4_ros2
