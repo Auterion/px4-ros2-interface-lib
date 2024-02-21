@@ -66,7 +66,7 @@ SetpointBase::Configuration GotoSetpointType::getConfiguration()
 }
 
 GotoGlobalSetpointType::GotoGlobalSetpointType(Context & context)
-: _node(context.node()), _map_projection(std::make_shared<MapProjection>(context)),
+: _node(context.node()), _map_projection(std::make_unique<MapProjection>(context)),
   _goto_setpoint(std::make_shared<GotoSetpointType>(context))
 {
   RequirementFlags requirements{};
@@ -82,7 +82,7 @@ void GotoGlobalSetpointType::update(
   const std::optional<float> & max_heading_rate)
 {
   if (!_map_projection->isInitialized()) {
-    RCLCPP_ERROR(
+    RCLCPP_ERROR_ONCE(
       _node.get_logger(),
       "Goto global setpoint update failed: map projection is uninitialized. Is /fmu/out/vehicle_local_position published?");
     return;

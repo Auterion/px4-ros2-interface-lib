@@ -21,7 +21,7 @@ class MapProjection
 public:
   explicit MapProjection(Context & context);
 
-  ~MapProjection() = default;
+  ~MapProjection();
 
   /**
    * @return true, if the map reference has been initialized before
@@ -70,8 +70,15 @@ private:
    */
   void assertInitalized() const;
 
+  /**
+   * Callback for VehicleLocalPosition messages which intializes and updates the map projection reference point from PX4
+   *
+   * @param msg the VehicleLocalPosition message
+  */
+  void vehicleLocalPositionCallback(px4_msgs::msg::VehicleLocalPosition::UniquePtr msg);
+
   rclcpp::Node & _node;
-  std::shared_ptr<MapProjectionImpl> _map_projection_math;
+  std::unique_ptr<MapProjectionImpl> _map_projection_math;
   rclcpp::Subscription<px4_msgs::msg::VehicleLocalPosition>::SharedPtr _vehicle_local_position_sub;
 };
 
@@ -93,7 +100,7 @@ float horizontalDistanceToGlobalPosition(
  * @param global_position_next next lat [deg], lon [deg], alt AMSL [m] (8.1234567°, not 81234567°)
  * @return the horizontal distance [m] between both positions
  */
-inline float horizontalDistanceToGlobalPosition(
+static inline float horizontalDistanceToGlobalPosition(
   const Eigen::Vector3d & global_position_now,
   const Eigen::Vector3d & global_position_next)
 {
@@ -131,7 +138,7 @@ float headingToGlobalPosition(
  * @param global_position_next next lat [deg], lon [deg], alt AMSL [m] (8.1234567°, not 81234567°)
  * @return the heading [rad] to the next global position (clockwise)
 */
-inline float headingToGlobalPosition(
+static inline float headingToGlobalPosition(
   const Eigen::Vector3d & global_position_now,
   const Eigen::Vector3d & global_position_next)
 {
@@ -158,7 +165,7 @@ Eigen::Vector2f vectorToGlobalPosition(
  * @param global_position_next next lat [deg], lon [deg], alt AMSL [m] (8.1234567°, not 81234567°)
  * @return the vector [m^3] in local frame to the next global position (NED)
 */
-inline Eigen::Vector3f vectorToGlobalPosition(
+static inline Eigen::Vector3f vectorToGlobalPosition(
   const Eigen::Vector3d & global_position_now,
   const Eigen::Vector3d & global_position_next)
 {
@@ -205,7 +212,7 @@ Eigen::Vector2d globalPositionFromHeadingAndDist(
  * @param distance distance from the current position [m]
  * @return the target global position
  */
-inline Eigen::Vector3d globalPositionFromHeadingAndDist(
+static inline Eigen::Vector3d globalPositionFromHeadingAndDist(
   const Eigen::Vector3d & global_position_now,
   float heading, float dist)
 {
@@ -235,7 +242,7 @@ Eigen::Vector2d addVectorToGlobalPosition(
  * @param vector_ne local vector to add [m^3] (NED)
  * @return the resulting global position from the addition
 */
-inline Eigen::Vector3d addVectorToGlobalPosition(
+static inline Eigen::Vector3d addVectorToGlobalPosition(
   const Eigen::Vector3d & global_position,
   const Eigen::Vector3f & vector_ned)
 {
