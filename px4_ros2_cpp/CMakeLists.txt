@@ -132,7 +132,9 @@ if(BUILD_TESTING)
             test/unit/main.cpp
             test/unit/modes.cpp
             test/unit/utils/frame_conversion.cpp
+            test/unit/utils/geodesic.cpp
             test/unit/utils/geometry.cpp
+            test/unit/utils/map_projection_impl.cpp
     )
     target_include_directories(${PROJECT_NAME}_unit_tests PRIVATE ${CMAKE_CURRENT_LIST_DIR})
     target_link_libraries(${PROJECT_NAME}_unit_tests ${PROJECT_NAME} unit_utils)
