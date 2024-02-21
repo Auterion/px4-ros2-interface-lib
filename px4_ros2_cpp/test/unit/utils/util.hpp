@@ -18,6 +18,10 @@ void vectorsApproxEqualTest(
   const Eigen::Vector3f & v_expected, const Eigen::Vector3f & v_actual,
   const std::string & msg = "", float precision = 1e-3);
 
+void vectorsApproxEqualTest(
+  const Eigen::Vector3d & v_expected, const Eigen::Vector3d & v_actual,
+  const std::string & msg = "", double precision = 1e-6);
+
 void quaternionToEulerReconstructionTest(
   const Eigen::Quaternionf & q,
   const std::string & msg = "");

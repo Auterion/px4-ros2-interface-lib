@@ -174,8 +174,8 @@ inline Eigen::Vector3f vectorToGlobalPosition(
  * Compute the global position on the line vector defined by two positions (start -> end) at a certain distance
  * from global position 'start'.
  *
- * @param global_position_line_start line start lat [deg], lon [deg], alt AMSL [m] (47.1234567°, not 471234567°)
- * @param global_position_line_end line end lat [deg], lon [deg], alt AMSL [m] (47.1234567°, not 471234567°)
+ * @param global_position_line_start line start lat [deg], lon [deg] (47.1234567°, not 471234567°)
+ * @param global_position_line_end line end lat [deg], lon [deg] (47.1234567°, not 471234567°)
  * @param dist distance [m] of target global position from position 'start' towards position 'end' (can be negative)
  */
 Eigen::Vector2d globalPositionFromLineAndDist(

@@ -21,8 +21,8 @@ class MapProjectionImpl final
 {
 private:
   uint64_t _ref_timestamp{0};       /**< Reference time (microseconds), since system start */
-  double _ref_lat{0.0};             /**< Reference point latitude (degrees) */
-  double _ref_lon{0.0};             /**< Reference point longitude (degrees) */
+  double _ref_lat{0.0};             /**< Reference point latitude (radians) */
+  double _ref_lon{0.0};             /**< Reference point longitude (radians) */
   double _ref_alt_amsl{0.0};        /**< Reference point altitude AMSL (meters) */
   double _ref_sin_lat{0.0};
   double _ref_cos_lat{0.0};
@@ -73,6 +73,19 @@ public:
    * @return the projection reference longitude in degrees
    */
   inline double getProjectionReferenceLon() const {return radToDeg(_ref_lon);}
+
+  /**
+   * @return the projection reference altitude AMSL in meters
+   */
+  inline double getProjectionReferenceAlt() const {return _ref_alt_amsl;}
+
+  /**
+   * @return the projection reference position: lat [deg], lon [deg], alt AMSL [m]
+   */
+  inline Eigen::Vector3d getProjectionReferencePosition() const
+  {
+    return Eigen::Vector3d{radToDeg(_ref_lat), radToDeg(_ref_lon), _ref_alt_amsl};
+  }
 
   /**
    * Transform a point in the geographic coordinate system to the local
