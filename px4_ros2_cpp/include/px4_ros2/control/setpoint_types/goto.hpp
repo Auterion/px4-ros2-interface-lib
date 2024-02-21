@@ -82,7 +82,7 @@ public:
 
 private:
   rclcpp::Node & _node;
-  std::shared_ptr<MapProjection> _map_projection;
+  std::unique_ptr<MapProjection> _map_projection;
   std::shared_ptr<GotoSetpointType> _goto_setpoint;
 };
 

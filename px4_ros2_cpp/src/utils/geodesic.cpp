@@ -13,18 +13,36 @@ namespace px4_ros2
 MapProjection::MapProjection(Context & context)
 : _node(context.node())
 {
-  _map_projection_math = std::make_shared<MapProjectionImpl>();
+  _map_projection_math = std::make_unique<MapProjectionImpl>();
   _vehicle_local_position_sub = _node.create_subscription<px4_msgs::msg::VehicleLocalPosition>(
-    "/fmu/out/vehicle_local_position", rclcpp::QoS(10).best_effort(),
+    "/fmu/out/vehicle_local_position", rclcpp::QoS(1).best_effort(),
     [this](px4_msgs::msg::VehicleLocalPosition::UniquePtr msg) {
-      const uint64_t timestamp = msg->ref_timestamp;
-      if (!isInitialized() && std::isfinite(timestamp) && timestamp != 0) {
-        _map_projection_math->initReference(
-          msg->ref_lat, msg->ref_lon, msg->ref_alt,
-          msg->ref_timestamp);
-      }
+      vehicleLocalPositionCallback(std::move(msg));
+    });
+}
+
+MapProjection::~MapProjection() = default;
+
+void MapProjection::vehicleLocalPositionCallback(px4_msgs::msg::VehicleLocalPosition::UniquePtr msg)
+{
+  const uint64_t timestamp_cur = msg->ref_timestamp;
+  const uint64_t timestamp_ref = _map_projection_math->getProjectionReferenceTimestamp();
+  if (!isInitialized()) {
+    if (timestamp_cur != 0) {
+      // Initialize map projection reference point
+      _map_projection_math->initReference(
+        msg->ref_lat, msg->ref_lon, msg->ref_alt,
+        timestamp_cur
+      );
     }
-  );
+  } else if (timestamp_cur != timestamp_ref) {
+    // Update reference point if it has changed
+    _map_projection_math->initReference(
+      msg->ref_lat, msg->ref_lon, msg->ref_alt,
+      timestamp_cur
+    );
+    RCLCPP_WARN(_node.get_logger(), "Map projection reference point has been reset.");
+  }
 }
 
 bool MapProjection::isInitialized() const
