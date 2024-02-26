@@ -8,7 +8,6 @@
 #include <px4_ros2/control/setpoint_types/goto.hpp>
 #include <px4_ros2/odometry/local_position.hpp>
 #include <px4_ros2/utils/geometry.hpp>
-#include <px4_msgs/msg/vehicle_attitude.hpp>
 
 #include <rclcpp/rclcpp.hpp>
 #include <Eigen/Core>
@@ -27,13 +26,6 @@ public:
     _goto_setpoint = std::make_shared<px4_ros2::GotoSetpointType>(*this);
 
     _vehicle_local_position = std::make_shared<px4_ros2::OdometryLocalPosition>(*this);
-
-    _vehicle_attitude_sub = node.create_subscription<px4_msgs::msg::VehicleAttitude>(
-      "/fmu/out/vehicle_attitude", rclcpp::QoS(1).best_effort(),
-      [this](px4_msgs::msg::VehicleAttitude::UniquePtr msg) {
-        updateVehicleHeading(msg);
-      }
-    );
   }
 
   void onActivate() override
@@ -102,7 +94,7 @@ public:
             px4_ros2::degToRad(40.f * speed_scale + (1.f - speed_scale) * 20.f);
 
           if (!_start_heading_set) {
-            _spinning_heading_rad = _vehicle_heading_rad;
+            _spinning_heading_rad = _vehicle_local_position->heading();
             _start_heading_set = true;
           }
 
@@ -157,9 +149,6 @@ private:
   Eigen::Vector3f _start_position_m;
   bool _start_position_set{false};
 
-  // [-pi, pi] current vehicle heading from VehicleAttitude subscription
-  float _vehicle_heading_rad{0.f};
-
   // [-pi, pi] current heading setpoint during spinning phase
   float _spinning_heading_rad{0.f};
 
@@ -168,14 +157,6 @@ private:
 
   std::shared_ptr<px4_ros2::GotoSetpointType> _goto_setpoint;
   std::shared_ptr<px4_ros2::OdometryLocalPosition> _vehicle_local_position;
-  rclcpp::Subscription<px4_msgs::msg::VehicleAttitude>::SharedPtr _vehicle_attitude_sub;
-
-  void updateVehicleHeading(const px4_msgs::msg::VehicleAttitude::UniquePtr & msg)
-  {
-    const Eigen::Quaternionf q = Eigen::Quaternionf(msg->q[0], msg->q[1], msg->q[2], msg->q[3]);
-    const Eigen::Vector3f rpy = px4_ros2::quaternionToEulerRpy(q);
-    _vehicle_heading_rad = rpy(2);
-  }
 
   bool positionReached(const Eigen::Vector3f & target_position_m) const
   {
@@ -190,7 +171,8 @@ private:
   bool headingReached(float target_heading_rad) const
   {
     static constexpr float kHeadingErrorThreshold = 7.0_deg;
-    const float heading_error_wrapped = px4_ros2::wrapPi(target_heading_rad - _vehicle_heading_rad);
+    const float heading_error_wrapped = px4_ros2::wrapPi(
+      target_heading_rad - _vehicle_local_position->heading());
     return fabsf(heading_error_wrapped) < kHeadingErrorThreshold;
   }
 };
