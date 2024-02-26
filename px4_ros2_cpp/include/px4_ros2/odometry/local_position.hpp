@@ -60,6 +60,17 @@ public:
     const px4_msgs::msg::VehicleLocalPosition & pos = last();
     return {pos.ax, pos.ay, pos.az};
   }
+
+  /**
+   * @brief Get the vehicle's heading relative to NED earth-fixed frame.
+   *
+   * @return The vehicle's yaw in radians within [-pi, pi] using extrinsic RPY order
+  */
+  float heading() const
+  {
+    const px4_msgs::msg::VehicleLocalPosition & pos = last();
+    return pos.heading;
+  }
 };
 
 /** @}*/
