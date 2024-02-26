@@ -12,7 +12,6 @@
 #include <rclcpp/rclcpp.hpp>
 
 static const std::string kName = "FW Attitude Example";
-static const std::string kNodeName = "example_mode_fw_attitude";
 
 class FwAttModeTest : public px4_ros2::ModeBase
 {
@@ -38,30 +37,4 @@ public:
 private:
   std::shared_ptr<px4_ros2::AttitudeSetpointType> _att_setpoint;
 
-};
-
-class TestNode : public rclcpp::Node
-{
-public:
-  TestNode()
-  : Node(kNodeName)
-  {
-    // Enable debug output
-    auto ret =
-      rcutils_logging_set_logger_level(get_logger().get_name(), RCUTILS_LOG_SEVERITY_DEBUG);
-
-    if (ret != RCUTILS_RET_OK) {
-      RCLCPP_ERROR(get_logger(), "Error setting severity: %s", rcutils_get_error_string().str);
-      rcutils_reset_error();
-    }
-
-    _mode = std::make_unique<FwAttModeTest>(*this);
-
-    if (!_mode->doRegister()) {
-      throw std::runtime_error("Registration failed");
-    }
-  }
-
-private:
-  std::unique_ptr<FwAttModeTest> _mode;
 };
