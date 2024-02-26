@@ -20,6 +20,7 @@ var annotated_dup =
       [ "RatesSetpointType", "classpx4__ros2_1_1RatesSetpointType.html", "classpx4__ros2_1_1RatesSetpointType" ],
       [ "TrajectorySetpointType", "classpx4__ros2_1_1TrajectorySetpointType.html", "classpx4__ros2_1_1TrajectorySetpointType" ],
       [ "GotoSetpointType", "classpx4__ros2_1_1GotoSetpointType.html", "classpx4__ros2_1_1GotoSetpointType" ],
+      [ "GotoGlobalSetpointType", "classpx4__ros2_1_1GotoGlobalSetpointType.html", "classpx4__ros2_1_1GotoGlobalSetpointType" ],
       [ "GlobalPositionMeasurement", "structpx4__ros2_1_1GlobalPositionMeasurement.html", "structpx4__ros2_1_1GlobalPositionMeasurement" ],
       [ "GlobalPositionMeasurementInterface", "classpx4__ros2_1_1GlobalPositionMeasurementInterface.html", "classpx4__ros2_1_1GlobalPositionMeasurementInterface" ],
       [ "LocalPositionMeasurement", "structpx4__ros2_1_1LocalPositionMeasurement.html", "structpx4__ros2_1_1LocalPositionMeasurement" ],
@@ -28,6 +29,7 @@ var annotated_dup =
       [ "PositionMeasurementInterfaceBase", "classpx4__ros2_1_1PositionMeasurementInterfaceBase.html", "classpx4__ros2_1_1PositionMeasurementInterfaceBase" ],
       [ "OdometryGlobalPosition", "classpx4__ros2_1_1OdometryGlobalPosition.html", "classpx4__ros2_1_1OdometryGlobalPosition" ],
       [ "OdometryLocalPosition", "classpx4__ros2_1_1OdometryLocalPosition.html", "classpx4__ros2_1_1OdometryLocalPosition" ],
-      [ "Subscription", "classpx4__ros2_1_1Subscription.html", "classpx4__ros2_1_1Subscription" ]
+      [ "Subscription", "classpx4__ros2_1_1Subscription.html", "classpx4__ros2_1_1Subscription" ],
+      [ "MapProjection", "classpx4__ros2_1_1MapProjection.html", "classpx4__ros2_1_1MapProjection" ]
     ] ]
 ];

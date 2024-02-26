@@ -99,37 +99,61 @@ $(document).ready(function(){initNavTree('goto_8hpp_source.html',''); initResiza
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;optional&gt;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;px4_ros2/common/setpoint_base.hpp&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>px4_ros2</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1GotoSetpointType.html">   20</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1GotoSetpointType.html">GotoSetpointType</a> : <span class="keyword">public</span> <a class="code" href="classpx4__ros2_1_1SetpointBase.html">SetpointBase</a></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpx4__ros2_1_1GotoSetpointType.html">GotoSetpointType</a>(<a class="code" href="classpx4__ros2_1_1Context.html">Context</a> &amp; context);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  ~<a class="code" href="classpx4__ros2_1_1GotoSetpointType.html">GotoSetpointType</a>() <span class="keyword">override</span> = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <a class="code" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a> getConfiguration() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1GotoSetpointType.html#a2117abf2c58b3909776bef70338c42be">   40</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classpx4__ros2_1_1GotoSetpointType.html#a2117abf2c58b3909776bef70338c42be">update</a>(</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">const</span> Eigen::Vector3f &amp; position,</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">const</span> std::optional&lt;float&gt; &amp; heading = {},</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">const</span> std::optional&lt;float&gt; &amp; max_horizontal_speed = {},</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">const</span> std::optional&lt;float&gt; &amp; max_vertical_speed = {},</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">const</span> std::optional&lt;float&gt; &amp; max_heading_rate = {}</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  );</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordtype">float</span> desiredUpdateRateHz()<span class="keyword"> override </span>{<span class="keywordflow">return</span> 30.f;}</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  rclcpp::Node &amp; _node;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::GotoSetpoint&gt;::SharedPtr</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    _goto_setpoint_pub;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;};</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;} <span class="comment">/* namespace px4_ros2 */</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;px4_ros2/utils/geodesic.hpp&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span>px4_ros2</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1GotoSetpointType.html">   21</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1GotoSetpointType.html">GotoSetpointType</a> : <span class="keyword">public</span> <a class="code" href="classpx4__ros2_1_1SetpointBase.html">SetpointBase</a></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpx4__ros2_1_1GotoSetpointType.html">GotoSetpointType</a>(<a class="code" href="classpx4__ros2_1_1Context.html">Context</a> &amp; context);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  ~<a class="code" href="classpx4__ros2_1_1GotoSetpointType.html">GotoSetpointType</a>() <span class="keyword">override</span> = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a> getConfiguration() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1GotoSetpointType.html#a2117abf2c58b3909776bef70338c42be">   41</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classpx4__ros2_1_1GotoSetpointType.html#a2117abf2c58b3909776bef70338c42be">update</a>(</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">const</span> Eigen::Vector3f &amp; position,</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">const</span> std::optional&lt;float&gt; &amp; heading = {},</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">const</span> std::optional&lt;float&gt; &amp; max_horizontal_speed = {},</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">const</span> std::optional&lt;float&gt; &amp; max_vertical_speed = {},</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">const</span> std::optional&lt;float&gt; &amp; max_heading_rate = {}</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  );</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordtype">float</span> desiredUpdateRateHz()<span class="keyword"> override </span>{<span class="keywordflow">return</span> 30.f;}</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  rclcpp::Node &amp; _node;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::GotoSetpoint&gt;::SharedPtr</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    _goto_setpoint_pub;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;};</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1GotoGlobalSetpointType.html">   57</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1GotoGlobalSetpointType.html">GotoGlobalSetpointType</a></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;{</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpx4__ros2_1_1GotoGlobalSetpointType.html">GotoGlobalSetpointType</a>(<a class="code" href="classpx4__ros2_1_1Context.html">Context</a> &amp; context);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  ~<a class="code" href="classpx4__ros2_1_1GotoGlobalSetpointType.html">GotoGlobalSetpointType</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1GotoGlobalSetpointType.html#a58660328921ec4619eca8cf279a3a185">   75</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classpx4__ros2_1_1GotoGlobalSetpointType.html#a58660328921ec4619eca8cf279a3a185">update</a>(</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">const</span> Eigen::Vector3d &amp; global_position,</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keyword">const</span> std::optional&lt;float&gt; &amp; heading = {},</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">const</span> std::optional&lt;float&gt; &amp; max_horizontal_speed = {},</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">const</span> std::optional&lt;float&gt; &amp; max_vertical_speed = {},</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">const</span> std::optional&lt;float&gt; &amp; max_heading_rate = {}</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  );</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  rclcpp::Node &amp; _node;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  std::unique_ptr&lt;MapProjection&gt; _map_projection;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  std::shared_ptr&lt;GotoSetpointType&gt; _goto_setpoint;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;};</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition:</b> context.hpp:20</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1GotoSetpointType_html"><div class="ttname"><a href="classpx4__ros2_1_1GotoSetpointType.html">px4_ros2::GotoSetpointType</a></div><div class="ttdef"><b>Definition:</b> goto.hpp:21</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1GotoGlobalSetpointType_html"><div class="ttname"><a href="classpx4__ros2_1_1GotoGlobalSetpointType.html">px4_ros2::GotoGlobalSetpointType</a></div><div class="ttdef"><b>Definition:</b> goto.hpp:58</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1GotoGlobalSetpointType_html_a58660328921ec4619eca8cf279a3a185"><div class="ttname"><a href="classpx4__ros2_1_1GotoGlobalSetpointType.html#a58660328921ec4619eca8cf279a3a185">px4_ros2::GotoGlobalSetpointType::update</a></div><div class="ttdeci">void update(const Eigen::Vector3d &amp;global_position, const std::optional&lt; float &gt; &amp;heading={}, const std::optional&lt; float &gt; &amp;max_horizontal_speed={}, const std::optional&lt; float &gt; &amp;max_vertical_speed={}, const std::optional&lt; float &gt; &amp;max_heading_rate={})</div><div class="ttdoc">Go-to global setpoint update.</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1GotoSetpointType_html"><div class="ttname"><a href="classpx4__ros2_1_1GotoSetpointType.html">px4_ros2::GotoSetpointType</a></div><div class="ttdef"><b>Definition:</b> goto.hpp:22</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1GotoSetpointType_html_a2117abf2c58b3909776bef70338c42be"><div class="ttname"><a href="classpx4__ros2_1_1GotoSetpointType.html#a2117abf2c58b3909776bef70338c42be">px4_ros2::GotoSetpointType::update</a></div><div class="ttdeci">void update(const Eigen::Vector3f &amp;position, const std::optional&lt; float &gt; &amp;heading={}, const std::optional&lt; float &gt; &amp;max_horizontal_speed={}, const std::optional&lt; float &gt; &amp;max_vertical_speed={}, const std::optional&lt; float &gt; &amp;max_heading_rate={})</div><div class="ttdoc">Go-to setpoint update.</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1SetpointBase_html"><div class="ttname"><a href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a></div><div class="ttdef"><b>Definition:</b> setpoint_base.hpp:20</div></div>
 <div class="ttc" id="astructpx4__ros2_1_1SetpointBase_1_1Configuration_html"><div class="ttname"><a href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">px4_ros2::SetpointBase::Configuration</a></div><div class="ttdef"><b>Definition:</b> setpoint_base.hpp:25</div></div>

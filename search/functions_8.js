@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['radtodeg_151',['radToDeg',['../geometry_8hpp.html#aebb5ddb7bd8196fe4481ff91cd792b84',1,'px4_ros2']]],
-  ['roll_152',['roll',['../classpx4__ros2_1_1ManualControlInput.html#a377da17ccfb46fc042d5b1a98f9e4398',1,'px4_ros2::ManualControlInput']]]
+  ['pitch_155',['pitch',['../classpx4__ros2_1_1ManualControlInput.html#adcdf54f3694dc4f46e7767f8a89c9199',1,'px4_ros2::ManualControlInput']]],
+  ['position_156',['position',['../classpx4__ros2_1_1OdometryGlobalPosition.html#a7bf7ab1b9f1f2ed6a8a833277247fa21',1,'px4_ros2::OdometryGlobalPosition']]]
 ];
