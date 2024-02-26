@@ -91,7 +91,7 @@ public:
    * Transform a point in the geographic coordinate system to the local
    * azimuthal equidistant plane using the projection
    *
-   * @param global_position lat [deg], lon [deg] (degrees: 8.1234567°, not 81234567°)
+   * @param global_position lat [deg], lon [deg]
    * @return the point in local coordinates as north, east [m]
    */
   Eigen::Vector2f globalToLocal(const Eigen::Vector2d & global_position) const;
@@ -100,7 +100,7 @@ public:
    * Transform a point in the geographic coordinate system to the local
    * azimuthal equidistant plane using the projection
    *
-   * @param global_position lat [deg], lon [deg], alt AMSL [m] (degrees: 8.1234567°, not 81234567°)
+   * @param global_position lat [deg], lon [deg], alt AMSL [m]
    * @return the point in local coordinates as north, east, down [m]
    */
   inline Eigen::Vector3f globalToLocal(const Eigen::Vector3d & global_position) const
@@ -117,7 +117,7 @@ public:
    * geographic coordinate system using the projection
    *
    * @param local_position north, east [m]
-   * @return the point in geographic coordinates as lat [deg], lon [deg] (degrees: 8.1234567°, not 81234567°)
+   * @return the point in geographic coordinates as lat [deg], lon [deg]
    */
   Eigen::Vector2d localToGlobal(const Eigen::Vector2f & local_position) const;
 
@@ -126,7 +126,7 @@ public:
    * geographic coordinate system using the projection
    *
    * @param local_position north, east, down [m]
-   * @return the point in geographic coordinates as lat [deg], lon [deg], alt AMSL [m] (degrees: 8.1234567°, not 81234567°)
+   * @return the point in geographic coordinates as lat [deg], lon [deg], alt AMSL [m]
    */
   inline Eigen::Vector3d localToGlobal(const Eigen::Vector3f & local_position) const
   {

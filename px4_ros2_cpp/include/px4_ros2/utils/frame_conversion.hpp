@@ -3,6 +3,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
+/**
+ * @defgroup frame_conversion Frame Conversion
+ * @ingroup utils
+ * This group contains helper functions to switch between reference frames.
+ */
+
 #pragma once
 
 #include <Eigen/Eigen>
@@ -10,6 +16,9 @@
 
 namespace px4_ros2
 {
+/** \ingroup frame_conversion
+ *  @{
+ */
 
 /**
  * @brief Converts attitude from NED to ENU frame.
@@ -176,4 +185,5 @@ static inline Eigen::Matrix<T, 3, 1> varianceEnuToNed(const Eigen::Matrix<T, 3, 
   return {v_enu.y(), v_enu.x(), v_enu.z()};
 }
 
+/** @}*/
 }  // namespace px4_ros2
