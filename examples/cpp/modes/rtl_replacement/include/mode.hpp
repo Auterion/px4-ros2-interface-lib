@@ -17,7 +17,6 @@
 using namespace std::chrono_literals; // NOLINT
 
 static const std::string kName = "Custom RTL";
-static const std::string kNodeName = "example_mode_rtl";
 
 class FlightModeTest : public px4_ros2::ModeBase
 {
@@ -58,30 +57,4 @@ private:
   bool _landed{true};
   rclcpp::Subscription<px4_msgs::msg::VehicleLandDetected>::SharedPtr _vehicle_land_detected_sub;
   std::shared_ptr<px4_ros2::TrajectorySetpointType> _trajectory_setpoint;
-};
-
-class TestNode : public rclcpp::Node
-{
-public:
-  TestNode()
-  : Node(kNodeName)
-  {
-    // Enable debug output
-    auto ret =
-      rcutils_logging_set_logger_level(get_logger().get_name(), RCUTILS_LOG_SEVERITY_DEBUG);
-
-    if (ret != RCUTILS_RET_OK) {
-      RCLCPP_ERROR(get_logger(), "Error setting severity: %s", rcutils_get_error_string().str);
-      rcutils_reset_error();
-    }
-
-    _mode = std::make_unique<FlightModeTest>(*this);
-
-    if (!_mode->doRegister()) {
-      throw std::runtime_error("Registration failed");
-    }
-  }
-
-private:
-  std::unique_ptr<FlightModeTest> _mode;
 };

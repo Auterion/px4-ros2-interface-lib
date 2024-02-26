@@ -15,7 +15,6 @@
 #include <algorithm>
 
 static const std::string kName = "Go-to Example";
-static const std::string kNodeName = "example_mode_goto";
 
 using namespace px4_ros2::literals; // NOLINT
 
@@ -194,30 +193,4 @@ private:
     const float heading_error_wrapped = px4_ros2::wrapPi(target_heading_rad - _vehicle_heading_rad);
     return fabsf(heading_error_wrapped) < kHeadingErrorThreshold;
   }
-};
-
-class TestNode : public rclcpp::Node
-{
-public:
-  TestNode()
-  : Node(kNodeName)
-  {
-    // Enable debug output
-    auto ret =
-      rcutils_logging_set_logger_level(get_logger().get_name(), RCUTILS_LOG_SEVERITY_DEBUG);
-
-    if (ret != RCUTILS_RET_OK) {
-      RCLCPP_ERROR(get_logger(), "Error setting severity: %s", rcutils_get_error_string().str);
-      rcutils_reset_error();
-    }
-
-    _mode = std::make_unique<FlightModeTest>(*this);
-
-    if (!_mode->doRegister()) {
-      throw std::runtime_error("Registration failed");
-    }
-  }
-
-private:
-  std::unique_ptr<FlightModeTest> _mode;
 };
