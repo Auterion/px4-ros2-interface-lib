@@ -30,6 +30,7 @@ set(HEADER_FILES
         include/px4_ros2/components/message_compatibility_check.hpp
         include/px4_ros2/components/mode.hpp
         include/px4_ros2/components/mode_executor.hpp
+        include/px4_ros2/components/node_with_mode.hpp
         include/px4_ros2/components/overrides.hpp
         include/px4_ros2/components/wait_for_fmu.hpp
         include/px4_ros2/control/peripheral_actuators.hpp

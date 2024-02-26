@@ -7,6 +7,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <px4_ros2/components/health_and_arming_checks.hpp>
 #include <px4_ros2/components/mode.hpp>
+#include <px4_ros2/components/node_with_mode.hpp>
 #include <px4_ros2/control/setpoint_types/experimental/rates.hpp>
 #include <px4_ros2/odometry/global_position.hpp>
 #include "fake_registration.hpp"
@@ -48,4 +49,13 @@ TEST(modes, modeRequirements)
 
   mode->modeRequirements().clearAll();
   EXPECT_FALSE(mode->modeRequirements().angular_velocity);
+}
+
+TEST(modes, nodeWithMode)
+{
+  auto node_with_mode = std::make_shared<px4_ros2::NodeWithMode<TestMode>>("test_node");
+  EXPECT_TRUE(node_with_mode->getMode().modeRequirements().angular_velocity);
+
+  node_with_mode->getMode().modeRequirements().clearAll();
+  EXPECT_FALSE(node_with_mode->getMode().modeRequirements().angular_velocity);
 }
