@@ -4,7 +4,8 @@
  ****************************************************************************/
 
 /**
- * @file geometry.hpp
+ * @defgroup geometry Geometry
+ * @ingroup utils
  *
  * All rotations and axis systems follow the right-hand rule
  *
@@ -27,6 +28,9 @@
 
 namespace px4_ros2
 {
+/** \ingroup geometry
+ *  @{
+ */
 
 /**
  * @brief Converts radians to degrees
@@ -185,4 +189,5 @@ Type quaternionToYaw(const Eigen::Quaternion<Type> & q)
   return std::atan2(2.0 * (x * y + w * z), w * w + x * x - y * y - z * z);
 }
 
+/** @}*/
 }  // namespace px4_ros2
