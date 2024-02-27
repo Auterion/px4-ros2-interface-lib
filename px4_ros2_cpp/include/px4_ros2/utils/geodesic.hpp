@@ -224,7 +224,7 @@ static inline Eigen::Vector3f vectorToGlobalPosition(
  *
  * @param global_position_line_start line start lat [deg], lon [deg]
  * @param global_position_line_end line end lat [deg], lon [deg]
- * @param dist distance [m] of target global position from position 'start' towards position 'end' (can be negative)
+ * @param dist_from_start distance [m] of target global position from position 'start' towards position 'end' (can be negative)
  *
  * @ingroup geodesic
  */
@@ -239,7 +239,7 @@ Eigen::Vector2d globalPositionFromLineAndDist(
  *
  * @param global_position_now current lat [deg], lon [deg]
  * @param heading heading from the current position [rad] (clockwise)
- * @param distance distance from the current position [m]
+ * @param dist distance from the current position [m]
  * @return the target global position
  *
  * @ingroup geodesic
@@ -254,7 +254,7 @@ Eigen::Vector2d globalPositionFromHeadingAndDist(
  *
  * @param global_position_now current lat [deg], lon [deg]
  * @param heading heading from the current position [rad] (clockwise)
- * @param distance distance from the current position [m]
+ * @param dist distance from the current position [m]
  * @return the target global position
  *
  * @ingroup geodesic
@@ -288,7 +288,7 @@ Eigen::Vector2d addVectorToGlobalPosition(
  * @brief Compute the global position from adding a local frame vector to the current global position.
  *
  * @param global_position current lat [deg], lon [deg], alt AMSL [m]
- * @param vector_ne local vector to add [m^3] (NED)
+ * @param vector_ned local vector to add [m^3] (NED)
  * @return the resulting global position from the addition
  *
  * @ingroup geodesic
