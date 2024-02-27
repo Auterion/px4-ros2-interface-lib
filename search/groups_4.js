@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['setpoint_20types_206',['Setpoint Types',['../group__setpoint__types.html',1,'']]]
+  ['navigation_261',['Navigation',['../group__navigation.html',1,'']]]
 ];

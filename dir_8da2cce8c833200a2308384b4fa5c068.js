@@ -6,6 +6,7 @@ var dir_8da2cce8c833200a2308384b4fa5c068 =
     [ "message_compatibility_check.hpp", "message__compatibility__check_8hpp_source.html", null ],
     [ "mode.hpp", "mode_8hpp_source.html", null ],
     [ "mode_executor.hpp", "mode__executor_8hpp_source.html", null ],
+    [ "node_with_mode.hpp", "node__with__mode_8hpp_source.html", null ],
     [ "overrides.hpp", "overrides_8hpp_source.html", null ],
     [ "wait_for_fmu.hpp", "wait__for__fmu_8hpp_source.html", null ]
 ];

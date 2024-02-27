@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['odometry_205',['Odometry',['../group__odometry.html',1,'']]]
+  ['geodesic_259',['Geodesic',['../group__geodesic.html',1,'']]],
+  ['geometry_260',['Geometry',['../group__geometry.html',1,'']]]
 ];

@@ -19,5 +19,11 @@ var classpx4__ros2_1_1ModeBase =
     [ "setSetpointUpdateRate", "classpx4__ros2_1_1ModeBase.html#a3d8ba94373de2a1c5bf0edaac7263ab1", null ],
     [ "setSkipMessageCompatibilityCheck", "classpx4__ros2_1_1ModeBase.html#aa5ea94ae5e77b813a15b1cb6e5d3f6de", null ],
     [ "updateSetpoint", "classpx4__ros2_1_1ModeBase.html#aa7b84d608e1dfbb1343406233e566ccb", null ],
-    [ "ModeExecutorBase", "classpx4__ros2_1_1ModeBase.html#ac2416bc043e74a529c151a67f87f070e", null ]
+    [ "ModeExecutorBase", "classpx4__ros2_1_1ModeBase.html#ac2416bc043e74a529c151a67f87f070e", null ],
+    [ "kModeIDDescend", "classpx4__ros2_1_1ModeBase.html#a1692146bb14350143a739c3613209c7d", null ],
+    [ "kModeIDInvalid", "classpx4__ros2_1_1ModeBase.html#a3741e155424f7685a33a412ced626dbd", null ],
+    [ "kModeIDLand", "classpx4__ros2_1_1ModeBase.html#a132d1a695e4a80e440ebabee615437d3", null ],
+    [ "kModeIDPosctl", "classpx4__ros2_1_1ModeBase.html#a73cb33bd1ac9df1e5b3eb319d64f419a", null ],
+    [ "kModeIDRtl", "classpx4__ros2_1_1ModeBase.html#a654f01c967124dfdcb468667d733107b", null ],
+    [ "kModeIDTakeoff", "classpx4__ros2_1_1ModeBase.html#a2330b704b4eeae79cd19cf295946055d", null ]
 ];

@@ -1,5 +1,12 @@
 var group__odometry =
 [
+    [ "OdometryAttitude", "classpx4__ros2_1_1OdometryAttitude.html", [
+      [ "OdometryAttitude", "classpx4__ros2_1_1OdometryAttitude.html#af22338007a823445803252d0080029a4", null ],
+      [ "attitude", "classpx4__ros2_1_1OdometryAttitude.html#a134ff54b2fa28dadceba8dca7eea051b", null ],
+      [ "pitch", "classpx4__ros2_1_1OdometryAttitude.html#aaa24ea71efa047ba1c94ac7d7f4de768", null ],
+      [ "roll", "classpx4__ros2_1_1OdometryAttitude.html#af40100c5121b4c584d347ccc4f6c95ac", null ],
+      [ "yaw", "classpx4__ros2_1_1OdometryAttitude.html#af6b73e4b56eb9b7582c0ecaa31596236", null ]
+    ] ],
     [ "OdometryGlobalPosition", "classpx4__ros2_1_1OdometryGlobalPosition.html", [
       [ "OdometryGlobalPosition", "classpx4__ros2_1_1OdometryGlobalPosition.html#af93f45a0250d991156e6fad22f451333", null ],
       [ "position", "classpx4__ros2_1_1OdometryGlobalPosition.html#a7bf7ab1b9f1f2ed6a8a833277247fa21", null ]
@@ -7,6 +14,7 @@ var group__odometry =
     [ "OdometryLocalPosition", "classpx4__ros2_1_1OdometryLocalPosition.html", [
       [ "OdometryLocalPosition", "classpx4__ros2_1_1OdometryLocalPosition.html#ad2fc9b90251a3bf7fddfbd2874ddc672", null ],
       [ "accelerationNed", "classpx4__ros2_1_1OdometryLocalPosition.html#aa495438cfeabb2f559bb751ada2ce446", null ],
+      [ "heading", "classpx4__ros2_1_1OdometryLocalPosition.html#a50193dab84758c3f08e5a5b947fad5f8", null ],
       [ "positionNed", "classpx4__ros2_1_1OdometryLocalPosition.html#a7e3b4ea403465950d6603dfbe566e65d", null ],
       [ "positionXYValid", "classpx4__ros2_1_1OdometryLocalPosition.html#a31d56b5e4969f5428271d23463ea56de", null ],
       [ "positionZValid", "classpx4__ros2_1_1OdometryLocalPosition.html#acded271012e402b6e11efa635ff4523c", null ],

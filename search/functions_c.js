@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['throttle_167',['throttle',['../classpx4__ros2_1_1ManualControlInput.html#ae00e8a8a0b226a0fb1e7644f8b38b5bc',1,'px4_ros2::ManualControlInput']]]
+  ['quaterniontoeulerrpy_203',['quaternionToEulerRpy',['../group__geometry.html#ga0c41c165cdd481d51b93ee9c54ad1a38',1,'px4_ros2']]],
+  ['quaterniontopitch_204',['quaternionToPitch',['../group__geometry.html#gacb1a4e729a428bc56c848707aa495787',1,'px4_ros2']]],
+  ['quaterniontoroll_205',['quaternionToRoll',['../group__geometry.html#ga6c0d59b58bc60adcdb56e89dd429c9d2',1,'px4_ros2']]],
+  ['quaterniontoyaw_206',['quaternionToYaw',['../group__geometry.html#gaf7e7ea1089241e844747111128658328',1,'px4_ros2']]]
 ];

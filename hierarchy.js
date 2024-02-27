@@ -31,11 +31,18 @@ var hierarchy =
     [ "px4_ros2::MapProjection", "classpx4__ros2_1_1MapProjection.html", null ],
     [ "px4_ros2::MessageCompatibilityTopic", "structpx4__ros2_1_1MessageCompatibilityTopic.html", null ],
     [ "px4_ros2::ModeExecutorBase", "classpx4__ros2_1_1ModeExecutorBase.html", null ],
+    [ "rclcpp::Node", null, [
+      [ "px4_ros2::NodeWithMode< ModeT >", "classpx4__ros2_1_1NodeWithMode.html", null ],
+      [ "px4_ros2::NodeWithModeExecutor< ModeExecutorT, ModeT >", "classpx4__ros2_1_1NodeWithModeExecutor.html", null ]
+    ] ],
     [ "px4_ros2::PeripheralActuatorControls", "classpx4__ros2_1_1PeripheralActuatorControls.html", null ],
     [ "px4_ros2::RequirementFlags", "structpx4__ros2_1_1RequirementFlags.html", null ],
     [ "px4_ros2::ModeBase::Settings", "structpx4__ros2_1_1ModeBase_1_1Settings.html", null ],
     [ "px4_ros2::ModeExecutorBase::Settings", "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html", null ],
     [ "px4_ros2::Subscription< RosMessageType >", "classpx4__ros2_1_1Subscription.html", null ],
+    [ "px4_ros2::Subscription< px4_msgs::msg::VehicleAttitude >", "classpx4__ros2_1_1Subscription.html", [
+      [ "px4_ros2::OdometryAttitude", "classpx4__ros2_1_1OdometryAttitude.html", null ]
+    ] ],
     [ "px4_ros2::Subscription< px4_msgs::msg::VehicleGlobalPosition >", "classpx4__ros2_1_1Subscription.html", [
       [ "px4_ros2::OdometryGlobalPosition", "classpx4__ros2_1_1OdometryGlobalPosition.html", null ]
     ] ],

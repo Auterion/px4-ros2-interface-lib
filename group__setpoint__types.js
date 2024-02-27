@@ -7,7 +7,9 @@ var group__setpoint__types =
       [ "desiredUpdateRateHz", "classpx4__ros2_1_1DirectActuatorsSetpointType.html#a53a1e27a5c8fb1c8553fd3cc0cb206fd", null ],
       [ "getConfiguration", "classpx4__ros2_1_1DirectActuatorsSetpointType.html#a10c8c72b34913d598bda3228b2664be9", null ],
       [ "updateMotors", "classpx4__ros2_1_1DirectActuatorsSetpointType.html#a021774ee25cb884530284e4899edde90", null ],
-      [ "updateServos", "classpx4__ros2_1_1DirectActuatorsSetpointType.html#a61a798f80721433dbafd15e629eea448", null ]
+      [ "updateServos", "classpx4__ros2_1_1DirectActuatorsSetpointType.html#a61a798f80721433dbafd15e629eea448", null ],
+      [ "kMaxNumMotors", "classpx4__ros2_1_1DirectActuatorsSetpointType.html#a922c8169dda05cabebb67ab3910a1f24", null ],
+      [ "kMaxNumServos", "classpx4__ros2_1_1DirectActuatorsSetpointType.html#aed0131686e9236157c206bf4df527bdf", null ]
     ] ],
     [ "GotoSetpointType", "classpx4__ros2_1_1GotoSetpointType.html", [
       [ "GotoSetpointType", "classpx4__ros2_1_1GotoSetpointType.html#aa4cec017cfc489fcffb1ca609ffe0150", null ],

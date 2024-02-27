@@ -43,7 +43,13 @@ var group__components =
       [ "setSetpointUpdateRate", "classpx4__ros2_1_1ModeBase.html#a3d8ba94373de2a1c5bf0edaac7263ab1", null ],
       [ "setSkipMessageCompatibilityCheck", "classpx4__ros2_1_1ModeBase.html#aa5ea94ae5e77b813a15b1cb6e5d3f6de", null ],
       [ "updateSetpoint", "classpx4__ros2_1_1ModeBase.html#aa7b84d608e1dfbb1343406233e566ccb", null ],
-      [ "ModeExecutorBase", "classpx4__ros2_1_1ModeBase.html#ac2416bc043e74a529c151a67f87f070e", null ]
+      [ "ModeExecutorBase", "classpx4__ros2_1_1ModeBase.html#ac2416bc043e74a529c151a67f87f070e", null ],
+      [ "kModeIDDescend", "classpx4__ros2_1_1ModeBase.html#a1692146bb14350143a739c3613209c7d", null ],
+      [ "kModeIDInvalid", "classpx4__ros2_1_1ModeBase.html#a3741e155424f7685a33a412ced626dbd", null ],
+      [ "kModeIDLand", "classpx4__ros2_1_1ModeBase.html#a132d1a695e4a80e440ebabee615437d3", null ],
+      [ "kModeIDPosctl", "classpx4__ros2_1_1ModeBase.html#a73cb33bd1ac9df1e5b3eb319d64f419a", null ],
+      [ "kModeIDRtl", "classpx4__ros2_1_1ModeBase.html#a654f01c967124dfdcb468667d733107b", null ],
+      [ "kModeIDTakeoff", "classpx4__ros2_1_1ModeBase.html#a2330b704b4eeae79cd19cf295946055d", null ]
     ] ],
     [ "ModeExecutorBase", "classpx4__ros2_1_1ModeExecutorBase.html", [
       [ "Settings", "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html", [
@@ -76,6 +82,14 @@ var group__components =
       [ "takeoff", "classpx4__ros2_1_1ModeExecutorBase.html#a4de9cbe09167f2dbcd6bc0fff0a99125", null ],
       [ "waitReadyToArm", "classpx4__ros2_1_1ModeExecutorBase.html#a05b4b2cc0e731c446dc938b9a0bca80d", null ],
       [ "waitUntilDisarmed", "classpx4__ros2_1_1ModeExecutorBase.html#aad679c74f875bb321821b39d837345bf", null ]
+    ] ],
+    [ "NodeWithMode", "classpx4__ros2_1_1NodeWithMode.html", [
+      [ "NodeWithMode", "classpx4__ros2_1_1NodeWithMode.html#a55731e21a3dff7f8978c063f388b90a4", null ],
+      [ "getMode", "classpx4__ros2_1_1NodeWithMode.html#a03deb42f740cf69516342a8e62365fa0", null ]
+    ] ],
+    [ "NodeWithModeExecutor", "classpx4__ros2_1_1NodeWithModeExecutor.html", [
+      [ "NodeWithModeExecutor", "classpx4__ros2_1_1NodeWithModeExecutor.html#ae53b5cb39556a71665213c2125f3b219", null ],
+      [ "getMode", "classpx4__ros2_1_1NodeWithModeExecutor.html#a66c418c880d08d52182b5e4135b12046", null ]
     ] ],
     [ "Result", "group__components.html#ga0d5805242f91956fd51e243091367f77", [
       [ "Rejected", "group__components.html#gga0d5805242f91956fd51e243091367f77ad37b1f6c0512e2118cee17fea015b699", null ],

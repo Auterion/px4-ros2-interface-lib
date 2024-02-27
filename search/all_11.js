@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['velocity_5fxy_96',['velocity_xy',['../structpx4__ros2_1_1LocalPositionMeasurement.html#aed24c0e0a675fb2d2b152e34f4cbb380',1,'px4_ros2::LocalPositionMeasurement']]],
-  ['velocity_5fxy_5fvariance_97',['velocity_xy_variance',['../structpx4__ros2_1_1LocalPositionMeasurement.html#a99ff8a89d9ddcf8614541182459690dd',1,'px4_ros2::LocalPositionMeasurement']]],
-  ['velocity_5fz_98',['velocity_z',['../structpx4__ros2_1_1LocalPositionMeasurement.html#aa4fcd4167d7592932a00afdc67859cd9',1,'px4_ros2::LocalPositionMeasurement']]],
-  ['velocity_5fz_5fvariance_99',['velocity_z_variance',['../structpx4__ros2_1_1LocalPositionMeasurement.html#a9319a5f75957b3389a0fd1f67bd19fa0',1,'px4_ros2::LocalPositionMeasurement']]],
-  ['vertical_5fvariance_100',['vertical_variance',['../structpx4__ros2_1_1GlobalPositionMeasurement.html#a54e7ed0c0d9cd58333d820ec2905d95a',1,'px4_ros2::GlobalPositionMeasurement']]]
+  ['update_113',['update',['../classpx4__ros2_1_1AttitudeSetpointType.html#a25fa251a0d840678570d6c9bc9e4a732',1,'px4_ros2::AttitudeSetpointType::update()'],['../classpx4__ros2_1_1GotoSetpointType.html#a2117abf2c58b3909776bef70338c42be',1,'px4_ros2::GotoSetpointType::update()'],['../classpx4__ros2_1_1GotoGlobalSetpointType.html#a58660328921ec4619eca8cf279a3a185',1,'px4_ros2::GotoGlobalSetpointType::update()'],['../classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#a1a183b595ef7f6a22f3a83ba543fe86d',1,'px4_ros2::GlobalPositionMeasurementInterface::update()'],['../classpx4__ros2_1_1LocalPositionMeasurementInterface.html#a6fd180b944710716d418b2cfe1c0c8e3',1,'px4_ros2::LocalPositionMeasurementInterface::update()']]],
+  ['updatemotors_114',['updateMotors',['../classpx4__ros2_1_1DirectActuatorsSetpointType.html#a021774ee25cb884530284e4899edde90',1,'px4_ros2::DirectActuatorsSetpointType']]],
+  ['updateservos_115',['updateServos',['../classpx4__ros2_1_1DirectActuatorsSetpointType.html#a61a798f80721433dbafd15e629eea448',1,'px4_ros2::DirectActuatorsSetpointType']]],
+  ['utils_116',['Utils',['../group__utils.html',1,'']]]
 ];

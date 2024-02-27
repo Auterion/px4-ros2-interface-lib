@@ -55,7 +55,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"setpoint__base_8hpp_source.html"
+"group__geodesic.html#ga0c23b4afb57270be82eef5962a9b01fb"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

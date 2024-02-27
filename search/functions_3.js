@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['globaltolocal_143',['globalToLocal',['../classpx4__ros2_1_1MapProjection.html#a3e0543785512cb358f1cdf13e5d31a94',1,'px4_ros2::MapProjection::globalToLocal(const Eigen::Vector2d &amp;global_position) const'],['../classpx4__ros2_1_1MapProjection.html#af288641107d8f2c7fe3e518a212a9e9a',1,'px4_ros2::MapProjection::globalToLocal(const Eigen::Vector3d &amp;global_position) const']]]
+  ['eulerrpytoquaternion_179',['eulerRpyToQuaternion',['../group__geometry.html#ga03d4bf66033a0a91f7136961e710085a',1,'px4_ros2::eulerRpyToQuaternion(const Eigen::Matrix&lt; Type, 3, 1 &gt; &amp;euler)'],['../group__geometry.html#ga439dbb36393e2a29047049ad3d689c3d',1,'px4_ros2::eulerRpyToQuaternion(const Type roll, const Type pitch, const Type yaw)']]]
 ];
