@@ -25,7 +25,7 @@ namespace px4_ros2
  */
 
 /**
- * Base class for a mode executor
+ * @brief Base class for a mode executor
  */
 class ModeExecutorBase
 {

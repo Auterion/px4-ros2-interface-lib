@@ -17,7 +17,9 @@ namespace px4_ros2
  */
 
 /**
- * Control one or more extra actuators. It maps to the 'Peripheral Actuator Set' output functions on the PX4 side.
+ * @brief Provides control of one or more extra actuators.
+ *
+ * It maps to the 'Peripheral Actuator Set' output functions on the PX4 side.
  * This can be used by a mode independent from the setpoints.
  */
 class PeripheralActuatorControls

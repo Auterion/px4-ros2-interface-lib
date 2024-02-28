@@ -17,7 +17,7 @@ namespace px4_ros2
  */
 
 /**
- * Provides access to the vehicle's global position estimate
+ * @brief Provides access to the vehicle's global position estimate
  */
 class OdometryGlobalPosition : public Subscription<px4_msgs::msg::VehicleGlobalPosition>
 {

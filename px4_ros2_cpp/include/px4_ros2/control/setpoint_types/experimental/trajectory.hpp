@@ -16,6 +16,11 @@ namespace px4_ros2
  *  @{
  */
 
+/**
+ * @brief Setpoint type for trajectory control
+ *
+ * Control entries must not be contradicting.
+*/
 class TrajectorySetpointType : public SetpointBase
 {
 public:

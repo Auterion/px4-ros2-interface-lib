@@ -63,7 +63,7 @@ constexpr inline const char * resultToString(Result result) noexcept
 }
 
 /**
- * Base class for a mode
+ * @brief Base class for a mode
  * \ingroup components
  */
 class ModeBase : public Context

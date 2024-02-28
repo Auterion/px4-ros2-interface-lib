@@ -16,6 +16,9 @@ namespace px4_ros2
  *  @{
  */
 
+/**
+ * @brief Setpoint type for direct rate control
+*/
 class RatesSetpointType : public SetpointBase
 {
 public:
