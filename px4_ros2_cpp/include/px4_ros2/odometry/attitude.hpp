@@ -18,7 +18,7 @@ namespace px4_ros2
  */
 
 /**
- * Provides access to the vehicle's attitude estimate
+ * @brief Provides access to the vehicle's attitude estimate
  */
 class OdometryAttitude : public Subscription<px4_msgs::msg::VehicleAttitude>
 {

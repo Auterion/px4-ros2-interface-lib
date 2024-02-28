@@ -18,7 +18,7 @@ namespace px4_ros2
  */
 
 /**
- * Setpoint type for direct actuator control (servos and/or motors)
+ * @brief Setpoint type for direct actuator control (servos and/or motors)
  */
 class DirectActuatorsSetpointType : public SetpointBase
 {

@@ -17,7 +17,7 @@ namespace px4_ros2
  */
 
 /**
- * Provides access to the vehicle's local position estimate
+ * @brief Provides access to the vehicle's local position estimate
  */
 class OdometryLocalPosition : public Subscription<px4_msgs::msg::VehicleLocalPosition>
 {

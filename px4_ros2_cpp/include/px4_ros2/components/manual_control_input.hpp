@@ -17,6 +17,9 @@ namespace px4_ros2
  *  @{
  */
 
+/**
+ * @brief Provides access to manually input control setpoints
+*/
 class ManualControlInput
 {
 public:

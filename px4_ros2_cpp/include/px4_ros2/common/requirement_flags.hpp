@@ -11,7 +11,7 @@ namespace px4_ros2
 {
 
 /**
- * Requirement flags used by modes
+ * @brief Requirement flags used by modes
  */
 struct RequirementFlags
 {

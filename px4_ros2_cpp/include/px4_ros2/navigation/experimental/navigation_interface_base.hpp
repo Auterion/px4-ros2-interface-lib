@@ -9,6 +9,10 @@
 
 namespace px4_ros2
 {
+
+/**
+ * @brief Thrown to report invalid arguments to measurement interface
+*/
 class NavigationInterfaceInvalidArgument : public std::invalid_argument
 {
 public:
@@ -16,6 +20,9 @@ public:
   : std::invalid_argument("PX4 ROS2 navigation interface: invalid argument: " + message) {}
 };
 
+/**
+ * @brief Base class for position measurement interface
+*/
 class PositionMeasurementInterfaceBase : public Context
 {
 public:

@@ -18,6 +18,9 @@ namespace px4_ros2
  *  @{
  */
 
+/**
+ * @brief Setpoint type for smooth position and heading control
+*/
 class GotoSetpointType : public SetpointBase
 {
 public:
@@ -54,6 +57,9 @@ private:
     _goto_setpoint_pub;
 };
 
+/**
+ * @brief Setpoint type for smooth global position and heading control
+*/
 class GotoGlobalSetpointType
 {
 public:

@@ -16,7 +16,7 @@ namespace px4_ros2
  */
 
 /**
- * Provides a subscription to arbitrary ROS topics.
+ * @brief Provides a subscription to arbitrary ROS topics.
  */
 template<typename RosMessageType>
 class Subscription
