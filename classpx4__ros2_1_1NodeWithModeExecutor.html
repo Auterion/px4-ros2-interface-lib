@@ -119,8 +119,8 @@ class px4_ros2::NodeWithModeExecutor&lt; ModeExecutorT, ModeT &gt;</h3>
 <p>Assumes mode executor constructor signature is <code>ModeExecutorT(rclcpp::Node, ModeT)</code>.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">ModeExecutorT</td><td>The mode executor type, which must be derived from <a class="el" href="classpx4__ros2_1_1ModeExecutorBase.html">px4_ros2::ModeExecutorBase</a>. </td></tr>
-    <tr><td class="paramname">ModeT</td><td>The mode type owned by the executor, which must be derived from <a class="el" href="classpx4__ros2_1_1ModeBase.html">px4_ros2::ModeBase</a>.</td></tr>
+    <tr><td class="paramname">ModeExecutorT</td><td>The mode executor type, which must be derived from <a class="el" href="classpx4__ros2_1_1ModeExecutorBase.html" title="Base class for a mode executor.">px4_ros2::ModeExecutorBase</a>. </td></tr>
+    <tr><td class="paramname">ModeT</td><td>The mode type owned by the executor, which must be derived from <a class="el" href="classpx4__ros2_1_1ModeBase.html" title="Base class for a mode.">px4_ros2::ModeBase</a>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -128,7 +128,7 @@ class px4_ros2::NodeWithModeExecutor&lt; ModeExecutorT, ModeT &gt;</h3>
 <div class="fragment"><div class="line"><span class="keyword">class </span>MyMode : <span class="keyword">public</span> <a class="code" href="classpx4__ros2_1_1ModeBase.html">px4_ros2::ModeBase</a> {...};</div>
 <div class="line"><span class="keyword">class </span>MyExecutor : <span class="keyword">public</span> px4_ros2::ModeExecutor {...};</div>
 <div class="line">rclcpp::spin(std::make_shared&lt;<a class="code" href="classpx4__ros2_1_1NodeWithMode.html">px4_ros2::NodeWithMode&lt;MyExecutor, MyMode&gt;</a>&gt;(<span class="stringliteral">&quot;my_node&quot;</span>));</div>
-<div class="ttc" id="aclasspx4__ros2_1_1ModeBase_html"><div class="ttname"><a href="classpx4__ros2_1_1ModeBase.html">px4_ros2::ModeBase</a></div><div class="ttdef"><b>Definition:</b> mode.hpp:70</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1ModeBase_html"><div class="ttname"><a href="classpx4__ros2_1_1ModeBase.html">px4_ros2::ModeBase</a></div><div class="ttdoc">Base class for a mode.</div><div class="ttdef"><b>Definition:</b> mode.hpp:70</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1NodeWithMode_html"><div class="ttname"><a href="classpx4__ros2_1_1NodeWithMode.html">px4_ros2::NodeWithMode</a></div><div class="ttdoc">A ROS2 node which instantiates a control mode and handles its registration with PX4.</div><div class="ttdef"><b>Definition:</b> node_with_mode.hpp:33</div></div>
 </div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>px4_ros2_cpp/include/px4_ros2/components/<a class="el" href="node__with__mode_8hpp_source.html">node_with_mode.hpp</a></li>

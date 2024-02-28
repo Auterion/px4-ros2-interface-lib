@@ -101,26 +101,26 @@ $(document).ready(function(){initNavTree('peripheral__actuators_8hpp_source.html
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span>px4_ros2</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;{</div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1PeripheralActuatorControls.html">   23</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1PeripheralActuatorControls.html">PeripheralActuatorControls</a></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> kNumActuators = 6;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpx4__ros2_1_1PeripheralActuatorControls.html">PeripheralActuatorControls</a>(<a class="code" href="classpx4__ros2_1_1Context.html">Context</a> &amp; context);</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1PeripheralActuatorControls.html">   25</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1PeripheralActuatorControls.html">PeripheralActuatorControls</a></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;{</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> kNumActuators = 6;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1PeripheralActuatorControls.html#aa290a7d4d1221c8d184752890bae88a3">   34</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classpx4__ros2_1_1PeripheralActuatorControls.html#aa290a7d4d1221c8d184752890bae88a3">set</a>(<span class="keyword">const</span> Eigen::Matrix&lt;float, kNumActuators, 1&gt; &amp; values);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1PeripheralActuatorControls.html#a59753e650558081296ec4ef83de00181">   41</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classpx4__ros2_1_1PeripheralActuatorControls.html#a59753e650558081296ec4ef83de00181">set</a>(<span class="keywordtype">float</span> value, <span class="keywordtype">unsigned</span> index = 0);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  rclcpp::Node &amp; _node;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::VehicleCommand&gt;::SharedPtr _vehicle_command_pub;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  rclcpp::Time _last_update{};</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;};</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;} <span class="comment">/* namespace px4_ros2 */</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpx4__ros2_1_1PeripheralActuatorControls.html">PeripheralActuatorControls</a>(<a class="code" href="classpx4__ros2_1_1Context.html">Context</a> &amp; context);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1PeripheralActuatorControls.html#aa290a7d4d1221c8d184752890bae88a3">   36</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classpx4__ros2_1_1PeripheralActuatorControls.html#aa290a7d4d1221c8d184752890bae88a3">set</a>(<span class="keyword">const</span> Eigen::Matrix&lt;float, kNumActuators, 1&gt; &amp; values);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1PeripheralActuatorControls.html#a59753e650558081296ec4ef83de00181">   43</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classpx4__ros2_1_1PeripheralActuatorControls.html#a59753e650558081296ec4ef83de00181">set</a>(<span class="keywordtype">float</span> value, <span class="keywordtype">unsigned</span> index = 0);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  rclcpp::Node &amp; _node;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::VehicleCommand&gt;::SharedPtr _vehicle_command_pub;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  rclcpp::Time _last_update{};</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;};</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition:</b> context.hpp:20</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1PeripheralActuatorControls_html"><div class="ttname"><a href="classpx4__ros2_1_1PeripheralActuatorControls.html">px4_ros2::PeripheralActuatorControls</a></div><div class="ttdef"><b>Definition:</b> peripheral_actuators.hpp:24</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1PeripheralActuatorControls_html"><div class="ttname"><a href="classpx4__ros2_1_1PeripheralActuatorControls.html">px4_ros2::PeripheralActuatorControls</a></div><div class="ttdoc">Provides control of one or more extra actuators.</div><div class="ttdef"><b>Definition:</b> peripheral_actuators.hpp:26</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1PeripheralActuatorControls_html_a59753e650558081296ec4ef83de00181"><div class="ttname"><a href="classpx4__ros2_1_1PeripheralActuatorControls.html#a59753e650558081296ec4ef83de00181">px4_ros2::PeripheralActuatorControls::set</a></div><div class="ttdeci">void set(float value, unsigned index=0)</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1PeripheralActuatorControls_html_aa290a7d4d1221c8d184752890bae88a3"><div class="ttname"><a href="classpx4__ros2_1_1PeripheralActuatorControls.html#aa290a7d4d1221c8d184752890bae88a3">px4_ros2::PeripheralActuatorControls::set</a></div><div class="ttdeci">void set(const Eigen::Matrix&lt; float, kNumActuators, 1 &gt; &amp;values)</div></div>
 </div><!-- fragment --></div><!-- contents -->
