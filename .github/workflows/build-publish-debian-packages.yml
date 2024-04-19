@@ -11,6 +11,7 @@ jobs:
   build:
     name: Build debian packages
     strategy:
+      fail-fast: false
       matrix:
         platform: [linux/amd64, linux/arm64]
         distro:
