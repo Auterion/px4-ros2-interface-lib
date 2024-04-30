@@ -17,7 +17,7 @@ jobs:
         distro:
           - ubuntu: jammy
             ros2: humble
-          - ubuntu: jammy
+          - ubuntu: noble
             ros2: rolling
           - ubuntu: focal
             ros2: foxy
