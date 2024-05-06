@@ -107,7 +107,8 @@ public:
   {
     Eigen::Vector3f local_position;
 
-    local_position.head(2) = globalToLocal(static_cast<Eigen::Vector2d>(global_position.head(2)));
+    local_position.template head<2>() =
+      globalToLocal(static_cast<Eigen::Vector2d>(global_position.head(2)));
     local_position.z() = static_cast<float>(_ref_alt_amsl - global_position.z());
     return local_position;
   }
@@ -132,7 +133,8 @@ public:
   {
     Eigen::Vector3d global_position;
 
-    global_position.head(2) = localToGlobal(static_cast<Eigen::Vector2f>(local_position.head(2)));
+    global_position.template head<2>() =
+      localToGlobal(static_cast<Eigen::Vector2f>(local_position.head(2)));
     global_position.z() = static_cast<double>(_ref_alt_amsl - local_position.z());
     return global_position;
   }
