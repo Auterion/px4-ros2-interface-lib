@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [linux/amd64, linux/arm64]
+        platform: [{runner: buildjet-2vcpu-ubuntu-2204-arm, platform: linux/arm64}, {runner: buildjet-2vcpu-ubuntu-2204, platform: linux/amd64}]
         distro:
           - ubuntu: jammy
             ros2: humble
@@ -24,8 +24,9 @@ jobs:
 
     uses: Auterion/ros-debian-workflow/.github/workflows/build-ros-debian.yml@main
     with:
-      platform: ${{ matrix.platform }}
+      platform: ${{ matrix.platform.platform }}
       ubuntu-distro: ${{ matrix.distro.ubuntu }}
       ros2-distro: ${{ matrix.distro.ros2 }}
+      runner: ${{ matrix.platform.runner }}
       source-prefix: px4_ros2_cpp
     secrets: inherit
