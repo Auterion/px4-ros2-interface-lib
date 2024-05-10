@@ -228,7 +228,9 @@ bool ModeBase::onRegistered()
   // TODO: check setpoint types compatibility with current vehicle type
 
   activateSetpointType(*_setpoint_types[0]);
-  setSetpointUpdateRateFromSetpointTypes();
+  if (_setpoint_update_rate_hz < FLT_EPSILON) {
+    setSetpointUpdateRateFromSetpointTypes();
+  }
 
   return true;
 }
