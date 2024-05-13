@@ -229,6 +229,7 @@ bool ModeBase::onRegistered()
 
   activateSetpointType(*_setpoint_types[0]);
   if (_setpoint_update_rate_hz < FLT_EPSILON) {
+    // Do not use default setpoint rate if rate was already set by user
     setSetpointUpdateRateFromSetpointTypes();
   }
 
