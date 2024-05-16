@@ -27,7 +27,7 @@ public:
   ~AttitudeSetpointType() override = default;
 
   Configuration getConfiguration() override;
-  float desiredUpdateRateHz() override {return 200.f;}
+  float desiredUpdateRateHz() override {return 100.f;}
 
   void update(
     const Eigen::Quaternionf & attitude_setpoint,

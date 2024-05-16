@@ -31,7 +31,7 @@ public:
   ~DirectActuatorsSetpointType() override = default;
 
   Configuration getConfiguration() override;
-  float desiredUpdateRateHz() override {return 500.f;}
+  float desiredUpdateRateHz() override {return 200.f;}
 
   /**
    * Send servos setpoint

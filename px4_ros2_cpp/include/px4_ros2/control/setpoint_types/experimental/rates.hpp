@@ -27,7 +27,7 @@ public:
   ~RatesSetpointType() override = default;
 
   Configuration getConfiguration() override;
-  float desiredUpdateRateHz() override {return 500.f;}
+  float desiredUpdateRateHz() override {return 200.f;}
 
   void update(
     const Eigen::Vector3f & rate_setpoints_ned_rad,
