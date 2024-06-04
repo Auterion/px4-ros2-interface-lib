@@ -229,13 +229,13 @@ bool messageCompatibilityCheck(
     message_format_response_sub
     =
     node.create_subscription<px4_msgs::msg::MessageFormatResponse>(
-      topic_namespace_prefix + "/fmu/out/message_format_response", rclcpp::QoS(1).best_effort(),
+      topic_namespace_prefix + "fmu/out/message_format_response", rclcpp::QoS(1).best_effort(),
       [](px4_msgs::msg::MessageFormatResponse::UniquePtr msg) {});
 
   const rclcpp::Publisher<px4_msgs::msg::MessageFormatRequest>::SharedPtr message_format_request_pub
     =
     node.create_publisher<px4_msgs::msg::MessageFormatRequest>(
-      topic_namespace_prefix + "/fmu/in/message_format_request", 1);
+      topic_namespace_prefix + "fmu/in/message_format_request", 1);
 
   const std::string msgs_dir = ament_index_cpp::get_package_share_directory("px4_msgs");
   if (msgs_dir.empty()) {

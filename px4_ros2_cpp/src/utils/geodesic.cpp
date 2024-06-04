@@ -15,7 +15,7 @@ MapProjection::MapProjection(Context & context)
 {
   _map_projection_math = std::make_unique<MapProjectionImpl>();
   _vehicle_local_position_sub = _node.create_subscription<px4_msgs::msg::VehicleLocalPosition>(
-    "/fmu/out/vehicle_local_position", rclcpp::QoS(1).best_effort(),
+    "fmu/out/vehicle_local_position", rclcpp::QoS(1).best_effort(),
     [this](px4_msgs::msg::VehicleLocalPosition::UniquePtr msg) {
       vehicleLocalPositionCallback(std::move(msg));
     });

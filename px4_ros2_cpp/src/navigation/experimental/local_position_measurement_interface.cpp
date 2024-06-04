@@ -19,7 +19,7 @@ LocalPositionMeasurementInterface::LocalPositionMeasurementInterface(
   _velocity_frame(velocityFrameToMessageFrame(velocity_frame))
 {
   _aux_local_position_pub = node.create_publisher<AuxLocalPosition>(
-    topicNamespacePrefix() + "/fmu/in/vehicle_visual_odometry", 10);
+    topicNamespacePrefix() + "fmu/in/vehicle_visual_odometry", 10);
 }
 
 void LocalPositionMeasurementInterface::update(

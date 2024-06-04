@@ -25,7 +25,7 @@ ModeExecutorBase::ModeExecutorBase(
   _config_overrides(node, topic_namespace_prefix)
 {
   _vehicle_status_sub = _node.create_subscription<px4_msgs::msg::VehicleStatus>(
-    topic_namespace_prefix + "/fmu/out/vehicle_status", rclcpp::QoS(1).best_effort(),
+    topic_namespace_prefix + "fmu/out/vehicle_status", rclcpp::QoS(1).best_effort(),
     [this](px4_msgs::msg::VehicleStatus::UniquePtr msg) {
       if (_registration->registered()) {
         vehicleStatusUpdated(msg);
@@ -33,10 +33,10 @@ ModeExecutorBase::ModeExecutorBase(
     });
 
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
-    topic_namespace_prefix + "/fmu/in/vehicle_command_mode_executor", 1);
+    topic_namespace_prefix + "fmu/in/vehicle_command_mode_executor", 1);
 
   _vehicle_command_ack_sub = _node.create_subscription<px4_msgs::msg::VehicleCommandAck>(
-    topic_namespace_prefix + "/fmu/out/vehicle_command_ack", rclcpp::QoS(1).best_effort(),
+    topic_namespace_prefix + "fmu/out/vehicle_command_ack", rclcpp::QoS(1).best_effort(),
     [](px4_msgs::msg::VehicleCommandAck::UniquePtr msg) {});
 }
 
@@ -397,7 +397,7 @@ ModeExecutorBase::ScheduledMode::ScheduledMode(
   const std::string & topic_namespace_prefix)
 {
   _mode_completed_sub = node.create_subscription<px4_msgs::msg::ModeCompleted>(
-    topic_namespace_prefix + "/fmu/out/mode_completed", rclcpp::QoS(1).best_effort(),
+    topic_namespace_prefix + "fmu/out/mode_completed", rclcpp::QoS(1).best_effort(),
     [this, &node](px4_msgs::msg::ModeCompleted::UniquePtr msg) {
       if (active() && msg->nav_state == static_cast<uint8_t>(_mode_id)) {
         RCLCPP_DEBUG(

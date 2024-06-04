@@ -14,7 +14,7 @@ GotoSetpointType::GotoSetpointType(Context & context)
 {
   _goto_setpoint_pub =
     context.node().create_publisher<px4_msgs::msg::GotoSetpoint>(
-    context.topicNamespacePrefix() + "/fmu/in/goto_setpoint", 1);
+    context.topicNamespacePrefix() + "fmu/in/goto_setpoint", 1);
 }
 
 void GotoSetpointType::update(
@@ -84,7 +84,7 @@ void GotoGlobalSetpointType::update(
   if (!_map_projection->isInitialized()) {
     RCLCPP_ERROR_ONCE(
       _node.get_logger(),
-      "Goto global setpoint update failed: map projection is uninitialized. Is /fmu/out/vehicle_local_position published?");
+      "Goto global setpoint update failed: map projection is uninitialized. Is fmu/out/vehicle_local_position published?");
     return;
   }
 
