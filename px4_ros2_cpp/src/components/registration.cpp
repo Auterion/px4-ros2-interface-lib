@@ -18,17 +18,17 @@ Registration::Registration(rclcpp::Node & node, const std::string & topic_namesp
 {
   _register_ext_component_reply_sub =
     node.create_subscription<px4_msgs::msg::RegisterExtComponentReply>(
-    topic_namespace_prefix + "/fmu/out/register_ext_component_reply",
+    topic_namespace_prefix + "fmu/out/register_ext_component_reply",
     rclcpp::QoS(1).best_effort(),
     [](px4_msgs::msg::RegisterExtComponentReply::UniquePtr msg) {
     });
 
   _register_ext_component_request_pub =
     node.create_publisher<px4_msgs::msg::RegisterExtComponentRequest>(
-    topic_namespace_prefix + "/fmu/in/register_ext_component_request", 1);
+    topic_namespace_prefix + "fmu/in/register_ext_component_request", 1);
 
   _unregister_ext_component_pub = node.create_publisher<px4_msgs::msg::UnregisterExtComponent>(
-    topic_namespace_prefix + "/fmu/in/unregister_ext_component", 1);
+    topic_namespace_prefix + "fmu/in/unregister_ext_component", 1);
 
   _unregister_ext_component.mode_id = px4_ros2::ModeBase::kModeIDInvalid;
 }

@@ -10,31 +10,31 @@ using namespace std::chrono_literals; // NOLINT
 
 // Set of all messages used by the library (<topic_name>[, <topic_type>])
 #define ALL_PX4_ROS2_MESSAGES \
-  {"/fmu/in/actuator_motors"}, \
-  {"/fmu/in/actuator_servos"}, \
-  {"/fmu/in/arming_check_reply"}, \
-  {"/fmu/in/aux_global_position", "VehicleGlobalPosition"}, \
-  {"/fmu/in/config_control_setpoints", "VehicleControlMode"}, \
-  {"/fmu/in/config_overrides_request", "ConfigOverrides"}, \
-  {"/fmu/in/goto_setpoint"}, \
-  {"/fmu/in/mode_completed"}, \
-  {"/fmu/in/register_ext_component_request"}, \
-  {"/fmu/in/trajectory_setpoint"}, \
-  {"/fmu/in/unregister_ext_component"}, \
-  {"/fmu/in/vehicle_attitude_setpoint"}, \
-  {"/fmu/in/vehicle_command"}, \
-  {"/fmu/in/vehicle_command_mode_executor", "VehicleCommand"}, \
-  {"/fmu/in/vehicle_rates_setpoint"}, \
-  {"/fmu/in/vehicle_visual_odometry", "VehicleOdometry"}, \
-  {"/fmu/out/arming_check_request"}, \
-  {"/fmu/out/manual_control_setpoint"}, \
-  {"/fmu/out/mode_completed"}, \
-  {"/fmu/out/register_ext_component_reply"}, \
-  {"/fmu/out/vehicle_attitude"}, \
-  {"/fmu/out/vehicle_command_ack"}, \
-  {"/fmu/out/vehicle_global_position"}, \
-  {"/fmu/out/vehicle_local_position"}, \
-  {"/fmu/out/vehicle_status"}
+  {"fmu/in/actuator_motors"}, \
+  {"fmu/in/actuator_servos"}, \
+  {"fmu/in/arming_check_reply"}, \
+  {"fmu/in/aux_global_position", "VehicleGlobalPosition"}, \
+  {"fmu/in/config_control_setpoints", "VehicleControlMode"}, \
+  {"fmu/in/config_overrides_request", "ConfigOverrides"}, \
+  {"fmu/in/goto_setpoint"}, \
+  {"fmu/in/mode_completed"}, \
+  {"fmu/in/register_ext_component_request"}, \
+  {"fmu/in/trajectory_setpoint"}, \
+  {"fmu/in/unregister_ext_component"}, \
+  {"fmu/in/vehicle_attitude_setpoint"}, \
+  {"fmu/in/vehicle_command"}, \
+  {"fmu/in/vehicle_command_mode_executor", "VehicleCommand"}, \
+  {"fmu/in/vehicle_rates_setpoint"}, \
+  {"fmu/in/vehicle_visual_odometry", "VehicleOdometry"}, \
+  {"fmu/out/arming_check_request"}, \
+  {"fmu/out/manual_control_setpoint"}, \
+  {"fmu/out/mode_completed"}, \
+  {"fmu/out/register_ext_component_reply"}, \
+  {"fmu/out/vehicle_attitude"}, \
+  {"fmu/out/vehicle_command_ack"}, \
+  {"fmu/out/vehicle_global_position"}, \
+  {"fmu/out/vehicle_local_position"}, \
+  {"fmu/out/vehicle_status"}
 
 
 namespace px4_ros2
@@ -45,7 +45,7 @@ namespace px4_ros2
 
 struct MessageCompatibilityTopic
 {
-  std::string topic_name;       ///< e.g. "/fmu/out/vehicle_status"
+  std::string topic_name;       ///< e.g. "fmu/out/vehicle_status"
   std::string topic_type{""};       ///< e.g. VehicleStatus. If empty, it's inferred from the topic_name // NOLINT
 };
 

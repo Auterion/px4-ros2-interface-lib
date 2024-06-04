@@ -27,7 +27,7 @@ def extract_topics_from_file(filename: str, extract_start_after: str = None,
 
         ret = []
         for line in file:
-            m = re.search(r'"/fmu/(in|out)/([^"]+)', line)
+            m = re.search(r'"fmu/(in|out)/([^"]+)', line)
             if m:
                 ret.append(m.group(2))
 

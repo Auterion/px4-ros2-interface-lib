@@ -9,7 +9,7 @@ namespace px4_ros2
 {
 
 OdometryGlobalPosition::OdometryGlobalPosition(Context & context)
-: Subscription<px4_msgs::msg::VehicleGlobalPosition>(context, "/fmu/out/vehicle_global_position")
+: Subscription<px4_msgs::msg::VehicleGlobalPosition>(context, "fmu/out/vehicle_global_position")
 {
   RequirementFlags requirements{};
   requirements.global_position = true;

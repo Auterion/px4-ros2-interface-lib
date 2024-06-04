@@ -25,7 +25,7 @@ public:
   : ModeBase(node, Settings{kName, true, ModeBase::kModeIDRtl})
   {
     _vehicle_land_detected_sub = node.create_subscription<px4_msgs::msg::VehicleLandDetected>(
-      "/fmu/out/vehicle_land_detected", rclcpp::QoS(1).best_effort(),
+      "fmu/out/vehicle_land_detected", rclcpp::QoS(1).best_effort(),
       [this](px4_msgs::msg::VehicleLandDetected::UniquePtr msg) {
         _landed = msg->landed;
       });

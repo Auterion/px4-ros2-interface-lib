@@ -9,7 +9,7 @@ namespace px4_ros2
 {
 
 OdometryAttitude::OdometryAttitude(Context & context)
-: Subscription<px4_msgs::msg::VehicleAttitude>(context, "/fmu/out/vehicle_attitude")
+: Subscription<px4_msgs::msg::VehicleAttitude>(context, "fmu/out/vehicle_attitude")
 {
   RequirementFlags requirements{};
   requirements.attitude = true;

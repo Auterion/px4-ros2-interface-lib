@@ -14,7 +14,7 @@ ConfigOverrides::ConfigOverrides(rclcpp::Node & node, const std::string & topic_
 : _node(node)
 {
   _config_overrides_pub = _node.create_publisher<px4_msgs::msg::ConfigOverrides>(
-    topic_namespace_prefix + "/fmu/in/config_overrides_request", 1);
+    topic_namespace_prefix + "fmu/in/config_overrides_request", 1);
 }
 
 void ConfigOverrides::controlAutoDisarm(bool enabled)

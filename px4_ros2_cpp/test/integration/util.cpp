@@ -26,7 +26,7 @@ VehicleState::VehicleState(rclcpp::Node & node, const std::string & topic_namesp
 : _node(node)
 {
   _vehicle_status_sub = _node.create_subscription<px4_msgs::msg::VehicleStatus>(
-    topic_namespace_prefix + "/fmu/out/vehicle_status", rclcpp::QoS(1).best_effort(),
+    topic_namespace_prefix + "fmu/out/vehicle_status", rclcpp::QoS(1).best_effort(),
     [this](px4_msgs::msg::VehicleStatus::UniquePtr msg) {
       if (_on_vehicle_status_update) {
         _on_vehicle_status_update(msg);
@@ -43,7 +43,7 @@ VehicleState::VehicleState(rclcpp::Node & node, const std::string & topic_namesp
     });
 
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
-    topic_namespace_prefix + "/fmu/in/vehicle_command", 1);
+    topic_namespace_prefix + "fmu/in/vehicle_command", 1);
 
 }
 

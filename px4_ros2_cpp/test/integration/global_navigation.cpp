@@ -35,7 +35,7 @@ protected:
 
     // Subscribe to PX4 EKF estimator status flags
     _subscriber = _node->create_subscription<EstimatorStatusFlags>(
-      "/fmu/out/estimator_status_flags", rclcpp::QoS(10).best_effort(),
+      "fmu/out/estimator_status_flags", rclcpp::QoS(10).best_effort(),
       [this](EstimatorStatusFlags::UniquePtr msg) {
         _estimator_status_flags = std::move(msg);
       });
@@ -84,7 +84,7 @@ protected:
 
       if (elapsed_time >= kTimeoutDuration) {
         ASSERT_NE(_estimator_status_flags, nullptr) <<
-          "Missing feedback from PX4: no estimator status flags published over /fmu/out/estimator_status_flags.";
+          "Missing feedback from PX4: no estimator status flags published over fmu/out/estimator_status_flags.";
         EXPECT_TRUE(is_fused_getter(_estimator_status_flags)) <<
           "Position measurement update was not fused into the PX4 EKF.";
         break;

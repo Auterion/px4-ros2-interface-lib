@@ -14,7 +14,7 @@ RatesSetpointType::RatesSetpointType(Context & context)
 {
   _vehicle_rates_setpoint_pub =
     context.node().create_publisher<px4_msgs::msg::VehicleRatesSetpoint>(
-    context.topicNamespacePrefix() + "/fmu/in/vehicle_rates_setpoint", 1);
+    context.topicNamespacePrefix() + "fmu/in/vehicle_rates_setpoint", 1);
 }
 
 void RatesSetpointType::update(

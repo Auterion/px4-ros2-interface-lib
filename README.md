@@ -15,7 +15,7 @@ Compatibility is only guaranteed if using latest `main` on the PX4 and px4_ros2/
 The library checks for message compatibility on startup when registering a mode.
 `ALL_PX4_ROS2_MESSAGES` defines the set of checked messages. If you use other messages, you can check them using:
 ```cpp
-if (!px4_ros2::messageCompatibilityCheck(node, {{"/fmu/in/vehicle_rates_setpoint"}})) {
+if (!px4_ros2::messageCompatibilityCheck(node, {{"fmu/in/vehicle_rates_setpoint"}})) {
   throw std::runtime_error("Messages incompatible");
 }
 ```

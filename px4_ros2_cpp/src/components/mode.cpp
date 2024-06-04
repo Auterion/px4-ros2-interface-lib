@@ -27,16 +27,16 @@ ModeBase::ModeBase(
     topic_namespace_prefix), _config_overrides(node, topic_namespace_prefix)
 {
   _vehicle_status_sub = node.create_subscription<px4_msgs::msg::VehicleStatus>(
-    topic_namespace_prefix + "/fmu/out/vehicle_status", rclcpp::QoS(1).best_effort(),
+    topic_namespace_prefix + "fmu/out/vehicle_status", rclcpp::QoS(1).best_effort(),
     [this](px4_msgs::msg::VehicleStatus::UniquePtr msg) {
       if (_registration->registered()) {
         vehicleStatusUpdated(msg);
       }
     });
   _mode_completed_pub = node.create_publisher<px4_msgs::msg::ModeCompleted>(
-    topic_namespace_prefix + "/fmu/in/mode_completed", 1);
+    topic_namespace_prefix + "fmu/in/mode_completed", 1);
   _config_control_setpoints_pub = node.create_publisher<px4_msgs::msg::VehicleControlMode>(
-    topic_namespace_prefix + "/fmu/in/config_control_setpoints", 1);
+    topic_namespace_prefix + "fmu/in/config_control_setpoints", 1);
 }
 
 ModeBase::ModeID ModeBase::id() const
