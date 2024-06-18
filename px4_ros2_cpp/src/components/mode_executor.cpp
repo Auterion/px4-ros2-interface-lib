@@ -118,7 +118,11 @@ Result ModeExecutorBase::sendCommandSync(
   cmd.param5 = param5;
   cmd.param6 = param6;
   cmd.param7 = param7;
-  cmd.source_component = px4_msgs::msg::VehicleCommand::COMPONENT_MODE_EXECUTOR_START + id();
+  if(!_is_in_charge){
+    cmd.source_component = px4_msgs::msg::VehicleCommand::COMPONENT_MODE_EXECUTOR_START;
+  }else{
+    cmd.source_component = px4_msgs::msg::VehicleCommand::COMPONENT_MODE_EXECUTOR_START + id();
+  } 
   cmd.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
 
 
