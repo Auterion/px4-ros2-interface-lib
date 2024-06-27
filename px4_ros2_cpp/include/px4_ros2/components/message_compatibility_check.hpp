@@ -31,6 +31,7 @@ using namespace std::chrono_literals; // NOLINT
   {"fmu/out/mode_completed"}, \
   {"fmu/out/register_ext_component_reply"}, \
   {"fmu/out/vehicle_attitude"}, \
+  {"fmu/out/vehicle_angular_velocity"}, \
   {"fmu/out/vehicle_command_ack"}, \
   {"fmu/out/vehicle_global_position"}, \
   {"fmu/out/vehicle_local_position"}, \
