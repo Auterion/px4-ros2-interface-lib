@@ -50,7 +50,10 @@ public:
     }
 
     _mode = std::make_unique<ModeT>(*this);
+  }
 
+  void doRegister()
+  {
     if (!_mode->doRegister()) {
       throw std::runtime_error("Registration failed");
     }
@@ -109,7 +112,10 @@ public:
 
     _mode = std::make_unique<ModeT>(*this);
     _mode_executor = std::make_unique<ModeExecutorT>(*this, *_mode);
+  }
 
+  void doRegister()
+  {
     if (!_mode_executor->doRegister()) {
       throw std::runtime_error("Registration failed");
     }
@@ -118,6 +124,11 @@ public:
   ModeT & getMode() const
   {
     return *_mode;
+  }
+
+  ModeExecutorT & getModeExecutor() const
+  {
+    return *_mode_executor;
   }
 
 private:
