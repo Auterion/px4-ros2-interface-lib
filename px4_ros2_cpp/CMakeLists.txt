@@ -45,6 +45,7 @@ set(HEADER_FILES
         include/px4_ros2/odometry/attitude.hpp
         include/px4_ros2/odometry/global_position.hpp
         include/px4_ros2/odometry/local_position.hpp
+        include/px4_ros2/odometry/angular_velocity.hpp
         include/px4_ros2/utils/frame_conversion.hpp
         include/px4_ros2/utils/geodesic.hpp
         include/px4_ros2/utils/geometry.hpp
@@ -71,6 +72,7 @@ add_library(px4_ros2_cpp
         src/odometry/attitude.cpp
         src/odometry/global_position.cpp
         src/odometry/local_position.cpp
+        src/odometry/angular_velocity.cpp
         src/utils/geodesic.cpp
         src/utils/map_projection_impl.cpp
 )
