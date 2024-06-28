@@ -40,6 +40,9 @@ var hierarchy =
     [ "px4_ros2::ModeBase::Settings", "structpx4__ros2_1_1ModeBase_1_1Settings.html", null ],
     [ "px4_ros2::ModeExecutorBase::Settings", "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html", null ],
     [ "px4_ros2::Subscription< RosMessageType >", "classpx4__ros2_1_1Subscription.html", null ],
+    [ "px4_ros2::Subscription< px4_msgs::msg::VehicleAngularVelocity >", "classpx4__ros2_1_1Subscription.html", [
+      [ "px4_ros2::OdometryAngularVelocity", "classpx4__ros2_1_1OdometryAngularVelocity.html", null ]
+    ] ],
     [ "px4_ros2::Subscription< px4_msgs::msg::VehicleAttitude >", "classpx4__ros2_1_1Subscription.html", [
       [ "px4_ros2::OdometryAttitude", "classpx4__ros2_1_1OdometryAttitude.html", null ]
     ] ],

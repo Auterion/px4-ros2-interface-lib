@@ -1,5 +1,9 @@
 var group__odometry =
 [
+    [ "OdometryAngularVelocity", "classpx4__ros2_1_1OdometryAngularVelocity.html", [
+      [ "OdometryAngularVelocity", "classpx4__ros2_1_1OdometryAngularVelocity.html#ac40b5c8376de268c54624a81fb8516de", null ],
+      [ "angularVelocityFrd", "classpx4__ros2_1_1OdometryAngularVelocity.html#a25760647e0964b91a4ef4f1ca23a0c47", null ]
+    ] ],
     [ "OdometryAttitude", "classpx4__ros2_1_1OdometryAttitude.html", [
       [ "OdometryAttitude", "classpx4__ros2_1_1OdometryAttitude.html#af22338007a823445803252d0080029a4", null ],
       [ "attitude", "classpx4__ros2_1_1OdometryAttitude.html#a134ff54b2fa28dadceba8dca7eea051b", null ],
