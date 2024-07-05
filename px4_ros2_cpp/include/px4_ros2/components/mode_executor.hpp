@@ -35,6 +35,7 @@ public:
   struct Settings
   {
     bool activate_immediately{false};             ///< If set activate the mode (and executor) immediately. Only use this for fully autonomous executors that also arm the vehicle
+    bool is_allowed_to_arm{false};                ///< If set, the executor is allowed to arm the vehicle
   };
 
   enum class DeactivateReason

@@ -291,7 +291,7 @@ void ModeExecutorBase::vehicleStatusUpdated(const px4_msgs::msg::VehicleStatus::
   _is_armed = msg->arming_state == px4_msgs::msg::VehicleStatus::ARMING_STATE_ARMED;
   const bool wants_to_activate_immediately = _settings.activate_immediately && _was_never_activated;
   const bool is_in_charge = id() == msg->executor_in_charge &&
-    (_is_armed || wants_to_activate_immediately);
+    (_is_armed || wants_to_activate_immediately || _settings.is_allowed_to_arm);
   const bool changed_to_armed = !was_armed && _is_armed;
 
   bool got_activated = false;
