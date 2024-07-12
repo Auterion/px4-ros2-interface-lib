@@ -79,7 +79,8 @@ class ModeExecutorTest : public px4_ros2::ModeExecutorBase
 {
 public:
   ModeExecutorTest(rclcpp::Node & node, FlightModeTest & owned_mode, bool activate_immediately)
-  : ModeExecutorBase(node, ModeExecutorBase::Settings{activate_immediately}, owned_mode),
+  : ModeExecutorBase(node, ModeExecutorBase::Settings{Settings::Activation::ActivateImmediately},
+      owned_mode),
     _node(node)
   {}
 

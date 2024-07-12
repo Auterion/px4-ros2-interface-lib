@@ -59,7 +59,8 @@ bool ModeExecutorBase::doRegister()
   _owned_mode.unsubscribeVehicleStatus();
   RegistrationSettings settings = _owned_mode.getRegistrationSettings();
   settings.register_mode_executor = true;
-  settings.activate_mode_immediately = _settings.activate_immediately;
+  settings.activate_mode_immediately =
+    (_settings.activation == Settings::Activation::ActivateImmediately);
   bool ret = _registration->doRegister(settings);
 
   if (ret) {
@@ -289,9 +290,11 @@ void ModeExecutorBase::vehicleStatusUpdated(const px4_msgs::msg::VehicleStatus::
   const bool was_armed = _is_armed;
   const ModeBase::ModeID current_mode = static_cast<ModeBase::ModeID>(msg->nav_state);
   _is_armed = msg->arming_state == px4_msgs::msg::VehicleStatus::ARMING_STATE_ARMED;
-  const bool wants_to_activate_immediately = _settings.activate_immediately && _was_never_activated;
+  const bool wants_to_activate_immediately =
+    (_settings.activation == Settings::Activation::ActivateImmediately) && _was_never_activated;
   const bool is_in_charge = id() == msg->executor_in_charge &&
-    (_is_armed || wants_to_activate_immediately || _settings.is_allowed_to_arm);
+    (_is_armed || wants_to_activate_immediately ||
+    _settings.activation == Settings::Activation::ActivateAlways);
   const bool changed_to_armed = !was_armed && _is_armed;
 
   bool got_activated = false;
