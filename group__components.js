@@ -53,7 +53,12 @@ var group__components =
     ] ],
     [ "ModeExecutorBase", "classpx4__ros2_1_1ModeExecutorBase.html", [
       [ "Settings", "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html", [
-        [ "activate_immediately", "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ab4c27ba22821127ce6d521a2ac2b6a35", null ]
+        [ "Activation", "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12", [
+          [ "ActivateOnlyWhenArmed", "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12a79bd7b9ab6560409e48f2b5967479ecf", null ],
+          [ "ActivateAlways", "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12a0da934c06c4ffb982ea2c2b7f5f1fa5b", null ],
+          [ "ActivateImmediately", "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12adf1e022bdf2028e2c6572e934c1b196a", null ]
+        ] ],
+        [ "activation", "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#a688d6a05b3e1bf6130cc1ecec1e43b92", null ]
       ] ],
       [ "CompletedCallback", "classpx4__ros2_1_1ModeExecutorBase.html#a393bd12468b70d8b6c68c0accdbf5f2c", null ],
       [ "DeactivateReason", "classpx4__ros2_1_1ModeExecutorBase.html#a13e655844fcada243b50dc35c249605b", [

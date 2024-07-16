@@ -84,6 +84,7 @@ $(document).ready(function(){initNavTree('structpx4__ros2_1_1ModeExecutorBase_1_
 
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structpx4__ros2_1_1ModeExecutorBase_1_1Settings-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -91,13 +92,51 @@ $(document).ready(function(){initNavTree('structpx4__ros2_1_1ModeExecutorBase_1_
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:ad2a971ced081b751758cc0060c950c12"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12">Activation</a> { <a class="el" href="structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12a79bd7b9ab6560409e48f2b5967479ecf">ActivateOnlyWhenArmed</a>
+, <a class="el" href="structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12a0da934c06c4ffb982ea2c2b7f5f1fa5b">ActivateAlways</a>
+, <a class="el" href="structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12adf1e022bdf2028e2c6572e934c1b196a">ActivateImmediately</a>
+ }</td></tr>
+<tr class="separator:ad2a971ced081b751758cc0060c950c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ab4c27ba22821127ce6d521a2ac2b6a35"><td class="memItemLeft" align="right" valign="top"><a id="ab4c27ba22821127ce6d521a2ac2b6a35"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ab4c27ba22821127ce6d521a2ac2b6a35">activate_immediately</a> {false}</td></tr>
-<tr class="memdesc:ab4c27ba22821127ce6d521a2ac2b6a35"><td class="mdescLeft">&#160;</td><td class="mdescRight">If set activate the mode (and executor) immediately. Only use this for fully autonomous executors that also arm the vehicle. <br /></td></tr>
-<tr class="separator:ab4c27ba22821127ce6d521a2ac2b6a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a688d6a05b3e1bf6130cc1ecec1e43b92"><td class="memItemLeft" align="right" valign="top"><a id="a688d6a05b3e1bf6130cc1ecec1e43b92"></a>
+<a class="el" href="structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12">Activation</a>&#160;</td><td class="memItemRight" valign="bottom"><b>activation</b> {<a class="el" href="structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12a79bd7b9ab6560409e48f2b5967479ecf">Activation::ActivateOnlyWhenArmed</a>}</td></tr>
+<tr class="separator:a688d6a05b3e1bf6130cc1ecec1e43b92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="ad2a971ced081b751758cc0060c950c12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2a971ced081b751758cc0060c950c12">&#9670;&nbsp;</a></span>Activation</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12">px4_ros2::ModeExecutorBase::Settings::Activation</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ad2a971ced081b751758cc0060c950c12a79bd7b9ab6560409e48f2b5967479ecf"></a>ActivateOnlyWhenArmed&#160;</td><td class="fielddoc"><p>Only activate the executor when armed (and selected) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ad2a971ced081b751758cc0060c950c12a0da934c06c4ffb982ea2c2b7f5f1fa5b"></a>ActivateAlways&#160;</td><td class="fielddoc"><p>Allow the executor to always be activated (so it can arm the vehicle) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ad2a971ced081b751758cc0060c950c12adf1e022bdf2028e2c6572e934c1b196a"></a>ActivateImmediately&#160;</td><td class="fielddoc"><p>Activate the mode and executor immediately after registration. Only use this for fully autonomous executors that also arm the vehicle. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>px4_ros2_cpp/include/px4_ros2/components/<a class="el" href="mode__executor_8hpp_source.html">mode_executor.hpp</a></li>
 </ul>

@@ -43,7 +43,8 @@ var NAVTREE =
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ],
-        [ "Typedefs", "functions_type.html", null ]
+        [ "Typedefs", "functions_type.html", null ],
+        [ "Enumerations", "functions_enum.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
@@ -55,7 +56,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "angular__velocity_8hpp_source.html",
-"group__frame__conversion.html#gacb37d6840da0ff534b998fb430ada38f"
+"group__frame__conversion.html#gacaf20320caec423ebe44e7bcde385fa0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
