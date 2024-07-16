@@ -34,7 +34,13 @@ public:
 
   struct Settings
   {
-    bool activate_immediately{false};             ///< If set activate the mode (and executor) immediately. Only use this for fully autonomous executors that also arm the vehicle
+    enum class Activation
+    {
+      ActivateOnlyWhenArmed, ///< Only activate the executor when armed (and selected)
+      ActivateAlways, ///< Allow the executor to always be activated (so it can arm the vehicle)
+      ActivateImmediately, ///< Activate the mode and executor immediately after registration. Only use this for fully autonomous executors that also arm the vehicle
+    };
+    Activation activation{Activation::ActivateOnlyWhenArmed};
   };
 
   enum class DeactivateReason
