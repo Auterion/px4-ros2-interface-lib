@@ -13,7 +13,7 @@ bool waitForFMU(
   rclcpp::Node & node, const rclcpp::Duration & timeout,
   const std::string & topic_namespace_prefix)
 {
-  RCLCPP_INFO(node.get_logger(), "Waiting for FMU...");
+  RCLCPP_DEBUG(node.get_logger(), "Waiting for FMU...");
   const rclcpp::Subscription<px4_msgs::msg::VehicleStatus>::SharedPtr vehicle_status_sub =
     node.create_subscription<px4_msgs::msg::VehicleStatus>(
     topic_namespace_prefix + "fmu/out/vehicle_status", rclcpp::QoS(1).best_effort(),
