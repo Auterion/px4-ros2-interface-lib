@@ -5,6 +5,7 @@
 
 #include "px4_ros2/components/mode.hpp"
 #include "px4_ros2/components/message_compatibility_check.hpp"
+#include "px4_ros2/components/wait_for_fmu.hpp"
 
 #include "registration.hpp"
 
@@ -55,8 +56,8 @@ bool ModeBase::doRegister()
 {
   assert(!_registration->registered());
 
-  if (!_skip_message_compatibility_check &&
-    !messageCompatibilityCheck(node(), {ALL_PX4_ROS2_MESSAGES}, topicNamespacePrefix()))
+  if (!_skip_message_compatibility_check && (!waitForFMU(node(), 15s) ||
+    !messageCompatibilityCheck(node(), {ALL_PX4_ROS2_MESSAGES}, topicNamespacePrefix())))
   {
     return false;
   }
