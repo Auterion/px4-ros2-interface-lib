@@ -82,6 +82,8 @@ public:
     px4_msgs::msg::VehicleStatus::NAVIGATION_STATE_AUTO_LAND;
   static constexpr ModeID kModeIDRtl =
     px4_msgs::msg::VehicleStatus::NAVIGATION_STATE_AUTO_RTL;
+  static constexpr ModeID kModeIDPrecisionLand =
+    px4_msgs::msg::VehicleStatus::NAVIGATION_STATE_AUTO_PRECLAND;
 
   struct Settings
   {
