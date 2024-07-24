@@ -42,6 +42,12 @@ void TrajectorySetpointType::update(
 
 }
 
+void TrajectorySetpointType::update(const px4_msgs::msg::TrajectorySetpoint& setpoint)
+{
+    onUpdate();
+    _trajectory_setpoint_pub->publish(setpoint);
+}
+
 SetpointBase::Configuration TrajectorySetpointType::getConfiguration()
 {
   Configuration config{};
