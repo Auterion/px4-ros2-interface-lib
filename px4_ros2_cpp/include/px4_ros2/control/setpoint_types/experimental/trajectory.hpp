@@ -36,6 +36,8 @@ public:
     std::optional<float> yaw_ned_rad = {},
     std::optional<float> yaw_rate_ned_rad_s = {});
 
+  void update(const px4_msgs::msg::TrajectorySetpoint& setpoint);
+
 private:
   rclcpp::Node & _node;
   rclcpp::Publisher<px4_msgs::msg::TrajectorySetpoint>::SharedPtr _trajectory_setpoint_pub;
