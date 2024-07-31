@@ -22,7 +22,7 @@ jobs:
           - ubuntu: focal
             ros2: foxy
 
-    uses: Auterion/ros-debian-workflow/.github/workflows/build-ros-debian.yml@main
+    uses: Auterion/ros-debian-workflow/.github/workflows/build-ros-debian.yml@allow-version-pinning
     with:
       platform: ${{ matrix.platform.platform }}
       ubuntu-distro: ${{ matrix.distro.ubuntu }}
