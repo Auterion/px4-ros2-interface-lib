@@ -24,6 +24,7 @@ var classpx4__ros2_1_1ModeBase =
     [ "kModeIDInvalid", "classpx4__ros2_1_1ModeBase.html#a3741e155424f7685a33a412ced626dbd", null ],
     [ "kModeIDLand", "classpx4__ros2_1_1ModeBase.html#a132d1a695e4a80e440ebabee615437d3", null ],
     [ "kModeIDPosctl", "classpx4__ros2_1_1ModeBase.html#a73cb33bd1ac9df1e5b3eb319d64f419a", null ],
+    [ "kModeIDPrecisionLand", "classpx4__ros2_1_1ModeBase.html#a683f9e385013b260a2f875eaf1822948", null ],
     [ "kModeIDRtl", "classpx4__ros2_1_1ModeBase.html#a654f01c967124dfdcb468667d733107b", null ],
     [ "kModeIDTakeoff", "classpx4__ros2_1_1ModeBase.html#a2330b704b4eeae79cd19cf295946055d", null ]
 ];
