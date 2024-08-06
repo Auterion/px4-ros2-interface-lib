@@ -5,6 +5,8 @@ import argparse
 import os
 import re
 
+from typing import Optional
+
 ignored_topics = ['message_format_request', 'message_format_response']
 
 configs = [
@@ -17,8 +19,8 @@ configs = [
 project_root_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')
 
 
-def extract_topics_from_file(filename: str, extract_start_after: str = None,
-                             extract_end_before: str = None) -> list[str]:
+def extract_topics_from_file(filename: str, extract_start_after: Optional[str] = None,
+                             extract_end_before: Optional[str] = None) -> list[str]:
     with open(filename) as file:
         if extract_start_after is not None:
             for line in file:

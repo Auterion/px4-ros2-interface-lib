@@ -20,6 +20,12 @@ if (!px4_ros2::messageCompatibilityCheck(node, {{"fmu/in/vehicle_rates_setpoint"
 }
 ```
 
+To manually verify that two local versions of PX4 and px4_msgs have matching message sets, you can use the following script:
+
+```sh
+./scripts/check-message-compatibility.py -v path/to/px4_msgs/ path/to/PX4-Autopilot/
+```
+
 ## Examples
 There are code examples under [examples/cpp/modes](examples/cpp/modes).
 
