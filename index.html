@@ -99,6 +99,8 @@ Compatibility with PX4</h1>
 <div class="line">  <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Messages incompatible&quot;</span>);</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__components_html_gacb3cd80960c70f09a1acf1e10d9f1d21"><div class="ttname"><a href="group__components.html#gacb3cd80960c70f09a1acf1e10d9f1d21">px4_ros2::messageCompatibilityCheck</a></div><div class="ttdeci">bool messageCompatibilityCheck(rclcpp::Node &amp;node, const std::vector&lt; MessageCompatibilityTopic &gt; &amp;messages_to_check, const std::string &amp;topic_namespace_prefix=&quot;&quot;)</div></div>
+</div><!-- fragment --><p>To manually verify that two local versions of PX4 and px4_msgs have matching message sets, you can use the following script:</p>
+<div class="fragment"><div class="line">./scripts/check-message-compatibility.py -v path/to/px4_msgs/ path/to/PX4-Autopilot/</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
 Examples</h1>
 <p>There are code examples under <a href="examples/cpp/modes">examples/cpp/modes</a>.</p>
