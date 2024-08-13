@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ Check message compatibility between two repositories containing a msg/ directory of .msg message definitions """
 
+from __future__ import annotations  # for Python 3.8 compatibility
 import os
 import sys
 import difflib
