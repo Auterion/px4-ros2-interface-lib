@@ -145,11 +145,11 @@ bool Registration::doRegister(const RegistrationSettings & settings)
           }
 
         } else {
-          RCLCPP_INFO(_node.get_logger(), "no message received");
+          RCLCPP_INFO(_node.get_logger(), "no RegisterExtComponentReply message received");
         }
 
       } else {
-        RCLCPP_INFO(_node.get_logger(), "timeout");
+        RCLCPP_INFO(_node.get_logger(), "timeout while registering external component");
       }
     }
   }
