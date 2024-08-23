@@ -157,7 +157,7 @@ Result ModeExecutorBase::sendCommandSync(
         }
 
       } else {
-        RCLCPP_DEBUG(_node.get_logger(), "no message received");
+        RCLCPP_DEBUG(_node.get_logger(), "no VehicleCommandAck message received");
       }
 
     } else {
@@ -382,7 +382,7 @@ bool ModeExecutorBase::deferFailsafesSync(bool enabled, int timeout_s)
           }
 
         } else {
-          RCLCPP_DEBUG(_node.get_logger(), "no message received");
+          RCLCPP_DEBUG(_node.get_logger(), "no VehicleStatus message received");
         }
 
       } else {

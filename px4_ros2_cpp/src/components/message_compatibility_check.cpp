@@ -203,11 +203,11 @@ RequestMessageFormatReturn requestMessageFormat(
           }
 
         } else {
-          RCLCPP_INFO(node.get_logger(), "no message received");
+          RCLCPP_INFO(node.get_logger(), "no MessageFormatResponse message received");
         }
 
       } else {
-        RCLCPP_INFO(node.get_logger(), "timeout");
+        RCLCPP_INFO(node.get_logger(), "timeout while checking message compatibility");
       }
     }
   }

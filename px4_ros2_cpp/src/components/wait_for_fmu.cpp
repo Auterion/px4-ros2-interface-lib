@@ -43,11 +43,11 @@ bool waitForFMU(
         got_message = true;
 
       } else {
-        RCLCPP_DEBUG(node.get_logger(), "no message received");
+        RCLCPP_DEBUG(node.get_logger(), "no VehicleStatus message received");
       }
 
     } else {
-      RCLCPP_DEBUG(node.get_logger(), "timeout");
+      RCLCPP_DEBUG(node.get_logger(), "timeout while waiting for FMU");
     }
   }
 
