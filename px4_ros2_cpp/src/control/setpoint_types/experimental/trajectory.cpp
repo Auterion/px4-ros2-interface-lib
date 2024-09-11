@@ -39,7 +39,25 @@ void TrajectorySetpointType::update(
   sp.yawspeed = yaw_rate_ned_rad_s.value_or(NAN);
 
   _trajectory_setpoint_pub->publish(sp);
+}
 
+void TrajectorySetpointType::updatePosition(
+  const Eigen::Vector3f & position_ned_m)
+{
+  onUpdate();
+
+  px4_msgs::msg::TrajectorySetpoint sp{};
+  sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+
+  sp.position[0] = position_ned_m.x();
+  sp.position[1] = position_ned_m.y();
+  sp.position[2] = position_ned_m.z();
+  sp.velocity[0] = sp.velocity[1] = sp.velocity[2] = NAN;
+  sp.acceleration[0] = sp.acceleration[1] = sp.acceleration[2] = NAN;
+  sp.yaw = NAN;
+  sp.yawspeed = NAN;
+
+  _trajectory_setpoint_pub->publish(sp);
 }
 
 SetpointBase::Configuration TrajectorySetpointType::getConfiguration()

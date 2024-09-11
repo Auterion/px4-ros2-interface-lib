@@ -36,6 +36,16 @@ public:
     std::optional<float> yaw_ned_rad = {},
     std::optional<float> yaw_rate_ned_rad_s = {});
 
+  /**
+   * @brief Position setpoint update.
+   *
+   * The GotoSetpointType should be preferred.
+   *
+   * @param position_ned_m [m] NED earth-fixed frame
+   */
+  void updatePosition(
+    const Eigen::Vector3f & position_ned_m);
+
 private:
   rclcpp::Node & _node;
   rclcpp::Publisher<px4_msgs::msg::TrajectorySetpoint>::SharedPtr _trajectory_setpoint_pub;
