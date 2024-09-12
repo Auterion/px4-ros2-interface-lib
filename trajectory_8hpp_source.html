@@ -116,15 +116,19 @@ $(document).ready(function(){initNavTree('trajectory_8hpp_source.html',''); init
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    std::optional&lt;float&gt; yaw_ned_rad = {},</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    std::optional&lt;float&gt; yaw_rate_ned_rad_s = {});</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  rclcpp::Node &amp; _node;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::TrajectorySetpoint&gt;::SharedPtr _trajectory_setpoint_pub;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;};</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;} <span class="comment">/* namespace px4_ros2 */</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1TrajectorySetpointType.html#a40b129f786de5afecc9b6a359ca741d6">   46</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classpx4__ros2_1_1TrajectorySetpointType.html#a40b129f786de5afecc9b6a359ca741d6">updatePosition</a>(</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">const</span> Eigen::Vector3f &amp; position_ned_m);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  rclcpp::Node &amp; _node;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::TrajectorySetpoint&gt;::SharedPtr _trajectory_setpoint_pub;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;};</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition:</b> context.hpp:20</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1SetpointBase_html"><div class="ttname"><a href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a></div><div class="ttdef"><b>Definition:</b> setpoint_base.hpp:20</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1TrajectorySetpointType_html"><div class="ttname"><a href="classpx4__ros2_1_1TrajectorySetpointType.html">px4_ros2::TrajectorySetpointType</a></div><div class="ttdoc">Setpoint type for trajectory control.</div><div class="ttdef"><b>Definition:</b> trajectory.hpp:25</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1TrajectorySetpointType_html_a40b129f786de5afecc9b6a359ca741d6"><div class="ttname"><a href="classpx4__ros2_1_1TrajectorySetpointType.html#a40b129f786de5afecc9b6a359ca741d6">px4_ros2::TrajectorySetpointType::updatePosition</a></div><div class="ttdeci">void updatePosition(const Eigen::Vector3f &amp;position_ned_m)</div><div class="ttdoc">Position setpoint update.</div></div>
 <div class="ttc" id="astructpx4__ros2_1_1SetpointBase_1_1Configuration_html"><div class="ttname"><a href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">px4_ros2::SetpointBase::Configuration</a></div><div class="ttdef"><b>Definition:</b> setpoint_base.hpp:25</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
