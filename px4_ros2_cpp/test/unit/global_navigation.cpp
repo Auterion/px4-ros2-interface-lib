@@ -18,7 +18,7 @@
 #include <px4_ros2/navigation/experimental/global_position_measurement_interface.hpp>
 
 using px4_ros2::GlobalPositionMeasurement, px4_ros2::NavigationInterfaceInvalidArgument;
-
+using namespace std::chrono_literals;
 
 class GlobalPositionInterfaceTest : public testing::Test
 {
@@ -39,11 +39,71 @@ protected:
 
     _global_navigation_interface = std::make_shared<px4_ros2::GlobalPositionMeasurementInterface>(
       *_node);
+    _subscriber =
+      _node->create_subscription<px4_msgs::msg::VehicleGlobalPosition>(
+      "/fmu/in/aux_global_position", rclcpp::QoS(10).best_effort(),
+      [this](px4_msgs::msg::VehicleGlobalPosition::UniquePtr msg) {
+        _update_msg = std::move(msg);
+      });
+  }
+
+  bool waitForUpdate()
+  {
+    _update_msg = nullptr;
+    auto start_time = _node->get_clock()->now();
+    while (!_update_msg) {
+      rclcpp::sleep_for(kSleepInterval);
+      rclcpp::spin_some(_node);
+      const auto elapsed_time = _node->get_clock()->now() - start_time;
+      if (elapsed_time >= kTimeoutDuration) {
+        return _update_msg != nullptr;
+      }
+    }
+    return true;
   }
 
   std::shared_ptr<rclcpp::Node> _node;
   std::shared_ptr<px4_ros2::GlobalPositionMeasurementInterface> _global_navigation_interface;
+  rclcpp::Subscription<px4_msgs::msg::VehicleGlobalPosition>::SharedPtr _subscriber;
+  px4_msgs::msg::VehicleGlobalPosition::UniquePtr _update_msg;
+
+  static constexpr std::chrono::seconds kTimeoutDuration{3s};
+  static constexpr std::chrono::milliseconds kSleepInterval{10ms};
+
+  // Test measurements
+  static constexpr double kLat{-33.925937};
+  static constexpr double kLon{18.427745};
+  static constexpr float kHorizontalVariance{0.5F};
 };
+
+
+// Tests interface when position measurement is valid
+TEST_F(GlobalPositionInterfaceTest, Valid) {
+
+  // Send measurement
+  GlobalPositionMeasurement measurement{};
+  measurement.timestamp_sample = _node->get_clock()->now();
+  measurement.lat_lon = Eigen::Vector2d {kLat, kLon};
+  measurement.horizontal_variance = kHorizontalVariance;
+
+  ASSERT_NO_THROW(_global_navigation_interface->update(measurement));
+
+  // Wait for the ROS2 update message
+  ASSERT_TRUE(waitForUpdate());
+  EXPECT_DOUBLE_EQ(_update_msg->lat, kLat);
+  EXPECT_DOUBLE_EQ(_update_msg->lon, kLon);
+  EXPECT_NEAR(
+    _update_msg->eph, std::sqrt(kHorizontalVariance), std::sqrt(
+      kHorizontalVariance) * 0.05);
+  EXPECT_EQ(_update_msg->lat_lon_reset_counter, 0);
+
+  // Signal measurement reset and send new measurement
+  _global_navigation_interface->reset();
+  ASSERT_NO_THROW(_global_navigation_interface->update(measurement));
+
+  ASSERT_TRUE(waitForUpdate());
+  EXPECT_EQ(_update_msg->lat_lon_reset_counter, 1);
+}
 
 // Tests interface when position measurement is empty
 TEST_F(GlobalPositionInterfaceTest, MeasurementEmpty) {
