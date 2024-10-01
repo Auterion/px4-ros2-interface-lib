@@ -67,8 +67,8 @@ public:
  *
  * Increments the reset counter for horizontal position (latitude and longitude) to signal the EKF
  * of a discontinuity in external position data (e.g., loss of tracking or reinitialization). Future measurement
- * updates will contain the incremented counter. This helps the EKF adjust and maintain consistent state estimation,
- * and accept new measurements after a gap or inconsistency in updates.
+ * updates will contain the incremented counter. This prevents the EKF from rejecting future measurement updates
+ * after an inconsistency in data.
  */
   inline void reset() {++_lat_lon_reset_counter;}
 
