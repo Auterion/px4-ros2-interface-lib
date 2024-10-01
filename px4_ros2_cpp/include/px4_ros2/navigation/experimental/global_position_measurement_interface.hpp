@@ -62,6 +62,16 @@ public:
    */
   void update(const GlobalPositionMeasurement & global_position_measurement) const;
 
+/**
+ * @brief Notify the FMU that the global position estimate has been reset.
+ *
+ * Increments the reset counter for horizontal position (latitude and longitude) to signal the EKF
+ * of a discontinuity in external position data (e.g., loss of tracking or reinitialization). Future measurement
+ * updates will contain the incremented counter. This helps the EKF adjust and maintain consistent state estimation,
+ * and accept new measurements after a gap or inconsistency in updates.
+ */
+  inline void reset() {++_lat_lon_reset_counter;}
+
 private:
   /**
    * @brief Check that at least one measurement value is defined.
@@ -85,6 +95,7 @@ private:
 
   rclcpp::Publisher<px4_msgs::msg::VehicleGlobalPosition>::SharedPtr _aux_global_position_pub;
 
+  uint8_t _lat_lon_reset_counter{0};  /** Counter for reset events on horizontal position coordinates */
   // uint8_t _altitude_frame;
 };
 
