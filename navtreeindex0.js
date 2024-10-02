@@ -32,8 +32,9 @@ var NAVTREEINDEX0 =
 "classpx4__ros2_1_1DirectActuatorsSetpointType.html#aed0131686e9236157c206bf4df527bdf":[3,1,0,1,7],
 "classpx4__ros2_1_1GlobalPositionMeasurementInterface.html":[3,2,0,0],
 "classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#a06bdbdfd1a88b09037106819f9a02278":[3,2,0,0,0],
-"classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#a1a183b595ef7f6a22f3a83ba543fe86d":[3,2,0,0,2],
+"classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#a1a183b595ef7f6a22f3a83ba543fe86d":[3,2,0,0,3],
 "classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#a748df69a2aa157d9205a57149e5293cc":[3,2,0,0,1],
+"classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#af36b2d47a6a32c0534df1b67abac1d63":[3,2,0,0,2],
 "classpx4__ros2_1_1GotoGlobalSetpointType.html":[4,0,0,19],
 "classpx4__ros2_1_1GotoGlobalSetpointType.html#a0fb13b1032237e1bd77df41a822b0a3c":[4,0,0,19,0],
 "classpx4__ros2_1_1GotoGlobalSetpointType.html#a58660328921ec4619eca8cf279a3a185":[4,0,0,19,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "group__frame__conversion.html#ga337f6dbef01cea6a40479f3026e98a79":[3,4,0,1],
 "group__frame__conversion.html#ga5f9133119e27182e4b3c042164b40378":[3,4,0,2],
 "group__frame__conversion.html#ga7e02bd65c3faa8b3f87c75046cbb5bd2":[3,4,0,3],
-"group__frame__conversion.html#ga7f297cea7143521cf35391bc35d887cc":[3,4,0,5],
-"group__frame__conversion.html#ga973366602ef2338f8f883c7696654698":[3,4,0,12]
+"group__frame__conversion.html#ga7f297cea7143521cf35391bc35d887cc":[3,4,0,5]
 };

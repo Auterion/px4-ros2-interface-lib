@@ -114,6 +114,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1a183b595ef7f6a22f3a83ba543fe86d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#a1a183b595ef7f6a22f3a83ba543fe86d">update</a> (const <a class="el" href="structpx4__ros2_1_1GlobalPositionMeasurement.html">GlobalPositionMeasurement</a> &amp;global_position_measurement) const</td></tr>
 <tr class="memdesc:a1a183b595ef7f6a22f3a83ba543fe86d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publishes a global position measurement to the FMU. Throws an exception if the following conditions are not met:  <a href="classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#a1a183b595ef7f6a22f3a83ba543fe86d">More...</a><br /></td></tr>
 <tr class="separator:a1a183b595ef7f6a22f3a83ba543fe86d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af36b2d47a6a32c0534df1b67abac1d63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#af36b2d47a6a32c0534df1b67abac1d63">reset</a> ()</td></tr>
+<tr class="memdesc:af36b2d47a6a32c0534df1b67abac1d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notify the FMU that the global position estimate has been reset.  <a href="classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#af36b2d47a6a32c0534df1b67abac1d63">More...</a><br /></td></tr>
+<tr class="separator:af36b2d47a6a32c0534df1b67abac1d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classpx4__ros2_1_1PositionMeasurementInterfaceBase"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classpx4__ros2_1_1PositionMeasurementInterfaceBase')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html">px4_ros2::PositionMeasurementInterfaceBase</a></td></tr>
 <tr class="memitem:a610ffcad1452bd4f821fc73025834cae inherit pub_methods_classpx4__ros2_1_1PositionMeasurementInterfaceBase"><td class="memItemLeft" align="right" valign="top"><a id="a610ffcad1452bd4f821fc73025834cae"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>PositionMeasurementInterfaceBase</b> (rclcpp::Node &amp;node, std::string topic_namespace_prefix=&quot;&quot;)</td></tr>
@@ -147,6 +150,34 @@ rclcpp::Node &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_node</
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for a global position measurement provider. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="af36b2d47a6a32c0534df1b67abac1d63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af36b2d47a6a32c0534df1b67abac1d63">&#9670;&nbsp;</a></span>reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void px4_ros2::GlobalPositionMeasurementInterface::reset </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Notify the FMU that the global position estimate has been reset. </p>
+<p>Increments the reset counter for horizontal position (latitude and longitude) to signal the EKF of a discontinuity in external position data (e.g., loss of tracking or reinitialization). Future measurement updates will contain the incremented counter. This prevents the EKF from rejecting future measurement updates after an inconsistency in data. </p>
+
+</div>
+</div>
 <a id="a1a183b595ef7f6a22f3a83ba543fe86d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1a183b595ef7f6a22f3a83ba543fe86d">&#9670;&nbsp;</a></span>update()</h2>
 
