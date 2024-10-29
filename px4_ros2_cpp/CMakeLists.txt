@@ -49,6 +49,11 @@ set(HEADER_FILES
         include/px4_ros2/utils/frame_conversion.hpp
         include/px4_ros2/utils/geodesic.hpp
         include/px4_ros2/utils/geometry.hpp
+        include/px4_ros2/vehicle_state/battery.hpp
+        include/px4_ros2/vehicle_state/home_position.hpp
+        include/px4_ros2/vehicle_state/land_detected.hpp
+        include/px4_ros2/vehicle_state/vehicle_status.hpp
+        include/px4_ros2/vehicle_state/vtol_status.hpp
 )
 
 add_library(px4_ros2_cpp

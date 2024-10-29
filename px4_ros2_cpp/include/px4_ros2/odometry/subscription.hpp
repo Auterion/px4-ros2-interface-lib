@@ -86,9 +86,10 @@ public:
     return hasReceivedMessages() && _node.get_clock()->now() - _last_message_time < max_delay;
   }
 
-private:
+protected:
   rclcpp::Node & _node;
 
+private:
   typename rclcpp::Subscription<RosMessageType>::SharedPtr _subscription{nullptr};
 
   RosMessageType _last;

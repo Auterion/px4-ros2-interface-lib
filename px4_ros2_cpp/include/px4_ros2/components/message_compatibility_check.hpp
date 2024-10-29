@@ -27,6 +27,8 @@ using namespace std::chrono_literals; // NOLINT
   {"fmu/in/vehicle_rates_setpoint"}, \
   {"fmu/in/vehicle_visual_odometry", "VehicleOdometry"}, \
   {"fmu/out/arming_check_request"}, \
+  {"fmu/out/battery_status"}, \
+  {"fmu/out/home_position"}, \
   {"fmu/out/manual_control_setpoint"}, \
   {"fmu/out/mode_completed"}, \
   {"fmu/out/register_ext_component_reply"}, \
@@ -34,8 +36,10 @@ using namespace std::chrono_literals; // NOLINT
   {"fmu/out/vehicle_angular_velocity"}, \
   {"fmu/out/vehicle_command_ack"}, \
   {"fmu/out/vehicle_global_position"}, \
+  {"fmu/out/vehicle_land_detected"}, \
   {"fmu/out/vehicle_local_position"}, \
-  {"fmu/out/vehicle_status"}
+  {"fmu/out/vehicle_status"}, \
+  {"fmu/out/vtol_vehicle_status"}
 
 
 namespace px4_ros2

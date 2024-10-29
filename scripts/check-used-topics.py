@@ -12,7 +12,7 @@ ignored_topics = ['message_format_request', 'message_format_response']
 configs = [
     # Tuples of (topics_list_file, topic define, source_dir list)
     ('px4_ros2_cpp/include/px4_ros2/components/message_compatibility_check.hpp', 'ALL_PX4_ROS2_MESSAGES', [
-        'px4_ros2_cpp/src'
+        'px4_ros2_cpp/src', 'px4_ros2_cpp/include'
     ]),
 ]
 
