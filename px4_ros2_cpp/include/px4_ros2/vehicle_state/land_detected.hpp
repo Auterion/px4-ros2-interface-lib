@@ -7,7 +7,7 @@
 
 #include <px4_msgs/msg/vehicle_land_detected.hpp>
 #include <px4_ros2/common/context.hpp>
-#include <px4_ros2/odometry/subscription.hpp>
+#include <px4_ros2/utils/subscription.hpp>
 
 namespace px4_ros2
 {
