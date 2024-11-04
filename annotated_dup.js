@@ -33,7 +33,12 @@ var annotated_dup =
       [ "OdometryAttitude", "classpx4__ros2_1_1OdometryAttitude.html", "classpx4__ros2_1_1OdometryAttitude" ],
       [ "OdometryGlobalPosition", "classpx4__ros2_1_1OdometryGlobalPosition.html", "classpx4__ros2_1_1OdometryGlobalPosition" ],
       [ "OdometryLocalPosition", "classpx4__ros2_1_1OdometryLocalPosition.html", "classpx4__ros2_1_1OdometryLocalPosition" ],
+      [ "MapProjection", "classpx4__ros2_1_1MapProjection.html", "classpx4__ros2_1_1MapProjection" ],
       [ "Subscription", "classpx4__ros2_1_1Subscription.html", "classpx4__ros2_1_1Subscription" ],
-      [ "MapProjection", "classpx4__ros2_1_1MapProjection.html", "classpx4__ros2_1_1MapProjection" ]
+      [ "Battery", "classpx4__ros2_1_1Battery.html", "classpx4__ros2_1_1Battery" ],
+      [ "HomePosition", "classpx4__ros2_1_1HomePosition.html", "classpx4__ros2_1_1HomePosition" ],
+      [ "LandDetected", "classpx4__ros2_1_1LandDetected.html", "classpx4__ros2_1_1LandDetected" ],
+      [ "VehicleStatus", "classpx4__ros2_1_1VehicleStatus.html", "classpx4__ros2_1_1VehicleStatus" ],
+      [ "VtolStatus", "classpx4__ros2_1_1VtolStatus.html", "classpx4__ros2_1_1VtolStatus" ]
     ] ]
 ];

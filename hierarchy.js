@@ -40,6 +40,12 @@ var hierarchy =
     [ "px4_ros2::ModeBase::Settings", "structpx4__ros2_1_1ModeBase_1_1Settings.html", null ],
     [ "px4_ros2::ModeExecutorBase::Settings", "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html", null ],
     [ "px4_ros2::Subscription< RosMessageType >", "classpx4__ros2_1_1Subscription.html", null ],
+    [ "px4_ros2::Subscription< px4_msgs::msg::BatteryStatus >", "classpx4__ros2_1_1Subscription.html", [
+      [ "px4_ros2::Battery", "classpx4__ros2_1_1Battery.html", null ]
+    ] ],
+    [ "px4_ros2::Subscription< px4_msgs::msg::HomePosition >", "classpx4__ros2_1_1Subscription.html", [
+      [ "px4_ros2::HomePosition", "classpx4__ros2_1_1HomePosition.html", null ]
+    ] ],
     [ "px4_ros2::Subscription< px4_msgs::msg::VehicleAngularVelocity >", "classpx4__ros2_1_1Subscription.html", [
       [ "px4_ros2::OdometryAngularVelocity", "classpx4__ros2_1_1OdometryAngularVelocity.html", null ]
     ] ],
@@ -49,7 +55,16 @@ var hierarchy =
     [ "px4_ros2::Subscription< px4_msgs::msg::VehicleGlobalPosition >", "classpx4__ros2_1_1Subscription.html", [
       [ "px4_ros2::OdometryGlobalPosition", "classpx4__ros2_1_1OdometryGlobalPosition.html", null ]
     ] ],
+    [ "px4_ros2::Subscription< px4_msgs::msg::VehicleLandDetected >", "classpx4__ros2_1_1Subscription.html", [
+      [ "px4_ros2::LandDetected", "classpx4__ros2_1_1LandDetected.html", null ]
+    ] ],
     [ "px4_ros2::Subscription< px4_msgs::msg::VehicleLocalPosition >", "classpx4__ros2_1_1Subscription.html", [
       [ "px4_ros2::OdometryLocalPosition", "classpx4__ros2_1_1OdometryLocalPosition.html", null ]
+    ] ],
+    [ "px4_ros2::Subscription< px4_msgs::msg::VehicleStatus >", "classpx4__ros2_1_1Subscription.html", [
+      [ "px4_ros2::VehicleStatus", "classpx4__ros2_1_1VehicleStatus.html", null ]
+    ] ],
+    [ "px4_ros2::Subscription< px4_msgs::msg::VtolVehicleStatus >", "classpx4__ros2_1_1Subscription.html", [
+      [ "px4_ros2::VtolStatus", "classpx4__ros2_1_1VtolStatus.html", null ]
     ] ]
 ];

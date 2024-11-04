@@ -85,6 +85,7 @@ $(document).ready(function(){initNavTree('classpx4__ros2_1_1Subscription.html','
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classpx4__ros2_1_1Subscription-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">px4_ros2::Subscription&lt; RosMessageType &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__odometry.html">Odometry</a></div></div>  </div>
@@ -94,7 +95,7 @@ $(document).ready(function(){initNavTree('classpx4__ros2_1_1Subscription.html','
 <p>Provides a subscription to arbitrary ROS topics.  
  <a href="classpx4__ros2_1_1Subscription.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="subscription_8hpp_source.html">px4_ros2/odometry/subscription.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="subscription_8hpp_source.html">px4_ros2/utils/subscription.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -114,6 +115,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a720ef682a71cefa9f7da922a7f189e32"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1Subscription.html#a720ef682a71cefa9f7da922a7f189e32">lastValid</a> (const std::chrono::duration&lt; int64_t, DurationT &gt; max_delay=500ms) const</td></tr>
 <tr class="memdesc:a720ef682a71cefa9f7da922a7f189e32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the last message is still valid. To be valid, the message must have been received within a given time of the current time.  <a href="classpx4__ros2_1_1Subscription.html#a720ef682a71cefa9f7da922a7f189e32">More...</a><br /></td></tr>
 <tr class="separator:a720ef682a71cefa9f7da922a7f189e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a2cade486b5886f40b70ab8c1101fa0ec"><td class="memItemLeft" align="right" valign="top"><a id="a2cade486b5886f40b70ab8c1101fa0ec"></a>
+rclcpp::Node &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_node</b></td></tr>
+<tr class="separator:a2cade486b5886f40b70ab8c1101fa0ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename RosMessageType&gt;<br />
@@ -263,7 +270,7 @@ template&lt;typename RosMessageType &gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>px4_ros2_cpp/include/px4_ros2/odometry/<a class="el" href="subscription_8hpp_source.html">subscription.hpp</a></li>
+<li>px4_ros2_cpp/include/px4_ros2/utils/<a class="el" href="subscription_8hpp_source.html">subscription.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

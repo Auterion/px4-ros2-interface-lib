@@ -1,15 +1,12 @@
 var searchData=
 [
-  ['schedulemode_103',['scheduleMode',['../classpx4__ros2_1_1ModeExecutorBase.html#a94f2c1e3dd07b3b58d78b94ebb3615a3',1,'px4_ros2::ModeExecutorBase']]],
-  ['sendcommandsync_104',['sendCommandSync',['../classpx4__ros2_1_1ModeExecutorBase.html#a332cb775e0543155595c51bbc4052522',1,'px4_ros2::ModeExecutorBase']]],
-  ['set_105',['set',['../classpx4__ros2_1_1PeripheralActuatorControls.html#aa290a7d4d1221c8d184752890bae88a3',1,'px4_ros2::PeripheralActuatorControls::set(const Eigen::Matrix&lt; float, kNumActuators, 1 &gt; &amp;values)'],['../classpx4__ros2_1_1PeripheralActuatorControls.html#a59753e650558081296ec4ef83de00181',1,'px4_ros2::PeripheralActuatorControls::set(float value, unsigned index=0)']]],
-  ['setpoint_20types_106',['Setpoint Types',['../group__setpoint__types.html',1,'']]],
-  ['setpointbase_107',['SetpointBase',['../classpx4__ros2_1_1SetpointBase.html',1,'px4_ros2']]],
-  ['setsetpointupdaterate_108',['setSetpointUpdateRate',['../classpx4__ros2_1_1ModeBase.html#a3d8ba94373de2a1c5bf0edaac7263ab1',1,'px4_ros2::ModeBase']]],
-  ['settings_109',['Settings',['../structpx4__ros2_1_1ModeBase_1_1Settings.html',1,'px4_ros2::ModeBase::Settings'],['../structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html',1,'px4_ros2::ModeExecutorBase::Settings']]],
-  ['subscription_110',['Subscription',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
-  ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avehicleangularvelocity_20_3e_111',['Subscription&lt; px4_msgs::msg::VehicleAngularVelocity &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
-  ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avehicleattitude_20_3e_112',['Subscription&lt; px4_msgs::msg::VehicleAttitude &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
-  ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avehicleglobalposition_20_3e_113',['Subscription&lt; px4_msgs::msg::VehicleGlobalPosition &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
-  ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avehiclelocalposition_20_3e_114',['Subscription&lt; px4_msgs::msg::VehicleLocalPosition &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]]
+  ['radtodeg_116',['radToDeg',['../group__geometry.html#gaebb5ddb7bd8196fe4481ff91cd792b84',1,'px4_ros2']]],
+  ['ratessetpointtype_117',['RatesSetpointType',['../classpx4__ros2_1_1RatesSetpointType.html',1,'px4_ros2']]],
+  ['rejected_118',['Rejected',['../group__components.html#gga0d5805242f91956fd51e243091367f77ad37b1f6c0512e2118cee17fea015b699',1,'px4_ros2']]],
+  ['remaningfraction_119',['remaningFraction',['../classpx4__ros2_1_1Battery.html#acaa6f4e27997ed86214b7ddcf385074a',1,'px4_ros2::Battery']]],
+  ['replace_5finternal_5fmode_120',['replace_internal_mode',['../structpx4__ros2_1_1ModeBase_1_1Settings.html#af61499f0183e347cb580407d64b4c3cd',1,'px4_ros2::ModeBase::Settings']]],
+  ['requirementflags_121',['RequirementFlags',['../structpx4__ros2_1_1RequirementFlags.html',1,'px4_ros2']]],
+  ['reset_122',['reset',['../classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#af36b2d47a6a32c0534df1b67abac1d63',1,'px4_ros2::GlobalPositionMeasurementInterface']]],
+  ['result_123',['Result',['../group__components.html#ga0d5805242f91956fd51e243091367f77',1,'px4_ros2']]],
+  ['roll_124',['roll',['../classpx4__ros2_1_1ManualControlInput.html#a377da17ccfb46fc042d5b1a98f9e4398',1,'px4_ros2::ManualControlInput::roll()'],['../classpx4__ros2_1_1OdometryAttitude.html#af40100c5121b4c584d347ccc4f6c95ac',1,'px4_ros2::OdometryAttitude::roll()']]]
 ];

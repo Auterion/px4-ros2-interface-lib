@@ -5,5 +5,6 @@ var dir_cc7c13f17ffdd9c3833a1819211ef352 =
     [ "control", "dir_7139ba757cb9212317a0ed2995419464.html", "dir_7139ba757cb9212317a0ed2995419464" ],
     [ "navigation", "dir_dfb2935a883daba4a765058cdea577df.html", "dir_dfb2935a883daba4a765058cdea577df" ],
     [ "odometry", "dir_7223aa5b05a13b8dd112252d934ebb2d.html", "dir_7223aa5b05a13b8dd112252d934ebb2d" ],
-    [ "utils", "dir_728c52ee7baa13f3cf535ab5642f1615.html", "dir_728c52ee7baa13f3cf535ab5642f1615" ]
+    [ "utils", "dir_728c52ee7baa13f3cf535ab5642f1615.html", "dir_728c52ee7baa13f3cf535ab5642f1615" ],
+    [ "vehicle_state", "dir_af38b6b5d6d37ebc33801d8219340576.html", "dir_af38b6b5d6d37ebc33801d8219340576" ]
 ];

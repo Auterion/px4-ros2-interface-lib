@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PX4 ROS 2 Interface Library: px4_ros2_cpp/include/px4_ros2/odometry/subscription.hpp Source File</title>
+<title>PX4 ROS 2 Interface Library: px4_ros2_cpp/include/px4_ros2/utils/subscription.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -145,23 +145,24 @@ $(document).ready(function(){initNavTree('subscription_8hpp_source.html',''); in
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">return</span> hasReceivedMessages() &amp;&amp; _node.get_clock()-&gt;now() - _last_message_time &lt; max_delay;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  }</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  rclcpp::Node &amp; _node;</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keyword">typename</span> rclcpp::Subscription&lt;RosMessageType&gt;::SharedPtr _subscription{<span class="keyword">nullptr</span>};</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  RosMessageType _last;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  rclcpp::Time _last_message_time;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  std::vector&lt;std::function&lt;void(<span class="keyword">const</span> RosMessageType &amp;)&gt;&gt; _callbacks{};</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="keywordtype">bool</span> hasReceivedMessages()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keyword">  </span>{</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">return</span> _last_message_time.seconds() != 0;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  }</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;};</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;} <span class="comment">// namespace px4_ros2</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keyword">typename</span> rclcpp::Subscription&lt;RosMessageType&gt;::SharedPtr _subscription{<span class="keyword">nullptr</span>};</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  RosMessageType _last;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  rclcpp::Time _last_message_time;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  std::vector&lt;std::function&lt;void(<span class="keyword">const</span> RosMessageType &amp;)&gt;&gt; _callbacks{};</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordtype">bool</span> hasReceivedMessages()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keyword">  </span>{</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordflow">return</span> _last_message_time.seconds() != 0;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  }</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;};</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;} <span class="comment">// namespace px4_ros2</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition:</b> context.hpp:20</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Subscription_html"><div class="ttname"><a href="classpx4__ros2_1_1Subscription.html">px4_ros2::Subscription</a></div><div class="ttdoc">Provides a subscription to arbitrary ROS topics.</div><div class="ttdef"><b>Definition:</b> subscription.hpp:23</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Subscription_html_a720ef682a71cefa9f7da922a7f189e32"><div class="ttname"><a href="classpx4__ros2_1_1Subscription.html#a720ef682a71cefa9f7da922a7f189e32">px4_ros2::Subscription::lastValid</a></div><div class="ttdeci">bool lastValid(const std::chrono::duration&lt; int64_t, DurationT &gt; max_delay=500ms) const</div><div class="ttdoc">Check whether the last message is still valid. To be valid, the message must have been received withi...</div><div class="ttdef"><b>Definition:</b> subscription.hpp:84</div></div>
@@ -173,7 +174,7 @@ $(document).ready(function(){initNavTree('subscription_8hpp_source.html',''); in
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_b4adda84387dc0fc0ee13f2f482eac98.html">px4_ros2_cpp</a></li><li class="navelem"><a class="el" href="dir_b7e881b133c7866aa1b0587ef5240a54.html">include</a></li><li class="navelem"><a class="el" href="dir_cc7c13f17ffdd9c3833a1819211ef352.html">px4_ros2</a></li><li class="navelem"><a class="el" href="dir_7223aa5b05a13b8dd112252d934ebb2d.html">odometry</a></li><li class="navelem"><b>subscription.hpp</b></li>
+    <li class="navelem"><a class="el" href="dir_b4adda84387dc0fc0ee13f2f482eac98.html">px4_ros2_cpp</a></li><li class="navelem"><a class="el" href="dir_b7e881b133c7866aa1b0587ef5240a54.html">include</a></li><li class="navelem"><a class="el" href="dir_cc7c13f17ffdd9c3833a1819211ef352.html">px4_ros2</a></li><li class="navelem"><a class="el" href="dir_728c52ee7baa13f3cf535ab5642f1615.html">utils</a></li><li class="navelem"><b>subscription.hpp</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['interrupted_47',['Interrupted',['../group__components.html#gga0d5805242f91956fd51e243091367f77a12c37c4278b8c0db6c2f65052569cd80',1,'px4_ros2']]],
-  ['isinitialized_48',['isInitialized',['../classpx4__ros2_1_1MapProjection.html#a0e43e62ed28e36e3d2c1bc92e8cd989c',1,'px4_ros2::MapProjection']]]
+  ['heading_50',['heading',['../classpx4__ros2_1_1OdometryLocalPosition.html#a50193dab84758c3f08e5a5b947fad5f8',1,'px4_ros2::OdometryLocalPosition']]],
+  ['headingtoglobalposition_51',['headingToGlobalPosition',['../group__geodesic.html#gab67f76184e10f2c36954e1343dc269f7',1,'px4_ros2::headingToGlobalPosition(const Eigen::Vector2d &amp;global_position_now, const Eigen::Vector2d &amp;global_position_next)'],['../group__geodesic.html#ga58885d46925c00a7f93a7ccbede46672',1,'px4_ros2::headingToGlobalPosition(const Eigen::Vector3d &amp;global_position_now, const Eigen::Vector3d &amp;global_position_next)']]],
+  ['healthandarmingcheckreporter_52',['HealthAndArmingCheckReporter',['../classpx4__ros2_1_1HealthAndArmingCheckReporter.html',1,'px4_ros2']]],
+  ['healthandarmingchecks_53',['HealthAndArmingChecks',['../classpx4__ros2_1_1HealthAndArmingChecks.html',1,'px4_ros2']]],
+  ['homeposition_54',['HomePosition',['../classpx4__ros2_1_1HomePosition.html',1,'px4_ros2']]],
+  ['horizontal_5fvariance_55',['horizontal_variance',['../structpx4__ros2_1_1GlobalPositionMeasurement.html#a098e08a4664b7708bb1a234ea0c96e4c',1,'px4_ros2::GlobalPositionMeasurement']]],
+  ['horizontaldistancetoglobalposition_56',['horizontalDistanceToGlobalPosition',['../group__geodesic.html#gac743119cb3987dfa6478aabc52c3a50e',1,'px4_ros2::horizontalDistanceToGlobalPosition(const Eigen::Vector2d &amp;global_position_now, const Eigen::Vector2d &amp;global_position_next)'],['../group__geodesic.html#ga0c23b4afb57270be82eef5962a9b01fb',1,'px4_ros2::horizontalDistanceToGlobalPosition(const Eigen::Vector3d &amp;global_position_now, const Eigen::Vector3d &amp;global_position_next)']]]
 ];
