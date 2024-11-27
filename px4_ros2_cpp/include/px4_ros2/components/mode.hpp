@@ -85,7 +85,7 @@ public:
   static constexpr ModeID kModeIDPrecisionLand =
     px4_msgs::msg::VehicleStatus::NAVIGATION_STATE_AUTO_PRECLAND;
   static constexpr ModeID kModeIDLoiter =
-    px4_msgs::msg::VehicleStatus::NAVIGATION_STATE_AUTO_LOITER;  
+    px4_msgs::msg::VehicleStatus::NAVIGATION_STATE_AUTO_LOITER;
 
   struct Settings
   {
