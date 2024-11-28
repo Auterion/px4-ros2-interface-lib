@@ -47,6 +47,7 @@ var group__components =
       [ "kModeIDDescend", "classpx4__ros2_1_1ModeBase.html#a1692146bb14350143a739c3613209c7d", null ],
       [ "kModeIDInvalid", "classpx4__ros2_1_1ModeBase.html#a3741e155424f7685a33a412ced626dbd", null ],
       [ "kModeIDLand", "classpx4__ros2_1_1ModeBase.html#a132d1a695e4a80e440ebabee615437d3", null ],
+      [ "kModeIDLoiter", "classpx4__ros2_1_1ModeBase.html#a623b52f7c4393c424279b1d1004cb331", null ],
       [ "kModeIDPosctl", "classpx4__ros2_1_1ModeBase.html#a73cb33bd1ac9df1e5b3eb319d64f419a", null ],
       [ "kModeIDPrecisionLand", "classpx4__ros2_1_1ModeBase.html#a683f9e385013b260a2f875eaf1822948", null ],
       [ "kModeIDRtl", "classpx4__ros2_1_1ModeBase.html#a654f01c967124dfdcb468667d733107b", null ],
