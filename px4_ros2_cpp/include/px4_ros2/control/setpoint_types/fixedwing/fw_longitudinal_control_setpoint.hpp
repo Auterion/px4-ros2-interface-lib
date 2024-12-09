@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <px4_msgs/msg/fw_lateral_control_setpoint.hpp>
+#include <px4_msgs/msg/fw_longitudinal_control_setpoint.hpp>
 #include <Eigen/Eigen>
 #include <optional>
 
@@ -21,12 +21,12 @@ namespace px4_ros2
 /**
  * @brief Setpoint type for smooth position and heading control
 */
-    class FwLateralControlSetpointType : public SetpointBase
+    class FwLongitudinalControlSetpointType : public SetpointBase
     {
     public:
-	explicit FwLateralControlSetpointType(Context & context);
+	explicit FwLongitudinalControlSetpointType(Context & context);
 
-	~FwLateralControlSetpointType() override = default;
+	~FwLongitudinalControlSetpointType() override = default;
 
 	Configuration getConfiguration() override;
 
@@ -37,15 +37,15 @@ namespace px4_ros2
 	 *
 	 */
 	void update(
-			    const float course_setpoint, const float heading_setpoint, const float lateral_acceleration_setpoint
+		const float altitude_setpoint_msl, const float height_rate_setpoint, const float equivalent_airspeed_setpoint
 	);
 
 	float desiredUpdateRateHz() override {return 30.f;}
 
     private:
 	rclcpp::Node & _node;
-	rclcpp::Publisher<px4_msgs::msg::FwLateralControlSetpoint >::SharedPtr
-		_fw_lateral_control_sp_pub;
+	rclcpp::Publisher<px4_msgs::msg::FwLongitudinalControlSetpoint >::SharedPtr
+		_fw_longitudinal_control_sp_pub;
     };
 
 /** @}*/
