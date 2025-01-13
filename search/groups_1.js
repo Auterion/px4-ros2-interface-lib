@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['experimental_334',['Experimental',['../group__navigation__experimental.html',1,'(Global Namespace)'],['../group__setpoint__types__experimental.html',1,'(Global Namespace)']]]
+  ['experimental_0',['experimental',['../group__setpoint__types__experimental.html',1,'Experimental'],['../group__navigation__experimental.html',1,'Experimental']]]
 ];

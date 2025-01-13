@@ -34,7 +34,7 @@ var NAVTREE =
         [ "Linters (code formatting etc)", "index.html#autotoc_md7", null ]
       ] ]
     ] ],
-    [ "Modules", "modules.html", "modules" ],
+    [ "Topics", "topics.html", "topics" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -56,7 +56,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "angular__velocity_8hpp_source.html",
-"dir_b7e881b133c7866aa1b0587ef5240a54.html"
+"trajectory_8hpp_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

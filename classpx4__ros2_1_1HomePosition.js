@@ -1,6 +1,5 @@
 var classpx4__ros2_1_1HomePosition =
 [
-    [ "HomePosition", "classpx4__ros2_1_1HomePosition.html#af231e096c4eae2f4c70e4cbe13ac679c", null ],
     [ "altitudeValid", "classpx4__ros2_1_1HomePosition.html#acc4782b8b6cebdf021a755390647cf3f", null ],
     [ "globaHorizontalPositionValid", "classpx4__ros2_1_1HomePosition.html#a3b18285ba6d93cecc6a83f06e867c4fc", null ],
     [ "globalPosition", "classpx4__ros2_1_1HomePosition.html#a6e17b84ba9e072271d79e761f06dd49e", null ],

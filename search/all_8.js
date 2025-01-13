@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['interrupted_57',['Interrupted',['../group__components.html#gga0d5805242f91956fd51e243091367f77a12c37c4278b8c0db6c2f65052569cd80',1,'px4_ros2']]],
-  ['isfwmode_58',['isFwMode',['../classpx4__ros2_1_1VtolStatus.html#a600750e1d2419688f6cf4442ec02b923',1,'px4_ros2::VtolStatus']]],
-  ['isinitialized_59',['isInitialized',['../classpx4__ros2_1_1MapProjection.html#a0e43e62ed28e36e3d2c1bc92e8cd989c',1,'px4_ros2::MapProjection']]],
-  ['ismcmode_60',['isMcMode',['../classpx4__ros2_1_1VtolStatus.html#a88818e710ceef20b8047b658128817c6',1,'px4_ros2::VtolStatus']]],
-  ['istransitioningtofw_61',['isTransitioningToFw',['../classpx4__ros2_1_1VtolStatus.html#a43db96da6a5df4309e6b4d79ccaffd63',1,'px4_ros2::VtolStatus']]],
-  ['istransitioningtomc_62',['isTransitioningToMc',['../classpx4__ros2_1_1VtolStatus.html#a907fb337765687185d937cd4738ce1bf',1,'px4_ros2::VtolStatus']]],
-  ['isundefined_63',['isUndefined',['../classpx4__ros2_1_1VtolStatus.html#a0e6e63fd30e3f9c698f8b1da93c87142',1,'px4_ros2::VtolStatus']]]
+  ['heading_0',['heading',['../classpx4__ros2_1_1OdometryLocalPosition.html#a50193dab84758c3f08e5a5b947fad5f8',1,'px4_ros2::OdometryLocalPosition']]],
+  ['headingtoglobalposition_1',['headingtoglobalposition',['../group__geodesic.html#gab67f76184e10f2c36954e1343dc269f7',1,'px4_ros2::headingToGlobalPosition(const Eigen::Vector2d &amp;global_position_now, const Eigen::Vector2d &amp;global_position_next)'],['../group__geodesic.html#ga58885d46925c00a7f93a7ccbede46672',1,'px4_ros2::headingToGlobalPosition(const Eigen::Vector3d &amp;global_position_now, const Eigen::Vector3d &amp;global_position_next)']]],
+  ['healthandarmingcheckreporter_2',['HealthAndArmingCheckReporter',['../classpx4__ros2_1_1HealthAndArmingCheckReporter.html',1,'px4_ros2']]],
+  ['healthandarmingchecks_3',['HealthAndArmingChecks',['../classpx4__ros2_1_1HealthAndArmingChecks.html',1,'px4_ros2']]],
+  ['homeposition_4',['HomePosition',['../classpx4__ros2_1_1HomePosition.html',1,'px4_ros2']]],
+  ['horizontal_5fvariance_5',['horizontal_variance',['../structpx4__ros2_1_1GlobalPositionMeasurement.html#a098e08a4664b7708bb1a234ea0c96e4c',1,'px4_ros2::GlobalPositionMeasurement']]],
+  ['horizontaldistancetoglobalposition_6',['horizontaldistancetoglobalposition',['../group__geodesic.html#gac743119cb3987dfa6478aabc52c3a50e',1,'px4_ros2::horizontalDistanceToGlobalPosition(const Eigen::Vector2d &amp;global_position_now, const Eigen::Vector2d &amp;global_position_next)'],['../group__geodesic.html#ga0c23b4afb57270be82eef5962a9b01fb',1,'px4_ros2::horizontalDistanceToGlobalPosition(const Eigen::Vector3d &amp;global_position_now, const Eigen::Vector3d &amp;global_position_next)']]]
 ];
