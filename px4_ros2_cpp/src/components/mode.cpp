@@ -184,7 +184,7 @@ void ModeBase::completed(Result result)
   px4_msgs::msg::ModeCompleted mode_completed{};
   mode_completed.nav_state = static_cast<uint8_t>(id());
   mode_completed.result = static_cast<uint8_t>(result);
-  mode_completed.timestamp = node().get_clock()->now().nanoseconds() / 1000;
+  mode_completed.timestamp = 0; // Let PX4 set the timestamp
   _mode_completed_pub->publish(mode_completed);
   _completed = true;
 }
@@ -281,7 +281,7 @@ void ModeBase::activateSetpointType(SetpointBase & setpoint)
   px4_msgs::msg::VehicleControlMode control_mode{};
   control_mode.source_id = static_cast<uint8_t>(id());
   setpoint.getConfiguration().fillControlMode(control_mode);
-  control_mode.timestamp = node().get_clock()->now().nanoseconds() / 1000;
+  control_mode.timestamp = 0; // Let PX4 set the timestamp
   _config_control_setpoints_pub->publish(control_mode);
 }
 

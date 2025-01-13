@@ -28,7 +28,7 @@ void DirectActuatorsSetpointType::updateMotors(
   for (int i = 0; i < kMaxNumMotors; ++i) {
     sp_motors.control[i] = motor_commands(i);
   }
-  sp_motors.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+  sp_motors.timestamp = 0; // Let PX4 set the timestamp
   _actuator_motors_pub->publish(sp_motors);
 }
 
@@ -42,7 +42,7 @@ void DirectActuatorsSetpointType::updateServos(
   for (int i = 0; i < kMaxNumServos; ++i) {
     sp_servos.control[i] = servo_commands(i);
   }
-  sp_servos.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+  sp_servos.timestamp = 0; // Let PX4 set the timestamp
   _actuator_servos_pub->publish(sp_servos);
 }
 

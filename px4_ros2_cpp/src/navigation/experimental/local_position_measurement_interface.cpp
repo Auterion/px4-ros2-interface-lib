@@ -101,7 +101,7 @@ void LocalPositionMeasurementInterface::update(
   aux_local_position.angular_velocity = {NAN, NAN, NAN};
 
   // Publish
-  aux_local_position.timestamp = _node.get_clock()->now().nanoseconds() * 1e-3;
+  aux_local_position.timestamp = 0; // Let PX4 set the timestamp
   _aux_local_position_pub->publish(aux_local_position);
 }
 

@@ -123,7 +123,7 @@ Result ModeExecutorBase::sendCommandSync(
   cmd.param6 = param6;
   cmd.param7 = param7;
   cmd.source_component = px4_msgs::msg::VehicleCommand::COMPONENT_MODE_EXECUTOR_START + id();
-  cmd.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+  cmd.timestamp = 0; // Let PX4 set the timestamp
 
 
   rclcpp::WaitSet wait_set;

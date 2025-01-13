@@ -71,7 +71,7 @@ void VehicleState::sendCommand(
   cmd.param5 = param5;
   cmd.param6 = param6;
   cmd.param7 = param7;
-  cmd.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+  cmd.timestamp = 0; // Let PX4 set the timestamp
   _vehicle_command_pub->publish(cmd);
 }
 

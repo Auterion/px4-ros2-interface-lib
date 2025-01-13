@@ -47,7 +47,7 @@ void GotoSetpointType::update(
   sp.flag_set_max_vertical_speed = max_vertical_speed.has_value();
   sp.flag_set_max_heading_rate = max_heading_rate.has_value();
 
-  sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+  sp.timestamp = 0; // Let PX4 set the timestamp
   _goto_setpoint_pub->publish(sp);
 }
 

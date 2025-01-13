@@ -269,7 +269,7 @@ bool messageCompatibilityCheck(
       reinterpret_cast<char *>(request.topic_name.data()),
       message_to_check.topic_name.c_str(), request.topic_name.size() - 1);
     request.topic_name.back() = '\0';
-    request.timestamp = node.get_clock()->now().nanoseconds() / 1000;
+    request.timestamp = 0; // Let PX4 set the timestamp
     px4_msgs::msg::MessageFormatResponse response;
     switch (requestMessageFormat(
         node, request, message_format_response_sub, message_format_request_pub,

@@ -25,7 +25,7 @@ void TrajectorySetpointType::update(
   onUpdate();
 
   px4_msgs::msg::TrajectorySetpoint sp{};
-  sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+  sp.timestamp = 0; // Let PX4 set the timestamp
 
   sp.position[0] = sp.position[1] = sp.position[2] = NAN;
   sp.velocity[0] = velocity_ned_m_s.x();
@@ -47,7 +47,7 @@ void TrajectorySetpointType::updatePosition(
   onUpdate();
 
   px4_msgs::msg::TrajectorySetpoint sp{};
-  sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+  sp.timestamp = 0; // Let PX4 set the timestamp
 
   sp.position[0] = position_ned_m.x();
   sp.position[1] = position_ned_m.y();
