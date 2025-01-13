@@ -36,7 +36,7 @@ void PeripheralActuatorControls::set(const Eigen::Matrix<float, kNumActuators, 1
     cmd.param5 = values(4);
     cmd.param6 = values(5);
     cmd.param7 = 0; // index
-    cmd.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+    cmd.timestamp = 0; // Let PX4 set the timestamp
     _vehicle_command_pub->publish(cmd);
   }
 }

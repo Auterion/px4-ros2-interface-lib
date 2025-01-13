@@ -83,7 +83,7 @@ bool Registration::doRegister(const RegistrationSettings & settings)
   bool got_reply = false;
 
   for (int retries = 0; retries < 5 && !got_reply; ++retries) {
-    request.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+    request.timestamp = 0; // Let PX4 set the timestamp
     _register_ext_component_request_pub->publish(request);
 
     // wait for publisher, it might take a while initially...
@@ -163,7 +163,7 @@ void Registration::doUnregister()
 {
   if (_registered) {
     RCLCPP_DEBUG(_node.get_logger(), "Unregistering");
-    _unregister_ext_component.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+    _unregister_ext_component.timestamp = 0; // Let PX4 set the timestamp
     _unregister_ext_component_pub->publish(_unregister_ext_component);
     _registered = false;
   }

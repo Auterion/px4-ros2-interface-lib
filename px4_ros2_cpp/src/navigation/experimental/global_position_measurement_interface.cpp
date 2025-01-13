@@ -63,7 +63,7 @@ void GlobalPositionMeasurementInterface::update(
   aux_global_position.epv = sqrt(global_position_measurement.vertical_variance.value_or(NAN));
 
   // Publish
-  aux_global_position.timestamp = _node.get_clock()->now().nanoseconds() * 1e-3;
+  aux_global_position.timestamp = 0; // Let PX4 set the timestamp
   _aux_global_position_pub->publish(aux_global_position);
 }
 

@@ -30,7 +30,7 @@ void RatesSetpointType::update(
   sp.thrust_body[0] = thrust_setpoint_frd(0);
   sp.thrust_body[1] = thrust_setpoint_frd(1);
   sp.thrust_body[2] = thrust_setpoint_frd(2);
-  sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+  sp.timestamp = 0; // Let PX4 set the timestamp
   _vehicle_rates_setpoint_pub->publish(sp);
 }
 

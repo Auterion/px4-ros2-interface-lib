@@ -33,7 +33,7 @@ void ConfigOverrides::deferFailsafes(bool enabled, int timeout_s)
 void ConfigOverrides::update()
 {
   if (_is_setup) {
-    _current_overrides.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+    _current_overrides.timestamp = 0; // Let PX4 set the timestamp
     _config_overrides_pub->publish(_current_overrides);
 
   } else {

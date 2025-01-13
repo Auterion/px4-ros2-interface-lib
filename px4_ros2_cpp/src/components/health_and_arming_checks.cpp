@@ -43,7 +43,7 @@ HealthAndArmingChecks::HealthAndArmingChecks(
 
         _mode_requirements.fillArmingCheckReply(reply);
 
-        reply.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+        reply.timestamp = 0; // Let PX4 set the timestamp
         _arming_check_reply_pub->publish(reply);
         _check_triggered = true;
 

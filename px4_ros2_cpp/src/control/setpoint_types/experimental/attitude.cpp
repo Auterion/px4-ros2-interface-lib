@@ -34,7 +34,7 @@ void AttitudeSetpointType::update(
   sp.thrust_body[1] = thrust_setpoint_frd(1);
   sp.thrust_body[2] = thrust_setpoint_frd(2);
   sp.yaw_sp_move_rate = yaw_sp_move_rate_rad_s;
-  sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+  sp.timestamp = 0; // Let PX4 set the timestamp
   _vehicle_attitude_setpoint_pub->publish(sp);
 }
 
@@ -48,7 +48,7 @@ void AttitudeSetpointType::update(
   onUpdate();
 
   px4_msgs::msg::VehicleAttitudeSetpoint sp{};
-  sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+  sp.timestamp = 0; // Let PX4 set the timestamp
 
   sp.yaw_sp_move_rate = yaw_sp_move_rate_rad_s;
 
