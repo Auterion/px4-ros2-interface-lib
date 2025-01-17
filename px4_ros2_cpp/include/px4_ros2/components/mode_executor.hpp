@@ -186,7 +186,6 @@ private:
 
   rclcpp::Subscription<px4_msgs::msg::VehicleStatus>::SharedPtr _vehicle_status_sub;
   rclcpp::Publisher<px4_msgs::msg::VehicleCommand>::SharedPtr _vehicle_command_pub;
-  rclcpp::Subscription<px4_msgs::msg::VehicleCommandAck>::SharedPtr _vehicle_command_ack_sub;
 
   ScheduledMode _current_scheduled_mode;
   WaitForVehicleStatusCondition _current_wait_vehicle_status;
