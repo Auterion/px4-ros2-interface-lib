@@ -6,7 +6,7 @@ A mode can send different types of setpoints, ranging from high-level navigation
 
 Documentation:
 - High-level: https://docs.px4.io/main/en/ros2/px4_ros2_interface_lib.html
-- API: https://auterion.github.io/px4-ros2-interface-lib/modules.html
+- API: https://auterion.github.io/px4-ros2-interface-lib/topics.html
 
 ## Compatibility with PX4
 The library interacts with PX4 by using its uORB messages, and thus requires a matching set of message definitions on the ROS 2 side.
