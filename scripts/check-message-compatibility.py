@@ -19,7 +19,7 @@ def message_fields_str_for_message_hash(topic_type: str, msgs_dir: str) -> str:
     Reads the .msg file corresponding to the given topic type, extracts field definitions,
     and recursively processes nested types to generate a string representation of all fields.
     """
-    filename = f"{msgs_dir}/msg/{topic_type}.msg"
+    filename = find_file_in_subfolders(f"{msgs_dir}/", f"{topic_type}.msg")
     try:
         with open(filename, 'r') as file:
             text = file.read()
@@ -114,10 +114,19 @@ def compare_files(file1: str, file2: str):
     with open(file1, 'r') as f1, open(file2, 'r') as f2:
         diff = list(difflib.unified_diff(f1.readlines(), f2.readlines(), fromfile=file1, tofile=file2))
         if diff:
-            print(f"Mismatch found between {file1} and {file2}:")
+            print(f"Mismatch found between {file1} and {file2}: ")
             print(''.join(diff), end='\n\n')
             return False
     return True
+
+
+def find_file_in_subfolders(root_dir, filename):
+    if filename in os.listdir(root_dir):
+        return os.path.join(root_dir, filename)
+    for dirpath, _, filenames in os.walk(root_dir):
+        if filename in filenames:
+            return os.path.join(dirpath, filename)
+    return None
 
 
 def main(repo1: str, repo2: str, verbose: bool = False):
@@ -135,7 +144,7 @@ def main(repo1: str, repo2: str, verbose: bool = False):
     if verbose:
         print("Checking the following message files:", end='\n\n')
         for msg_type in messages_types:
-            print(f"  - {msg_type}.msg")
+            print(f" - {msg_type}.msg")
         print()
 
     # Find mismatches
@@ -151,14 +160,14 @@ def main(repo1: str, repo2: str, verbose: bool = False):
     else:
         if verbose:
             for msg_type in incompatible_types:
-                file1 = os.path.join(repo1, 'msg', f'{msg_type}.msg')
-                file2 = os.path.join(repo2, 'msg', f'{msg_type}.msg')
+                file1 = find_file_in_subfolders(os.path.join(repo1, 'msg'), f'{msg_type}.msg')
+                file2 = find_file_in_subfolders(os.path.join(repo2, 'msg'), f'{msg_type}.msg')
                 compare_files(file1, file2)
             print("Note: The printed diff includes all content differences. "
                   "The computed check is less sensitive to formatting and comments.", end='\n\n')
         print("FAILED! Some files differ:")
         for msg_type in incompatible_types:
-            print(f"  - {msg_type}.msg")
+            print(f" - {msg_type}.msg")
         sys.exit(1)
 
 
