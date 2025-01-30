@@ -4,6 +4,7 @@
  ****************************************************************************/
 
 #include <px4_ros2/utils/geodesic.hpp>
+#include <px4_ros2/utils/message_version.hpp>
 
 #include "map_projection_impl.hpp"
 
@@ -15,7 +16,8 @@ MapProjection::MapProjection(Context & context)
 {
   _map_projection_math = std::make_unique<MapProjectionImpl>();
   _vehicle_local_position_sub = _node.create_subscription<px4_msgs::msg::VehicleLocalPosition>(
-    "fmu/out/vehicle_local_position", rclcpp::QoS(1).best_effort(),
+    "fmu/out/vehicle_local_position" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLocalPosition>(), rclcpp::QoS(
+      1).best_effort(),
     [this](px4_msgs::msg::VehicleLocalPosition::UniquePtr msg) {
       vehicleLocalPositionCallback(std::move(msg));
     });

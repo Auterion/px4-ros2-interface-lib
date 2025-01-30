@@ -8,6 +8,7 @@
 #include <px4_msgs/msg/vehicle_land_detected.hpp>
 #include <px4_ros2/common/context.hpp>
 #include <px4_ros2/utils/subscription.hpp>
+#include <px4_ros2/utils/message_version.hpp>
 
 namespace px4_ros2
 {
@@ -24,7 +25,9 @@ class LandDetected : public Subscription<px4_msgs::msg::VehicleLandDetected>
 {
 public:
   explicit LandDetected(Context & context)
-  : Subscription<px4_msgs::msg::VehicleLandDetected>(context, "fmu/out/vehicle_land_detected") {}
+  : Subscription<px4_msgs::msg::VehicleLandDetected>(context,
+      "fmu/out/vehicle_land_detected" +
+      px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLandDetected>()) {}
 
   /**
    * @brief Check if vehicle is landed on the ground.
