@@ -4,7 +4,7 @@
  ****************************************************************************/
 
 #include <px4_ros2/control/setpoint_types/experimental/rates.hpp>
-
+#include <px4_ros2/utils/message_version.hpp>
 
 namespace px4_ros2
 {
@@ -14,7 +14,8 @@ RatesSetpointType::RatesSetpointType(Context & context)
 {
   _vehicle_rates_setpoint_pub =
     context.node().create_publisher<px4_msgs::msg::VehicleRatesSetpoint>(
-    context.topicNamespacePrefix() + "fmu/in/vehicle_rates_setpoint", 1);
+    context.topicNamespacePrefix() + "fmu/in/vehicle_rates_setpoint" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleRatesSetpoint>(),
+    1);
 }
 
 void RatesSetpointType::update(

@@ -8,6 +8,7 @@
 #include <px4_msgs/msg/vehicle_status.hpp>
 #include <px4_ros2/common/context.hpp>
 #include <px4_ros2/utils/subscription.hpp>
+#include <px4_ros2/utils/message_version.hpp>
 
 namespace px4_ros2
 {
@@ -24,7 +25,8 @@ class VehicleStatus : public Subscription<px4_msgs::msg::VehicleStatus>
 {
 public:
   explicit VehicleStatus(Context & context)
-  : Subscription<px4_msgs::msg::VehicleStatus>(context, "fmu/out/vehicle_status") {}
+  : Subscription<px4_msgs::msg::VehicleStatus>(context,
+      "fmu/out/vehicle_status" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>()) {}
 
   /**
    * @brief Get the vehicle's arming status.
