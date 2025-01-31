@@ -5,6 +5,7 @@
 
 #include <rclcpp/rclcpp.hpp>
 #include <px4_ros2/navigation/experimental/local_position_measurement_interface.hpp>
+#include <px4_ros2/utils/message_version.hpp>
 
 using Eigen::Vector2f, Eigen::Quaternionf, Eigen::Vector3f;
 
@@ -19,7 +20,8 @@ LocalPositionMeasurementInterface::LocalPositionMeasurementInterface(
   _velocity_frame(velocityFrameToMessageFrame(velocity_frame))
 {
   _aux_local_position_pub = node.create_publisher<AuxLocalPosition>(
-    topicNamespacePrefix() + "fmu/in/vehicle_visual_odometry", 10);
+    topicNamespacePrefix() + "fmu/in/vehicle_visual_odometry" + px4_ros2::getMessageNameVersion<AuxLocalPosition>(),
+    10);
 }
 
 void LocalPositionMeasurementInterface::update(

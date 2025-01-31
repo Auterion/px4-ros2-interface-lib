@@ -4,6 +4,7 @@
  ****************************************************************************/
 
 #include <px4_ros2/navigation/experimental/global_position_measurement_interface.hpp>
+#include <px4_ros2/utils/message_version.hpp>
 
 using Eigen::Vector2d;
 using px4_msgs::msg::VehicleGlobalPosition;
@@ -16,7 +17,8 @@ GlobalPositionMeasurementInterface::GlobalPositionMeasurementInterface(rclcpp::N
 {
   _aux_global_position_pub =
     node.create_publisher<VehicleGlobalPosition>(
-    topicNamespacePrefix() + "fmu/in/aux_global_position", 10);
+    topicNamespacePrefix() + "fmu/in/aux_global_position" + px4_ros2::getMessageNameVersion<VehicleGlobalPosition>(),
+    10);
 }
 
 void GlobalPositionMeasurementInterface::update(

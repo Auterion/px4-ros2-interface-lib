@@ -8,6 +8,7 @@
 #include <px4_msgs/msg/vtol_vehicle_status.hpp>
 #include <px4_ros2/common/context.hpp>
 #include <px4_ros2/utils/subscription.hpp>
+#include <px4_ros2/utils/message_version.hpp>
 
 namespace px4_ros2
 {
@@ -24,7 +25,9 @@ class VtolStatus : public Subscription<px4_msgs::msg::VtolVehicleStatus>
 {
 public:
   explicit VtolStatus(Context & context)
-  : Subscription<px4_msgs::msg::VtolVehicleStatus>(context, "fmu/out/vtol_vehicle_status") {}
+  : Subscription<px4_msgs::msg::VtolVehicleStatus>(context,
+      "fmu/out/vtol_vehicle_status" +
+      px4_ros2::getMessageNameVersion<px4_msgs::msg::VtolVehicleStatus>()) {}
 
   /**
    * @brief Check if vehicle is in an undefined state. This indicates the vehicle is not a VTOL.

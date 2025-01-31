@@ -9,6 +9,7 @@
 #include <px4_msgs/msg/home_position.hpp>
 #include <px4_ros2/common/context.hpp>
 #include <px4_ros2/utils/subscription.hpp>
+#include <px4_ros2/utils/message_version.hpp>
 
 namespace px4_ros2
 {
@@ -25,7 +26,8 @@ class HomePosition : public Subscription<px4_msgs::msg::HomePosition>
 {
 public:
   explicit HomePosition(Context & context)
-  : Subscription<px4_msgs::msg::HomePosition>(context, "fmu/out/home_position") {}
+  : Subscription<px4_msgs::msg::HomePosition>(context,
+      "fmu/out/home_position" + +px4_ros2::getMessageNameVersion<px4_msgs::msg::HomePosition>()) {}
 
   /**
    * @brief Get the vehicle's home position in local coordinates.

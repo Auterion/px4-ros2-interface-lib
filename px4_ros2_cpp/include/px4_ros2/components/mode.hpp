@@ -162,7 +162,10 @@ public:
   RequirementFlags & modeRequirements() {return _health_and_arming_checks.modeRequirements();}
 
 protected:
-  void setSkipMessageCompatibilityCheck() {_skip_message_compatibility_check = true;}
+  void setSkipMessageCompatibilityCheck(bool skip = true)
+  {
+    _skip_message_compatibility_check = skip;
+  }
   void overrideRegistration(const std::shared_ptr<Registration> & registration);
 
 private:
@@ -191,7 +194,7 @@ private:
   std::shared_ptr<Registration> _registration;
 
   const Settings _settings;
-  bool _skip_message_compatibility_check{false};
+  bool _skip_message_compatibility_check{true};
 
   HealthAndArmingChecks _health_and_arming_checks;
 

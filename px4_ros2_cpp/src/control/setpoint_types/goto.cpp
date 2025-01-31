@@ -4,6 +4,7 @@
  ****************************************************************************/
 
 #include <px4_ros2/control/setpoint_types/goto.hpp>
+#include <px4_ros2/utils/message_version.hpp>
 
 
 namespace px4_ros2
@@ -14,7 +15,8 @@ GotoSetpointType::GotoSetpointType(Context & context)
 {
   _goto_setpoint_pub =
     context.node().create_publisher<px4_msgs::msg::GotoSetpoint>(
-    context.topicNamespacePrefix() + "fmu/in/goto_setpoint", 1);
+    context.topicNamespacePrefix() + "fmu/in/goto_setpoint" + px4_ros2::getMessageNameVersion<px4_msgs::msg::GotoSetpoint>(),
+    1);
 }
 
 void GotoSetpointType::update(

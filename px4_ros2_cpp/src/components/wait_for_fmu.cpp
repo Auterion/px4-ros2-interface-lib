@@ -5,6 +5,7 @@
 
 #include <px4_ros2/components/wait_for_fmu.hpp>
 #include <px4_msgs/msg/vehicle_status.hpp>
+#include <px4_ros2/utils/message_version.hpp>
 
 namespace px4_ros2
 {
@@ -16,7 +17,8 @@ bool waitForFMU(
   RCLCPP_DEBUG(node.get_logger(), "Waiting for FMU...");
   const rclcpp::Subscription<px4_msgs::msg::VehicleStatus>::SharedPtr vehicle_status_sub =
     node.create_subscription<px4_msgs::msg::VehicleStatus>(
-    topic_namespace_prefix + "fmu/out/vehicle_status", rclcpp::QoS(1).best_effort(),
+    topic_namespace_prefix + "fmu/out/vehicle_status" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(), rclcpp::QoS(
+      1).best_effort(),
     [](px4_msgs::msg::VehicleStatus::UniquePtr msg) {});
 
   rclcpp::WaitSet wait_set;

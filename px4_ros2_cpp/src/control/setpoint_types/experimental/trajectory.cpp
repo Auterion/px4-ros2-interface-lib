@@ -4,7 +4,7 @@
  ****************************************************************************/
 
 #include <px4_ros2/control/setpoint_types/experimental/trajectory.hpp>
-
+#include <px4_ros2/utils/message_version.hpp>
 
 namespace px4_ros2
 {
@@ -13,7 +13,8 @@ TrajectorySetpointType::TrajectorySetpointType(Context & context)
 : SetpointBase(context), _node(context.node())
 {
   _trajectory_setpoint_pub = context.node().create_publisher<px4_msgs::msg::TrajectorySetpoint>(
-    context.topicNamespacePrefix() + "fmu/in/trajectory_setpoint", 1);
+    context.topicNamespacePrefix() + "fmu/in/trajectory_setpoint" + px4_ros2::getMessageNameVersion<px4_msgs::msg::TrajectorySetpoint>(),
+    1);
 }
 
 void TrajectorySetpointType::update(

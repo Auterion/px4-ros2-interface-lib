@@ -16,6 +16,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <px4_msgs/msg/estimator_status_flags.hpp>
 #include <px4_ros2/navigation/experimental/global_position_measurement_interface.hpp>
+#include <px4_ros2/utils/message_version.hpp>
 #include "util.hpp"
 
 using namespace std::chrono_literals;
@@ -35,7 +36,8 @@ protected:
 
     // Subscribe to PX4 EKF estimator status flags
     _subscriber = _node->create_subscription<EstimatorStatusFlags>(
-      "fmu/out/estimator_status_flags", rclcpp::QoS(10).best_effort(),
+      "fmu/out/estimator_status_flags" + px4_ros2::getMessageNameVersion<EstimatorStatusFlags>(), rclcpp::QoS(
+        10).best_effort(),
       [this](EstimatorStatusFlags::UniquePtr msg) {
         _estimator_status_flags = std::move(msg);
       });

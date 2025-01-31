@@ -5,6 +5,7 @@
 
 #include "util.hpp"
 #include <gtest/gtest.h>
+#include <px4_ros2/utils/message_version.hpp>
 
 std::shared_ptr<rclcpp::Node> initNode()
 {
@@ -25,8 +26,10 @@ std::shared_ptr<rclcpp::Node> initNode()
 VehicleState::VehicleState(rclcpp::Node & node, const std::string & topic_namespace_prefix)
 : _node(node)
 {
+  const std::string vehicle_status_topic = topic_namespace_prefix + "fmu/out/vehicle_status" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>();
   _vehicle_status_sub = _node.create_subscription<px4_msgs::msg::VehicleStatus>(
-    topic_namespace_prefix + "fmu/out/vehicle_status", rclcpp::QoS(1).best_effort(),
+    vehicle_status_topic, rclcpp::QoS(1).best_effort(),
     [this](px4_msgs::msg::VehicleStatus::UniquePtr msg) {
       if (_on_vehicle_status_update) {
         _on_vehicle_status_update(msg);
@@ -42,8 +45,10 @@ VehicleState::VehicleState(rclcpp::Node & node, const std::string & topic_namesp
       }
     });
 
+  const std::string vehicle_command_topic = topic_namespace_prefix + "fmu/in/vehicle_command" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>();
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
-    topic_namespace_prefix + "fmu/in/vehicle_command", 1);
+    vehicle_command_topic, 1);
 
 }
 

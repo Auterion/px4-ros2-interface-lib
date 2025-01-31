@@ -16,6 +16,7 @@
 #include <gtest/gtest.h>
 #include <rclcpp/rclcpp.hpp>
 #include <px4_ros2/navigation/experimental/global_position_measurement_interface.hpp>
+#include <px4_ros2/utils/message_version.hpp>
 
 using px4_ros2::GlobalPositionMeasurement, px4_ros2::NavigationInterfaceInvalidArgument;
 using namespace std::chrono_literals;
@@ -41,7 +42,8 @@ protected:
       *_node);
     _subscriber =
       _node->create_subscription<px4_msgs::msg::VehicleGlobalPosition>(
-      "/fmu/in/aux_global_position", rclcpp::QoS(10).best_effort(),
+      "/fmu/in/aux_global_position" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleGlobalPosition>(), rclcpp::QoS(
+        10).best_effort(),
       [this](px4_msgs::msg::VehicleGlobalPosition::UniquePtr msg) {
         _update_msg = std::move(msg);
       });

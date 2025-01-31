@@ -9,6 +9,7 @@
 #include <px4_msgs/msg/battery_status.hpp>
 #include <px4_ros2/common/context.hpp>
 #include <px4_ros2/utils/subscription.hpp>
+#include <px4_ros2/utils/message_version.hpp>
 
 namespace px4_ros2
 {
@@ -25,7 +26,8 @@ class Battery : public Subscription<px4_msgs::msg::BatteryStatus>
 {
 public:
   explicit Battery(Context & context)
-  : Subscription<px4_msgs::msg::BatteryStatus>(context, "fmu/out/battery_status") {}
+  : Subscription<px4_msgs::msg::BatteryStatus>(context,
+      "fmu/out/battery_status" + px4_ros2::getMessageNameVersion<px4_msgs::msg::BatteryStatus>()) {}
 
   /**
    * @brief Get the vehicle's battery voltage.
