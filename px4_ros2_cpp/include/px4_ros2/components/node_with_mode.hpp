@@ -142,7 +142,7 @@ public:
   }
 
   template<typename ModeT>
-  OwnedModeT & getMode() const
+  ModeT & getMode() const
   {
     return *std::get<ModeT>(_other_modes);
   }
