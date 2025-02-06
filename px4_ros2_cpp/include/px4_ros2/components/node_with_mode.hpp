@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <tuple>
+#include <utility>
 #include <rclcpp/rclcpp.hpp>
 #include <px4_ros2/components/mode.hpp>
 #include <px4_ros2/components/wait_for_fmu.hpp>
@@ -68,10 +70,11 @@ private:
 /**
  * @brief A ROS2 node which instantiates a mode executor and its owned mode, and handles their registration with PX4.
  *
- * Assumes mode executor constructor signature is `ModeExecutorT(rclcpp::Node, ModeT)`.
+ * Assumes mode executor constructor signature is `ModeExecutorT(rclcpp::Node, OwnedModeT, OtherModesT...)`.
  *
  * @tparam ModeExecutorT The mode executor type, which must be derived from px4_ros2::ModeExecutorBase.
- * @tparam ModeT The mode type owned by the executor, which must be derived from px4_ros2::ModeBase.
+ * @tparam OwnedModeT The mode type owned by the executor, which must be derived from px4_ros2::ModeBase.
+ * @tparam OtherModesT Optional additional modes not owned by the executor but registered by the node, which must be derived from px4_ros2::ModeBase.
  *
  * Example usage:
  *
@@ -83,15 +86,18 @@ private:
  *
  * @ingroup components
  */
-template<typename ModeExecutorT, typename ModeT>
+template<typename ModeExecutorT, typename OwnedModeT, typename ... OtherModesT>
 class NodeWithModeExecutor : public rclcpp::Node
 {
   static_assert(
     std::is_base_of<ModeExecutorBase, ModeExecutorT>::value,
     "Template type ModeExecutorT must be derived from px4_ros2::ModeExecutorBase");
   static_assert(
-    std::is_base_of<ModeBase, ModeT>::value,
-    "Template type ModeT must be derived from px4_ros2::ModeBase");
+    std::is_base_of<ModeBase, OwnedModeT>::value,
+    "Template type OwnedModeT must be derived from px4_ros2::ModeBase");
+  static_assert(
+    (std::is_base_of<ModeBase, OtherModesT>::value && ...),
+    "All template types OtherModesT must be derived from px4_ros2::ModeBase");
 
 public:
   explicit NodeWithModeExecutor(std::string node_name, bool enable_debug_output = false)
@@ -107,22 +113,44 @@ public:
       }
     }
 
-    _mode = std::make_unique<ModeT>(*this);
-    _mode_executor = std::make_unique<ModeExecutorT>(*this, *_mode);
+    _owned_mode = std::make_unique<OwnedModeT>(*this);
+    _other_modes = std::make_tuple(std::make_unique<OtherModesT>(*this)...);
+    _mode_executor = createModeExecutor(std::index_sequence_for<OtherModesT...>{});
 
-    if (!_mode_executor->doRegister()) {
+    if (!_mode_executor->doRegister() || !std::apply(
+        [](const auto &... mode) {
+          return (mode->doRegister() && ...);
+        }, _other_modes))
+    {
       throw std::runtime_error("Registration failed");
     }
   }
 
-  ModeT & getMode() const
+  template<std::size_t... Idx>
+  auto createModeExecutor(std::index_sequence<Idx...>)
   {
-    return *_mode;
+    if constexpr (sizeof...(Idx) == 0) {
+      return std::make_unique<ModeExecutorT>(*this, *_owned_mode);
+    } else {
+      return std::make_unique<ModeExecutorT>(*this, *_owned_mode, *std::get<Idx>(_other_modes)...);
+    }
+  }
+
+  OwnedModeT & getMode() const
+  {
+    return *_owned_mode;
+  }
+
+  template<typename ModeT>
+  OwnedModeT & getMode() const
+  {
+    return *std::get<ModeT>(_other_modes);
   }
 
 private:
   std::unique_ptr<ModeExecutorT> _mode_executor;
-  std::unique_ptr<ModeT> _mode;
+  std::unique_ptr<OwnedModeT> _owned_mode;
+  std::tuple<std::unique_ptr<OtherModesT>...> _other_modes;
 };
 
 /** @}*/
