@@ -18,6 +18,9 @@ var hierarchy =
         [ "px4_ros2::TrajectorySetpointType", "classpx4__ros2_1_1TrajectorySetpointType.html", null ]
       ] ]
     ] ],
+    [ "std::false_type", null, [
+      [ "px4_ros2::HasMessageVersion< T, typename >", "structpx4__ros2_1_1HasMessageVersion.html", null ]
+    ] ],
     [ "px4_ros2::GlobalPositionMeasurement", "structpx4__ros2_1_1GlobalPositionMeasurement.html", null ],
     [ "px4_ros2::GotoGlobalSetpointType", "classpx4__ros2_1_1GotoGlobalSetpointType.html", null ],
     [ "px4_ros2::HealthAndArmingCheckReporter", "classpx4__ros2_1_1HealthAndArmingCheckReporter.html", null ],
@@ -66,5 +69,8 @@ var hierarchy =
     ] ],
     [ "px4_ros2::Subscription< px4_msgs::msg::VtolVehicleStatus >", "classpx4__ros2_1_1Subscription.html", [
       [ "px4_ros2::VtolStatus", "classpx4__ros2_1_1VtolStatus.html", null ]
+    ] ],
+    [ "std::true_type", null, [
+      [ "px4_ros2::HasMessageVersion< T, std::void_t< decltype(T::MESSAGE_VERSION)> >", "structpx4__ros2_1_1HasMessageVersion_3_01T_00_01std_1_1void__t_3_01decltype_07T_1_1MESSAGE__VERSION_08_4_01_4.html", null ]
     ] ]
 ];

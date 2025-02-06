@@ -109,40 +109,42 @@ $(document).ready(function(){initNavTree('vehicle__status_8hpp_source.html','');
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;px4_msgs/msg/vehicle_status.hpp&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;px4_ros2/common/context.hpp&gt;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;px4_ros2/utils/subscription.hpp&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span>px4_ros2</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
-<div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1VehicleStatus.html">   23</a></span><span class="keyword">class </span><a class="code hl_class" href="classpx4__ros2_1_1VehicleStatus.html">VehicleStatus</a> : <span class="keyword">public</span> <a class="code hl_class" href="classpx4__ros2_1_1Subscription.html">Subscription</a>&lt;px4_msgs::msg::VehicleStatus&gt;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>{</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classpx4__ros2_1_1VehicleStatus.html">VehicleStatus</a>(<a class="code hl_class" href="classpx4__ros2_1_1Context.html">Context</a> &amp; context)</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  : <a class="code hl_class" href="classpx4__ros2_1_1Subscription.html">Subscription&lt;px4_msgs::msg::VehicleStatus&gt;</a>(context, <span class="stringliteral">&quot;fmu/out/vehicle_status&quot;</span>) {}</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="foldopen" id="foldopen00034" data-start="{" data-end="}">
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1VehicleStatus.html#a4ab528a46af2e30f1fe0ea295b699309">   34</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classpx4__ros2_1_1VehicleStatus.html#a4ab528a46af2e30f1fe0ea295b699309">armed</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">  </span>{</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classpx4__ros2_1_1Subscription.html#ac0369b75dbd7c349451771d1885e3a97">last</a>().arming_state == px4_msgs::msg::VehicleStatus::ARMING_STATE_ARMED;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  }</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;px4_ros2/utils/message_version.hpp&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span>px4_ros2</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
+<div class="foldopen" id="foldopen00024" data-start="{" data-end="};">
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1VehicleStatus.html">   24</a></span><span class="keyword">class </span><a class="code hl_class" href="classpx4__ros2_1_1VehicleStatus.html">VehicleStatus</a> : <span class="keyword">public</span> <a class="code hl_class" href="classpx4__ros2_1_1Subscription.html">Subscription</a>&lt;px4_msgs::msg::VehicleStatus&gt;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>{</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classpx4__ros2_1_1VehicleStatus.html">VehicleStatus</a>(<a class="code hl_class" href="classpx4__ros2_1_1Context.html">Context</a> &amp; context)</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  : <a class="code hl_class" href="classpx4__ros2_1_1Subscription.html">Subscription&lt;px4_msgs::msg::VehicleStatus&gt;</a>(context,</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>      <span class="stringliteral">&quot;fmu/out/vehicle_status&quot;</span> + px4_ros2::getMessageNameVersion&lt;px4_msgs::msg::VehicleStatus&gt;()) {}</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="foldopen" id="foldopen00036" data-start="{" data-end="}">
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1VehicleStatus.html#a4ab528a46af2e30f1fe0ea295b699309">   36</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classpx4__ros2_1_1VehicleStatus.html#a4ab528a46af2e30f1fe0ea295b699309">armed</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classpx4__ros2_1_1Subscription.html#ac0369b75dbd7c349451771d1885e3a97">last</a>().arming_state == px4_msgs::msg::VehicleStatus::ARMING_STATE_ARMED;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  }</div>
 </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="foldopen" id="foldopen00045" data-start="{" data-end="}">
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1VehicleStatus.html#a199bc3dc1729c1631f32bf48b13b1de7">   45</a></span>  uint8_t <a class="code hl_function" href="classpx4__ros2_1_1VehicleStatus.html#a199bc3dc1729c1631f32bf48b13b1de7">navState</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="keyword">  </span>{</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classpx4__ros2_1_1Subscription.html#ac0369b75dbd7c349451771d1885e3a97">last</a>().nav_state;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  }</div>
-</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>};</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="foldopen" id="foldopen00047" data-start="{" data-end="}">
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1VehicleStatus.html#a199bc3dc1729c1631f32bf48b13b1de7">   47</a></span>  uint8_t <a class="code hl_function" href="classpx4__ros2_1_1VehicleStatus.html#a199bc3dc1729c1631f32bf48b13b1de7">navState</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classpx4__ros2_1_1Subscription.html#ac0369b75dbd7c349451771d1885e3a97">last</a>().nav_state;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  }</div>
 </div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>};</div>
+</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition</b> context.hpp:20</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Subscription_html"><div class="ttname"><a href="classpx4__ros2_1_1Subscription.html">px4_ros2::Subscription</a></div><div class="ttdoc">Provides a subscription to arbitrary ROS topics.</div><div class="ttdef"><b>Definition</b> subscription.hpp:23</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Subscription_html_ac0369b75dbd7c349451771d1885e3a97"><div class="ttname"><a href="classpx4__ros2_1_1Subscription.html#ac0369b75dbd7c349451771d1885e3a97">px4_ros2::Subscription&lt; px4_msgs::msg::VehicleStatus &gt;::last</a></div><div class="ttdeci">const px4_msgs::msg::VehicleStatus &amp; last() const</div><div class="ttdoc">Get the last-received message.</div><div class="ttdef"><b>Definition</b> subscription.hpp:58</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1VehicleStatus_html"><div class="ttname"><a href="classpx4__ros2_1_1VehicleStatus.html">px4_ros2::VehicleStatus</a></div><div class="ttdoc">Provides access to the vehicle's status.</div><div class="ttdef"><b>Definition</b> vehicle_status.hpp:24</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1VehicleStatus_html_a199bc3dc1729c1631f32bf48b13b1de7"><div class="ttname"><a href="classpx4__ros2_1_1VehicleStatus.html#a199bc3dc1729c1631f32bf48b13b1de7">px4_ros2::VehicleStatus::navState</a></div><div class="ttdeci">uint8_t navState() const</div><div class="ttdoc">Get the vehicle's current active flight mode.</div><div class="ttdef"><b>Definition</b> vehicle_status.hpp:45</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1VehicleStatus_html_a4ab528a46af2e30f1fe0ea295b699309"><div class="ttname"><a href="classpx4__ros2_1_1VehicleStatus.html#a4ab528a46af2e30f1fe0ea295b699309">px4_ros2::VehicleStatus::armed</a></div><div class="ttdeci">bool armed() const</div><div class="ttdoc">Get the vehicle's arming status.</div><div class="ttdef"><b>Definition</b> vehicle_status.hpp:34</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1VehicleStatus_html"><div class="ttname"><a href="classpx4__ros2_1_1VehicleStatus.html">px4_ros2::VehicleStatus</a></div><div class="ttdoc">Provides access to the vehicle's status.</div><div class="ttdef"><b>Definition</b> vehicle_status.hpp:25</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1VehicleStatus_html_a199bc3dc1729c1631f32bf48b13b1de7"><div class="ttname"><a href="classpx4__ros2_1_1VehicleStatus.html#a199bc3dc1729c1631f32bf48b13b1de7">px4_ros2::VehicleStatus::navState</a></div><div class="ttdeci">uint8_t navState() const</div><div class="ttdoc">Get the vehicle's current active flight mode.</div><div class="ttdef"><b>Definition</b> vehicle_status.hpp:47</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1VehicleStatus_html_a4ab528a46af2e30f1fe0ea295b699309"><div class="ttname"><a href="classpx4__ros2_1_1VehicleStatus.html#a4ab528a46af2e30f1fe0ea295b699309">px4_ros2::VehicleStatus::armed</a></div><div class="ttdeci">bool armed() const</div><div class="ttdoc">Get the vehicle's arming status.</div><div class="ttdef"><b>Definition</b> vehicle_status.hpp:36</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

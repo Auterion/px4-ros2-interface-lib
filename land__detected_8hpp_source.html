@@ -109,30 +109,33 @@ $(document).ready(function(){initNavTree('land__detected_8hpp_source.html',''); 
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;px4_msgs/msg/vehicle_land_detected.hpp&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;px4_ros2/common/context.hpp&gt;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;px4_ros2/utils/subscription.hpp&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span>px4_ros2</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
-<div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1LandDetected.html">   23</a></span><span class="keyword">class </span><a class="code hl_class" href="classpx4__ros2_1_1LandDetected.html">LandDetected</a> : <span class="keyword">public</span> <a class="code hl_class" href="classpx4__ros2_1_1Subscription.html">Subscription</a>&lt;px4_msgs::msg::VehicleLandDetected&gt;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>{</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classpx4__ros2_1_1LandDetected.html">LandDetected</a>(<a class="code hl_class" href="classpx4__ros2_1_1Context.html">Context</a> &amp; context)</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  : <a class="code hl_class" href="classpx4__ros2_1_1Subscription.html">Subscription&lt;px4_msgs::msg::VehicleLandDetected&gt;</a>(context, <span class="stringliteral">&quot;fmu/out/vehicle_land_detected&quot;</span>) {}</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="foldopen" id="foldopen00034" data-start="{" data-end="}">
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1LandDetected.html#a0bec66635de00b2ed57378f0362ce446">   34</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classpx4__ros2_1_1LandDetected.html#a0bec66635de00b2ed57378f0362ce446">landed</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">  </span>{</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classpx4__ros2_1_1Subscription.html#ac0369b75dbd7c349451771d1885e3a97">last</a>().landed;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  }</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;px4_ros2/utils/message_version.hpp&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span>px4_ros2</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
+<div class="foldopen" id="foldopen00024" data-start="{" data-end="};">
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1LandDetected.html">   24</a></span><span class="keyword">class </span><a class="code hl_class" href="classpx4__ros2_1_1LandDetected.html">LandDetected</a> : <span class="keyword">public</span> <a class="code hl_class" href="classpx4__ros2_1_1Subscription.html">Subscription</a>&lt;px4_msgs::msg::VehicleLandDetected&gt;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>{</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classpx4__ros2_1_1LandDetected.html">LandDetected</a>(<a class="code hl_class" href="classpx4__ros2_1_1Context.html">Context</a> &amp; context)</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  : <a class="code hl_class" href="classpx4__ros2_1_1Subscription.html">Subscription&lt;px4_msgs::msg::VehicleLandDetected&gt;</a>(context,</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>      <span class="stringliteral">&quot;fmu/out/vehicle_land_detected&quot;</span> +</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>      px4_ros2::getMessageNameVersion&lt;px4_msgs::msg::VehicleLandDetected&gt;()) {}</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="foldopen" id="foldopen00037" data-start="{" data-end="}">
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1LandDetected.html#a0bec66635de00b2ed57378f0362ce446">   37</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classpx4__ros2_1_1LandDetected.html#a0bec66635de00b2ed57378f0362ce446">landed</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classpx4__ros2_1_1Subscription.html#ac0369b75dbd7c349451771d1885e3a97">last</a>().landed;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  }</div>
 </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>};</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>};</div>
 </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition</b> context.hpp:20</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1LandDetected_html"><div class="ttname"><a href="classpx4__ros2_1_1LandDetected.html">px4_ros2::LandDetected</a></div><div class="ttdoc">Provides access to the vehicle's status.</div><div class="ttdef"><b>Definition</b> land_detected.hpp:24</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1LandDetected_html_a0bec66635de00b2ed57378f0362ce446"><div class="ttname"><a href="classpx4__ros2_1_1LandDetected.html#a0bec66635de00b2ed57378f0362ce446">px4_ros2::LandDetected::landed</a></div><div class="ttdeci">bool landed() const</div><div class="ttdoc">Check if vehicle is landed on the ground.</div><div class="ttdef"><b>Definition</b> land_detected.hpp:34</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1LandDetected_html"><div class="ttname"><a href="classpx4__ros2_1_1LandDetected.html">px4_ros2::LandDetected</a></div><div class="ttdoc">Provides access to the vehicle's status.</div><div class="ttdef"><b>Definition</b> land_detected.hpp:25</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1LandDetected_html_a0bec66635de00b2ed57378f0362ce446"><div class="ttname"><a href="classpx4__ros2_1_1LandDetected.html#a0bec66635de00b2ed57378f0362ce446">px4_ros2::LandDetected::landed</a></div><div class="ttdeci">bool landed() const</div><div class="ttdoc">Check if vehicle is landed on the ground.</div><div class="ttdef"><b>Definition</b> land_detected.hpp:37</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Subscription_html"><div class="ttname"><a href="classpx4__ros2_1_1Subscription.html">px4_ros2::Subscription</a></div><div class="ttdoc">Provides a subscription to arbitrary ROS topics.</div><div class="ttdef"><b>Definition</b> subscription.hpp:23</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Subscription_html_ac0369b75dbd7c349451771d1885e3a97"><div class="ttname"><a href="classpx4__ros2_1_1Subscription.html#ac0369b75dbd7c349451771d1885e3a97">px4_ros2::Subscription&lt; px4_msgs::msg::VehicleLandDetected &gt;::last</a></div><div class="ttdeci">const px4_msgs::msg::VehicleLandDetected &amp; last() const</div><div class="ttdoc">Get the last-received message.</div><div class="ttdef"><b>Definition</b> subscription.hpp:58</div></div>
 </div><!-- fragment --></div><!-- contents -->

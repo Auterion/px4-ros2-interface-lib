@@ -13,6 +13,8 @@ var annotated_dup =
       [ "GlobalPositionMeasurementInterface", "classpx4__ros2_1_1GlobalPositionMeasurementInterface.html", "classpx4__ros2_1_1GlobalPositionMeasurementInterface" ],
       [ "GotoGlobalSetpointType", "classpx4__ros2_1_1GotoGlobalSetpointType.html", "classpx4__ros2_1_1GotoGlobalSetpointType" ],
       [ "GotoSetpointType", "classpx4__ros2_1_1GotoSetpointType.html", "classpx4__ros2_1_1GotoSetpointType" ],
+      [ "HasMessageVersion", "structpx4__ros2_1_1HasMessageVersion.html", null ],
+      [ "HasMessageVersion< T, std::void_t< decltype(T::MESSAGE_VERSION)> >", "structpx4__ros2_1_1HasMessageVersion_3_01T_00_01std_1_1void__t_3_01decltype_07T_1_1MESSAGE__VERSION_08_4_01_4.html", null ],
       [ "HealthAndArmingCheckReporter", "classpx4__ros2_1_1HealthAndArmingCheckReporter.html", null ],
       [ "HealthAndArmingChecks", "classpx4__ros2_1_1HealthAndArmingChecks.html", "classpx4__ros2_1_1HealthAndArmingChecks" ],
       [ "HomePosition", "classpx4__ros2_1_1HomePosition.html", "classpx4__ros2_1_1HomePosition" ],
