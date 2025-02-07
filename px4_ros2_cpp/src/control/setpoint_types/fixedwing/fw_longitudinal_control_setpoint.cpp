@@ -28,7 +28,8 @@ namespace px4_ros2
 	sp.altitude_setpoint = altitude_setpoint_msl;
 	sp.height_rate_setpoint = height_rate_setpoint;
 	sp.equivalent_airspeed_setpoint = equivalent_airspeed_setpoint;
-
+	sp.pitch_sp = NAN;
+	sp.thrust_sp = NAN;
 	sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
 	_fw_longitudinal_control_sp_pub->publish(sp);
     }
