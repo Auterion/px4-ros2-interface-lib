@@ -25,7 +25,7 @@ namespace px4_ros2
 
 	px4_msgs::msg::FwLateralControlSetpoint sp{};
 	sp.course_setpoint = course_setpoint;
-	sp.heading_setpoint = heading_setpoint;
+	sp.airspeed_reference_direction = heading_setpoint;
 	sp.lateral_acceleration_setpoint = lateral_acceleration_setpoint;
 
 	sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
