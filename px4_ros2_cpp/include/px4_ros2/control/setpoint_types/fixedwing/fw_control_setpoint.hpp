@@ -38,7 +38,14 @@ namespace px4_ros2
 	 *
 	 */
 	void update(
-			    const float course_setpoint, const float heading_setpoint, const float lateral_acceleration_setpoint, const float altitude_setpoint_msl
+			    const float course_setpoint,
+				const float heading_setpoint, 
+				const float lateral_acceleration_setpoint, 
+				const float altitude_setpoint_msl,
+				const float height_rate_setpoint,
+				const float EAS_setpoint,
+				const float pitch_setpoint,
+				const float throttle_setpoint
 	);
 
 	float desiredUpdateRateHz() override {return 30.f;}

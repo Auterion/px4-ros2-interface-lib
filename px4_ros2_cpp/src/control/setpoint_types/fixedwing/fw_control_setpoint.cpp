@@ -23,7 +23,14 @@ namespace px4_ros2
     }
 
     void FwControlSetpointType::update(
-	    const float course_setpoint, const float heading_setpoint, const float lateral_acceleration_setpoint, const float altitude_setpoint_msl)
+			    const float course_setpoint, 
+				const float heading_setpoint, 
+				const float lateral_acceleration_setpoint, 
+				const float altitude_setpoint_msl,
+				const float height_rate_setpoint,
+				const float EAS_setpoint,
+				const float pitch_setpoint,
+				const float throttle_setpoint)
     {
 	onUpdate();
 
@@ -37,9 +44,10 @@ namespace px4_ros2
 
     px4_msgs::msg::FwLongitudinalControlSetpoint lon_sp{};
     lon_sp.altitude_setpoint = altitude_setpoint_msl;
-    lon_sp.height_rate_setpoint = NAN;
-    lon_sp.pitch_sp = NAN;
-    lon_sp.thrust_sp = NAN;
+    lon_sp.height_rate_setpoint = height_rate_setpoint;
+    lon_sp.equivalent_airspeed_setpoint = EAS_setpoint;
+    lon_sp.pitch_sp = pitch_setpoint;
+    lon_sp.thrust_sp = throttle_setpoint;
 
     lon_sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
     _fw_longitudinal_control_sp_pub->publish(lon_sp);
