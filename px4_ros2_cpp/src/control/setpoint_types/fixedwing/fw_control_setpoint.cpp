@@ -37,6 +37,7 @@ namespace px4_ros2
 
     px4_msgs::msg::FwLongitudinalControlSetpoint lon_sp{};
     lon_sp.altitude_setpoint = altitude_setpoint_msl;
+    lon_sp.height_rate_setpoint = NAN;
     lon_sp.pitch_sp = NAN;
     lon_sp.thrust_sp = NAN;
 
