@@ -24,7 +24,7 @@ namespace px4_ros2
 
     void FwControlSetpointType::update(
 			    const float course_setpoint, 
-				const float heading_setpoint, 
+				const float airspeed_reference_direction, 
 				const float lateral_acceleration_setpoint, 
 				const float altitude_setpoint_msl,
 				const float height_rate_setpoint,
@@ -36,7 +36,7 @@ namespace px4_ros2
 
 	px4_msgs::msg::FwLateralControlSetpoint lat_sp{};
 	lat_sp.course_setpoint = course_setpoint;
-	lat_sp.airspeed_reference_direction = heading_setpoint;
+	lat_sp.airspeed_reference_direction = airspeed_reference_direction;
 	lat_sp.lateral_acceleration_setpoint = lateral_acceleration_setpoint;
 
 	lat_sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
