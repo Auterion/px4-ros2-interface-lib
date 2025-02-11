@@ -4,8 +4,6 @@
  ****************************************************************************/
 
 #include <px4_ros2/control/setpoint_types/fixedwing/fw_control_setpoint.hpp>
-#include <px4_msgs/msg/fw_longitudinal_control_setpoint.hpp>
-#include <px4_msgs/msg/fw_lateral_control_setpoint.hpp>
 
 
 namespace px4_ros2
@@ -20,6 +18,13 @@ namespace px4_ros2
     _fw_longitudinal_control_sp_pub =
         context.node().create_publisher<px4_msgs::msg::FwLongitudinalControlSetpoint>(
             context.topicNamespacePrefix() + "fmu/in/fw_longitudinal_control_setpoint", 1);
+
+	_lateral_control_limits_pub = 
+		context.node().create_publisher<px4_msgs::msg::LateralControlLimits>(
+			context.topicNamespacePrefix() + "fmu/in/lateral_control_limits", 1);
+	_longitudinal_control_limits_pub =
+		context.node().create_publisher<px4_msgs::msg::LongitudinalControlLimits>(
+			context.topicNamespacePrefix() + "fmu/in/longitudinal_control_limits", 1);
     }
 
     void FwControlSetpointType::update(
@@ -30,7 +35,16 @@ namespace px4_ros2
 				const float height_rate_setpoint,
 				const float EAS_setpoint,
 				const float pitch_setpoint,
-				const float throttle_setpoint)
+				const float throttle_setpoint,
+				const std::optional<float> & min_pitch,
+				const std::optional<float> & max_pitch,
+				const std::optional<float> & min_throttle,
+				const std::optional<float> & max_throttle,
+				const std::optional<float> & min_EAS,
+				const std::optional<float> & max_EAS,
+				const std::optional<float> & max_lat_acc,
+				const std::optional<float> & target_climb_rate,
+				const std::optional<float> & target_sink_rate)
     {
 	onUpdate();
 
@@ -51,7 +65,26 @@ namespace px4_ros2
 
     lon_sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
     _fw_longitudinal_control_sp_pub->publish(lon_sp);
-    }
+
+	px4_msgs::msg::LateralControlLimits lat_limits{};
+	lat_limits.lateral_accel_max = max_lat_acc.value_or(0.f);
+
+	lat_limits.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+	_lateral_control_limits_pub->publish(lat_limits);
+
+	px4_msgs::msg::LongitudinalControlLimits lon_limits{};
+	lon_limits.pitch_min = min_pitch.value_or(0.f);
+	lon_limits.pitch_max = max_pitch.value_or(0.f);
+	lon_limits.throttle_min = min_throttle.value_or(0.f);
+	lon_limits.throttle_max = max_throttle.value_or(0.f);
+	lon_limits.equivalent_airspeed_min = min_EAS.value_or(0.f);
+	lon_limits.equivalent_airspeed_max = max_EAS.value_or(0.f);
+	lon_limits.climb_rate_target = target_climb_rate.value_or(0.f);
+	lon_limits.sink_rate_target = target_sink_rate.value_or(0.f);
+
+	lon_limits.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+	_longitudinal_control_limits_pub->publish(lon_limits);
+	}
 
     SetpointBase::Configuration FwControlSetpointType::getConfiguration()
     {
