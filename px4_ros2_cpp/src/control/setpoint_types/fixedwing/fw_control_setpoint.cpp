@@ -67,23 +67,34 @@ namespace px4_ros2
     _fw_longitudinal_control_sp_pub->publish(lon_sp);
 
 	px4_msgs::msg::LateralControlLimits lat_limits{};
-	lat_limits.lateral_accel_max = max_lat_acc.value_or(0.f);
+	bool publish_lat_limits =  !std::isnan(max_lat_acc.value());
+	
+	if (publish_lat_limits) {
+		lat_limits.lateral_accel_max = *max_lat_acc;
 
-	lat_limits.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
-	_lateral_control_limits_pub->publish(lat_limits);
+		lat_limits.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+		_lateral_control_limits_pub->publish(lat_limits);
+	}
 
 	px4_msgs::msg::LongitudinalControlLimits lon_limits{};
-	lon_limits.pitch_min = min_pitch.value_or(0.f);
-	lon_limits.pitch_max = max_pitch.value_or(0.f);
-	lon_limits.throttle_min = min_throttle.value_or(0.f);
-	lon_limits.throttle_max = max_throttle.value_or(0.f);
-	lon_limits.equivalent_airspeed_min = min_EAS.value_or(0.f);
-	lon_limits.equivalent_airspeed_max = max_EAS.value_or(0.f);
-	lon_limits.climb_rate_target = target_climb_rate.value_or(0.f);
-	lon_limits.sink_rate_target = target_sink_rate.value_or(0.f);
 
-	lon_limits.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
-	_longitudinal_control_limits_pub->publish(lon_limits);
+	bool publish_lon_limits = !std::isnan(min_pitch.value()) && !std::isnan(max_pitch.value()) &&
+		!std::isnan(min_throttle.value()) && !std::isnan(max_throttle.value()) &&
+		!std::isnan(min_EAS.value()) && !std::isnan(max_EAS.value()) &&
+		!std::isnan(target_climb_rate.value()) && !std::isnan(target_sink_rate.value());
+
+	if (publish_lon_limits) {
+		lon_limits.pitch_min = *min_pitch;
+		lon_limits.pitch_max = *max_pitch;
+		lon_limits.throttle_min = *min_throttle;
+		lon_limits.throttle_max = *max_throttle;
+		lon_limits.equivalent_airspeed_min = *min_EAS;
+		lon_limits.equivalent_airspeed_max = *max_EAS;
+		lon_limits.climb_rate_target = *target_climb_rate;
+		lon_limits.sink_rate_target = *target_sink_rate;
+
+		lon_limits.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+		_longitudinal_control_limits_pub->publish(lon_limits);}
 	}
 
     SetpointBase::Configuration FwControlSetpointType::getConfiguration()
