@@ -83,9 +83,11 @@ namespace px4_ros2
 		!std::isnan(min_EAS.value()) && !std::isnan(max_EAS.value()) &&
 		!std::isnan(target_climb_rate.value()) && !std::isnan(target_sink_rate.value());
 	
-	bool incomplete_lon_limits = !publish_lon_limits && (min_pitch.has_value() || max_pitch.has_value() ||
-		min_throttle.has_value() || max_throttle.has_value() || min_EAS.has_value() || max_EAS.has_value() ||
-		target_climb_rate.has_value() || target_sink_rate.has_value());
+	bool incomplete_lon_limits = !publish_lon_limits && 
+		(!std::isnan(min_pitch.value()) || !std::isnan(max_pitch.value()) ||
+		!std::isnan(min_throttle.value()) || !std::isnan(max_throttle.value()) ||
+		!std::isnan(min_EAS.value()) || !std::isnan(max_EAS.value()) ||
+		!std::isnan(target_climb_rate.value()) || !std::isnan(target_sink_rate.value()));
 
 	if (publish_lon_limits) {
 		lon_limits.pitch_min = *min_pitch;
