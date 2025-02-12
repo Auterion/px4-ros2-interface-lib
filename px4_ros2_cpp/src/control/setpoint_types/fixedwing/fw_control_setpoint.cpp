@@ -82,6 +82,10 @@ namespace px4_ros2
 		!std::isnan(min_throttle.value()) && !std::isnan(max_throttle.value()) &&
 		!std::isnan(min_EAS.value()) && !std::isnan(max_EAS.value()) &&
 		!std::isnan(target_climb_rate.value()) && !std::isnan(target_sink_rate.value());
+	
+	bool incomplete_lon_limits = !publish_lon_limits && (min_pitch.has_value() || max_pitch.has_value() ||
+		min_throttle.has_value() || max_throttle.has_value() || min_EAS.has_value() || max_EAS.has_value() ||
+		target_climb_rate.has_value() || target_sink_rate.has_value());
 
 	if (publish_lon_limits) {
 		lon_limits.pitch_min = *min_pitch;
@@ -94,7 +98,11 @@ namespace px4_ros2
 		lon_limits.sink_rate_target = *target_sink_rate;
 
 		lon_limits.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
-		_longitudinal_control_limits_pub->publish(lon_limits);}
+		_longitudinal_control_limits_pub->publish(lon_limits);
+	} else if (incomplete_lon_limits) {
+		// Log warning if incomplete limits are set
+		RCLCPP_WARN_ONCE(_node.get_logger(), "Incomplete longitudinal control limits set. Using default PX4 limits.");
+	}
 	}
 
     SetpointBase::Configuration FwControlSetpointType::getConfiguration()
@@ -110,5 +118,4 @@ namespace px4_ros2
 	config.climb_rate_enabled = true;
 	return config;
     }
-
 } // namespace px4_ros2
