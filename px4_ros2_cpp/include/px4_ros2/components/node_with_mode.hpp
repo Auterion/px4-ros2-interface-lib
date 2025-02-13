@@ -90,14 +90,11 @@ template<typename ModeExecutorT, typename OwnedModeT, typename ... OtherModesT>
 class NodeWithModeExecutor : public rclcpp::Node
 {
   static_assert(
-    std::is_base_of<ModeExecutorBase, ModeExecutorT>::value,
+    std::is_base_of_v<ModeExecutorBase, ModeExecutorT>,
     "Template type ModeExecutorT must be derived from px4_ros2::ModeExecutorBase");
   static_assert(
-    std::is_base_of<ModeBase, OwnedModeT>::value,
-    "Template type OwnedModeT must be derived from px4_ros2::ModeBase");
-  static_assert(
-    (std::is_base_of<ModeBase, OtherModesT>::value && ...),
-    "All template types OtherModesT must be derived from px4_ros2::ModeBase");
+    (std::is_base_of_v<ModeBase, OwnedModeT> && ... && std::is_base_of_v<ModeBase, OtherModesT>),
+    "Template types OwnedModeT and OtherModesT must be derived from px4_ros2::ModeBase");
 
 public:
   explicit NodeWithModeExecutor(std::string node_name, bool enable_debug_output = false)
@@ -136,15 +133,14 @@ public:
     }
   }
 
-  OwnedModeT & getMode() const
-  {
-    return *_owned_mode;
-  }
-
-  template<typename ModeT>
+  template<typename ModeT = OwnedModeT>
   ModeT & getMode() const
   {
-    return *std::get<ModeT>(_other_modes);
+    if constexpr (std::is_same_v<ModeT, OwnedModeT>) {
+      return *_owned_mode;
+    } else {
+      return *std::get<ModeT>(_other_modes);
+    }
   }
 
 private:
