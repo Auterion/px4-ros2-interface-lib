@@ -8,7 +8,8 @@
 #include <executor.hpp>
 #include <px4_ros2/components/node_with_mode.hpp>
 
-using MyNodeWithModeExecutor = px4_ros2::NodeWithModeExecutor<ModeExecutorTest, FlightModeTestStart, FlightModeTestSegment, FlightModeTestEnd>;
+using MyNodeWithModeExecutor = px4_ros2::NodeWithModeExecutor<ModeExecutorTest, FlightModeTestStart,
+    FlightModeTestSegment, FlightModeTestEnd>;
 
 static const std::string kNodeName = "example_executor_with_multiple_modes";
 static const bool kEnableDebugOutput = true;
