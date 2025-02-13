@@ -93,7 +93,7 @@ class NodeWithModeExecutor : public rclcpp::Node
     std::is_base_of_v<ModeExecutorBase, ModeExecutorT>,
     "Template type ModeExecutorT must be derived from px4_ros2::ModeExecutorBase");
   static_assert(
-    (std::is_base_of_v<ModeBase, OwnedModeT> && ... && std::is_base_of_v<ModeBase, OtherModesT>),
+    (std::is_base_of_v<ModeBase, OwnedModeT>&& ... && std::is_base_of_v<ModeBase, OtherModesT>),
     "Template types OwnedModeT and OtherModesT must be derived from px4_ros2::ModeBase");
 
 public:
@@ -116,7 +116,9 @@ public:
 
     if (!_mode_executor->doRegister() || !std::apply(
         [](const auto &... mode) {
+          // *INDENT-OFF*
           return (mode->doRegister() && ...);
+          // *INDENT-ON*
         }, _other_modes))
     {
       throw std::runtime_error("Registration failed");
