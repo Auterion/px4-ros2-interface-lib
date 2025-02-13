@@ -123,16 +123,6 @@ public:
     }
   }
 
-  template<std::size_t... Idx>
-  auto createModeExecutor(std::index_sequence<Idx...>)
-  {
-    if constexpr (sizeof...(Idx) == 0) {
-      return std::make_unique<ModeExecutorT>(*this, *_owned_mode);
-    } else {
-      return std::make_unique<ModeExecutorT>(*this, *_owned_mode, *std::get<Idx>(_other_modes)...);
-    }
-  }
-
   template<typename ModeT = OwnedModeT>
   ModeT & getMode() const
   {
@@ -144,6 +134,16 @@ public:
   }
 
 private:
+  template<std::size_t... Idx>
+  auto createModeExecutor(std::index_sequence<Idx...>)
+  {
+    if constexpr (sizeof...(Idx) == 0) {
+      return std::make_unique<ModeExecutorT>(*this, *_owned_mode);
+    } else {
+      return std::make_unique<ModeExecutorT>(*this, *_owned_mode, *std::get<Idx>(_other_modes)...);
+    }
+  }
+
   std::unique_ptr<ModeExecutorT> _mode_executor;
   std::unique_ptr<OwnedModeT> _owned_mode;
   std::tuple<std::unique_ptr<OtherModesT>...> _other_modes;
