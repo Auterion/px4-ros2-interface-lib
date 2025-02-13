@@ -114,13 +114,13 @@ public:
   {
     const rclcpp::Time now = node().get_clock()->now();
 
-    if (now - _activation_time > 5s) {
+    if (now - _activation_time > 10s) {
       completed(px4_ros2::Result::Success);
       return;
     }
 
-    const float elapsed_s = (now - _activation_time).seconds();
-    const Eigen::Vector3f velocity{-10.f, -elapsed_s * 2.f, 0.f};
+    const unsigned int elapsed_s = static_cast<unsigned int>((now - _activation_time).seconds());
+    const Eigen::Vector3f velocity{-10.f, (elapsed_s % 3 - 1) * 2.f, 0.f};
     _trajectory_setpoint->update(velocity);
   }
 
