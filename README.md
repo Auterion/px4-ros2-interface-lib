@@ -13,7 +13,7 @@ The library interacts with PX4 by using its uORB messages, and thus requires a m
 To ensure compatibility, you must either:
 
 1. Use latest `main` on the PX4 and px4_ros2/px4_msgs sides, which should define matching messages
-1. (Experimental) Run the PX4 [message translation node](https://github.com/PX4/PX4-Autopilot/tree/message_versioning_and_translation/msg/translation_node), which dynamically monitors and translates PX4 messages when different message version are used within the same ROS 2 domain
+1. (Experimental) Run the PX4 [message translation node](https://github.com/PX4/PX4-Autopilot/tree/main/msg/translation_node), which dynamically monitors and translates PX4 messages when different message version are used within the same ROS 2 domain
 
 ### Option 1: Match Messages
 
