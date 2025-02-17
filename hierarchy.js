@@ -36,7 +36,7 @@ var hierarchy =
     [ "px4_ros2::ModeExecutorBase", "classpx4__ros2_1_1ModeExecutorBase.html", null ],
     [ "rclcpp::Node", null, [
       [ "px4_ros2::NodeWithMode< ModeT >", "classpx4__ros2_1_1NodeWithMode.html", null ],
-      [ "px4_ros2::NodeWithModeExecutor< ModeExecutorT, ModeT >", "classpx4__ros2_1_1NodeWithModeExecutor.html", null ]
+      [ "px4_ros2::NodeWithModeExecutor< ModeExecutorT, OwnedModeT, OtherModesT >", "classpx4__ros2_1_1NodeWithModeExecutor.html", null ]
     ] ],
     [ "px4_ros2::PeripheralActuatorControls", "classpx4__ros2_1_1PeripheralActuatorControls.html", null ],
     [ "px4_ros2::RequirementFlags", "structpx4__ros2_1_1RequirementFlags.html", null ],

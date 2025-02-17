@@ -42,7 +42,7 @@ var group__components =
       [ "sendCommandSync", "classpx4__ros2_1_1ModeExecutorBase.html#a332cb775e0543155595c51bbc4052522", null ]
     ] ],
     [ "px4_ros2::NodeWithMode< ModeT >", "classpx4__ros2_1_1NodeWithMode.html", null ],
-    [ "px4_ros2::NodeWithModeExecutor< ModeExecutorT, ModeT >", "classpx4__ros2_1_1NodeWithModeExecutor.html", null ],
+    [ "px4_ros2::NodeWithModeExecutor< ModeExecutorT, OwnedModeT, OtherModesT >", "classpx4__ros2_1_1NodeWithModeExecutor.html", null ],
     [ "px4_ros2::Result", "group__components.html#ga0d5805242f91956fd51e243091367f77", [
       [ "px4_ros2::Result::Rejected", "group__components.html#gga0d5805242f91956fd51e243091367f77ad37b1f6c0512e2118cee17fea015b699", null ],
       [ "px4_ros2::Result::Interrupted", "group__components.html#gga0d5805242f91956fd51e243091367f77a12c37c4278b8c0db6c2f65052569cd80", null ],
