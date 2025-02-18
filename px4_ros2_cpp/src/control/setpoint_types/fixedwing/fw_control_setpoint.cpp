@@ -33,7 +33,7 @@ namespace px4_ros2
 				const float lateral_acceleration_setpoint, 
 				const float altitude_setpoint_msl,
 				const float height_rate_setpoint,
-				const float EAS_setpoint,
+				const float equivalent_airspeed_setpoint,
 				const float pitch_setpoint,
 				const float throttle_setpoint,
 				const std::optional<float> & min_pitch,
@@ -59,7 +59,7 @@ namespace px4_ros2
     px4_msgs::msg::FwLongitudinalControlSetpoint lon_sp{};
     lon_sp.altitude_setpoint = altitude_setpoint_msl;
     lon_sp.height_rate_setpoint = height_rate_setpoint;
-    lon_sp.equivalent_airspeed_setpoint = EAS_setpoint;
+    lon_sp.equivalent_airspeed_setpoint = equivalent_airspeed_setpoint;
     lon_sp.pitch_sp = pitch_setpoint;
     lon_sp.thrust_sp = throttle_setpoint;
 
