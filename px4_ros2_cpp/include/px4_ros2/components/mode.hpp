@@ -92,12 +92,13 @@ public:
     // NOLINTNEXTLINE allow implicit conversion
     Settings(
       std::string mode_name, bool want_activate_even_while_disarmed = false,
-      ModeID request_replace_internal_mode = kModeIDInvalid)
+      ModeID request_replace_internal_mode = kModeIDInvalid, bool shutdown_on_to = true)
     : name(std::move(mode_name)), activate_even_while_disarmed(want_activate_even_while_disarmed),
-      replace_internal_mode(request_replace_internal_mode) {}
+      replace_internal_mode(request_replace_internal_mode), shutdown_on_timeout(shutdown_on_to) {}
     std::string name;             ///< Name of the mode with length < 25 characters
     bool activate_even_while_disarmed{true};             ///< If true, the mode is also activated while disarmed if selected
     ModeID replace_internal_mode{kModeIDInvalid};             ///< Can be used to replace an fmu-internal mode
+    bool shutdown_on_timeout{true};             ///< Can be used to avoid throwing an error on FMU connection loss
   };
 
   ModeBase(
@@ -152,6 +153,8 @@ public:
   bool isArmed() const {return _is_armed;}
 
   bool isActive() const {return _is_active;}
+
+  bool isConnected() {return _health_and_arming_checks.isConnected();};
 
   ConfigOverrides & configOverrides() {return _config_overrides;}
 

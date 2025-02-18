@@ -17,9 +17,10 @@ namespace px4_ros2
 
 HealthAndArmingChecks::HealthAndArmingChecks(
   rclcpp::Node & node, CheckCallback check_callback,
-  const std::string & topic_namespace_prefix)
+  const std::string & topic_namespace_prefix,
+  const bool & shutdown_on_timeout)
 : _node(node), _registration(std::make_shared<Registration>(node, topic_namespace_prefix)),
-  _check_callback(std::move(check_callback))
+  _check_callback(std::move(check_callback)), _shutdown_on_timeout(shutdown_on_timeout)
 {
   _arming_check_reply_pub = _node.create_publisher<px4_msgs::msg::ArmingCheckReply>(
     topic_namespace_prefix + "fmu/in/arming_check_reply" + px4_ros2::getMessageNameVersion<px4_msgs::msg::ArmingCheckReply>(),
@@ -48,7 +49,7 @@ HealthAndArmingChecks::HealthAndArmingChecks(
         reply.timestamp = 0; // Let PX4 set the timestamp
         _arming_check_reply_pub->publish(reply);
         _check_triggered = true;
-
+        _is_connected_to_fmu = true;
       } else {
         RCLCPP_DEBUG(_node.get_logger(), "...not registered yet");
       }
@@ -79,15 +80,22 @@ void HealthAndArmingChecks::watchdogTimerUpdate()
     if (!_check_triggered && _shutdown_on_timeout) {
       rclcpp::shutdown();
       throw std::runtime_error(
-              "Timeout, no request received from FMU, exiting (this can happen on FMU reboots)");
+        "Timeout, no request received from FMU, exiting (this can happen on FMU reboots)");
+    }
+    if (!_check_triggered && !_shutdown_on_timeout) {
+        RCLCPP_WARN(_node.get_logger(), "Timeout, no request received from FMU (this can happen on FMU reboots)");
+        _registration->doUnregister();
+
+        // TODO re-registering does not work so far.
     }
 
     _check_triggered = false;
-
   } else {
     // avoid false positives while unregistered
     _check_triggered = true;
   }
+
+  _is_connected_to_fmu = false;
 }
 
 } // namespace px4_ros2

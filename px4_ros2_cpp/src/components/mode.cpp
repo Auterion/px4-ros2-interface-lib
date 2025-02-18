@@ -26,14 +26,20 @@ ModeBase::ModeBase(
     [this](auto && reporter) {
       checkArmingAndRunConditions(std::forward<decltype(reporter)>(reporter));
     },
-    topic_namespace_prefix), _config_overrides(node, topic_namespace_prefix)
+    topic_namespace_prefix, _settings.shutdown_on_timeout), _config_overrides(node, topic_namespace_prefix)
 {
+
+  // RCLCPP_WARN(node.get_logger(), "_settings.shutdown_on_timeout '%d'", _settings.shutdown_on_timeout);
+
   _vehicle_status_sub = node.create_subscription<px4_msgs::msg::VehicleStatus>(
     topic_namespace_prefix + "fmu/out/vehicle_status" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(), rclcpp::QoS(
       1).best_effort(),
     [this](px4_msgs::msg::VehicleStatus::UniquePtr msg) {
       if (_registration->registered()) {
         vehicleStatusUpdated(msg);
+      }
+      else {
+        doRegister();
       }
     });
   _mode_completed_pub = node.create_publisher<px4_msgs::msg::ModeCompleted>(
