@@ -96,7 +96,8 @@ public:
 
   HealthAndArmingChecks(
     rclcpp::Node & node, CheckCallback check_callback,
-    const std::string & topic_namespace_prefix = "");
+    const std::string & topic_namespace_prefix = "",
+    const bool & shutdown_on_timeout = true);
   HealthAndArmingChecks(const HealthAndArmingChecks &) = delete;
 
   /**
@@ -113,6 +114,8 @@ public:
 
   RequirementFlags & modeRequirements() {return _mode_requirements;}
 
+  bool isConnected() {return _is_connected_to_fmu;};
+
 private:
   friend class ModeBase;
   friend class ModeExecutorBase;
@@ -124,6 +127,7 @@ private:
   std::shared_ptr<Registration> _registration;
   CheckCallback _check_callback;
   bool _check_triggered{true};
+  bool _is_connected_to_fmu{false};
 
   rclcpp::Subscription<px4_msgs::msg::ArmingCheckRequest>::SharedPtr _arming_check_request_sub;
   rclcpp::Publisher<px4_msgs::msg::ArmingCheckReply>::SharedPtr _arming_check_reply_pub;
