@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('classpx4__ros2_1_1TrajectorySetpointTy
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classpx4__ros2_1_1TrajectorySetpointType-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">px4_ros2::TrajectorySetpointType Class Reference<div class="ingroups"><a class="el" href="group__control.html">Control</a> &raquo; <a class="el" href="group__setpoint__types.html">Setpoint Types</a> &raquo; <a class="el" href="group__setpoint__types__experimental.html">Experimental</a></div></div></div>
+  <div class="headertitle"><div class="title">px4_ros2::TrajectorySetpointType Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -122,6 +122,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a08391ac38a3bd117f41414a41b662d46" id="r_a08391ac38a3bd117f41414a41b662d46"><td class="memItemLeft" align="right" valign="top"><a id="a08391ac38a3bd117f41414a41b662d46" name="a08391ac38a3bd117f41414a41b662d46"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (const Eigen::Vector3f &amp;velocity_ned_m_s, const std::optional&lt; Eigen::Vector3f &gt; &amp;acceleration_ned_m_s2={}, std::optional&lt; float &gt; yaw_ned_rad={}, std::optional&lt; float &gt; yaw_rate_ned_rad_s={})</td></tr>
 <tr class="separator:a08391ac38a3bd117f41414a41b662d46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7d6885c013971edaf2a497c72d9e157" id="r_ab7d6885c013971edaf2a497c72d9e157"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1TrajectorySetpointType.html#ab7d6885c013971edaf2a497c72d9e157">update</a> (const <a class="el" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a> &amp;setpoint)</td></tr>
+<tr class="memdesc:ab7d6885c013971edaf2a497c72d9e157"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the setpoint with full flexibility by passing a <a class="el" href="structpx4__ros2_1_1TrajectorySetpoint.html" title="Setpoint structure for trajectory control with fine-grained control over individual components.">TrajectorySetpoint</a>.  <br /></td></tr>
+<tr class="separator:ab7d6885c013971edaf2a497c72d9e157"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40b129f786de5afecc9b6a359ca741d6" id="r_a40b129f786de5afecc9b6a359ca741d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1TrajectorySetpointType.html#a40b129f786de5afecc9b6a359ca741d6">updatePosition</a> (const Eigen::Vector3f &amp;position_ned_m)</td></tr>
 <tr class="memdesc:a40b129f786de5afecc9b6a359ca741d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Position setpoint update.  <br /></td></tr>
 <tr class="separator:a40b129f786de5afecc9b6a359ca741d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,6 +184,33 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onUpdate</b> ()</td><
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a>.</p>
+
+</div>
+</div>
+<a id="ab7d6885c013971edaf2a497c72d9e157" name="ab7d6885c013971edaf2a497c72d9e157"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7d6885c013971edaf2a497c72d9e157">&#9670;&#160;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void px4_ros2::TrajectorySetpointType::update </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a> &amp;&#160;</td>
+          <td class="paramname"><em>setpoint</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update the setpoint with full flexibility by passing a <a class="el" href="structpx4__ros2_1_1TrajectorySetpoint.html" title="Setpoint structure for trajectory control with fine-grained control over individual components.">TrajectorySetpoint</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">setpoint</td><td>a <a class="el" href="structpx4__ros2_1_1TrajectorySetpoint.html" title="Setpoint structure for trajectory control with fine-grained control over individual components.">TrajectorySetpoint</a> object where position, velocity and acceleration can be set individually for full flexibility</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>This method is not recommended for general use because it is possible to set contradicting setpoint values that can result in an unstable system and to crashes. </dd></dl>
 
 </div>
 </div>

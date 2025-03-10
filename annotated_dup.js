@@ -39,6 +39,7 @@ var annotated_dup =
       [ "RequirementFlags", "structpx4__ros2_1_1RequirementFlags.html", "structpx4__ros2_1_1RequirementFlags" ],
       [ "SetpointBase", "classpx4__ros2_1_1SetpointBase.html", "classpx4__ros2_1_1SetpointBase" ],
       [ "Subscription", "classpx4__ros2_1_1Subscription.html", "classpx4__ros2_1_1Subscription" ],
+      [ "TrajectorySetpoint", "structpx4__ros2_1_1TrajectorySetpoint.html", "structpx4__ros2_1_1TrajectorySetpoint" ],
       [ "TrajectorySetpointType", "classpx4__ros2_1_1TrajectorySetpointType.html", "classpx4__ros2_1_1TrajectorySetpointType" ],
       [ "VehicleStatus", "classpx4__ros2_1_1VehicleStatus.html", "classpx4__ros2_1_1VehicleStatus" ],
       [ "VtolStatus", "classpx4__ros2_1_1VtolStatus.html", "classpx4__ros2_1_1VtolStatus" ]
