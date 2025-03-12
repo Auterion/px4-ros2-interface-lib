@@ -24,12 +24,12 @@ namespace px4_ros2
 /**
  * @brief Setpoint type for fixedwing control
 */
-    class FwControlSetpointType : public SetpointBase
+    class FwLatLonSetpointType : public SetpointBase
     {
     public:
-	explicit FwControlSetpointType(Context & context);
+	explicit FwLatLonSetpointType(Context & context);
 
-	~FwControlSetpointType() override = default;
+	~FwLatLonSetpointType() override = default;
 
 	Configuration getConfiguration() override;
 
@@ -40,23 +40,21 @@ namespace px4_ros2
 	 *
 	 */
 	void update(
-			    const float course_setpoint,
-				const float airspeed_reference_direction, 
-				const float lateral_acceleration_setpoint, 
-				const float altitude_setpoint_msl,
-				const float height_rate_setpoint,
-				const float EAS_setpoint,
-				const float pitch_setpoint,
-				const float throttle_setpoint,
-				const std::optional<float> & min_pitch = {},
-				const std::optional<float> & max_pitch = {},
-				const std::optional<float> & min_throttle = {},
-				const std::optional<float> & max_throttle = {},
-				const std::optional<float> & min_EAS = {},
-				const std::optional<float> & max_EAS = {},
-				const std::optional<float> & max_lat_acc = {},
-				const std::optional<float> & target_climb_rate = {},
-				const std::optional<float> & target_sink_rate = {}
+			const float course_setpoint,
+			const float airspeed_reference_direction, 
+			const float lateral_acceleration_setpoint, 
+			const float altitude_setpoint_msl,
+			const float height_rate_setpoint,
+			const float EAS_setpoint,
+			const std::optional<float> & min_pitch = {},
+			const std::optional<float> & max_pitch = {},
+			const std::optional<float> & min_throttle = {},
+			const std::optional<float> & max_throttle = {},
+			const std::optional<float> & min_EAS = {},
+			const std::optional<float> & max_EAS = {},
+			const std::optional<float> & max_lat_acc = {},
+			const std::optional<float> & target_climb_rate = {},
+			const std::optional<float> & target_sink_rate = {}
 	);
 
 	float desiredUpdateRateHz() override {return 30.f;}
