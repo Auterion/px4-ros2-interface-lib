@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
-#include <px4_ros2/control/setpoint_types/fixedwing/fw_control_setpoint.hpp>
+#include <px4_ros2/control/setpoint_types/experimental/fw_lat_lon.hpp>
 
 
 namespace px4_ros2
 {
 
-    FwControlSetpointType::FwControlSetpointType(Context & context)
+    FwLatLonSetpointType::FwLatLonSetpointType(Context & context)
 	    : SetpointBase(context), _node(context.node())
     {
 	_fw_lateral_control_sp_pub=
@@ -27,24 +27,22 @@ namespace px4_ros2
 			context.topicNamespacePrefix() + "fmu/in/longitudinal_control_limits", 1);
     }
 
-    void FwControlSetpointType::update(
-			    const float course_setpoint, 
-				const float airspeed_reference_direction, 
-				const float lateral_acceleration_setpoint, 
-				const float altitude_setpoint_msl,
-				const float height_rate_setpoint,
-				const float EAS_setpoint,
-				const float pitch_setpoint,
-				const float throttle_setpoint,
-				const std::optional<float> & min_pitch,
-				const std::optional<float> & max_pitch,
-				const std::optional<float> & min_throttle,
-				const std::optional<float> & max_throttle,
-				const std::optional<float> & min_EAS,
-				const std::optional<float> & max_EAS,
-				const std::optional<float> & max_lat_acc,
-				const std::optional<float> & target_climb_rate,
-				const std::optional<float> & target_sink_rate)
+    void FwLatLonSetpointType::update(
+			const float course_setpoint, 
+			const float airspeed_reference_direction, 
+			const float lateral_acceleration_setpoint, 
+			const float altitude_setpoint_msl,
+			const float height_rate_setpoint,
+			const float EAS_setpoint,
+			const std::optional<float> & min_pitch,
+			const std::optional<float> & max_pitch,
+			const std::optional<float> & min_throttle,
+			const std::optional<float> & max_throttle,
+			const std::optional<float> & min_EAS,
+			const std::optional<float> & max_EAS,
+			const std::optional<float> & max_lat_acc,
+			const std::optional<float> & target_climb_rate,
+			const std::optional<float> & target_sink_rate)
     {
 	onUpdate();
 
@@ -60,8 +58,8 @@ namespace px4_ros2
     lon_sp.altitude_setpoint = altitude_setpoint_msl;
     lon_sp.height_rate_setpoint = height_rate_setpoint;
     lon_sp.equivalent_airspeed_setpoint = EAS_setpoint;
-    lon_sp.pitch_sp = pitch_setpoint;
-    lon_sp.thrust_sp = throttle_setpoint;
+    lon_sp.pitch_sp = NAN; 
+    lon_sp.thrust_sp = NAN; 
 
     lon_sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
     _fw_longitudinal_control_sp_pub->publish(lon_sp);
@@ -86,7 +84,7 @@ namespace px4_ros2
 	_longitudinal_control_limits_pub->publish(lon_limits);
 	}
 
-    SetpointBase::Configuration FwControlSetpointType::getConfiguration()
+    SetpointBase::Configuration FwLatLonSetpointType::getConfiguration()
     {
 	Configuration config{};
 	config.control_allocation_enabled = true;
