@@ -12,12 +12,12 @@ namespace px4_ros2
     FwLatLonSetpointType::FwLatLonSetpointType(Context & context)
 	    : SetpointBase(context), _node(context.node())
     {
-	_fw_lateral_control_sp_pub=
-		context.node().create_publisher<px4_msgs::msg::FwLateralControlSetpoint>(
-			context.topicNamespacePrefix() + "fmu/in/fw_lateral_control_setpoint", 1);
-    _fw_longitudinal_control_sp_pub =
-        context.node().create_publisher<px4_msgs::msg::FwLongitudinalControlSetpoint>(
-            context.topicNamespacePrefix() + "fmu/in/fw_longitudinal_control_setpoint", 1);
+	_fw_lateral_sp_pub=
+		context.node().create_publisher<px4_msgs::msg::FixedWingLateralSetpoint>(
+			context.topicNamespacePrefix() + "fmu/in/fixed_wing_lateral_setpoint", 1);
+    _fw_longitudinal_sp_pub =
+        context.node().create_publisher<px4_msgs::msg::FixedWingLongitudinalSetpoint>(
+            context.topicNamespacePrefix() + "fmu/in/fixed_wing_longitudinal_setpoint", 1);
 
 	_lateral_control_limits_pub = 
 		context.node().create_publisher<px4_msgs::msg::LateralControlLimits>(
@@ -46,23 +46,23 @@ namespace px4_ros2
     {
 	onUpdate();
 
-	px4_msgs::msg::FwLateralControlSetpoint lat_sp{};
-	lat_sp.course_setpoint = course_setpoint;
+	px4_msgs::msg::FixedWingLateralSetpoint lat_sp{};
+	lat_sp.course = course_setpoint;
 	lat_sp.airspeed_reference_direction = airspeed_reference_direction;
-	lat_sp.lateral_acceleration_setpoint = lateral_acceleration_setpoint;
+	lat_sp.lateral_acceleration = lateral_acceleration_setpoint;
 
 	lat_sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
-	_fw_lateral_control_sp_pub->publish(lat_sp);
+	_fw_lateral_sp_pub->publish(lat_sp);
 
-    px4_msgs::msg::FwLongitudinalControlSetpoint lon_sp{};
-    lon_sp.altitude_setpoint = altitude_setpoint_msl;
-    lon_sp.height_rate_setpoint = height_rate_setpoint;
-    lon_sp.equivalent_airspeed_setpoint = EAS_setpoint;
-    lon_sp.pitch_sp = NAN; 
-    lon_sp.thrust_sp = NAN; 
+    px4_msgs::msg::FixedWingLongitudinalSetpoint lon_sp{};
+    lon_sp.altitude = altitude_setpoint_msl;
+    lon_sp.height_rate = height_rate_setpoint;
+    lon_sp.equivalent_airspeed = EAS_setpoint;
+    lon_sp.pitch_direct = NAN; 
+    lon_sp.thrust_direct = NAN; 
 
     lon_sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
-    _fw_longitudinal_control_sp_pub->publish(lon_sp);
+    _fw_longitudinal_sp_pub->publish(lon_sp);
 
 	px4_msgs::msg::LateralControlLimits lat_limits{};
 	lat_limits.lateral_accel_max = *max_lat_acc;
