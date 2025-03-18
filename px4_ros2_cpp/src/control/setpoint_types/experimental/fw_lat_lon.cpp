@@ -51,7 +51,7 @@ namespace px4_ros2
 	lat_sp.airspeed_reference_direction = airspeed_reference_direction;
 	lat_sp.lateral_acceleration = lateral_acceleration_setpoint;
 
-	lat_sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+	lat_sp.timestamp = 0; // Let PX4 set the timestamp
 	_fw_lateral_sp_pub->publish(lat_sp);
 
     px4_msgs::msg::FixedWingLongitudinalSetpoint lon_sp{};
@@ -61,13 +61,13 @@ namespace px4_ros2
     lon_sp.pitch_direct = NAN; 
     lon_sp.thrust_direct = NAN; 
 
-    lon_sp.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+    lon_sp.timestamp = 0; // Let PX4 set the timestamp
     _fw_longitudinal_sp_pub->publish(lon_sp);
 
 	px4_msgs::msg::LateralControlLimits lat_limits{};
 	lat_limits.lateral_accel_max = *max_lat_acc;
 
-	lat_limits.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+	lat_limits.timestamp = 0; // Let PX4 set the timestamp
 	_lateral_control_limits_pub->publish(lat_limits);
 
 	px4_msgs::msg::LongitudinalControlLimits lon_limits{};
@@ -80,7 +80,7 @@ namespace px4_ros2
 	lon_limits.climb_rate_target = *target_climb_rate;
 	lon_limits.sink_rate_target = *target_sink_rate;
 
-	lon_limits.timestamp = _node.get_clock()->now().nanoseconds() / 1000;
+	lon_limits.timestamp = 0; // Let PX4 set the timestamp
 	_longitudinal_control_limits_pub->publish(lon_limits);
 	}
 
