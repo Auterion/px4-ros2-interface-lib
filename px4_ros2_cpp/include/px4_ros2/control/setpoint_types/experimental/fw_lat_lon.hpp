@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include <px4_msgs/msg/fw_lateral_control_setpoint.hpp>
-#include <px4_msgs/msg/fw_longitudinal_control_setpoint.hpp>
+#include <px4_msgs/msg/fixed_wing_lateral_setpoint.hpp>
+#include <px4_msgs/msg/fixed_wing_longitudinal_setpoint.hpp>
 #include <px4_msgs/msg/lateral_control_limits.hpp>
 #include <px4_msgs/msg/longitudinal_control_limits.hpp>
 #include <Eigen/Eigen>
@@ -61,10 +61,10 @@ namespace px4_ros2
 
     private:
 	rclcpp::Node & _node;
-	rclcpp::Publisher<px4_msgs::msg::FwLateralControlSetpoint >::SharedPtr
-		_fw_lateral_control_sp_pub;
-	rclcpp::Publisher<px4_msgs::msg::FwLongitudinalControlSetpoint >::SharedPtr
-		_fw_longitudinal_control_sp_pub;
+	rclcpp::Publisher<px4_msgs::msg::FixedWingLateralSetpoint >::SharedPtr
+		_fw_lateral_sp_pub;
+	rclcpp::Publisher<px4_msgs::msg::FixedWingLongitudinalSetpoint >::SharedPtr
+		_fw_longitudinal_sp_pub;
 	
 	rclcpp::Publisher<px4_msgs::msg::LateralControlLimits >::SharedPtr
 		_lateral_control_limits_pub;
