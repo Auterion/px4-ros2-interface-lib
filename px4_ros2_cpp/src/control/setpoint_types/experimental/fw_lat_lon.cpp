@@ -59,7 +59,7 @@ namespace px4_ros2
     lon_sp.height_rate = height_rate_setpoint;
     lon_sp.equivalent_airspeed = equivalent_airspeed_setpoint;
     lon_sp.pitch_direct = NAN; 
-    lon_sp.thrust_direct = NAN; 
+    lon_sp.throttle_direct = NAN; 
 
     lon_sp.timestamp = 0; // Let PX4 set the timestamp
     _fw_longitudinal_sp_pub->publish(lon_sp);
