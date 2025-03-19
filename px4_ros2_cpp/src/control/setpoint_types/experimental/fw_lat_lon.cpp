@@ -29,17 +29,17 @@ namespace px4_ros2
 
     void FwLatLonSetpointType::update(
 			const float course_setpoint, 
-			const float airspeed_reference_direction, 
+			const float airspeed_direction, 
 			const float lateral_acceleration_setpoint, 
 			const float altitude_setpoint_msl,
 			const float height_rate_setpoint,
-			const float EAS_setpoint,
+			const float equivalent_airspeed_setpoint,
 			const std::optional<float> & min_pitch,
 			const std::optional<float> & max_pitch,
 			const std::optional<float> & min_throttle,
 			const std::optional<float> & max_throttle,
-			const std::optional<float> & min_EAS,
-			const std::optional<float> & max_EAS,
+			const std::optional<float> & min_equivalent_airspeed,
+			const std::optional<float> & max_equivalent_airspeed,
 			const std::optional<float> & max_lat_acc,
 			const std::optional<float> & target_climb_rate,
 			const std::optional<float> & target_sink_rate)
@@ -48,7 +48,7 @@ namespace px4_ros2
 
 	px4_msgs::msg::FixedWingLateralSetpoint lat_sp{};
 	lat_sp.course = course_setpoint;
-	lat_sp.airspeed_reference_direction = airspeed_reference_direction;
+	lat_sp.airspeed_direction = airspeed_direction;
 	lat_sp.lateral_acceleration = lateral_acceleration_setpoint;
 
 	lat_sp.timestamp = 0; // Let PX4 set the timestamp
@@ -57,7 +57,7 @@ namespace px4_ros2
     px4_msgs::msg::FixedWingLongitudinalSetpoint lon_sp{};
     lon_sp.altitude = altitude_setpoint_msl;
     lon_sp.height_rate = height_rate_setpoint;
-    lon_sp.equivalent_airspeed = EAS_setpoint;
+    lon_sp.equivalent_airspeed = equivalent_airspeed_setpoint;
     lon_sp.pitch_direct = NAN; 
     lon_sp.thrust_direct = NAN; 
 
@@ -75,8 +75,8 @@ namespace px4_ros2
 	lon_limits.pitch_max = *max_pitch;
 	lon_limits.throttle_min = *min_throttle;
 	lon_limits.throttle_max = *max_throttle;
-	lon_limits.equivalent_airspeed_min = *min_EAS;
-	lon_limits.equivalent_airspeed_max = *max_EAS;
+	lon_limits.equivalent_airspeed_min = *min_equivalent_airspeed;
+	lon_limits.equivalent_airspeed_max = *max_equivalent_airspeed;
 	lon_limits.climb_rate_target = *target_climb_rate;
 	lon_limits.sink_rate_target = *target_sink_rate;
 
