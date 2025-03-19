@@ -41,17 +41,17 @@ namespace px4_ros2
 	 */
 	void update(
 			const float course_setpoint,
-			const float airspeed_reference_direction, 
+			const float airspeed_direction, 
 			const float lateral_acceleration_setpoint, 
 			const float altitude_setpoint_msl,
 			const float height_rate_setpoint,
-			const float EAS_setpoint,
+			const float equivalent_airspeed_setpoint,
 			const std::optional<float> & min_pitch = {},
 			const std::optional<float> & max_pitch = {},
 			const std::optional<float> & min_throttle = {},
 			const std::optional<float> & max_throttle = {},
-			const std::optional<float> & min_EAS = {},
-			const std::optional<float> & max_EAS = {},
+			const std::optional<float> & min_equivalent_airspeed = {},
+			const std::optional<float> & max_equivalent_airspeed = {},
 			const std::optional<float> & max_lat_acc = {},
 			const std::optional<float> & target_climb_rate = {},
 			const std::optional<float> & target_sink_rate = {}
