@@ -38,7 +38,7 @@
      px4_msgs::msg::VehicleCommand cmd;
      cmd.command = px4_msgs::msg::VehicleCommand::VEHICLE_CMD_DO_VTOL_TRANSITION; 
 
-     cmd.param1 = (_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_ROTARY_WING) ?  px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC : px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW ;
+     cmd.param1 = (_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_ROTARY_WING) ?  px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW : px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC ;
 
      cmd.param2 = 0;
 
