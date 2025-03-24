@@ -13,7 +13,6 @@
 #include <optional>
 
 #include <px4_ros2/common/setpoint_base.hpp>
-#include <px4_ros2/utils/geodesic.hpp>
 
 namespace px4_ros2
 {
@@ -24,12 +23,12 @@ namespace px4_ros2
 /**
  * @brief Setpoint type for fixedwing control
 */
-    class FwLatLonSetpointType : public SetpointBase
+    class FwLateralLongitudinalSetpointType : public SetpointBase
     {
     public:
-	explicit FwLatLonSetpointType(Context & context);
+	explicit FwLateralLongitudinalSetpointType(Context & context);
 
-	~FwLatLonSetpointType() override = default;
+	~FwLateralLongitudinalSetpointType() override = default;
 
 	Configuration getConfiguration() override;
 
