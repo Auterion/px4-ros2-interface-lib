@@ -42,16 +42,14 @@
         cmd.command = px4_msgs::msg::VehicleCommand::VEHICLE_CMD_DO_VTOL_TRANSITION; 
         cmd.param1 = px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW;
 
-        cmd.param2 = 0;
-   
-        cmd.source_system = _system_id; 
-        cmd.target_system = _system_id; 
-        cmd.source_component = _component_id; 
-        cmd.target_component = _component_id; 
-   
-        cmd.timestamp = 0; // Let PX4 set the timestamp
-   
-        _vehicle_command_pub->publish(cmd);
+            cmd.param2 = 0;
+    
+            cmd.target_system = _system_id; 
+            cmd.target_component = _component_id; 
+    
+            cmd.timestamp = 0; // Let PX4 set the timestamp
+    
+            _vehicle_command_pub->publish(cmd);
 
     }
     else if(_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_FIXED_WING){
@@ -62,16 +60,14 @@
         cmd.command = px4_msgs::msg::VehicleCommand::VEHICLE_CMD_DO_VTOL_TRANSITION; 
         cmd.param1 = px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC;
 
-        cmd.param2 = 0;
-   
-        cmd.source_system = _system_id; 
-        cmd.target_system = _system_id; 
-        cmd.source_component = _component_id; 
-        cmd.target_component = _component_id; 
-   
-        cmd.timestamp = 0; // Let PX4 set the timestamp
-   
-        _vehicle_command_pub->publish(cmd);
+            cmd.param2 = 0;
+    
+            cmd.target_system = _system_id; 
+            cmd.target_component = _component_id; 
+    
+            cmd.timestamp = 0; // Let PX4 set the timestamp
+    
+            _vehicle_command_pub->publish(cmd);
 
     }
    
