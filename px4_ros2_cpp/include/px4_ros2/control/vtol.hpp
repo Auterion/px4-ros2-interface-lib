@@ -40,8 +40,8 @@
 
    px4_msgs::msg::VehicleStatus::UniquePtr _vehicle_status_msg;
 
-   uint _system_id{1}; 
-   uint _component_id{1}; 
+   uint _system_id; 
+   uint _component_id; 
    uint _vehicle_type; 
    
  };
