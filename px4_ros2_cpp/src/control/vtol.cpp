@@ -26,39 +26,20 @@
         _system_id = msg->system_id; 
         _component_id = msg->component_id; 
         _vehicle_type = msg->vehicle_type;
+        _is_vtol = msg->is_vtol; 
 
     });
-
  }
- 
  
  void VTOL::transition()
  {  
+    if(_is_vtol){
+        if(_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_ROTARY_WING){
 
-    if(_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_ROTARY_WING){
-
-        px4_msgs::msg::VehicleCommand cmd;
-        
-        cmd.command = px4_msgs::msg::VehicleCommand::VEHICLE_CMD_DO_VTOL_TRANSITION; 
-        cmd.param1 = px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW;
-
-            cmd.param2 = 0;
-    
-            cmd.target_system = _system_id; 
-            cmd.target_component = _component_id; 
-    
-            cmd.timestamp = 0; // Let PX4 set the timestamp
-    
-            _vehicle_command_pub->publish(cmd);
-
-    }
-    else if(_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_FIXED_WING){
-
-
-        px4_msgs::msg::VehicleCommand cmd;
-        
-        cmd.command = px4_msgs::msg::VehicleCommand::VEHICLE_CMD_DO_VTOL_TRANSITION; 
-        cmd.param1 = px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC;
+            px4_msgs::msg::VehicleCommand cmd;
+            
+            cmd.command = px4_msgs::msg::VehicleCommand::VEHICLE_CMD_DO_VTOL_TRANSITION; 
+            cmd.param1 = px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW;
 
             cmd.param2 = 0;
     
@@ -69,8 +50,28 @@
     
             _vehicle_command_pub->publish(cmd);
 
+        }
+        else if(_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_FIXED_WING){
+
+
+            px4_msgs::msg::VehicleCommand cmd;
+            
+            cmd.command = px4_msgs::msg::VehicleCommand::VEHICLE_CMD_DO_VTOL_TRANSITION; 
+            cmd.param1 = px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC;
+
+            cmd.param2 = 0;
+    
+            cmd.target_system = _system_id; 
+            cmd.target_component = _component_id; 
+    
+            cmd.timestamp = 0; // Let PX4 set the timestamp
+    
+            _vehicle_command_pub->publish(cmd);
+
+        } 
+    }else{
+        RCLCPP_WARN(_node.get_logger(), "VTOL Transition not supported by current vehicle type.");
     }
-   
  }
  
  } // namespace px4_ros2

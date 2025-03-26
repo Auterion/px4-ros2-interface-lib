@@ -43,6 +43,7 @@
    uint _system_id; 
    uint _component_id; 
    uint _vehicle_type; 
+   bool _is_vtol; 
    
  };
  
