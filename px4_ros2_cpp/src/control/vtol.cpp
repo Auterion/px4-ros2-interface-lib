@@ -29,7 +29,36 @@
         _is_vtol = msg->is_vtol; 
 
     });
+
+    _vtol_vehicle_status_sub  = _node.create_subscription<px4_msgs::msg::VtolVehicleStatus>(
+    context.topicNamespacePrefix() + "fmu/out/vtol_vehicle_status" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VtolVehicleStatus>(),
+    rclcpp::QoS(10).best_effort(), 
+    [this](px4_msgs::msg::VtolVehicleStatus::UniquePtr msg) {
+
+        switch (msg->vehicle_vtol_state)
+        {
+        case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_TRANSITION_TO_FW:
+            _current_state = VTOL::State::TRANSITION_TO_FIXED_WING; 
+            break;
+        case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_TRANSITION_TO_MC:
+            _current_state = VTOL::State::TRANSITION_TO_MULTICOPTER; 
+            break; 
+        case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC:
+            _current_state = VTOL::State::MULTICOPTER; 
+            break; 
+        case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW:
+            _current_state = VTOL::State::FIXED_WING; 
+            break; 
+        default:
+            _current_state = VTOL::State::UNDEFINED; 
+        }
+        
+    });
  }
+
+ VTOL::State VTOL::get_current_state(){
+    return _current_state; 
+}
  
  void VTOL::transition()
  {  
@@ -73,6 +102,10 @@
         RCLCPP_WARN(_node.get_logger(), "VTOL Transition not supported by current vehicle type.");
     }
  }
+
+
+
+
  
  } // namespace px4_ros2
  
