@@ -26,6 +26,7 @@ using namespace std::chrono_literals; // NOLINT
   {"fmu/in/vehicle_command_mode_executor", "VehicleCommand"}, \
   {"fmu/in/vehicle_rates_setpoint"}, \
   {"fmu/in/vehicle_visual_odometry", "VehicleOdometry"}, \
+  {"fmu/out/airspeed_validated"}, \
   {"fmu/out/arming_check_request"}, \
   {"fmu/out/battery_status"}, \
   {"fmu/out/home_position"}, \
