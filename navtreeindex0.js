@@ -80,6 +80,7 @@ var NAVTREEINDEX0 =
 "classpx4__ros2_1_1OdometryAttitude.html#af6b73e4b56eb9b7582c0ecaa31596236":[3,3,1,3],
 "classpx4__ros2_1_1OdometryGlobalPosition.html":[3,3,2],
 "classpx4__ros2_1_1OdometryGlobalPosition.html#a7bf7ab1b9f1f2ed6a8a833277247fa21":[3,3,2,0],
+"classpx4__ros2_1_1OdometryGlobalPosition.html#ae9f5c281e0a629e491ae4f03c5b5daba":[3,3,2,1],
 "classpx4__ros2_1_1OdometryLocalPosition.html":[3,3,3],
 "classpx4__ros2_1_1OdometryLocalPosition.html#a50193dab84758c3f08e5a5b947fad5f8":[3,3,3,0],
 "classpx4__ros2_1_1PeripheralActuatorControls.html":[3,1,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "structpx4__ros2_1_1ModeBase_1_1Settings.html#af61499f0183e347cb580407d64b4c3cd":[3,0,2,0,2],
 "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html":[3,0,3,0],
 "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12":[3,0,3,0,0],
-"structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12a0da934c06c4ffb982ea2c2b7f5f1fa5b":[3,0,3,0,0,1],
-"structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12a79bd7b9ab6560409e48f2b5967479ecf":[3,0,3,0,0,0]
+"structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12a0da934c06c4ffb982ea2c2b7f5f1fa5b":[3,0,3,0,0,1]
 };
