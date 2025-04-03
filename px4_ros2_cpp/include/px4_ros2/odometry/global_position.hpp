@@ -25,6 +25,14 @@ public:
   explicit OdometryGlobalPosition(Context & context);
 
   /**
+   * Check if the last vehicle's global position is valid.
+   */
+  bool positionValid() const
+  {
+    return lastValid() && last().lat_lon_valid && last().alt_valid;
+  }
+
+  /**
    * @brief Get the vehicle's global position.
    *
    * @returns a vector of (latitude [°], longitude [°], altitude [m AMSL])
