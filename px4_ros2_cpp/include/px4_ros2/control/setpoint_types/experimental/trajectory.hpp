@@ -53,7 +53,7 @@ public:
   /**
    * @brief Position setpoint update.
    *
-   * The FwGotoSetpointType should be preferred.
+   * The GotoSetpointType should be preferred.
    *
    * @param position_ned_m [m] NED earth-fixed frame
    */
