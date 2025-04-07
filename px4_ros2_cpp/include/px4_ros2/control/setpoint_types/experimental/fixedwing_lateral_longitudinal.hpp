@@ -16,9 +16,12 @@
 
 namespace px4_ros2
 {
-/** \ingroup setpoint_types
+/** \ingroup setpoint_types_experimental
  *  @{
  */
+
+struct FwLateralLongitudinalSetpoint;
+struct FwControlLimits;
 
 /**
  * @brief Setpoint type for fixedwing control
@@ -38,21 +41,10 @@ public:
    * Unset optional values are not controlled
    *
    */
-  void update(
-    const float course_setpoint,
-    const float airspeed_direction,
-    const float lateral_acceleration_setpoint,
-    const float altitude_setpoint_msl,
-    const float height_rate_setpoint,
-    const float equivalent_airspeed_setpoint,
-    const std::optional<float> & min_pitch = {},
-    const std::optional<float> & max_pitch = {},
-    const std::optional<float> & min_throttle = {},
-    const std::optional<float> & max_throttle = {},
-    const std::optional<float> & max_lat_acc = {},
-    const std::optional<float> & target_climb_rate = {},
-    const std::optional<float> & target_sink_rate = {}
-  );
+
+  void update(const FwLateralLongitudinalSetpoint & setpoint, const FwControlLimits & limits);
+
+  void update(const FwLateralLongitudinalSetpoint & setpoint);
 
   float desiredUpdateRateHz() override {return 30.f;}
 
@@ -67,6 +59,104 @@ private:
     _lateral_control_limits_pub;
   rclcpp::Publisher<px4_msgs::msg::LongitudinalControlLimits>::SharedPtr
     _longitudinal_control_limits_pub;
+};
+
+struct FwLateralLongitudinalSetpoint
+{
+  std::optional<float> course;
+  std::optional<float> airspeed_direction;
+  std::optional<float> lateral_acceleration;
+  std::optional<float> altitude_msl;
+  std::optional<float> height_rate;
+  std::optional<float> equivalent_airspeed;
+
+  FwLateralLongitudinalSetpoint & withCourse(float course_sp)
+  {
+    course = course_sp;
+    return *this;
+  }
+
+  FwLateralLongitudinalSetpoint & withAirspeedDirection(float airspeed_direction_sp)
+  {
+    airspeed_direction = airspeed_direction_sp;
+    return *this;
+  }
+
+  FwLateralLongitudinalSetpoint & withLateralAcceleration(float lateral_acceleration_sp)
+  {
+    lateral_acceleration = lateral_acceleration_sp;
+    return *this;
+  }
+
+  FwLateralLongitudinalSetpoint & withAltitude(float altitude_sp)
+  {
+    altitude_msl = altitude_sp;
+    return *this;
+  }
+
+  FwLateralLongitudinalSetpoint & withHeightRate(float height_rate_sp)
+  {
+    height_rate = height_rate_sp;
+    return *this;
+  }
+
+  FwLateralLongitudinalSetpoint & withEquivalentAirspeed(float equivalent_airspeed_sp)
+  {
+    equivalent_airspeed = equivalent_airspeed_sp;
+    return *this;
+  }
+};
+
+struct FwControlLimits
+{
+  std::optional<float> min_pitch;
+  std::optional<float> max_pitch;
+  std::optional<float> min_throttle;
+  std::optional<float> max_throttle;
+  std::optional<float> min_equivalent_airspeed;
+  std::optional<float> max_equivalent_airspeed;
+  std::optional<float> max_lateral_acceleration;
+  std::optional<float> target_climb_rate;
+  std::optional<float> target_sink_rate;
+
+  FwControlLimits & withPitchLimits(float min_pitch_sp, float max_pitch_sp)
+  {
+
+    min_pitch = min_pitch_sp;
+    max_pitch = max_pitch_sp;
+
+    return *this;
+  }
+
+  FwControlLimits & withThrottleLimits(float min_throttle_sp, float max_throttle_sp)
+  {
+
+    min_throttle = min_throttle_sp;
+    max_throttle = max_throttle_sp;
+
+    return *this;
+  }
+
+  FwControlLimits & withMaxAcceleration(float max_lateral_acceleration_sp)
+  {
+
+    max_lateral_acceleration = max_lateral_acceleration_sp;
+    return *this;
+  }
+
+  FwControlLimits & withTargetSinkRate(float target_sink_rate_sp)
+  {
+
+    target_sink_rate = target_sink_rate_sp;
+    return *this;
+  }
+
+  FwControlLimits & withTargetClimbRate(float target_climb_rate_sp)
+  {
+
+    target_climb_rate = target_climb_rate_sp;
+    return *this;
+  }
 };
 
 /** @}*/
