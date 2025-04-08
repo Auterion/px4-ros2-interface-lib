@@ -210,19 +210,19 @@ Result ModeExecutorBase::sendCommandSync(
 
 void ModeExecutorBase::scheduleMode(
   ModeBase::ModeID mode_id,
-  const CompletedCallback & on_completed)
+  const CompletedCallback & on_completed, bool forced)
 {
   px4_msgs::msg::VehicleCommand cmd{};
   cmd.command = px4_msgs::msg::VehicleCommand::VEHICLE_CMD_SET_NAV_STATE;
   cmd.param1 = mode_id;
-  scheduleMode(mode_id, cmd, on_completed);
+  scheduleMode(mode_id, cmd, on_completed, forced);
 }
 
 void ModeExecutorBase::scheduleMode(
   ModeBase::ModeID mode_id, const px4_msgs::msg::VehicleCommand & cmd,
-  const CompletedCallback & on_completed)
+  const CompletedCallback & on_completed, bool forced)
 {
-  if (!_is_armed) {
+  if (!_is_armed && !forced) {
     on_completed(Result::Rejected);
     return;
   }
