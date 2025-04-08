@@ -60,8 +60,36 @@
     return _current_state; 
 }
  
- void VTOL::transition()
- {  
+ void VTOL::to_multicopter()
+ {
+    if(_is_vtol){
+        if(_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_FIXED_WING){
+
+
+            px4_msgs::msg::VehicleCommand cmd;
+            
+            cmd.command = px4_msgs::msg::VehicleCommand::VEHICLE_CMD_DO_VTOL_TRANSITION; 
+            cmd.param1 = px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC;
+
+            cmd.param2 = 0;
+    
+            cmd.target_system = _system_id; 
+            cmd.target_component = _component_id; 
+    
+            _vehicle_command_pub->publish(cmd);
+        } 
+        else if(_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_ROTARY_WING){
+
+            RCLCPP_WARN(_node.get_logger(), "VTOL already in hover state.");
+        }
+    }
+    else{
+        RCLCPP_WARN(_node.get_logger(), "VTOL Transition not supported by current vehicle type.");
+    }
+ }
+
+ void VTOL::to_fixedwing()
+ {
     if(_is_vtol){
         if(_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_ROTARY_WING){
 
@@ -75,37 +103,16 @@
             cmd.target_system = _system_id; 
             cmd.target_component = _component_id; 
     
-            cmd.timestamp = 0; // Let PX4 set the timestamp
-    
             _vehicle_command_pub->publish(cmd);
-
         }
         else if(_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_FIXED_WING){
 
-
-            px4_msgs::msg::VehicleCommand cmd;
-            
-            cmd.command = px4_msgs::msg::VehicleCommand::VEHICLE_CMD_DO_VTOL_TRANSITION; 
-            cmd.param1 = px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC;
-
-            cmd.param2 = 0;
-    
-            cmd.target_system = _system_id; 
-            cmd.target_component = _component_id; 
-    
-            cmd.timestamp = 0; // Let PX4 set the timestamp
-    
-            _vehicle_command_pub->publish(cmd);
-
-        } 
-    }else{
-        RCLCPP_WARN(_node.get_logger(), "VTOL Transition not supported by current vehicle type.");
+            RCLCPP_WARN(_node.get_logger(), "VTOL already in fixed-wing state.");
+        }    
+        else{
+            RCLCPP_WARN(_node.get_logger(), "VTOL Transition not supported by current vehicle type.");
+        }
     }
- }
-
-
-
-
- 
- } // namespace px4_ros2
+}
+} // namespace px4_ros2
  

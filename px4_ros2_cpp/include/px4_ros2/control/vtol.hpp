@@ -39,7 +39,8 @@
     * VTOL Transition
     */
 
-   void transition(); 
+   void to_multicopter(); 
+   void to_fixedwing();
 
    VTOL::State get_current_state(); 
    
