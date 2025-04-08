@@ -256,6 +256,10 @@ void ModeBase::updateModeRequirementsFromSetpoints()
     requirements.local_alt |= config.climb_rate_enabled;
   }
 
+  if(requirements.avoid_local_position_checks){
+    requirements.local_position = false;
+  }
+
   if (requirements.manual_control) {
     // Use relaxed local position accuracy if a manual mode
     if (requirements.local_position) {

@@ -59,6 +59,7 @@ struct RequirementFlags
   bool home_position{false};
   bool prevent_arming{false}; ///< If set, arming is prevented when the mode is selected
   bool manual_control{false};
+  bool avoid_local_position_checks{false};
 };
 
 } // namespace px4_ros2
