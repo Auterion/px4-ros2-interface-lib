@@ -290,6 +290,36 @@ void ModeExecutorBase::arm(const CompletedCallback & on_completed)
     [this](const px4_msgs::msg::VehicleStatus::UniquePtr & msg) {return _is_armed;}, on_completed);
 }
 
+void ModeExecutorBase::disarm(const CompletedCallback & on_completed, const bool & forced)
+{
+  if (!_is_armed) {
+    on_completed(Result::Success);
+    return;
+  }
+
+  Result result;
+
+  if (forced)
+  {
+    result = sendCommandSync(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
+    0.f, 21196.f);
+  }
+  else
+  {
+    result = sendCommandSync(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
+    0.f);
+  }
+
+  if (result != Result::Success) {
+    on_completed(result);
+    return;
+  }
+
+  // Wait until our internal state changes to disarmed
+  _current_wait_vehicle_status.activate(
+    [this](const px4_msgs::msg::VehicleStatus::UniquePtr & msg) {return !_is_armed;}, on_completed);
+}
+
 void ModeExecutorBase::waitReadyToArm(const CompletedCallback & on_completed)
 {
   if (_is_armed) {
