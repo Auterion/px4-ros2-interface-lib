@@ -36,13 +36,29 @@ public:
   Configuration getConfiguration() override;
 
   /**
-   * @brief Update
+   * @brief Update the setpoint with full flexibility by passing a TrajectorySetpoint
    *
-   * Unset optional values are not controlled
+   * @param setpoint a FwLateralLongitudinalSetpoint object where, course, airspeed
+   * direction, lateral acceleration, altitude, height rate and equivalent airspeed
+   * can be set for full flexibility
+   *
+   * @param limits a FwControlLimit object where pitch, throttle, lateral acceleration
+   * limits can be set
    *
    */
 
   void update(const FwLateralLongitudinalSetpoint & setpoint, const FwControlLimits & limits);
+
+  /**
+ * @brief Update the setpoint with full flexibility by passing a TrajectorySetpoint
+ *
+ * @param setpoint a FwLateralLongitudinalSetpoint object where, course, airspeed
+ * direction, lateral acceleration, altitude, height rate and equivalent airspeed
+ * can be set for full flexibility
+ *
+ * @warning Any previously set limits will be maintained when this method is called.
+ * If no limits have been previously set, PX4 will set default limits.
+ */
 
   void update(const FwLateralLongitudinalSetpoint & setpoint);
 
