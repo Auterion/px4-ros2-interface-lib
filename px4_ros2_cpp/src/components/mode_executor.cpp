@@ -272,16 +272,17 @@ void ModeExecutorBase::rtl(const CompletedCallback & on_completed)
   scheduleMode(ModeBase::kModeIDRtl, on_completed);
 }
 
-void ModeExecutorBase::arm(const CompletedCallback & on_completed)
+void ModeExecutorBase::arm(const CompletedCallback & on_completed, bool run_preflight_checks)
 {
   if (_is_armed) {
     on_completed(Result::Success);
     return;
   }
 
+  const float param2 = run_preflight_checks ? NAN : 21196.f;
   const Result result = sendCommandSync(
     px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
-    1.f);
+    1.f, param2);
 
   if (result != Result::Success) {
     on_completed(result);
