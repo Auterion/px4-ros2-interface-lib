@@ -269,16 +269,22 @@ void ModeExecutorBase::rtl(const CompletedCallback & on_completed)
   scheduleMode(ModeBase::kModeIDRtl, on_completed);
 }
 
-void ModeExecutorBase::arm(const CompletedCallback & on_completed)
+void ModeExecutorBase::arm(const CompletedCallback & on_completed, const bool & run_preflight_checks)
 {
   if (_is_armed) {
     on_completed(Result::Success);
     return;
   }
 
-  const Result result = sendCommandSync(
+  Result result = sendCommandSync(
     px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
     1.f);
+
+  if (!run_preflight_checks)
+  {
+    result = sendCommandSync(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
+    1.f, 21196.f);
+  }
 
   if (result != Result::Success) {
     on_completed(result);
