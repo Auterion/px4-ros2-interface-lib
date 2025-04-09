@@ -69,7 +69,7 @@ void VTOL::to_multicopter()
     const auto now = _node.get_clock()->now();
 
     if (_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_FIXED_WING &&
-      (now - _last_update) > 150ms)
+      _current_state != VTOL::State::TRANSITION_TO_FIXED_WING && (now - _last_update) > 150ms)
     {
       _last_update = now;
 
@@ -84,9 +84,6 @@ void VTOL::to_multicopter()
       cmd.target_component = _component_id;
 
       _vehicle_command_pub->publish(cmd);
-    } else if (_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_ROTARY_WING) {
-
-      RCLCPP_WARN(_node.get_logger(), "VTOL already in hover state.");
     }
   } else {
     RCLCPP_WARN(_node.get_logger(), "VTOL Transition not supported by current vehicle type.");
@@ -98,7 +95,7 @@ void VTOL::to_fixedwing()
   if (_is_vtol) {
     const auto now = _node.get_clock()->now();
     if (_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_ROTARY_WING &&
-      (now - _last_update) > 150ms)
+      _current_state != VTOL::State::TRANSITION_TO_MULTICOPTER && (now - _last_update) > 150ms)
     {
       _last_update - now;
 
@@ -113,9 +110,6 @@ void VTOL::to_fixedwing()
       cmd.target_component = _component_id;
 
       _vehicle_command_pub->publish(cmd);
-    } else if (_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_FIXED_WING) {
-
-      RCLCPP_WARN(_node.get_logger(), "VTOL already in fixed-wing state.");
     }
   } else {
     RCLCPP_WARN(_node.get_logger(), "VTOL Transition not supported by current vehicle type.");
