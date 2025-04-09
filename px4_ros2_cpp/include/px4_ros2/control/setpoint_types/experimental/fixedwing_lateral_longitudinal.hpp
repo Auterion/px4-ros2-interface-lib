@@ -62,6 +62,19 @@ public:
 
   void update(const FwLateralLongitudinalSetpoint & setpoint);
 
+  /**
+* @brief Update the setpoint with simplest set of inputs. Lateral acceleration acceleration and height
+* rate setpoints will be used as feedforward when altitude and course are provided. To directly control
+* height rate, set altitude_amsl_sp to NAN. To directly control lateral acceleration, set course_sp to NAN.
+*
+* @warning Any previously set limits will be maintained when this method is called.
+* If no limits have been previously set, PX4 will set default limits.
+*/
+  void update(
+    const float altitude_amsl_sp, const float course_sp,
+    std::optional<float> height_rate_sp, std::optional<float> equivalent_airspeed_sp,
+    std::optional<float> lateral_acceleration_sp);
+
   float desiredUpdateRateHz() override {return 30.f;}
 
 private:

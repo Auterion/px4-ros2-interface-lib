@@ -32,6 +32,32 @@ FwLateralLongitudinalSetpointType::FwLateralLongitudinalSetpointType(Context & c
 }
 
 void FwLateralLongitudinalSetpointType::update(
+  const float altitude_amsl_sp, const float course_sp,
+  std::optional<float> height_rate_sp,
+  std::optional<float> equivalent_airspeed_sp,
+  std::optional<float> lateral_acceleration_sp)
+{
+  onUpdate();
+
+  px4_msgs::msg::FixedWingLateralSetpoint lateral_sp{};
+  lateral_sp.course = course_sp;
+  lateral_sp.airspeed_direction = NAN;
+  lateral_sp.lateral_acceleration = lateral_acceleration_sp.value_or(NAN);
+
+  _fw_lateral_sp_pub->publish(lateral_sp);
+
+  px4_msgs::msg::FixedWingLongitudinalSetpoint longitudinal_sp{};
+  longitudinal_sp.altitude = altitude_amsl_sp;
+  longitudinal_sp.height_rate = height_rate_sp.value_or(NAN);
+  longitudinal_sp.equivalent_airspeed = equivalent_airspeed_sp.value_or(NAN);
+  longitudinal_sp.pitch_direct = NAN;
+  longitudinal_sp.throttle_direct = NAN;
+
+  _fw_longitudinal_sp_pub->publish(longitudinal_sp);
+
+}
+
+void FwLateralLongitudinalSetpointType::update(
   const FwLateralLongitudinalSetpoint & setpoint,
   const FwControlLimits & limits)
 {
