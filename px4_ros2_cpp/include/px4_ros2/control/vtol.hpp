@@ -49,16 +49,14 @@ private:
   rclcpp::Publisher<px4_msgs::msg::VehicleCommand>::SharedPtr _vehicle_command_pub;
   rclcpp::Subscription<px4_msgs::msg::VehicleStatus>::SharedPtr _vehicle_status_sub;
   rclcpp::Subscription<px4_msgs::msg::VtolVehicleStatus>::SharedPtr _vtol_vehicle_status_sub;
-  rclcpp::Time _last_update{};
-
+  rclcpp::Time _last_command_sent;
+  rclcpp::Time _last_vtol_vehicle_status_received;
 
   px4_msgs::msg::VehicleStatus::UniquePtr _vehicle_status_msg;
   px4_msgs::msg::VtolVehicleStatus::UniquePtr _vtol_vehicle_status_msg;
 
   uint _system_id;
   uint _component_id;
-  uint _vehicle_type;
-  bool _is_vtol;
 
   VTOL::State _current_state{VTOL::State::UNDEFINED};
 };

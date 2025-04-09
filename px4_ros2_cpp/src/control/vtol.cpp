@@ -26,8 +26,6 @@ VTOL::VTOL(Context & context)
     [this](px4_msgs::msg::VehicleStatus::UniquePtr msg) {
       _system_id = msg->system_id;
       _component_id = msg->component_id;
-      _vehicle_type = msg->vehicle_type;
-      _is_vtol = msg->is_vtol;
 
     });
 
@@ -35,6 +33,8 @@ VTOL::VTOL(Context & context)
     context.topicNamespacePrefix() + "fmu/out/vtol_vehicle_status" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VtolVehicleStatus>(),
     rclcpp::QoS(10).best_effort(),
     [this](px4_msgs::msg::VtolVehicleStatus::UniquePtr msg) {
+
+      _last_vtol_vehicle_status_received = _node.get_clock()->now();
 
       switch (msg->vehicle_vtol_state) {
         case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_TRANSITION_TO_FW:
@@ -52,10 +52,10 @@ VTOL::VTOL(Context & context)
         default:
           _current_state = VTOL::State::UNDEFINED;
       }
-
     });
 
-  _last_update = _node.get_clock()->now();
+  _last_command_sent = _node.get_clock()->now();
+
 }
 
 VTOL::State VTOL::get_current_state()
@@ -65,13 +65,14 @@ VTOL::State VTOL::get_current_state()
 
 void VTOL::to_multicopter()
 {
-  if (_is_vtol) {
-    const auto now = _node.get_clock()->now();
+  const auto now = _node.get_clock()->now();
 
-    if ((_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_FIXED_WING ||
-      _current_state == VTOL::State::TRANSITION_TO_FIXED_WING) && (now - _last_update) > 150ms)
+  if (now - _last_vtol_vehicle_status_received < 1s) {
+    if ((_current_state == VTOL::State::FIXED_WING ||
+      _current_state == VTOL::State::TRANSITION_TO_FIXED_WING) &&
+      (now - _last_command_sent) > 150ms)
     {
-      _last_update = now;
+      _last_command_sent = now;
 
       px4_msgs::msg::VehicleCommand cmd;
 
@@ -86,18 +87,20 @@ void VTOL::to_multicopter()
       _vehicle_command_pub->publish(cmd);
     }
   } else {
-    RCLCPP_WARN(_node.get_logger(), "VTOL Transition not supported by current vehicle type.");
+    RCLCPP_WARN(_node.get_logger(), "Current VTOL vehicle state unknown. Not able to transition.");
   }
 }
 
 void VTOL::to_fixedwing()
 {
-  if (_is_vtol) {
-    const auto now = _node.get_clock()->now();
-    if ((_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_ROTARY_WING ||
-      _current_state == VTOL::State::TRANSITION_TO_MULTICOPTER) && (now - _last_update) > 150ms)
+  const auto now = _node.get_clock()->now();
+
+  if (now - _last_vtol_vehicle_status_received < 1s) {
+    if ((_current_state == VTOL::State::MULTICOPTER ||
+      _current_state == VTOL::State::TRANSITION_TO_MULTICOPTER) &&
+      (now - _last_command_sent) > 150ms)
     {
-      _last_update - now;
+      _last_command_sent = now;
 
       px4_msgs::msg::VehicleCommand cmd;
 
@@ -112,7 +115,7 @@ void VTOL::to_fixedwing()
       _vehicle_command_pub->publish(cmd);
     }
   } else {
-    RCLCPP_WARN(_node.get_logger(), "VTOL Transition not supported by current vehicle type.");
+    RCLCPP_WARN(_node.get_logger(), "Current VTOL vehicle state unknown. Not able to transition.");
   }
 }
 }
