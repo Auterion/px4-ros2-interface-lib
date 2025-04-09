@@ -68,8 +68,8 @@ void VTOL::to_multicopter()
   if (_is_vtol) {
     const auto now = _node.get_clock()->now();
 
-    if (_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_FIXED_WING &&
-      _current_state != VTOL::State::TRANSITION_TO_FIXED_WING && (now - _last_update) > 150ms)
+    if ((_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_FIXED_WING ||
+      _current_state == VTOL::State::TRANSITION_TO_FIXED_WING) && (now - _last_update) > 150ms)
     {
       _last_update = now;
 
@@ -94,8 +94,8 @@ void VTOL::to_fixedwing()
 {
   if (_is_vtol) {
     const auto now = _node.get_clock()->now();
-    if (_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_ROTARY_WING &&
-      _current_state != VTOL::State::TRANSITION_TO_MULTICOPTER && (now - _last_update) > 150ms)
+    if ((_vehicle_type == px4_msgs::msg::VehicleStatus::VEHICLE_TYPE_ROTARY_WING ||
+      _current_state == VTOL::State::TRANSITION_TO_MULTICOPTER) && (now - _last_update) > 150ms)
     {
       _last_update - now;
 
