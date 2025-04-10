@@ -49,8 +49,6 @@ public:
     const std::optional<float> & max_pitch = {},
     const std::optional<float> & min_throttle = {},
     const std::optional<float> & max_throttle = {},
-    const std::optional<float> & min_equivalent_airspeed = {},
-    const std::optional<float> & max_equivalent_airspeed = {},
     const std::optional<float> & max_lat_acc = {},
     const std::optional<float> & target_climb_rate = {},
     const std::optional<float> & target_sink_rate = {}
