@@ -1,0 +1,127 @@
+/****************************************************************************
+ * Copyright (c) 2024 PX4 Development Team.
+ * SPDX-License-Identifier: BSD-3-Clause
+ ****************************************************************************/
+
+#pragma once
+
+#include <px4_ros2/mission/actions/action.hpp>
+#include <px4_ros2/mission/mission_executor.hpp>
+#include <px4_ros2/components/mode.hpp>
+#include <px4_ros2/vehicle_state/land_detected.hpp>
+#include <rclcpp/rclcpp.hpp>
+
+
+namespace px4_ros2
+{
+/** \ingroup mission
+ *  @{
+ */
+
+namespace default_actions
+{
+class Rtl : public ActionInterface
+{
+public:
+  ~Rtl() override = default;
+  std::string name() const override {return "rtl";}
+
+  bool shouldStopAtWaypoint(const ActionArguments & arguments) override {return false;}
+  void run(
+    const std::shared_ptr<ActionHandler> & handler, const ActionArguments & arguments,
+    const std::function<void()> & on_completed) override
+  {
+    handler->runMode(ModeBase::kModeIDRtl, on_completed);
+  }
+};
+
+class Land : public ActionInterface
+{
+public:
+  ~Land() override = default;
+  std::string name() const override {return "land";}
+
+  bool shouldStopAtWaypoint(const ActionArguments & arguments) override {return true;}
+  void run(
+    const std::shared_ptr<ActionHandler> & handler, const ActionArguments & arguments,
+    const std::function<void()> & on_completed) override
+  {
+    handler->runMode(ModeBase::kModeIDLand, on_completed);
+  }
+};
+
+class Takeoff : public ActionInterface
+{
+public:
+  ~Takeoff() override = default;
+  std::string name() const override {return "takeoff";}
+
+  void run(
+    const std::shared_ptr<ActionHandler> & handler, const ActionArguments & arguments,
+    const std::function<void()> & on_completed) override
+  {
+    handler->runMode(ModeBase::kModeIDTakeoff, on_completed);
+  }
+};
+
+class OnResume : public ActionInterface
+{
+public:
+  explicit OnResume(ModeBase & mode, std::shared_ptr<LandDetected> land_detected)
+  : _node(mode.node()), _landed(std::move(land_detected))
+  {
+  }
+
+  ~OnResume() override = default;
+  std::string name() const override {return "onResume";}
+
+  void run(
+    const std::shared_ptr<ActionHandler> & handler, const ActionArguments & arguments,
+    const std::function<void()> & on_completed) override;
+
+private:
+  void resumeFromLanded(
+    const std::shared_ptr<ActionHandler> & handler,
+    const std::function<void()> & on_completed, int current_mission_index);
+  void navigateToPreviousWaypoint(
+    const std::shared_ptr<ActionHandler> & handler,
+    const std::function<void()> & on_completed, int current_mission_index);
+
+  rclcpp::Node & _node;
+  std::shared_ptr<LandDetected> _landed;
+};
+
+class OnFailure : public ActionInterface
+{
+public:
+  ~OnFailure() override = default;
+  std::string name() const override {return "onFailure";}
+
+  void run(
+    const std::shared_ptr<ActionHandler> & handler, const ActionArguments & arguments,
+    const std::function<void()> & on_completed) override;
+};
+
+class ChangeSettings : public ActionInterface
+{
+public:
+  ~ChangeSettings() override = default;
+  std::string name() const override {return "changeSettings";}
+
+  bool shouldStopAtWaypoint(const ActionArguments & arguments) override {return false;}
+
+  void run(
+    const std::shared_ptr<ActionHandler> & handler, const ActionArguments & arguments,
+    const std::function<void()> & on_completed) override;
+
+  void deactivate() override;
+
+private:
+  std::unique_ptr<ActionStateKeeper> _state;
+};
+
+
+} // namespace default_actions
+
+/** @}*/
+} /* namespace px4_ros2 */

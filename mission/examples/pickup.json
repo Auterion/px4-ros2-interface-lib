@@ -1,0 +1,52 @@
+{
+  "mission": {
+    "defaults": {
+      "horizontalVelocity": 12.5,
+      "maxHeadingRate": 60,
+      "verticalVelocity": 3.0
+    },
+    "items": [
+      {
+        "type": "takeoff"
+      },
+      {
+        "type": "navigation",
+        "navigationType": "waypoint",
+        "frame": "global",
+        "id": "item id 0",
+        "x": 123.0,
+        "y": 111.0,
+        "z": 11.0
+      },
+      {
+        "type": "navigation",
+        "navigationType": "waypoint",
+        "frame": "global",
+        "x": 124.0,
+        "y": 222.0,
+        "z": 20.0
+      },
+      {
+        "type": "pickup",
+        "__comment__": "Pickup coordinate is the previous waypoint",
+        "arg1": 4372,
+        "arg2": [1, 2, 3],
+        "arg3": false,
+        "id": "custom action item id 1"
+      },
+      {
+        "type": "navigation",
+        "navigationType": "waypoint",
+        "frame": "global",
+        "id": "item id 2",
+        "x": 120.0,
+        "y": 123.0,
+        "z": 10.0
+      },
+      {
+        "type": "rtl"
+      }
+    ]
+  },
+  "version": 1
+}

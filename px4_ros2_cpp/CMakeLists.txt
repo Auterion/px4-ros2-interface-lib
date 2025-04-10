@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 project(px4_ros2_cpp)
 
 # Default to C++17
@@ -39,6 +39,12 @@ set(HEADER_FILES
         include/px4_ros2/control/setpoint_types/experimental/attitude.hpp
         include/px4_ros2/control/setpoint_types/experimental/rates.hpp
         include/px4_ros2/control/setpoint_types/experimental/trajectory.hpp
+        include/px4_ros2/mission/actions/action.hpp
+        include/px4_ros2/mission/actions/default_actions.hpp
+        include/px4_ros2/mission/mission.hpp
+        include/px4_ros2/mission/mission_executor.hpp
+        include/px4_ros2/mission/trajectory/multicopter/waypoint_trajectory_executor.hpp
+        include/px4_ros2/mission/trajectory/trajectory_executor.hpp
         include/px4_ros2/navigation/experimental/global_position_measurement_interface.hpp
         include/px4_ros2/navigation/experimental/local_position_measurement_interface.hpp
         include/px4_ros2/navigation/experimental/navigation_interface_base.hpp
@@ -51,6 +57,7 @@ set(HEADER_FILES
         include/px4_ros2/utils/geodesic.hpp
         include/px4_ros2/utils/geometry.hpp
         include/px4_ros2/utils/message_version.hpp
+        include/px4_ros2/utils/visit.hpp
         include/px4_ros2/vehicle_state/battery.hpp
         include/px4_ros2/vehicle_state/home_position.hpp
         include/px4_ros2/vehicle_state/land_detected.hpp
@@ -76,6 +83,10 @@ add_library(px4_ros2_cpp
         src/control/setpoint_types/experimental/attitude.cpp
         src/control/setpoint_types/experimental/rates.cpp
         src/control/setpoint_types/experimental/trajectory.cpp
+        src/mission/actions/default_actions.cpp
+        src/mission/mission.cpp
+        src/mission/mission_executor.cpp
+        src/mission/trajectory/multicopter/waypoint_trajectory_executor.cpp
         src/navigation/experimental/global_position_measurement_interface.cpp
         src/navigation/experimental/local_position_measurement_interface.cpp
         src/odometry/attitude.cpp
@@ -146,6 +157,7 @@ if(BUILD_TESTING)
             test/unit/local_navigation.cpp
             test/unit/main.cpp
             test/unit/modes.cpp
+            test/unit/mission_execution.cpp
             test/unit/utils/frame_conversion.cpp
             test/unit/utils/geodesic.cpp
             test/unit/utils/geometry.cpp

@@ -1,0 +1,155 @@
+$id: https://example.com/schema.json
+$schema: https://json-schema.org/draft/2020-12/schema
+description: Schema for mission JSON files
+# A JSON file can be validated with `check-jsonschema --schemafile schema.yaml file.json`
+type: object
+properties:
+
+  version:
+    type: integer
+    minimum: 1
+    maximum: 1
+    description: File format version for compatibility check.
+
+  mission:
+    type: object
+    properties:
+      defaults:
+        description: |
+          Defaults, applied to the whole mission. Some might only be available
+          for certain trajectory types or executors.
+          If not provided, vehicle- or application-specific defaults are used.
+          Vehicle-specific limits will still be applied in any case.
+        type: object
+        properties:
+          horizontalVelocity:
+            description: |
+              Horizontal velocity in m/s
+            type: number
+            minimum: 0
+          verticalVelocity:
+            description: |
+              Vertical velocity in m/s
+            type: number
+            minimum: 0
+          maxHeadingRate:
+            description: |
+              Maximum heading rate in deg/s
+            type: number
+            minimum: 0
+
+      items:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              description: |
+                Optional ID of the mission item, can be set to an arbitrary string
+              type: string
+          allOf:
+            - if:
+                properties:
+                  type: { const: "navigation" }
+                  navigationType: { const: "waypoint" }
+              then:
+                properties:
+                  frame:
+                    description: |
+                      Frame type, one of:
+                      - global: WGS84 latitude/longitude and altitude is mean sea level (MSL), corresponds to MAV_FRAME_GLOBAL
+                    enum: [ "global" ]
+                  x:
+                    description: X position, depending on the frame type
+                    type: number
+                  y:
+                    description: Y position, depending on the frame type
+                    type: number
+                  z:
+                    description: Z position, depending on the frame type
+                    type: number
+                  id: { type: string }
+                  type: { type: string }
+                  navigationType: { type: string }
+                required: [ x, y, z, frame ]
+                additionalProperties: false
+
+            # Internal actions (should not be used in mission files)
+            - if:
+                properties: { type: { const: "onResume" } }
+              then:
+                description: |
+                  Action that is called when resuming a mission. This can happen from landed state, or while in-air.
+                properties:
+                  action:
+                    description: |
+                      The action will also be called when deactivating the mission (e.g. due to a failsafe),
+                      which can be used to store extra state, such as the current position.
+                      The extra state will be added to the arguments when calling 'resume'.
+                    type: string
+                    enum: [ "storeState", "resume" ]
+            - if:
+                properties: { type: { const: "onFailure" } }
+              then:
+                description: |
+                  Action that is executed when the mission fails, e.g. due to a mode not being able to run.
+                properties:
+                  reason:
+                    description: |
+                      Reason for the failure
+                    type: string
+                    enum: [ "actionDoesNotExist", "noValidMission", "trajectoryFailure", "modeFailure", "other" ]
+                  recursionLevel:
+                    description: |
+                      Recursion level, when onFailure is called recursively (when a failure happens inside onFailure)
+                    type: integer
+                  currentIndex:
+                    description: |
+                      The index of the current item in the mission
+                    type: integer
+
+            # Common, predefined actions
+            - if:
+                properties: { type: { const: "takeoff" } }
+              then:
+                properties: {}
+            - if:
+                properties: { type: { const: "rtl" } }
+              then:
+                properties: {}
+            - if:
+                properties: { type: { const: "land" } }
+              then:
+                properties: {}
+            - if:
+                properties: { type: { const: "changeSettings" } }
+              then:
+                description: |
+                  Change trajectory settings, or reset to the mission defaults
+                properties:
+                  horizontalVelocity:
+                    description: |
+                      Horizontal velocity in m/s
+                    type: number
+                    minimum: 0
+                  verticalVelocity:
+                    description: |
+                      Vertical velocity in m/s
+                    type: number
+                    minimum: 0
+                  maxHeadingRate:
+                    description: |
+                      Maximum heading rate in deg/s
+                    type: number
+                    minimum: 0
+
+                  resetAll:
+                    description: Reset all settings to the mission defaults
+                    type: boolean
+
+            # Allow defining any other action with arbitrary parameters
+
+    required: [ items ]
+    additionalProperties: false
+
+additionalProperties: false
