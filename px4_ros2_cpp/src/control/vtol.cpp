@@ -67,7 +67,7 @@ void VTOL::to_multicopter()
 {
   const auto now = _node.get_clock()->now();
 
-  if (now - _last_vtol_vehicle_status_received < 1s) {
+  if (now - _last_vtol_vehicle_status_received < 2s) {
     if ((_current_state == VTOL::State::FIXED_WING ||
       _current_state == VTOL::State::TRANSITION_TO_FIXED_WING) &&
       (now - _last_command_sent) > 150ms)
@@ -95,7 +95,7 @@ void VTOL::to_fixedwing()
 {
   const auto now = _node.get_clock()->now();
 
-  if (now - _last_vtol_vehicle_status_received < 1s) {
+  if (now - _last_vtol_vehicle_status_received < 2s) {
     if ((_current_state == VTOL::State::MULTICOPTER ||
       _current_state == VTOL::State::TRANSITION_TO_MULTICOPTER) &&
       (now - _last_command_sent) > 150ms)
