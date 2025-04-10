@@ -42,8 +42,6 @@ void FwLateralLongitudinalSetpointType::update(
   const std::optional<float> & max_pitch,
   const std::optional<float> & min_throttle,
   const std::optional<float> & max_throttle,
-  const std::optional<float> & min_equivalent_airspeed,
-  const std::optional<float> & max_equivalent_airspeed,
   const std::optional<float> & max_lat_acc,
   const std::optional<float> & target_climb_rate,
   const std::optional<float> & target_sink_rate)
@@ -76,8 +74,6 @@ void FwLateralLongitudinalSetpointType::update(
   longitudinal_limits.pitch_max = max_pitch.value_or(NAN);
   longitudinal_limits.throttle_min = min_throttle.value_or(NAN);
   longitudinal_limits.throttle_max = max_throttle.value_or(NAN);
-  longitudinal_limits.equivalent_airspeed_min = min_equivalent_airspeed.value_or(NAN);
-  longitudinal_limits.equivalent_airspeed_max = max_equivalent_airspeed.value_or(NAN);
   longitudinal_limits.climb_rate_target = target_climb_rate.value_or(NAN);
   longitudinal_limits.sink_rate_target = target_sink_rate.value_or(NAN);
 
