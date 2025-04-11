@@ -37,13 +37,17 @@ public:
 
   /**
    * @brief Update the setpoint with full flexibility by passing a FwLateralLongitudinalSetpointType
+   * and FwControlLimits struct.
    *
-   * @param setpoint a FwLateralLongitudinalSetpoint object where, course, airspeed
+   * @param setpoint a FwLateralLongitudinalSetpoint object where course, airspeed
    * direction, lateral acceleration, altitude, height rate and equivalent airspeed
-   * can be set for full flexibility
+   * can be set for full flexibility. If multiple lateral inputs are set, the lower
+   * level inputs are used as feedforward. If a height rate is set, the altitude setpoint
+   * is not used.
    *
    * @param limits a FwControlLimit object where pitch, throttle, lateral acceleration
-   * limits can be set
+   * limits can be set. Target sink/climb rates are only used if a height rate is not
+   * set.
    *
    */
 
@@ -52,9 +56,11 @@ public:
   /**
  * @brief Update the setpoint with full flexibility by passing a FwLateralLongitudinalSetpointType
  *
- * @param setpoint a FwLateralLongitudinalSetpoint object where, course, airspeed
+ * @param setpoint a FwLateralLongitudinalSetpoint object where course, airspeed
  * direction, lateral acceleration, altitude, height rate and equivalent airspeed
- * can be set for full flexibility
+ * can be set for full flexibility. If multiple lateral inputs are set, the lower
+ * level inputs are used as feedforward. If a height rate is set, the altitude setpoint
+ * is not used.
  *
  * @warning Any previously set limits will be maintained when this method is called.
  * If no limits have been previously set, PX4 will set default limits.
@@ -63,9 +69,9 @@ public:
   void update(const FwLateralLongitudinalSetpoint & setpoint);
 
   /**
-* @brief Update the setpoint with simplest set of inputs. Lateral acceleration acceleration and height
-* rate setpoints will be used as feedforward when altitude and course are provided. To directly control
-* height rate, set altitude_amsl_sp to NAN. To directly control lateral acceleration, set course_sp to NAN.
+* @brief Update the setpoint with simplest set of inputs. Lateral acceleration setpoints will be used as feedforward when course is provided.
+*  To directly control lateral acceleration, set course_sp to NAN. If a height rate is provided, the altitude setpoint
+*  is not used.
 *
 * @warning Any previously set limits will be maintained when this method is called.
 * If no limits have been previously set, PX4 will set default limits.
