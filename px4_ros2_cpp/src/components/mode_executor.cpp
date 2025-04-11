@@ -280,11 +280,9 @@ void ModeExecutorBase::arm(const CompletedCallback & on_completed, const bool & 
     px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
     1.f);
 
-  if (!run_preflight_checks)
-  {
-    result = sendCommandSync(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
-    1.f, 21196.f);
-  }
+  const float param2 = run_preflight_checks ? NAN : 21196.f;
+  const result = sendCommandSync(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
+    1.f, param2);
 
   if (result != Result::Success) {
     on_completed(result);
