@@ -98,7 +98,7 @@ public:
   void rtl(const CompletedCallback & on_completed);
 
   void arm(const CompletedCallback & on_completed);
-  void disarm(const CompletedCallback & on_completed, const bool & forced = false);
+  void disarm(const CompletedCallback & on_completed, bool forced = false);
   void waitReadyToArm(const CompletedCallback & on_completed);
   void waitUntilDisarmed(const CompletedCallback & on_completed);
 

@@ -297,18 +297,10 @@ void ModeExecutorBase::disarm(const CompletedCallback & on_completed, const bool
     return;
   }
 
-  Result result;
+  const float param2 = forced ? 21196.f : NAN;
+  const Result result = sendCommandSync(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
+    0.f, param2);
 
-  if (forced)
-  {
-    result = sendCommandSync(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
-    0.f, 21196.f);
-  }
-  else
-  {
-    result = sendCommandSync(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
-    0.f);
-  }
 
   if (result != Result::Success) {
     on_completed(result);
