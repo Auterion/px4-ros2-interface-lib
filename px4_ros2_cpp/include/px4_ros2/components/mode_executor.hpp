@@ -90,6 +90,9 @@ public:
    * Switch to a mode with a callback when it is finished.
    * The callback is also executed when the mode is deactivated.
    * If there's already a mode scheduling active, the previous one is cancelled.
+   * 
+   * the forced parameter, when set to true, allows to be able to force the scheduling of the modes when 
+   * the drone is disarmed
    */
   void scheduleMode(ModeBase::ModeID mode_id, const CompletedCallback & on_completed, const bool forced = false);
 
