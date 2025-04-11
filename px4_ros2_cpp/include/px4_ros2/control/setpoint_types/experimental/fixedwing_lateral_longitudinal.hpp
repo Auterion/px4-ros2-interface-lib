@@ -142,8 +142,6 @@ struct FwControlLimits
   std::optional<float> max_pitch;
   std::optional<float> min_throttle;
   std::optional<float> max_throttle;
-  std::optional<float> min_equivalent_airspeed;
-  std::optional<float> max_equivalent_airspeed;
   std::optional<float> max_lateral_acceleration;
   std::optional<float> target_climb_rate;
   std::optional<float> target_sink_rate;

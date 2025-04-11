@@ -75,8 +75,6 @@ void FwLateralLongitudinalSetpointType::update(
   longitudinal_limits.pitch_max = limits.max_pitch.value_or(NAN);
   longitudinal_limits.throttle_min = limits.min_throttle.value_or(NAN);
   longitudinal_limits.throttle_max = limits.max_throttle.value_or(NAN);
-  longitudinal_limits.equivalent_airspeed_min = limits.min_equivalent_airspeed.value_or(NAN);
-  longitudinal_limits.equivalent_airspeed_max = limits.max_equivalent_airspeed.value_or(NAN);
   longitudinal_limits.climb_rate_target = limits.target_climb_rate.value_or(NAN);
   longitudinal_limits.sink_rate_target = limits.target_sink_rate.value_or(NAN);
 
