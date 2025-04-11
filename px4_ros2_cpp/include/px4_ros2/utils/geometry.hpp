@@ -147,12 +147,8 @@ Eigen::Quaternion<Type> eulerRpyToQuaternion(const Type roll, const Type pitch, 
 template<typename Type>
 Type quaternionToRoll(const Eigen::Quaternion<Type> & q)
 {
-  Type x = q.x();
-  Type y = q.y();
-  Type z = q.z();
-  Type w = q.w();
 
-  return std::atan2(2.0 * (w * x + y * z), 1.0 - 2.0 * (x *x + y *y));
+  return quaternionToEulerRpy(q)[0];
 }
 
 /**
@@ -164,12 +160,7 @@ Type quaternionToRoll(const Eigen::Quaternion<Type> & q)
 template<typename Type>
 Type quaternionToPitch(const Eigen::Quaternion<Type> & q)
 {
-  Type x = q.x();
-  Type y = q.y();
-  Type z = q.z();
-  Type w = q.w();
-
-  return std::return std::asin(2.0 * (w * y - z * x));
+  return quaternionToEulerRpy(q)[1];
 }
 
 /**
@@ -181,12 +172,7 @@ Type quaternionToPitch(const Eigen::Quaternion<Type> & q)
 template<typename Type>
 Type quaternionToYaw(const Eigen::Quaternion<Type> & q)
 {
-  Type x = q.x();
-  Type y = q.y();
-  Type z = q.z();
-  Type w = q.w();
-
-  return std::atan2(2.0 * (w * z + x * y), 1.0 - 2.0 * (y * y + z * z));
+  return quaternionToEulerRpy(q)[2];
 }
 
 /** @}*/
