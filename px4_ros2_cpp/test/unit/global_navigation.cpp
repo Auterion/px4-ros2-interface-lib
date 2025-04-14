@@ -42,7 +42,8 @@ protected:
       *_node);
     _subscriber =
       _node->create_subscription<px4_msgs::msg::VehicleGlobalPosition>(
-      "/fmu/in/aux_global_position" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleGlobalPosition>(), rclcpp::QoS(
+      "/fmu/in/aux_global_position" +
+      px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleGlobalPosition>(), rclcpp::QoS(
         10).best_effort(),
       [this](px4_msgs::msg::VehicleGlobalPosition::UniquePtr msg) {
         _update_msg = std::move(msg);
