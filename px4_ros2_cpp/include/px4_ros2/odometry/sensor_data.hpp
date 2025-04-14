@@ -17,7 +17,7 @@ namespace px4_ros2
  */
 
 /**
- * @brief Provides access to the vehicle's sensor data 
+ * @brief Provides access to the vehicle's sensor data
  */
 class SensorData : public Subscription<px4_msgs::msg::SensorCombined>
 {
