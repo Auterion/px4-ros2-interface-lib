@@ -94,7 +94,9 @@ public:
    * the forced parameter, when set to true, allows to be able to force the scheduling of the modes when 
    * the drone is disarmed
    */
-  void scheduleMode(ModeBase::ModeID mode_id, const CompletedCallback & on_completed, const bool forced = false);
+  void scheduleMode(
+    ModeBase::ModeID mode_id, const CompletedCallback & on_completed,
+    bool forced = false);
 
   void takeoff(const CompletedCallback & on_completed, float altitude = NAN, float heading = NAN);
   void land(const CompletedCallback & on_completed);
