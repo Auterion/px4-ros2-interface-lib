@@ -78,8 +78,8 @@ public:
 */
   void update(
     const float altitude_amsl_sp, const float course_sp,
-    std::optional<float> height_rate_sp, std::optional<float> equivalent_airspeed_sp,
-    std::optional<float> lateral_acceleration_sp);
+    std::optional<float> height_rate_sp = {}, std::optional<float> equivalent_airspeed_sp = {},
+    std::optional<float> lateral_acceleration_sp = {});
 
   float desiredUpdateRateHz() override {return 30.f;}
 
