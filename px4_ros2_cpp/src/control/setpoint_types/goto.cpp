@@ -15,7 +15,8 @@ GotoSetpointType::GotoSetpointType(Context & context)
 {
   _goto_setpoint_pub =
     context.node().create_publisher<px4_msgs::msg::GotoSetpoint>(
-    context.topicNamespacePrefix() + "fmu/in/goto_setpoint" + px4_ros2::getMessageNameVersion<px4_msgs::msg::GotoSetpoint>(),
+    context.topicNamespacePrefix() + "fmu/in/goto_setpoint" +
+      px4_ros2::getMessageNameVersion<px4_msgs::msg::GotoSetpoint>(),
     1);
 }
 

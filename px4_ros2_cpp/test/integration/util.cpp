@@ -85,7 +85,8 @@ void VehicleState::setGPSFailure(bool failure)
   sendCommand(
     px4_msgs::msg::VehicleCommand::VEHICLE_CMD_INJECT_FAILURE,
     px4_msgs::msg::VehicleCommand::FAILURE_UNIT_SENSOR_GPS,
-    failure ? px4_msgs::msg::VehicleCommand::FAILURE_TYPE_OFF : px4_msgs::msg::VehicleCommand::FAILURE_TYPE_OK,
+    failure ? px4_msgs::msg::VehicleCommand::FAILURE_TYPE_OFF :
+    px4_msgs::msg::VehicleCommand::FAILURE_TYPE_OK,
     0);
 }
 
@@ -94,6 +95,7 @@ void VehicleState::setForceLowBattery(bool enabled)
   sendCommand(
     px4_msgs::msg::VehicleCommand::VEHICLE_CMD_INJECT_FAILURE,
     px4_msgs::msg::VehicleCommand::FAILURE_UNIT_SYSTEM_BATTERY,
-    enabled ? px4_msgs::msg::VehicleCommand::FAILURE_TYPE_OFF : px4_msgs::msg::VehicleCommand::FAILURE_TYPE_OK,
+    enabled ? px4_msgs::msg::VehicleCommand::FAILURE_TYPE_OFF :
+    px4_msgs::msg::VehicleCommand::FAILURE_TYPE_OK,
     0);
 }

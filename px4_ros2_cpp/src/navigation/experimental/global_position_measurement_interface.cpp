@@ -17,7 +17,8 @@ GlobalPositionMeasurementInterface::GlobalPositionMeasurementInterface(rclcpp::N
 {
   _aux_global_position_pub =
     node.create_publisher<VehicleGlobalPosition>(
-    topicNamespacePrefix() + "fmu/in/aux_global_position" + px4_ros2::getMessageNameVersion<VehicleGlobalPosition>(),
+    topicNamespacePrefix() + "fmu/in/aux_global_position" +
+      px4_ros2::getMessageNameVersion<VehicleGlobalPosition>(),
     10);
 }
 

@@ -20,7 +20,8 @@ LocalPositionMeasurementInterface::LocalPositionMeasurementInterface(
   _velocity_frame(velocityFrameToMessageFrame(velocity_frame))
 {
   _aux_local_position_pub = node.create_publisher<AuxLocalPosition>(
-    topicNamespacePrefix() + "fmu/in/vehicle_visual_odometry" + px4_ros2::getMessageNameVersion<AuxLocalPosition>(),
+    topicNamespacePrefix() + "fmu/in/vehicle_visual_odometry" +
+      px4_ros2::getMessageNameVersion<AuxLocalPosition>(),
     10);
 }
 
