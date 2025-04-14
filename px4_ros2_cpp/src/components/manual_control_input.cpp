@@ -17,7 +17,8 @@ ManualControlInput::ManualControlInput(Context & context, bool is_optional)
 
   _manual_control_setpoint_sub =
     context.node().create_subscription<px4_msgs::msg::ManualControlSetpoint>(
-    context.topicNamespacePrefix() + "fmu/out/manual_control_setpoint" + px4_ros2::getMessageNameVersion<px4_msgs::msg::ManualControlSetpoint>(), rclcpp::QoS(
+    context.topicNamespacePrefix() + "fmu/out/manual_control_setpoint" +
+      px4_ros2::getMessageNameVersion<px4_msgs::msg::ManualControlSetpoint>(), rclcpp::QoS(
       1).best_effort(),
     [this](px4_msgs::msg::ManualControlSetpoint::UniquePtr msg) {
       _manual_control_setpoint = *msg;

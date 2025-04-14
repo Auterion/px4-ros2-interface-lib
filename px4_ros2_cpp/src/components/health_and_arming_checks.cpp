@@ -22,11 +22,13 @@ HealthAndArmingChecks::HealthAndArmingChecks(
   _check_callback(std::move(check_callback))
 {
   _arming_check_reply_pub = _node.create_publisher<px4_msgs::msg::ArmingCheckReply>(
-    topic_namespace_prefix + "fmu/in/arming_check_reply" + px4_ros2::getMessageNameVersion<px4_msgs::msg::ArmingCheckReply>(),
+    topic_namespace_prefix + "fmu/in/arming_check_reply" +
+      px4_ros2::getMessageNameVersion<px4_msgs::msg::ArmingCheckReply>(),
     1);
 
   _arming_check_request_sub = _node.create_subscription<px4_msgs::msg::ArmingCheckRequest>(
-    topic_namespace_prefix + "fmu/out/arming_check_request" + px4_ros2::getMessageNameVersion<px4_msgs::msg::ArmingCheckRequest>(),
+    topic_namespace_prefix + "fmu/out/arming_check_request" +
+      px4_ros2::getMessageNameVersion<px4_msgs::msg::ArmingCheckRequest>(),
     rclcpp::QoS(1).best_effort(),
     [this](px4_msgs::msg::ArmingCheckRequest::UniquePtr msg) {
 
