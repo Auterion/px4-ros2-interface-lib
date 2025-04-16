@@ -21,13 +21,13 @@ FwLateralLongitudinalSetpointType::FwLateralLongitudinalSetpointType(Context & c
     context.topicNamespacePrefix() + "fmu/in/fixed_wing_longitudinal_setpoint" + px4_ros2::getMessageNameVersion<px4_msgs::msg::FixedWingLongitudinalSetpoint>(),
     1);
 
-  _lateral_control_limits_pub =
-    context.node().create_publisher<px4_msgs::msg::LateralControlLimits>(
-    context.topicNamespacePrefix() + "fmu/in/lateral_control_limits" + px4_ros2::getMessageNameVersion<px4_msgs::msg::LateralControlLimits>(),
+  _lateral_control_configuration_pub =
+    context.node().create_publisher<px4_msgs::msg::LateralControlConfiguration>(
+    context.topicNamespacePrefix() + "fmu/in/lateral_control_configuration" + px4_ros2::getMessageNameVersion<px4_msgs::msg::LateralControlConfiguration>(),
     1);
-  _longitudinal_control_limits_pub =
-    context.node().create_publisher<px4_msgs::msg::LongitudinalControlLimits>(
-    context.topicNamespacePrefix() + "fmu/in/longitudinal_control_limits" + px4_ros2::getMessageNameVersion<px4_msgs::msg::LongitudinalControlLimits>(),
+  _longitudinal_control_configuration_pub =
+    context.node().create_publisher<px4_msgs::msg::LongitudinalControlConfiguration>(
+    context.topicNamespacePrefix() + "fmu/in/longitudinal_control_configuration" + px4_ros2::getMessageNameVersion<px4_msgs::msg::LongitudinalControlConfiguration>(),
     1);
 }
 
@@ -59,26 +59,26 @@ void FwLateralLongitudinalSetpointType::update(
 
 void FwLateralLongitudinalSetpointType::update(
   const FwLateralLongitudinalSetpoint & setpoint,
-  const FwControlLimits & limits)
+  const FwControlConfiguration & config)
 {
   onUpdate();
 
   update(setpoint);
 
-  px4_msgs::msg::LateralControlLimits lateral_limits{};
-  lateral_limits.lateral_accel_max = limits.max_lateral_acceleration.value_or(NAN);
+  px4_msgs::msg::LateralControlConfiguration lateral_configuration{};
+  lateral_configuration.lateral_accel_max = config.max_lateral_acceleration.value_or(NAN);
 
-  _lateral_control_limits_pub->publish(lateral_limits);
+  _lateral_control_configuration_pub->publish(lateral_configuration);
 
-  px4_msgs::msg::LongitudinalControlLimits longitudinal_limits{};
-  longitudinal_limits.pitch_min = limits.min_pitch.value_or(NAN);
-  longitudinal_limits.pitch_max = limits.max_pitch.value_or(NAN);
-  longitudinal_limits.throttle_min = limits.min_throttle.value_or(NAN);
-  longitudinal_limits.throttle_max = limits.max_throttle.value_or(NAN);
-  longitudinal_limits.climb_rate_target = limits.target_climb_rate.value_or(NAN);
-  longitudinal_limits.sink_rate_target = limits.target_sink_rate.value_or(NAN);
+  px4_msgs::msg::LongitudinalControlConfiguration longitudinal_configuration{};
+  longitudinal_configuration.pitch_min = config.min_pitch.value_or(NAN);
+  longitudinal_configuration.pitch_max = config.max_pitch.value_or(NAN);
+  longitudinal_configuration.throttle_min = config.min_throttle.value_or(NAN);
+  longitudinal_configuration.throttle_max = config.max_throttle.value_or(NAN);
+  longitudinal_configuration.climb_rate_target = config.target_climb_rate.value_or(NAN);
+  longitudinal_configuration.sink_rate_target = config.target_sink_rate.value_or(NAN);
 
-  _longitudinal_control_limits_pub->publish(longitudinal_limits);
+  _longitudinal_control_configuration_pub->publish(longitudinal_configuration);
 
 }
 

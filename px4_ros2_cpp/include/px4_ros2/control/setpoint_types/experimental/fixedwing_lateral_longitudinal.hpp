@@ -7,8 +7,8 @@
 
 #include <px4_msgs/msg/fixed_wing_lateral_setpoint.hpp>
 #include <px4_msgs/msg/fixed_wing_longitudinal_setpoint.hpp>
-#include <px4_msgs/msg/lateral_control_limits.hpp>
-#include <px4_msgs/msg/longitudinal_control_limits.hpp>
+#include <px4_msgs/msg/lateral_control_configuration.hpp>
+#include <px4_msgs/msg/longitudinal_control_configuration.hpp>
 #include <Eigen/Eigen>
 #include <optional>
 
@@ -21,7 +21,7 @@ namespace px4_ros2
  */
 
 struct FwLateralLongitudinalSetpoint;
-struct FwControlLimits;
+struct FwControlConfiguration;
 
 /**
  * @brief Setpoint type for fixedwing control
@@ -37,7 +37,7 @@ public:
 
   /**
    * @brief Update the setpoint with full flexibility by passing a FwLateralLongitudinalSetpointType
-   * and FwControlLimits struct.
+   * and FwControlConfiguration struct.
    *
    * @param setpoint a FwLateralLongitudinalSetpoint object where course, airspeed
    * direction, lateral acceleration, altitude, height rate and equivalent airspeed
@@ -45,13 +45,13 @@ public:
    * level inputs are used as feedforward. If a height rate is set, the altitude setpoint
    * is not used.
    *
-   * @param limits a FwControlLimit object where pitch, throttle, lateral acceleration
-   * limits can be set. Target sink/climb rates are only used if a height rate is not
+   * @param config a FwControlConfiguration object where pitch, throttle, lateral acceleration
+   * configuration can be set. Target sink/climb rates are only used if a height rate is not
    * set.
    *
    */
 
-  void update(const FwLateralLongitudinalSetpoint & setpoint, const FwControlLimits & limits);
+  void update(const FwLateralLongitudinalSetpoint & setpoint, const FwControlConfiguration & config);
 
   /**
  * @brief Update the setpoint with full flexibility by passing a FwLateralLongitudinalSetpointType
@@ -62,8 +62,8 @@ public:
  * level inputs are used as feedforward. If a height rate is set, the altitude setpoint
  * is not used.
  *
- * @warning Any previously set limits will be maintained when this method is called.
- * If no limits have been previously set, PX4 will set default limits.
+ * @warning Any previously set configurations will be maintained when this method is called.
+ * If no configurations have been previously set, PX4 will set default configuration.
  */
 
   void update(const FwLateralLongitudinalSetpoint & setpoint);
@@ -73,8 +73,8 @@ public:
 *  To directly control lateral acceleration, set course_sp to NAN. If a height rate is provided, the altitude setpoint
 *  is not used.
 *
-* @warning Any previously set limits will be maintained when this method is called.
-* If no limits have been previously set, PX4 will set default limits.
+* @warning Any previously set configurations will be maintained when this method is called.
+* If no configurations have been previously set, PX4 will set default configurations.
 */
   void update(
     const float altitude_amsl_sp, const float course_sp,
@@ -90,10 +90,10 @@ private:
   rclcpp::Publisher<px4_msgs::msg::FixedWingLongitudinalSetpoint>::SharedPtr
     _fw_longitudinal_sp_pub;
 
-  rclcpp::Publisher<px4_msgs::msg::LateralControlLimits>::SharedPtr
-    _lateral_control_limits_pub;
-  rclcpp::Publisher<px4_msgs::msg::LongitudinalControlLimits>::SharedPtr
-    _longitudinal_control_limits_pub;
+  rclcpp::Publisher<px4_msgs::msg::LateralControlConfiguration>::SharedPtr
+    _lateral_control_configuration_pub;
+  rclcpp::Publisher<px4_msgs::msg::LongitudinalControlConfiguration>::SharedPtr
+    _longitudinal_control_configuration_pub;
 };
 
 struct FwLateralLongitudinalSetpoint
@@ -142,7 +142,7 @@ struct FwLateralLongitudinalSetpoint
   }
 };
 
-struct FwControlLimits
+struct FwControlConfiguration
 {
   std::optional<float> min_pitch;
   std::optional<float> max_pitch;
@@ -152,7 +152,7 @@ struct FwControlLimits
   std::optional<float> target_climb_rate;
   std::optional<float> target_sink_rate;
 
-  FwControlLimits & withPitchLimits(float min_pitch_sp, float max_pitch_sp)
+  FwControlConfiguration & withPitchLimits(float min_pitch_sp, float max_pitch_sp)
   {
 
     min_pitch = min_pitch_sp;
@@ -161,7 +161,7 @@ struct FwControlLimits
     return *this;
   }
 
-  FwControlLimits & withThrottleLimits(float min_throttle_sp, float max_throttle_sp)
+  FwControlConfiguration & withThrottleLimits(float min_throttle_sp, float max_throttle_sp)
   {
 
     min_throttle = min_throttle_sp;
@@ -170,21 +170,21 @@ struct FwControlLimits
     return *this;
   }
 
-  FwControlLimits & withMaxAcceleration(float max_lateral_acceleration_sp)
+  FwControlConfiguration & withMaxAcceleration(float max_lateral_acceleration_sp)
   {
 
     max_lateral_acceleration = max_lateral_acceleration_sp;
     return *this;
   }
 
-  FwControlLimits & withTargetSinkRate(float target_sink_rate_sp)
+  FwControlConfiguration & withTargetSinkRate(float target_sink_rate_sp)
   {
 
     target_sink_rate = target_sink_rate_sp;
     return *this;
   }
 
-  FwControlLimits & withTargetClimbRate(float target_climb_rate_sp)
+  FwControlConfiguration & withTargetClimbRate(float target_climb_rate_sp)
   {
 
     target_climb_rate = target_climb_rate_sp;
