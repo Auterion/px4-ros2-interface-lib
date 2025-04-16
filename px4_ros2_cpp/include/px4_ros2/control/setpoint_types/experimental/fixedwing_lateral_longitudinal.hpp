@@ -41,26 +41,25 @@ public:
    *
    * @param setpoint a FwLateralLongitudinalSetpoint object where course, airspeed
    * direction, lateral acceleration, altitude, height rate and equivalent airspeed
-   * can be set for full flexibility. If multiple lateral inputs are set, the lower
-   * level inputs are used as feedforward. If a height rate is set, the altitude setpoint
-   * is not used.
+   * can be set for full flexibility. See (## TODO: ADD LINK TO PX4_MSGS) for more information on this
+   * setpoint type.
    *
    * @param config a FwControlConfiguration object where pitch, throttle, lateral acceleration
-   * configuration can be set. Target sink/climb rates are only used if a height rate is not
-   * set.
+   * configuration can be set. See (## TODO: ADD LINK TO PX4_MSGS) for more information.
    *
    */
 
-  void update(const FwLateralLongitudinalSetpoint & setpoint, const FwControlConfiguration & config);
+  void update(
+    const FwLateralLongitudinalSetpoint & setpoint,
+    const FwControlConfiguration & config);
 
   /**
  * @brief Update the setpoint with full flexibility by passing a FwLateralLongitudinalSetpointType
  *
  * @param setpoint a FwLateralLongitudinalSetpoint object where course, airspeed
  * direction, lateral acceleration, altitude, height rate and equivalent airspeed
- * can be set for full flexibility. If multiple lateral inputs are set, the lower
- * level inputs are used as feedforward. If a height rate is set, the altitude setpoint
- * is not used.
+ * can be set for full flexibility. See (## TODO: ADD LINK TO PX4_MSGS) for more information on this
+ * setpoint type.
  *
  * @warning Any previously set configurations will be maintained when this method is called.
  * If no configurations have been previously set, PX4 will set default configuration.
