@@ -41,7 +41,8 @@ protected:
 
     // Subscribe to PX4 EKF estimator status flags
     _subscriber = _node->create_subscription<EstimatorStatusFlags>(
-      "fmu/out/estimator_status_flags" + px4_ros2::getMessageNameVersion<EstimatorStatusFlags>(), rclcpp::QoS(
+      "fmu/out/estimator_status_flags" + px4_ros2::getMessageNameVersion<EstimatorStatusFlags>(),
+      rclcpp::QoS(
         10).best_effort(),
       [this](EstimatorStatusFlags::UniquePtr msg) {
         _estimator_status_flags = std::move(msg);
