@@ -139,7 +139,7 @@ Eigen::Quaternion<Type> eulerRpyToQuaternion(const Type roll, const Type pitch, 
 }
 
 /**
- * @brief Convert quaternion to roll angle in extrinsic RPY order (intrinsic YPR)
+ * @brief Convert quaternion to roll angle in ZYX sequence
  *
  * @param q The input quaternion
  * @return Roll angle corresponding to the given quaternion in range [-pi, pi]
@@ -147,16 +147,12 @@ Eigen::Quaternion<Type> eulerRpyToQuaternion(const Type roll, const Type pitch, 
 template<typename Type>
 Type quaternionToRoll(const Eigen::Quaternion<Type> & q)
 {
-  Type x = q.x();
-  Type y = q.y();
-  Type z = q.z();
-  Type w = q.w();
 
-  return std::atan2(2.0 * (w * x + y * z), w * w - x * x - y * y + z * z);
+  return quaternionToEulerRpy(q)[0];
 }
 
 /**
- * @brief Convert quaternion to pitch angle in extrinsic RPY order (intrinsic YPR)
+ * @brief Convert quaternion to pitch angle in in ZYX sequence
  *
  * @param q The input quaternion
  * @return Pitch angle corresponding to the given quaternion in range [-pi, pi]
@@ -164,16 +160,11 @@ Type quaternionToRoll(const Eigen::Quaternion<Type> & q)
 template<typename Type>
 Type quaternionToPitch(const Eigen::Quaternion<Type> & q)
 {
-  Type x = q.x();
-  Type y = q.y();
-  Type z = q.z();
-  Type w = q.w();
-
-  return std::atan2(2.0 * (w * y - z * x), 1.0 - 2.0 * (x * x + y * y));
+  return quaternionToEulerRpy(q)[1];
 }
 
 /**
- * @brief Convert quaternion to yaw angle in extrinsic RPY order (intrinsic YPR)
+ * @brief Convert quaternion to yaw angle in ZYX sequence
  *
  * @param q The input quaternion
  * @return Yaw angle corresponding to the given quaternion in range [-pi, pi]
@@ -181,12 +172,7 @@ Type quaternionToPitch(const Eigen::Quaternion<Type> & q)
 template<typename Type>
 Type quaternionToYaw(const Eigen::Quaternion<Type> & q)
 {
-  Type x = q.x();
-  Type y = q.y();
-  Type z = q.z();
-  Type w = q.w();
-
-  return std::atan2(2.0 * (x * y + w * z), w * w + x * x - y * y - z * z);
+  return quaternionToEulerRpy(q)[2];
 }
 
 /** @}*/
