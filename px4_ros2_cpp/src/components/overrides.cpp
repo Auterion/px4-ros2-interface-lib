@@ -16,7 +16,7 @@ ConfigOverrides::ConfigOverrides(rclcpp::Node & node, const std::string & topic_
 {
   _config_overrides_pub = _node.create_publisher<px4_msgs::msg::ConfigOverrides>(
     topic_namespace_prefix + "fmu/in/config_overrides_request" +
-      px4_ros2::getMessageNameVersion<px4_msgs::msg::ConfigOverrides>(),
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::ConfigOverrides>(),
     1);
 }
 

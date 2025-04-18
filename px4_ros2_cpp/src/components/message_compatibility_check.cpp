@@ -201,7 +201,7 @@ RequestMessageFormatReturn requestMessageFormat(
           } else {
             RCLCPP_ERROR(
               node.get_logger(), "Protocol version mismatch: got %i, expected %i",
-                response.protocol_version,
+              response.protocol_version,
               px4_msgs::msg::MessageFormatRequest::LATEST_PROTOCOL_VERSION);
             request_message_format_return = RequestMessageFormatReturn::ProtocolVersionMismatch;
           }
@@ -310,7 +310,7 @@ bool messageCompatibilityCheck(
   if (!mismatched_topics.empty()) {
     RCLCPP_ERROR(
       node.get_logger(),
-        "Mismatch for the following topics, update PX4 or the px4_ros2 library and px4_msgs:%s",
+      "Mismatch for the following topics, update PX4 or the px4_ros2 library and px4_msgs:%s",
       mismatched_topics.c_str());
   }
 
