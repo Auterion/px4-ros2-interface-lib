@@ -27,7 +27,8 @@ ModeExecutorBase::ModeExecutorBase(
   _config_overrides(node, topic_namespace_prefix)
 {
   _vehicle_status_sub = _node.create_subscription<px4_msgs::msg::VehicleStatus>(
-    topic_namespace_prefix + "fmu/out/vehicle_status" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(), rclcpp::QoS(
+    topic_namespace_prefix + "fmu/out/vehicle_status" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(), rclcpp::QoS(
       1).best_effort(),
     [this](px4_msgs::msg::VehicleStatus::UniquePtr msg) {
       if (_registration->registered()) {
@@ -36,7 +37,8 @@ ModeExecutorBase::ModeExecutorBase(
     });
 
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
-    topic_namespace_prefix + "fmu/in/vehicle_command_mode_executor" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
+    topic_namespace_prefix + "fmu/in/vehicle_command_mode_executor" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
     1);
 
 }
@@ -130,7 +132,8 @@ Result ModeExecutorBase::sendCommandSync(
   // (We could also use exchange_in_use_by_wait_set_state(), but that might cause an
   // inconsistent state)
   const auto vehicle_command_ack_sub = _node.create_subscription<px4_msgs::msg::VehicleCommandAck>(
-    _topic_namespace_prefix + "fmu/out/vehicle_command_ack" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommandAck>(), rclcpp::QoS(
+    _topic_namespace_prefix + "fmu/out/vehicle_command_ack" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommandAck>(), rclcpp::QoS(
       1).best_effort(),
     [](px4_msgs::msg::VehicleCommandAck::UniquePtr msg) {});
 
@@ -207,19 +210,19 @@ Result ModeExecutorBase::sendCommandSync(
 
 void ModeExecutorBase::scheduleMode(
   ModeBase::ModeID mode_id,
-  const CompletedCallback & on_completed)
+  const CompletedCallback & on_completed, const bool forced)
 {
   px4_msgs::msg::VehicleCommand cmd{};
   cmd.command = px4_msgs::msg::VehicleCommand::VEHICLE_CMD_SET_NAV_STATE;
   cmd.param1 = mode_id;
-  scheduleMode(mode_id, cmd, on_completed);
+  scheduleMode(mode_id, cmd, on_completed, forced);
 }
 
 void ModeExecutorBase::scheduleMode(
   ModeBase::ModeID mode_id, const px4_msgs::msg::VehicleCommand & cmd,
-  const CompletedCallback & on_completed)
+  const CompletedCallback & on_completed, const bool forced)
 {
-  if (!_is_armed) {
+  if (!_is_armed && !forced) {
     on_completed(Result::Rejected);
     return;
   }
@@ -434,7 +437,8 @@ ModeExecutorBase::ScheduledMode::ScheduledMode(
   const std::string & topic_namespace_prefix)
 {
   _mode_completed_sub = node.create_subscription<px4_msgs::msg::ModeCompleted>(
-    topic_namespace_prefix + "fmu/out/mode_completed" + px4_ros2::getMessageNameVersion<px4_msgs::msg::ModeCompleted>(), rclcpp::QoS(
+    topic_namespace_prefix + "fmu/out/mode_completed" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::ModeCompleted>(), rclcpp::QoS(
       1).best_effort(),
     [this, &node](px4_msgs::msg::ModeCompleted::UniquePtr msg) {
       if (active() && msg->nav_state == static_cast<uint8_t>(_mode_id)) {
