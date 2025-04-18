@@ -28,7 +28,7 @@ ModeExecutorBase::ModeExecutorBase(
 {
   _vehicle_status_sub = _node.create_subscription<px4_msgs::msg::VehicleStatus>(
     topic_namespace_prefix + "fmu/out/vehicle_status" +
-      px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(), rclcpp::QoS(
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(), rclcpp::QoS(
       1).best_effort(),
     [this](px4_msgs::msg::VehicleStatus::UniquePtr msg) {
       if (_registration->registered()) {
@@ -38,7 +38,7 @@ ModeExecutorBase::ModeExecutorBase(
 
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
     topic_namespace_prefix + "fmu/in/vehicle_command_mode_executor" +
-      px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
     1);
 
 }
@@ -133,7 +133,7 @@ Result ModeExecutorBase::sendCommandSync(
   // inconsistent state)
   const auto vehicle_command_ack_sub = _node.create_subscription<px4_msgs::msg::VehicleCommandAck>(
     _topic_namespace_prefix + "fmu/out/vehicle_command_ack" +
-      px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommandAck>(), rclcpp::QoS(
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommandAck>(), rclcpp::QoS(
       1).best_effort(),
     [](px4_msgs::msg::VehicleCommandAck::UniquePtr msg) {});
 
@@ -280,7 +280,8 @@ void ModeExecutorBase::arm(const CompletedCallback & on_completed, bool run_pref
   }
 
   const float param2 = run_preflight_checks ? NAN : 21196.f;
-  const result = sendCommandSync(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
+  const result = sendCommandSync(
+    px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
     1.f, param2);
 
   if (result != Result::Success) {
@@ -438,7 +439,7 @@ ModeExecutorBase::ScheduledMode::ScheduledMode(
 {
   _mode_completed_sub = node.create_subscription<px4_msgs::msg::ModeCompleted>(
     topic_namespace_prefix + "fmu/out/mode_completed" +
-      px4_ros2::getMessageNameVersion<px4_msgs::msg::ModeCompleted>(), rclcpp::QoS(
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::ModeCompleted>(), rclcpp::QoS(
       1).best_effort(),
     [this, &node](px4_msgs::msg::ModeCompleted::UniquePtr msg) {
       if (active() && msg->nav_state == static_cast<uint8_t>(_mode_id)) {
