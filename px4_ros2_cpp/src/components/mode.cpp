@@ -254,9 +254,12 @@ void ModeBase::updateModeRequirementsFromSetpoints()
     requirements.angular_velocity |= config.rates_enabled;
     requirements.attitude |= config.attitude_enabled;
     requirements.local_alt |= config.altitude_enabled;
-    requirements.local_position |= config.velocity_enabled;
-    requirements.local_position |= config.position_enabled;
     requirements.local_alt |= config.climb_rate_enabled;
+
+    if (!config.local_position_is_optional) {
+      requirements.local_position |= config.velocity_enabled;
+      requirements.local_position |= config.position_enabled;
+    }
   }
 
   if (requirements.manual_control) {
