@@ -38,7 +38,7 @@ var group__components =
       [ "onActivate", "classpx4__ros2_1_1ModeExecutorBase.html#afbe189b02346968da5a15c8fbdba0a95", null ],
       [ "onDeactivate", "classpx4__ros2_1_1ModeExecutorBase.html#a130be86de12e870743799902744dbba8", null ],
       [ "onFailsafeDeferred", "classpx4__ros2_1_1ModeExecutorBase.html#ad80a234c8cb2f4c186fa2b7bffd1a1dd", null ],
-      [ "scheduleMode", "classpx4__ros2_1_1ModeExecutorBase.html#a94f2c1e3dd07b3b58d78b94ebb3615a3", null ],
+      [ "scheduleMode", "classpx4__ros2_1_1ModeExecutorBase.html#a5c58cceb7914b863e9b848f140977525", null ],
       [ "sendCommandSync", "classpx4__ros2_1_1ModeExecutorBase.html#a332cb775e0543155595c51bbc4052522", null ]
     ] ],
     [ "px4_ros2::NodeWithMode< ModeT >", "classpx4__ros2_1_1NodeWithMode.html", null ],
