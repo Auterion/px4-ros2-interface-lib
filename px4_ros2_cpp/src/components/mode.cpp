@@ -29,7 +29,8 @@ ModeBase::ModeBase(
     topic_namespace_prefix), _config_overrides(node, topic_namespace_prefix)
 {
   _vehicle_status_sub = node.create_subscription<px4_msgs::msg::VehicleStatus>(
-    topic_namespace_prefix + "fmu/out/vehicle_status" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(), rclcpp::QoS(
+    topic_namespace_prefix + "fmu/out/vehicle_status" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(), rclcpp::QoS(
       1).best_effort(),
     [this](px4_msgs::msg::VehicleStatus::UniquePtr msg) {
       if (_registration->registered()) {
@@ -37,10 +38,12 @@ ModeBase::ModeBase(
       }
     });
   _mode_completed_pub = node.create_publisher<px4_msgs::msg::ModeCompleted>(
-    topic_namespace_prefix + "fmu/in/mode_completed" + px4_ros2::getMessageNameVersion<px4_msgs::msg::ModeCompleted>(),
+    topic_namespace_prefix + "fmu/in/mode_completed" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::ModeCompleted>(),
     1);
   _config_control_setpoints_pub = node.create_publisher<px4_msgs::msg::VehicleControlMode>(
-    topic_namespace_prefix + "fmu/in/config_control_setpoints" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleControlMode>(),
+    topic_namespace_prefix + "fmu/in/config_control_setpoints" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleControlMode>(),
     1);
 }
 
