@@ -42,7 +42,7 @@ public:
     bool acceleration_enabled{true};
     bool velocity_enabled{true};
     bool position_enabled{true};
-
+    bool local_position_is_optional{false};
     bool climb_rate_enabled{false};
   };
 
