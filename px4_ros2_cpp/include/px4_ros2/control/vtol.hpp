@@ -42,6 +42,8 @@ public:
   void to_multicopter();
   void to_fixedwing();
 
+  Eigen::Vector3f get_acceleration_setpoint_during_transition();
+
   VTOL::State get_current_state();
 
 private:
@@ -58,7 +60,11 @@ private:
   uint _system_id;
   uint _component_id;
 
+  bool _is_backtransition;
+
   VTOL::State _current_state{VTOL::State::UNDEFINED};
+
+  float get_pitch_setpoint_during_transition();
 };
 
 /** @}*/

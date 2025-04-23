@@ -67,6 +67,8 @@ void VTOL::to_multicopter()
 {
   const auto now = _node.get_clock()->now();
 
+  _is_backtransition = true;
+
   if (now - _last_vtol_vehicle_status_received < 2s) {
     if ((_current_state == VTOL::State::FIXED_WING ||
       _current_state == VTOL::State::TRANSITION_TO_FIXED_WING) &&
@@ -95,6 +97,8 @@ void VTOL::to_fixedwing()
 {
   const auto now = _node.get_clock()->now();
 
+  _is_backtransition = false;
+
   if (now - _last_vtol_vehicle_status_received < 2s) {
     if ((_current_state == VTOL::State::MULTICOPTER ||
       _current_state == VTOL::State::TRANSITION_TO_MULTICOPTER) &&
@@ -118,5 +122,23 @@ void VTOL::to_fixedwing()
     RCLCPP_WARN(_node.get_logger(), "Current VTOL vehicle state unknown. Not able to transition.");
   }
 }
+
+Eigen::Vector3f VTOL::get_acceleration_setpoint_during_transition()
+{
+  // float pitch_setpoint = _is_backtransition ? VTOL::get_pitch_setpoint_during_transition() : 0.f;
+
+  Eigen::Vector3f acceleration_setpoint_during_transition{0.f, 0.f, NAN};
+
+  return acceleration_setpoint_during_transition;
+
+}
+
+float VTOL::get_pitch_setpoint_during_transition()
+{
+
+  return 0.f;
+}
+
+
 }
 // namespace px4_ros2
