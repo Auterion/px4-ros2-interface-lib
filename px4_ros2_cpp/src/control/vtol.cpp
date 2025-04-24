@@ -10,6 +10,8 @@
 
 using namespace std::chrono_literals;
 
+static constexpr float CONSTANTS_ONE_G = 9.80665f; // m/s^2
+
 namespace px4_ros2
 {
 
@@ -54,6 +56,14 @@ VTOL::VTOL(Context & context)
       }
     });
 
+    _vehicle_local_position_sub = _node.create_subscription<px4_msgs::msg::VehicleLocalPosition>(
+      context.topicNamespacePrefix() + "fmu/out/vehicle_local_position" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLocalPosition>(),
+      rclcpp::QoS(10).best_effort(),
+      [this](px4_msgs::msg::VehicleLocalPosition::UniquePtr msg){
+
+        _vehicle_velocity_xy = {msg->vx, msg->vy};
+    });
+
   _last_command_sent = _node.get_clock()->now();
 
 }
@@ -66,8 +76,6 @@ VTOL::State VTOL::get_current_state()
 void VTOL::to_multicopter()
 {
   const auto now = _node.get_clock()->now();
-
-  _is_backtransition = true;
 
   if (now - _last_vtol_vehicle_status_received < 2s) {
     if ((_current_state == VTOL::State::FIXED_WING ||
@@ -97,8 +105,6 @@ void VTOL::to_fixedwing()
 {
   const auto now = _node.get_clock()->now();
 
-  _is_backtransition = false;
-
   if (now - _last_vtol_vehicle_status_received < 2s) {
     if ((_current_state == VTOL::State::MULTICOPTER ||
       _current_state == VTOL::State::TRANSITION_TO_MULTICOPTER) &&
@@ -123,22 +129,20 @@ void VTOL::to_fixedwing()
   }
 }
 
-Eigen::Vector3f VTOL::get_acceleration_setpoint_during_transition()
+Eigen::Vector3f VTOL::compute_acceleration_setpoint_during_transition()
 {
-  // float pitch_setpoint = _is_backtransition ? VTOL::get_pitch_setpoint_during_transition() : 0.f;
+  Eigen::Vector2f vehicle_velocity_xy_dir = _vehicle_velocity_xy.normalized(); 
 
-  Eigen::Vector3f acceleration_setpoint_during_transition{0.f, 0.f, NAN};
+  // TODO: add function that computes pitch setpoint for back-transition. 
+  // This still works, the vehicle just wont decelerate much. 
+  // Probably ok for most applications as a first implementation    
 
-  return acceleration_setpoint_during_transition;
+  float pitch_setpoint = 0.f; 
 
-}
+  Eigen::Vector2f acceleration_setpoint_during_transition = tanf(pitch_setpoint) * CONSTANTS_ONE_G * -vehicle_velocity_xy_dir;
 
-float VTOL::get_pitch_setpoint_during_transition()
-{
-
-  return 0.f;
-}
-
+  return {acceleration_setpoint_during_transition.x(), acceleration_setpoint_during_transition.y(), NAN};
 
 }
-// namespace px4_ros2
+
+}// namespace px4_ros2
