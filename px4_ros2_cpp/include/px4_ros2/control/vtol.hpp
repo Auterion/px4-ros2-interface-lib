@@ -55,6 +55,8 @@ private:
   rclcpp::Subscription<px4_msgs::msg::VehicleLocalPosition>::SharedPtr _vehicle_local_position_sub;
   rclcpp::Time _last_command_sent;
   rclcpp::Time _last_vtol_vehicle_status_received;
+  rclcpp::Time _last_pitch_integrator_update{0, 0, _node.get_clock()->get_clock_type()};
+
 
   px4_msgs::msg::VehicleStatus::UniquePtr _vehicle_status_msg;
   px4_msgs::msg::VtolVehicleStatus::UniquePtr _vtol_vehicle_status_msg;
@@ -63,9 +65,27 @@ private:
   uint _system_id;
   uint _component_id;
 
+  float _vehicle_heading{0.f}; 
+  float _decel_error_bt_int{0.f}; 
+
+  Eigen::Vector2f _vehicle_position_xy{NAN, NAN}; 
   Eigen::Vector2f _vehicle_velocity_xy{NAN, NAN};
+  Eigen::Vector2f _vehicle_acceleration_xy{NAN, NAN}; 
+
+  Eigen::Vector2f _backtransition_commanded_position{NAN, NAN}; 
+  
+  bool _vehicle_velocity_xy_valid{false}; 
+  bool _vehicle_position_xy_valid{false}; 
 
   VTOL::State _current_state{VTOL::State::UNDEFINED};
+
+  float compute_pitch_setpoint_during_backtransition();
+
+  static constexpr float VT_B_DEC_MSS = 2.f; 
+  static constexpr float VT_B_DEC_I = 0.1f; 
+  static constexpr float DECELERATION_INTEGRATOR_LIMIT = 0.3f;
+  static constexpr float BACK_TRANS_END_DIST = 50.f; 
+
 };
 
 /** @}*/
