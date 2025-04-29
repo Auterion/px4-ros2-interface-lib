@@ -256,7 +256,7 @@ void ModeBase::updateModeRequirementsFromSetpoints()
     requirements.local_alt |= config.climb_rate_enabled;
 
     if (config.local_position_is_optional) {
-    requirements.local_position = false;
+      requirements.local_position = false;
     }
   }
 
