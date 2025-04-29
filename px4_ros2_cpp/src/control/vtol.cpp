@@ -15,9 +15,9 @@ static constexpr float CONSTANTS_ONE_G = 9.80665f; // m/s^2
 namespace px4_ros2
 {
 
-VTOL::VTOL(Context & context)
-: _node(context.node())
-{  
+VTOL::VTOL(Context & context, const VTOLConfig & config)
+: _node(context.node()), _config(config)
+{
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
     context.topicNamespacePrefix() + "fmu/in/vehicle_command" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
     1);
@@ -56,16 +56,12 @@ VTOL::VTOL(Context & context)
       }
     });
 
-    _vehicle_local_position_sub = _node.create_subscription<px4_msgs::msg::VehicleLocalPosition>(
-      context.topicNamespacePrefix() + "fmu/out/vehicle_local_position" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLocalPosition>(),
-      rclcpp::QoS(10).best_effort(),
-      [this](px4_msgs::msg::VehicleLocalPosition::UniquePtr msg){
-        _vehicle_heading = msg->heading; 
-        _vehicle_position_xy_valid = msg->xy_valid; 
-        _vehicle_velocity_xy_valid = msg->v_xy_valid; 
-        _vehicle_position_xy = {msg->x, msg->y}; 
-        _vehicle_velocity_xy = {msg->vx, msg->vy};
-        _vehicle_acceleration_xy = {msg->ax, msg->ay};
+  _vehicle_local_position_sub = _node.create_subscription<px4_msgs::msg::VehicleLocalPosition>(
+    context.topicNamespacePrefix() + "fmu/out/vehicle_local_position" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLocalPosition>(),
+    rclcpp::QoS(10).best_effort(),
+    [this](px4_msgs::msg::VehicleLocalPosition::UniquePtr msg) {
+      _vehicle_heading = msg->heading;
+      _vehicle_velocity_xy = {msg->vx, msg->vy};
     });
 
   _last_command_sent = _node.get_clock()->now();
@@ -87,7 +83,6 @@ void VTOL::to_multicopter()
       (now - _last_command_sent) > 150ms)
     {
       _last_command_sent = now;
-      _backtransition_commanded_position = _vehicle_position_xy; 
 
       px4_msgs::msg::VehicleCommand cmd;
 
@@ -134,60 +129,24 @@ void VTOL::to_fixedwing()
   }
 }
 
-Eigen::Vector3f VTOL::compute_acceleration_setpoint_during_transition()
+Eigen::Vector3f VTOL::compute_acceleration_setpoint_during_transition(
+  std::optional<float> back_transition_deceleration_m_s2)
 {
-  const Eigen::Vector2f velocity_xy_direction = {std::cos(_vehicle_heading), std::sin(_vehicle_heading)}; 
-  bool is_backtransition = (VTOL::get_current_state() == VTOL::State::TRANSITION_TO_MULTICOPTER) ? true : false; 
+  const Eigen::Vector2f velocity_xy_direction = {std::cos(_vehicle_heading), std::sin(
+      _vehicle_heading)};
+  bool is_backtransition =
+    (VTOL::get_current_state() == VTOL::State::TRANSITION_TO_MULTICOPTER) ? true : false;
 
-  float pitch_setpoint = 0.f; 
+  Eigen::Vector2f acceleration_setpoint_during_transition{0.f, 0.f};
 
-  // if we are doing a backtransition and we have gps 
-  if(is_backtransition && _vehicle_position_xy_valid && _vehicle_velocity_xy_valid){
-    pitch_setpoint = VTOL::compute_pitch_setpoint_during_backtransition(); 
+  if (is_backtransition) {
+    const float back_transition_deceleration = back_transition_deceleration_m_s2.value_or(
+      _config.back_transition_deceleration);
+    acceleration_setpoint_during_transition = -back_transition_deceleration * velocity_xy_direction;
   }
 
-  Eigen::Vector2f acceleration_setpoint_during_transition = tanf(pitch_setpoint) * CONSTANTS_ONE_G * -velocity_xy_direction;
-
-  return {acceleration_setpoint_during_transition.x(), acceleration_setpoint_during_transition.y(), NAN};
-
-}
-
-float VTOL::compute_pitch_setpoint_during_backtransition(){
-
-  float deceleration_setpoint = VT_B_DEC_MSS; 
-
-  const Eigen::Vector2f velocity_xy_direction = {std::cos(_vehicle_heading), std::sin(_vehicle_heading)}; 
-  const Eigen::Vector2f back_transition_end_pos = _backtransition_commanded_position + BACK_TRANS_END_DIST * velocity_xy_direction; 
-  const float dist_to_end_pos_in_moving_direction = back_transition_end_pos.dot(velocity_xy_direction); 
-
-  if (dist_to_end_pos_in_moving_direction > __FLT_EPSILON__) {
-    deceleration_setpoint = _vehicle_velocity_xy.squaredNorm() / (2.f * dist_to_end_pos_in_moving_direction);
-  } else{
-    deceleration_setpoint = 2.f * VT_B_DEC_MSS; 
-  }
-
-  deceleration_setpoint = std::min(deceleration_setpoint, 2.f * VT_B_DEC_MSS); 
-
-  // Pitch up to reach a negative accel_in_flight_direction otherwise we decelerate too slow
-
-  const float deceleration = -_vehicle_acceleration_xy.dot(velocity_xy_direction); 
-  const float deceleration_error = deceleration_setpoint - deceleration; 
-
-  const auto now = _node.get_clock()->now(); 
-  float dt = (now - _last_pitch_integrator_update).seconds(); 
-  _last_pitch_integrator_update = now; 
-
-  // Reset for new transition 
-  if(dt > 2.f){
-    dt = 0.f; 
-    _decel_error_bt_int = 0.f; 
-  }
-
-  // Update back-transition deceleration error integrator 
-  _decel_error_bt_int += (VT_B_DEC_I * deceleration_error) * dt; 
-  _decel_error_bt_int = std::clamp(_decel_error_bt_int, 0.f, DECELERATION_INTEGRATOR_LIMIT); 
-
-  return _decel_error_bt_int;
+  return {acceleration_setpoint_during_transition.x(), acceleration_setpoint_during_transition.y(),
+    NAN};
 }
 
 }// namespace px4_ros2
