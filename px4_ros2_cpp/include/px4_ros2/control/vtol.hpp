@@ -18,6 +18,8 @@ namespace px4_ros2
 struct VTOLConfig
 {
   float back_transition_deceleration{2.f}; /**< vehicle deceleration during back-transition [m/s^2]. */
+  float back_transition_deceleration_setpoint_to_pitch_I{0.1f}; /**< Backtransition deceleration setpoint to pitch I gain  [rad s/m]. */
+  float deceleration_integrator_limit{0.3f};
 
   VTOLConfig & withBackTransitionDeceleration(
     const float back_transition_deceleration)
@@ -25,6 +27,23 @@ struct VTOLConfig
     this->back_transition_deceleration = back_transition_deceleration;
     return *this;
   }
+
+  VTOLConfig & withDecelerationIntegratorLimit(
+    const float deceleration_integrator_limit)
+  {
+    this->deceleration_integrator_limit = deceleration_integrator_limit;
+    return *this;
+  }
+
+  VTOLConfig & withBackTransitionDecelerationIGain(
+    const float back_transition_deceleration_setpoint_to_pitch_I)
+  {
+    this->back_transition_deceleration_setpoint_to_pitch_I =
+      back_transition_deceleration_setpoint_to_pitch_I;
+    return *this;
+  }
+
+
 };
 
 /** \ingroup control
@@ -68,6 +87,7 @@ private:
   rclcpp::Subscription<px4_msgs::msg::VehicleLocalPosition>::SharedPtr _vehicle_local_position_sub;
   rclcpp::Time _last_command_sent;
   rclcpp::Time _last_vtol_vehicle_status_received;
+  rclcpp::Time _last_pitch_integrator_update{0, 0, _node.get_clock()->get_clock_type()};
 
   px4_msgs::msg::VehicleStatus::UniquePtr _vehicle_status_msg;
   px4_msgs::msg::VtolVehicleStatus::UniquePtr _vtol_vehicle_status_msg;
@@ -76,14 +96,18 @@ private:
   uint _system_id;
   uint _component_id;
 
-  float _vehicle_heading{0.f};
+  float _vehicle_heading{NAN};
+  float _decel_error_bt_int{0.f};
 
   Eigen::Vector2f _vehicle_velocity_xy{NAN, NAN};
+  Eigen::Vector2f _vehicle_acceleration_xy{NAN, NAN};
 
   VTOL::State _current_state{VTOL::State::UNDEFINED};
 
-  VTOLConfig _config;
+  float compute_pitch_setpoint_during_backtransition(
+    std::optional<float> back_transition_deceleration_m_s2 = std::nullopt);
 
+  VTOLConfig _config;
 };
 
 /** @}*/

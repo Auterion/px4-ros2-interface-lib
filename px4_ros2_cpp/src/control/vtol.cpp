@@ -62,6 +62,8 @@ VTOL::VTOL(Context & context, const VTOLConfig & config)
     [this](px4_msgs::msg::VehicleLocalPosition::UniquePtr msg) {
       _vehicle_heading = msg->heading;
       _vehicle_velocity_xy = {msg->vx, msg->vy};
+      _vehicle_acceleration_xy = {msg->ax, msg->ay};
+
     });
 
   _last_command_sent = _node.get_clock()->now();
@@ -137,16 +139,49 @@ Eigen::Vector3f VTOL::compute_acceleration_setpoint_during_transition(
   bool is_backtransition =
     (VTOL::get_current_state() == VTOL::State::TRANSITION_TO_MULTICOPTER) ? true : false;
 
-  Eigen::Vector2f acceleration_setpoint_during_transition{0.f, 0.f};
+  float pitch_setpoint = 0.f;
 
   if (is_backtransition) {
-    const float back_transition_deceleration = back_transition_deceleration_m_s2.value_or(
-      _config.back_transition_deceleration);
-    acceleration_setpoint_during_transition = -back_transition_deceleration * velocity_xy_direction;
+    pitch_setpoint =
+      compute_pitch_setpoint_during_backtransition(back_transition_deceleration_m_s2);
   }
+
+  Eigen::Vector2f acceleration_setpoint_during_transition = tanf(pitch_setpoint) * CONSTANTS_ONE_G *
+    -velocity_xy_direction;
 
   return {acceleration_setpoint_during_transition.x(), acceleration_setpoint_during_transition.y(),
     NAN};
+}
+
+float VTOL::compute_pitch_setpoint_during_backtransition(
+  std::optional<float> back_transition_deceleration_m_s2)
+{
+
+  const float deceleration_setpoint = back_transition_deceleration_m_s2.value_or(
+    _config.back_transition_deceleration);
+  const Eigen::Vector2f velocity_xy_direction = {std::cos(_vehicle_heading), std::sin(
+      _vehicle_heading)};
+
+  // Pitch up to reach a negative accel_in_flight_direction otherwise we decelerate too slow
+  const float deceleration = -_vehicle_acceleration_xy.dot(velocity_xy_direction);
+  const float deceleration_error = deceleration_setpoint - deceleration;
+
+  const auto now = _node.get_clock()->now();
+  float dt = (now - _last_pitch_integrator_update).seconds();
+  _last_pitch_integrator_update = now;
+
+  // Reset for new transition
+  if (dt > 2.f) {
+    dt = 0.f;
+    _decel_error_bt_int = 0.f;
+  }
+
+  // Update back-transition deceleration error integrator
+  _decel_error_bt_int +=
+    (_config.back_transition_deceleration_setpoint_to_pitch_I * deceleration_error) * dt;
+  _decel_error_bt_int = std::clamp(_decel_error_bt_int, 0.f, _config.deceleration_integrator_limit);
+
+  return _decel_error_bt_int;
 }
 
 }// namespace px4_ros2
