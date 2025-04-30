@@ -10,11 +10,13 @@
 
 using namespace std::chrono_literals;
 
+static constexpr float CONSTANTS_ONE_G = 9.80665f; // m/s^2
+
 namespace px4_ros2
 {
 
-VTOL::VTOL(Context & context)
-: _node(context.node())
+VTOL::VTOL(Context & context, const VTOLConfig & config)
+: _node(context.node()), _config(config)
 {
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
     context.topicNamespacePrefix() + "fmu/in/vehicle_command" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
@@ -52,6 +54,16 @@ VTOL::VTOL(Context & context)
         default:
           _current_state = VTOL::State::UNDEFINED;
       }
+    });
+
+  _vehicle_local_position_sub = _node.create_subscription<px4_msgs::msg::VehicleLocalPosition>(
+    context.topicNamespacePrefix() + "fmu/out/vehicle_local_position" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLocalPosition>(),
+    rclcpp::QoS(10).best_effort(),
+    [this](px4_msgs::msg::VehicleLocalPosition::UniquePtr msg) {
+      _vehicle_heading = msg->heading;
+      _vehicle_velocity_xy = {msg->vx, msg->vy};
+      _vehicle_acceleration_xy = {msg->ax, msg->ay};
+
     });
 
   _last_command_sent = _node.get_clock()->now();
@@ -118,5 +130,58 @@ void VTOL::to_fixedwing()
     RCLCPP_WARN(_node.get_logger(), "Current VTOL vehicle state unknown. Not able to transition.");
   }
 }
+
+Eigen::Vector3f VTOL::compute_acceleration_setpoint_during_transition(
+  std::optional<float> back_transition_deceleration_m_s2)
+{
+  const Eigen::Vector2f velocity_xy_direction = {std::cos(_vehicle_heading), std::sin(
+      _vehicle_heading)};
+  bool is_backtransition =
+    (VTOL::get_current_state() == VTOL::State::TRANSITION_TO_MULTICOPTER) ? true : false;
+
+  float pitch_setpoint = 0.f;
+
+  if (is_backtransition) {
+    pitch_setpoint =
+      compute_pitch_setpoint_during_backtransition(back_transition_deceleration_m_s2);
+  }
+
+  Eigen::Vector2f acceleration_setpoint_during_transition = tanf(pitch_setpoint) * CONSTANTS_ONE_G *
+    -velocity_xy_direction;
+
+  return {acceleration_setpoint_during_transition.x(), acceleration_setpoint_during_transition.y(),
+    NAN};
 }
-// namespace px4_ros2
+
+float VTOL::compute_pitch_setpoint_during_backtransition(
+  std::optional<float> back_transition_deceleration_m_s2)
+{
+
+  const float deceleration_setpoint = back_transition_deceleration_m_s2.value_or(
+    _config.back_transition_deceleration);
+  const Eigen::Vector2f velocity_xy_direction = {std::cos(_vehicle_heading), std::sin(
+      _vehicle_heading)};
+
+  // Pitch up to reach a negative accel_in_flight_direction otherwise we decelerate too slow
+  const float deceleration = -_vehicle_acceleration_xy.dot(velocity_xy_direction);
+  const float deceleration_error = deceleration_setpoint - deceleration;
+
+  const auto now = _node.get_clock()->now();
+  float dt = (now - _last_pitch_integrator_update).seconds();
+  _last_pitch_integrator_update = now;
+
+  // Reset for new transition
+  if (dt > 2.f) {
+    dt = 0.f;
+    _decel_error_bt_int = 0.f;
+  }
+
+  // Update back-transition deceleration error integrator
+  _decel_error_bt_int +=
+    (_config.back_transition_deceleration_setpoint_to_pitch_I * deceleration_error) * dt;
+  _decel_error_bt_int = std::clamp(_decel_error_bt_int, 0.f, _config.deceleration_integrator_limit);
+
+  return _decel_error_bt_int;
+}
+
+}// namespace px4_ros2
