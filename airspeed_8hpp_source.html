@@ -145,19 +145,10 @@ $(document).ready(function(){initNavTree('airspeed_8hpp_source.html',''); initRe
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keyword">const</span> px4_msgs::msg::AirspeedValidated &amp; aspd = <a class="code hl_function" href="classpx4__ros2_1_1Subscription.html#ac0369b75dbd7c349451771d1885e3a97">last</a>();</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">return</span> aspd.true_airspeed_m_s;</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  }</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <span class="keywordtype">bool</span> airspeedSensorMeasurementValid()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="keyword">  </span>{</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keywordflow">if</span> (!<a class="code hl_function" href="classpx4__ros2_1_1Subscription.html#a720ef682a71cefa9f7da922a7f189e32">lastValid</a>()) {</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    }</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keyword">const</span> px4_msgs::msg::AirspeedValidated &amp; aspd = <a class="code hl_function" href="classpx4__ros2_1_1Subscription.html#ac0369b75dbd7c349451771d1885e3a97">last</a>();</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordflow">return</span> aspd.airspeed_sensor_measurement_valid;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  }</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>};</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>};</div>
 </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition</b> context.hpp:20</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1OdometryAirspeed_html"><div class="ttname"><a href="classpx4__ros2_1_1OdometryAirspeed.html">px4_ros2::OdometryAirspeed</a></div><div class="ttdoc">Provides access to the vehicle's airspeed estimates.</div><div class="ttdef"><b>Definition</b> airspeed.hpp:23</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Subscription_html"><div class="ttname"><a href="classpx4__ros2_1_1Subscription.html">px4_ros2::Subscription</a></div><div class="ttdoc">Provides a subscription to arbitrary ROS topics.</div><div class="ttdef"><b>Definition</b> subscription.hpp:23</div></div>
