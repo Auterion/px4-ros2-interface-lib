@@ -114,9 +114,8 @@ Inheritance diagram for px4_ros2::OdometryLocalPosition:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad2fc9b90251a3bf7fddfbd2874ddc672" id="r_ad2fc9b90251a3bf7fddfbd2874ddc672"><td class="memItemLeft" align="right" valign="top"><a id="ad2fc9b90251a3bf7fddfbd2874ddc672" name="ad2fc9b90251a3bf7fddfbd2874ddc672"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>OdometryLocalPosition</b> (<a class="el" href="classpx4__ros2_1_1Context.html">Context</a> &amp;context)</td></tr>
-<tr class="separator:ad2fc9b90251a3bf7fddfbd2874ddc672"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af05e8fd5845d7e7b34e209210e221ccc" id="r_af05e8fd5845d7e7b34e209210e221ccc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1OdometryLocalPosition.html#af05e8fd5845d7e7b34e209210e221ccc">OdometryLocalPosition</a> (<a class="el" href="classpx4__ros2_1_1Context.html">Context</a> &amp;context, bool local_position_is_optional=false)</td></tr>
+<tr class="separator:af05e8fd5845d7e7b34e209210e221ccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31d56b5e4969f5428271d23463ea56de" id="r_a31d56b5e4969f5428271d23463ea56de"><td class="memItemLeft" align="right" valign="top"><a id="a31d56b5e4969f5428271d23463ea56de" name="a31d56b5e4969f5428271d23463ea56de"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>positionXYValid</b> () const</td></tr>
 <tr class="separator:a31d56b5e4969f5428271d23463ea56de"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -170,7 +169,45 @@ rclcpp::Node &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_node</
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides access to the vehicle's local position estimate. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="af05e8fd5845d7e7b34e209210e221ccc" name="af05e8fd5845d7e7b34e209210e221ccc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af05e8fd5845d7e7b34e209210e221ccc">&#9670;&#160;</a></span>OdometryLocalPosition()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">px4_ros2::OdometryLocalPosition::OdometryLocalPosition </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classpx4__ros2_1_1Context.html">Context</a> &amp;&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>local_position_is_optional</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>setting local_position_is_optional to true allows to create a mode that uses local position data but doesn't necessarly require local position to be available (for instance if the mode reads altitude data from vehicle_local_position). Reading XY position without a correct source of positional data is not recommended </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a50193dab84758c3f08e5a5b947fad5f8" name="a50193dab84758c3f08e5a5b947fad5f8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a50193dab84758c3f08e5a5b947fad5f8">&#9670;&#160;</a></span>heading()</h2>
 

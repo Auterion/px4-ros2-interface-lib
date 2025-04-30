@@ -59,7 +59,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "airspeed_8hpp_source.html",
-"structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12"
+"structpx4__ros2_1_1ModeBase_1_1Settings.html#af61499f0183e347cb580407d64b4c3cd"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

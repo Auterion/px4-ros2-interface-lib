@@ -84,7 +84,8 @@ var NAVTREEINDEX0 =
 "classpx4__ros2_1_1OdometryGlobalPosition.html#a7bf7ab1b9f1f2ed6a8a833277247fa21":[3,3,3,0],
 "classpx4__ros2_1_1OdometryGlobalPosition.html#ae9f5c281e0a629e491ae4f03c5b5daba":[3,3,3,1],
 "classpx4__ros2_1_1OdometryLocalPosition.html":[3,3,4],
-"classpx4__ros2_1_1OdometryLocalPosition.html#a50193dab84758c3f08e5a5b947fad5f8":[3,3,4,0],
+"classpx4__ros2_1_1OdometryLocalPosition.html#a50193dab84758c3f08e5a5b947fad5f8":[3,3,4,1],
+"classpx4__ros2_1_1OdometryLocalPosition.html#af05e8fd5845d7e7b34e209210e221ccc":[3,3,4,0],
 "classpx4__ros2_1_1PeripheralActuatorControls.html":[3,1,1],
 "classpx4__ros2_1_1PeripheralActuatorControls.html#a59753e650558081296ec4ef83de00181":[3,1,1,1],
 "classpx4__ros2_1_1PeripheralActuatorControls.html#aa290a7d4d1221c8d184752890bae88a3":[3,1,1,0],
@@ -98,8 +99,9 @@ var NAVTREEINDEX0 =
 "classpx4__ros2_1_1Subscription.html#a976b417f3e21c2f6bb715f2410deadde":[3,3,5,3],
 "classpx4__ros2_1_1Subscription.html#ac0369b75dbd7c349451771d1885e3a97":[3,3,5,0],
 "classpx4__ros2_1_1TrajectorySetpointType.html":[4,0,0,38],
-"classpx4__ros2_1_1TrajectorySetpointType.html#a40b129f786de5afecc9b6a359ca741d6":[4,0,0,38,1],
-"classpx4__ros2_1_1TrajectorySetpointType.html#ab7d6885c013971edaf2a497c72d9e157":[4,0,0,38,0],
+"classpx4__ros2_1_1TrajectorySetpointType.html#a40b129f786de5afecc9b6a359ca741d6":[4,0,0,38,2],
+"classpx4__ros2_1_1TrajectorySetpointType.html#a98113db5fcb74712bfe3b909cab554f8":[4,0,0,38,0],
+"classpx4__ros2_1_1TrajectorySetpointType.html#ab7d6885c013971edaf2a497c72d9e157":[4,0,0,38,1],
 "classpx4__ros2_1_1VehicleStatus.html":[3,5,3],
 "classpx4__ros2_1_1VehicleStatus.html#a199bc3dc1729c1631f32bf48b13b1de7":[3,5,3,1],
 "classpx4__ros2_1_1VehicleStatus.html#a4ab528a46af2e30f1fe0ea295b699309":[3,5,3,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "structpx4__ros2_1_1MessageCompatibilityTopic.html#a8b09af8673cb3ee37e23cf87a5eadd45":[3,0,1,0],
 "structpx4__ros2_1_1ModeBase_1_1Settings.html":[3,0,2,0],
 "structpx4__ros2_1_1ModeBase_1_1Settings.html#a52d24121ecefb1aa62d4c18d3f37dc19":[3,0,2,0,1],
-"structpx4__ros2_1_1ModeBase_1_1Settings.html#ab9b70687e48871121d6e239e6c52c8f0":[3,0,2,0,0],
-"structpx4__ros2_1_1ModeBase_1_1Settings.html#af61499f0183e347cb580407d64b4c3cd":[3,0,2,0,2],
-"structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html":[3,0,3,0]
+"structpx4__ros2_1_1ModeBase_1_1Settings.html#ab9b70687e48871121d6e239e6c52c8f0":[3,0,2,0,0]
 };

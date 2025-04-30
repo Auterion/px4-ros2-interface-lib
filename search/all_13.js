@@ -7,7 +7,7 @@ var searchData=
   ['topic_5fname_4',['topic_name',['../structpx4__ros2_1_1MessageCompatibilityTopic.html#a8b09af8673cb3ee37e23cf87a5eadd45',1,'px4_ros2::MessageCompatibilityTopic']]],
   ['topic_5ftype_5',['topic_type',['../structpx4__ros2_1_1MessageCompatibilityTopic.html#a06daee8ae5be471400bb598e5a1b9ced',1,'px4_ros2::MessageCompatibilityTopic']]],
   ['trajectorysetpoint_6',['TrajectorySetpoint',['../structpx4__ros2_1_1TrajectorySetpoint.html',1,'px4_ros2']]],
-  ['trajectorysetpointtype_7',['TrajectorySetpointType',['../classpx4__ros2_1_1TrajectorySetpointType.html',1,'px4_ros2']]],
+  ['trajectorysetpointtype_7',['trajectorysetpointtype',['../classpx4__ros2_1_1TrajectorySetpointType.html',1,'px4_ros2::TrajectorySetpointType'],['../classpx4__ros2_1_1TrajectorySetpointType.html#a98113db5fcb74712bfe3b909cab554f8',1,'px4_ros2::TrajectorySetpointType::TrajectorySetpointType()']]],
   ['translate_20messages_8',['Option 2: Translate Messages',['../index.html#autotoc_md4',1,'']]],
   ['types_9',['Setpoint Types',['../group__setpoint__types.html',1,'']]]
 ];

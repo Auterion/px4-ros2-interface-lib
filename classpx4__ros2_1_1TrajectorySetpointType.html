@@ -114,9 +114,8 @@ Inheritance diagram for px4_ros2::TrajectorySetpointType:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aab5bdd0f1c2740575dc591437f72fb9e" id="r_aab5bdd0f1c2740575dc591437f72fb9e"><td class="memItemLeft" align="right" valign="top"><a id="aab5bdd0f1c2740575dc591437f72fb9e" name="aab5bdd0f1c2740575dc591437f72fb9e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>TrajectorySetpointType</b> (<a class="el" href="classpx4__ros2_1_1Context.html">Context</a> &amp;context)</td></tr>
-<tr class="separator:aab5bdd0f1c2740575dc591437f72fb9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98113db5fcb74712bfe3b909cab554f8" id="r_a98113db5fcb74712bfe3b909cab554f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1TrajectorySetpointType.html#a98113db5fcb74712bfe3b909cab554f8">TrajectorySetpointType</a> (<a class="el" href="classpx4__ros2_1_1Context.html">Context</a> &amp;context, bool local_position_is_optional=false)</td></tr>
+<tr class="separator:a98113db5fcb74712bfe3b909cab554f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a666f17cb5ccd0c695a93119bd4b69ef1" id="r_a666f17cb5ccd0c695a93119bd4b69ef1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1TrajectorySetpointType.html#a666f17cb5ccd0c695a93119bd4b69ef1">getConfiguration</a> () override</td></tr>
 <tr class="separator:a666f17cb5ccd0c695a93119bd4b69ef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08391ac38a3bd117f41414a41b662d46" id="r_a08391ac38a3bd117f41414a41b662d46"><td class="memItemLeft" align="right" valign="top"><a id="a08391ac38a3bd117f41414a41b662d46" name="a08391ac38a3bd117f41414a41b662d46"></a>
@@ -159,7 +158,45 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onUpdate</b> ()</td><
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Setpoint type for trajectory control. </p>
 <p>Control entries must not be contradicting. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a98113db5fcb74712bfe3b909cab554f8" name="a98113db5fcb74712bfe3b909cab554f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98113db5fcb74712bfe3b909cab554f8">&#9670;&#160;</a></span>TrajectorySetpointType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">px4_ros2::TrajectorySetpointType::TrajectorySetpointType </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classpx4__ros2_1_1Context.html">Context</a> &amp;&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>local_position_is_optional</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>setting local_position_is_optional to true allows to create a mode that uses trajectory setpoint but doesn't necessarly require local position. Sending XY position setpoint without a correct source of positional data is not recommended </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a666f17cb5ccd0c695a93119bd4b69ef1" name="a666f17cb5ccd0c695a93119bd4b69ef1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a666f17cb5ccd0c695a93119bd4b69ef1">&#9670;&#160;</a></span>getConfiguration()</h2>
 
