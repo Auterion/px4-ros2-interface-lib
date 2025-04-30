@@ -50,15 +50,6 @@ public:
     const px4_msgs::msg::AirspeedValidated & aspd = last();
     return aspd.true_airspeed_m_s;
   }
-
-  bool airspeedSensorMeasurementValid() const
-  {
-    if (!lastValid()) {
-      return false;
-    }
-    const px4_msgs::msg::AirspeedValidated & aspd = last();
-    return aspd.airspeed_sensor_measurement_valid;
-  }
 };
 
 /** @}*/
