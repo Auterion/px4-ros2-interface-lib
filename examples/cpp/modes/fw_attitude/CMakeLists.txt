@@ -18,7 +18,7 @@ find_package(px4_ros2_cpp REQUIRED)
 include_directories(include ${Eigen3_INCLUDE_DIRS})
 add_executable(example_mode_fw_attitude
         src/main.cpp)
-ament_target_dependencies(example_mode_fw_attitude px4_ros2_cpp rclcpp)
+target_link_libraries(example_mode_fw_attitude PUBLIC px4_ros2_cpp::px4_ros2_cpp rclcpp::rclcpp)
 
 install(TARGETS
         example_mode_fw_attitude
