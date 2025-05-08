@@ -17,7 +17,7 @@ jobs:
           submodules: true
 
       - name: Install system hooks
-        run: sudo apt update && sudo apt install -qq ament-cmake-uncrustify ament-lint
+        run: sudo apt-get update && sudo apt-get install -qq ament-cmake-uncrustify ament-lint
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.0
 
