@@ -7,6 +7,7 @@
 #include <px4_ros2/utils/message_version.hpp>
 
 #include "map_projection_impl.hpp"
+#include <px4_ros2/common/exception.hpp>
 
 namespace px4_ros2
 {
@@ -56,7 +57,7 @@ bool MapProjection::isInitialized() const
 void MapProjection::assertInitalized() const
 {
   if (!isInitialized()) {
-    throw std::runtime_error("Map projection impossible: uninitialized.");
+    throw Exception("Map projection impossible: uninitialized.");
   }
 }
 
