@@ -81,7 +81,7 @@ public:
   /**
   * Send command and wait for ack/nack
   */
-  Result sendCommandSync(
+  virtual Result sendCommandSync(
     uint32_t command, float param1 = NAN, float param2 = NAN, float param3 = NAN,
     float param4 = NAN,
     float param5 = NAN, float param6 = NAN, float param7 = NAN);
@@ -131,6 +131,10 @@ public:
    * @return true on success
    */
   bool deferFailsafesSync(bool enabled, int timeout_s = 0);
+
+protected:
+  void setSkipMessageCompatibilityCheck() {_skip_message_compatibility_check = true;}
+  void overrideRegistration(const std::shared_ptr<Registration> & registration);
 
 private:
   class ScheduledMode
@@ -185,6 +189,7 @@ private:
   rclcpp::Node & _node;
   const std::string _topic_namespace_prefix;
   const Settings _settings;
+  bool _skip_message_compatibility_check{false};
   ModeBase & _owned_mode;
 
   std::shared_ptr<Registration> _registration;

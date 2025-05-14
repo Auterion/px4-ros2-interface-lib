@@ -6,18 +6,19 @@
 #pragma once
 
 #include <src/components/registration.hpp>
+#include <utility>
 
 class FakeRegistration : public Registration
 {
 public:
-  explicit FakeRegistration(rclcpp::Node & node)
+  FakeRegistration(rclcpp::Node & node)
   : Registration(node)
   {}
   ~FakeRegistration() override = default;
 
   bool doRegister(const RegistrationSettings & settings) override
   {
-    setRegistrationDetails(_arming_check_id, _mode_id, _mode_executor_id);
+    setRegistrationDetails(_arming_check_id, _mode_id, _mode_executor_id, settings.name);
     return true;
   }
   void doUnregister() override {}

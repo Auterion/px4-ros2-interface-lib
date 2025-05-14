@@ -53,8 +53,8 @@ bool ModeExecutorBase::doRegister()
 
   assert(!_registration->registered());
 
-  if (!waitForFMU(node(), 15s) ||
-    !messageCompatibilityCheck(node(), {ALL_PX4_ROS2_MESSAGES}, _topic_namespace_prefix))
+  if (!_skip_message_compatibility_check && (!waitForFMU(node(), 15s) ||
+    !messageCompatibilityCheck(node(), {ALL_PX4_ROS2_MESSAGES}, _topic_namespace_prefix)))
   {
     return false;
   }
@@ -455,6 +455,13 @@ bool ModeExecutorBase::deferFailsafesSync(bool enabled, int timeout_s)
   }
 
   return true;
+}
+
+void ModeExecutorBase::overrideRegistration(const std::shared_ptr<Registration> & registration)
+{
+  assert(!_registration->registered());
+  _owned_mode.overrideRegistration(registration);
+  _registration = registration;
 }
 
 ModeExecutorBase::ScheduledMode::ScheduledMode(
