@@ -113,6 +113,11 @@ public:
 
   RequirementFlags & modeRequirements() {return _mode_requirements;}
 
+  void disableWatchdogTimer()
+  {
+    _watchdog_timer.reset();
+  }
+
 private:
   friend class ModeBase;
   friend class ModeExecutorBase;
