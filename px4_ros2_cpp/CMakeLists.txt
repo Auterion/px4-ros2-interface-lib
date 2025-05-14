@@ -65,6 +65,8 @@ set(HEADER_FILES
         include/px4_ros2/vehicle_state/land_detected.hpp
         include/px4_ros2/vehicle_state/vehicle_status.hpp
         include/px4_ros2/vehicle_state/vtol_status.hpp
+        include/px4_ros2/third_party/nlohmann/json.hpp
+        include/px4_ros2/third_party/nlohmann/json_fwd.hpp
 )
 
 add_library(px4_ros2_cpp
