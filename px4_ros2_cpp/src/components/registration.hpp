@@ -53,7 +53,7 @@ public:
 protected:
   void setRegistrationDetails(
     int arming_check_id, px4_ros2::ModeBase::ModeID mode_id,
-    int mode_executor_id);
+    int mode_executor_id, const std::string & name);
 
 private:
   rclcpp::Subscription<px4_msgs::msg::RegisterExtComponentReply>::SharedPtr
