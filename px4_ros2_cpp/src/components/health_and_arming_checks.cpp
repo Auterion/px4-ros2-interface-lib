@@ -80,7 +80,7 @@ void HealthAndArmingChecks::watchdogTimerUpdate()
   if (_registration->registered()) {
     if (!_check_triggered && _shutdown_on_timeout) {
       rclcpp::shutdown();
-      throw std::runtime_error(
+      throw Exception(
               "Timeout, no request received from FMU, exiting (this can happen on FMU reboots)");
     }
 
