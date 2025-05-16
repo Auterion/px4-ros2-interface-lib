@@ -6,6 +6,7 @@
 #pragma once
 
 #include <px4_ros2/common/context.hpp>
+#include <px4_ros2/utils/message_version.hpp>
 
 using namespace std::chrono_literals; // NOLINT
 
@@ -27,7 +28,8 @@ public:
   Subscription(Context & context, const std::string & topic)
   : _node(context.node())
   {
-    const std::string namespaced_topic = context.topicNamespacePrefix() + topic;
+    const std::string namespaced_topic = context.topicNamespacePrefix() + topic +
+      px4_ros2::getMessageNameVersion<RosMessageType>();
     _subscription = _node.create_subscription<RosMessageType>(
       namespaced_topic, rclcpp::QoS(1).best_effort(),
       [this](const typename RosMessageType::UniquePtr msg) {
