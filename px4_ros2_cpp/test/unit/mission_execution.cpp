@@ -1533,12 +1533,17 @@ public:
     const px4_ros2::ActionArguments & arguments,
     const std::function<void()> & on_completed) override
   {
+    _handler = handler;
     handler->runAction(
       "nonExistentAction", {}, []
       {
         EXPECT_TRUE(false) << "on_completed called, but should never be";
       });
   }
+
+  std::shared_ptr<px4_ros2::ActionHandler> handler() { return _handler; }
+private:
+  std::shared_ptr<px4_ros2::ActionHandler> _handler;
 };
 
 TEST_F(MissionExecutionTester, failureDefault)
@@ -1592,6 +1597,34 @@ FakeAutopilot: sending mode completed (id=12)
 Got matching ModeCompleted message, result: 0
 onFailure action completed
 )V0G0N");
+}
+
+TEST_F(MissionExecutionTester, failureInvalidHandler)
+{
+  // Test that the action handler becomes invalid after a failure/abort.
+  // It ensures that actions using timers to run actions after being activated are canceled when interrupted
+  // (either by an abort or deactivation).
+  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"), px4_ros2::ActionItem("customActionTriggerFailure")});
+
+  px4_ros2::MissionExecutor::Configuration config;
+  std::shared_ptr<CustomActionTriggerFailure> action;
+  config.custom_actions_factory.emplace_back([&action](px4_ros2::ModeBase & mode)
+  {
+    action = std::make_shared<CustomActionTriggerFailure>(mode);
+    return action;
+  });
+  MissionExecutorTest mission_executor("my mission", config, *node, fake_autopilot);
+  ASSERT_TRUE(mission_executor.doRegister());
+  mission_executor.setMission(mission);
+
+  mission_executor.setModeAndArm(mission_executor.modeId());
+
+  ASSERT_TRUE(waitFor(node, [&action]
+  {
+    return action->handler() != nullptr;
+  }));
+
+  EXPECT_FALSE(action->handler()->isValid());
 }
 
 class CustomOnFailureAction : public px4_ros2::ActionInterface
