@@ -243,6 +243,7 @@ private:
   void setCurrentMissionIndex(int index);
 
   void abort(AbortReason reason);
+  void invalidateActionHandler();
 
   void savePersistentState();
   void clearPersistentState() const;
@@ -258,6 +259,7 @@ private:
   std::unique_ptr<ActionStateKeeper> addContinousAction(const ActionState & state);
   void removeContinousAction(ActionID id);
   void runStoredActions();
+  void deactivateAllActions();
 
   struct PersistentState
   {
@@ -337,12 +339,20 @@ public:
     ModeBase::ModeID mode_id,
     const std::function<void()> & on_completed, const std::function<void()> & on_failure = nullptr)
   {
+    if (!_valid) {
+      RCLCPP_WARN(_mission_executor._node.get_logger(), "ActionHandler is not valid anymore");
+      return;
+    }
     _mission_executor.runMode(mode_id, on_completed, on_failure);
   }
   void runAction(
     const std::string & action_name, const ActionArguments & arguments,
     const std::function<void()> & on_completed)
   {
+    if (!_valid) {
+      RCLCPP_WARN(_mission_executor._node.get_logger(), "ActionHandler is not valid anymore");
+      return;
+    }
     _mission_executor.runAction(action_name, arguments, on_completed);
   }
   void runTrajectory(
@@ -356,7 +366,14 @@ public:
   /**
    * @brief Reset the current trajectory config options to the mission defaults
    */
-  void clearTrajectoryOptions() {_mission_executor.clearTrajectoryOptions();}
+  void clearTrajectoryOptions()
+  {
+    if (!_valid) {
+      RCLCPP_WARN(_mission_executor._node.get_logger(), "ActionHandler is not valid anymore");
+      return;
+    }
+    _mission_executor.clearTrajectoryOptions();
+  }
   /**
    * @brief Override the trajectory config options
    *
@@ -364,6 +381,10 @@ public:
    */
   void setTrajectoryOptions(const TrajectoryOptions & options)
   {
+    if (!_valid) {
+      RCLCPP_WARN(_mission_executor._node.get_logger(), "ActionHandler is not valid anymore");
+      return;
+    }
     _mission_executor.setTrajectoryOptions(options);
   }
 
@@ -387,6 +408,9 @@ public:
     const std::string & action_name,
     const ActionArguments & arguments)
   {
+    if (!_valid) {
+      return nullptr;
+    }
     return _mission_executor.addContinousAction(
       MissionExecutor::ActionState{action_name,
         arguments});
@@ -394,7 +418,20 @@ public:
 
   const Mission & mission() const {return _mission_executor.mission();}
 
+  /**
+   * @brief Check if the handler is still valid
+   *
+   * If the handler is invalid, it cannot be used anymore. It will be set invalid when the mission is aborted,
+   * or deactivated.
+   * This is useful for actions that use timers to run actions.
+   */
+  bool isValid() const { return _valid; }
+
 private:
+  friend class MissionExecutor;
+  void setInvalid() {_valid = false;}
+
+  bool _valid{true};
   MissionExecutor & _mission_executor;
 };
 

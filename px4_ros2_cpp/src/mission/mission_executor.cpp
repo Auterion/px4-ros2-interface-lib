@@ -324,6 +324,13 @@ void MissionExecutor::runStoredActions()
   }
 }
 
+void MissionExecutor::deactivateAllActions()
+{
+  for (auto & [name, action] : _actions) {
+    action->deactivate();
+  }
+}
+
 void MissionExecutor::savePersistentState()
 {
   if (_persistence_filename.empty()) {
@@ -544,6 +551,7 @@ void MissionExecutor::onActivate()
 void MissionExecutor::onDeactivate(ModeExecutorBase::DeactivateReason reason)
 {
   _is_active = false;
+  invalidateActionHandler();
 
   // If landed and at the last item, or the last item is completed, flag the mission as done
   const bool landed = _land_detected->lastValid(3s) && _land_detected->landed();
@@ -557,10 +565,8 @@ void MissionExecutor::onDeactivate(ModeExecutorBase::DeactivateReason reason)
     savePersistentState();
   }
 
-  // Deactivate all actions
-  for (auto & [name, action] : _actions) {
-    action->deactivate();
-  }
+  deactivateAllActions();
+
   if (_on_deactivated) {
     _reporting->callAsync(_on_deactivated);
   }
@@ -786,6 +792,7 @@ void MissionExecutor::setCurrentMissionIndex(int index)
 
 void MissionExecutor::abort(AbortReason reason)
 {
+  invalidateActionHandler();
   const std::string reason_str = abortReasonStr(reason);
   RCLCPP_DEBUG(
     _node.get_logger(), "Aborting mission (reason: %s, recursion level: %i)",
@@ -797,6 +804,8 @@ void MissionExecutor::abort(AbortReason reason)
     RCLCPP_ERROR(_node.get_logger(), "Maximum abort recursion level reached");
     return;
   }
+
+  deactivateAllActions();
 
   ++_abort_recursion_level;
   if (_actions.find("onFailure") == _actions.end()) {
@@ -821,10 +830,20 @@ void MissionExecutor::abort(AbortReason reason)
   --_abort_recursion_level;
 }
 
+void MissionExecutor::invalidateActionHandler()
+{
+  _action_handler->setInvalid();
+  _action_handler = std::make_shared<ActionHandler>(*this);
+}
+
 void ActionHandler::runTrajectory(
   const std::shared_ptr<Mission> & trajectory, const std::function<void()> & on_completed,
   bool stop_at_last_item)
 {
+  if (!_valid) {
+    RCLCPP_WARN(_mission_executor._node.get_logger(), "ActionHandler is not valid anymore");
+    return;
+  }
   RCLCPP_DEBUG(
     _mission_executor._node.get_logger(), "Running custom trajectory (%lu items)",
     trajectory->items().size());
