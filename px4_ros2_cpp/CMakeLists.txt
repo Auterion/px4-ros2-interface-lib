@@ -36,6 +36,7 @@ set(HEADER_FILES
         include/px4_ros2/control/peripheral_actuators.hpp
         include/px4_ros2/control/setpoint_types/direct_actuators.hpp
         include/px4_ros2/control/setpoint_types/goto.hpp
+        include/px4_ros2/control/setpoint_types/fixedwing_lateral_longitudinal.hpp
         include/px4_ros2/control/setpoint_types/experimental/attitude.hpp
         include/px4_ros2/control/setpoint_types/experimental/rates.hpp
         include/px4_ros2/control/setpoint_types/experimental/trajectory.hpp
@@ -71,6 +72,7 @@ add_library(px4_ros2_cpp
         src/control/peripheral_actuators.cpp
         src/control/setpoint_types/direct_actuators.cpp
         src/control/setpoint_types/goto.cpp
+        src/control/setpoint_types/fixedwing_lateral_longitudinal.cpp
         src/control/setpoint_types/experimental/attitude.cpp
         src/control/setpoint_types/experimental/rates.cpp
         src/control/setpoint_types/experimental/trajectory.cpp
