@@ -535,7 +535,7 @@ void MissionExecutor::onActivate()
 
   if (_actions.find("onResume") == _actions.end() || start_from_beginning) {
     runStoredActions();
-    runCurrentMissionItem();
+    runCurrentMissionItem(!start_from_beginning);
   } else {
     nlohmann::json arguments = getOnResumeStateAndClear();
     arguments["action"] = "resume";
@@ -543,7 +543,7 @@ void MissionExecutor::onActivate()
       "onResume", ActionArguments(arguments), [this]()
       {
         runStoredActions();
-        runCurrentMissionItem();
+        runCurrentMissionItem(true);
       });
   }
 }
@@ -661,10 +661,10 @@ void MissionExecutor::runNextMissionItem()
     index = *_state.current_index + 1;
   }
   setCurrentMissionIndex(index);
-  runCurrentMissionItem();
+  runCurrentMissionItem(false);
 }
 
-void MissionExecutor::runCurrentMissionItem()
+void MissionExecutor::runCurrentMissionItem(bool resuming)
 {
   if (!_state.current_index.has_value()) {
     RCLCPP_ERROR(_node.get_logger(), "No current mission index, entering Hold");
@@ -697,13 +697,17 @@ void MissionExecutor::runCurrentMissionItem()
           {
             setCurrentMissionIndex(index + 1);
             if (index == end_index) {
-              runCurrentMissionItem();
+              runCurrentMissionItem(false);
             }
           }, should_stop_at_index);
       },
       [&](const ActionItem & action_item)
       {
-        runAction(action_item.name, action_item.arguments, [this]() {runNextMissionItem();});
+        nlohmann::json arguments = action_item.arguments.json();
+        if (resuming) {
+          arguments["internal:resuming"] = true;
+        }
+        runAction(action_item.name, ActionArguments(arguments), [this]() {runNextMissionItem();});
       }
     },
     item);

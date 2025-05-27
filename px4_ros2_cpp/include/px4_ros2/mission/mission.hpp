@@ -39,6 +39,13 @@ public:
   template<typename T>
   T at(const std::string & key) const;
 
+  /**
+   * @brief Check if the action is being resumed
+   *
+   * This is set when the mission was interrupted and resumed while executing this specific action.
+   */
+  bool resuming() const;
+
 private:
   std::shared_ptr<nlohmann::json> _data;
 };
