@@ -236,7 +236,7 @@ private:
     const std::function<void(int)> & on_index_reached, bool stop_at_last_item);
 
   void runNextMissionItem();
-  void runCurrentMissionItem();
+  void runCurrentMissionItem(bool resuming);
   void resetMissionState();
   std::pair<int, bool> getNextTrajectorySegment(int start_index) const;
   bool currentActionSupportsResumeFromLanded() const;
@@ -433,7 +433,7 @@ public:
    * or deactivated.
    * This is useful for actions that use timers to run actions.
    */
-  bool isValid() const { return _valid; }
+  bool isValid() const {return _valid;}
 
 private:
   friend class MissionExecutor;

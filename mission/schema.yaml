@@ -148,6 +148,7 @@ properties:
                     type: boolean
 
             # Allow defining any other action with arbitrary parameters
+            # Note: parameters starting with 'internal:' are reserved for internal use
 
     required: [ items ]
     additionalProperties: false

@@ -56,6 +56,11 @@ bool ActionArguments::contains(const std::string & key) const
   return _data->contains(key);
 }
 
+bool ActionArguments::resuming() const
+{
+  return contains("internal:resuming") && at<bool>("internal:resuming");
+}
+
 std::string Mission::checksum() const
 {
   try {
