@@ -9,6 +9,9 @@ var annotated_dup =
       [ "ConfigOverrides", "classpx4__ros2_1_1ConfigOverrides.html", null ],
       [ "Context", "classpx4__ros2_1_1Context.html", null ],
       [ "DirectActuatorsSetpointType", "classpx4__ros2_1_1DirectActuatorsSetpointType.html", "classpx4__ros2_1_1DirectActuatorsSetpointType" ],
+      [ "FwControlConfiguration", "structpx4__ros2_1_1FwControlConfiguration.html", null ],
+      [ "FwLateralLongitudinalSetpoint", "structpx4__ros2_1_1FwLateralLongitudinalSetpoint.html", null ],
+      [ "FwLateralLongitudinalSetpointType", "classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html", "classpx4__ros2_1_1FwLateralLongitudinalSetpointType" ],
       [ "GlobalPositionMeasurement", "structpx4__ros2_1_1GlobalPositionMeasurement.html", "structpx4__ros2_1_1GlobalPositionMeasurement" ],
       [ "GlobalPositionMeasurementInterface", "classpx4__ros2_1_1GlobalPositionMeasurementInterface.html", "classpx4__ros2_1_1GlobalPositionMeasurementInterface" ],
       [ "GotoGlobalSetpointType", "classpx4__ros2_1_1GotoGlobalSetpointType.html", "classpx4__ros2_1_1GotoGlobalSetpointType" ],
@@ -43,6 +46,8 @@ var annotated_dup =
       [ "TrajectorySetpoint", "structpx4__ros2_1_1TrajectorySetpoint.html", "structpx4__ros2_1_1TrajectorySetpoint" ],
       [ "TrajectorySetpointType", "classpx4__ros2_1_1TrajectorySetpointType.html", "classpx4__ros2_1_1TrajectorySetpointType" ],
       [ "VehicleStatus", "classpx4__ros2_1_1VehicleStatus.html", "classpx4__ros2_1_1VehicleStatus" ],
+      [ "VTOL", "classpx4__ros2_1_1VTOL.html", "classpx4__ros2_1_1VTOL" ],
+      [ "VTOLConfig", "structpx4__ros2_1_1VTOLConfig.html", "structpx4__ros2_1_1VTOLConfig" ],
       [ "VtolStatus", "classpx4__ros2_1_1VtolStatus.html", "classpx4__ros2_1_1VtolStatus" ]
     ] ]
 ];
