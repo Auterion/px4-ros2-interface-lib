@@ -540,10 +540,12 @@ void MissionExecutor::onActivate()
     nlohmann::json arguments = getOnResumeStateAndClear();
     arguments["action"] = "resume";
     runAction(
-      "onResume", ActionArguments(arguments), [this]()
+      "onResume", ActionArguments(arguments), [this, action_handler = _action_handler]()
       {
-        runStoredActions();
-        runCurrentMissionItem(true);
+        if (action_handler->isValid()) {
+          runStoredActions();
+          runCurrentMissionItem(true);
+        }
       });
   }
 }
@@ -693,11 +695,16 @@ void MissionExecutor::runCurrentMissionItem(bool resuming)
         const auto[end_index, should_stop_at_index] = getNextTrajectorySegment(
           *_state.current_index);
         runTrajectory(
-          _mission, *_state.current_index, end_index, [end_index, this](int index)
+          _mission, *_state.current_index, end_index,
+          [end_index, this, action_handler = _action_handler](int index)
           {
-            setCurrentMissionIndex(index + 1);
-            if (index == end_index) {
-              runCurrentMissionItem(false);
+            // As the callback might still be called after the mission is deactivated or aborted, we check if the previous
+            // handler is still valid
+            if (action_handler->isValid()) {
+              setCurrentMissionIndex(index + 1);
+              if (index == end_index) {
+                runCurrentMissionItem(false);
+              }
             }
           }, should_stop_at_index);
       },
@@ -707,7 +714,13 @@ void MissionExecutor::runCurrentMissionItem(bool resuming)
         if (resuming) {
           arguments["internal:resuming"] = true;
         }
-        runAction(action_item.name, ActionArguments(arguments), [this]() {runNextMissionItem();});
+        runAction(
+          action_item.name, ActionArguments(arguments), [this, action_handler = _action_handler]()
+          {
+            if (action_handler->isValid()) {
+              runNextMissionItem();
+            }
+          });
       }
     },
     item);

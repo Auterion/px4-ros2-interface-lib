@@ -1478,6 +1478,9 @@ public:
     {
       EXPECT_TRUE(false) << "on_completed called, but should never be";
     });
+
+    // Call on_completed, which must not do anything, since the action failed and abort was called
+    on_completed();
   }
 
   std::shared_ptr<px4_ros2::ActionHandler> handler() { return _handler; }
