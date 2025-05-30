@@ -36,7 +36,7 @@ public:
   Configuration getConfiguration() override;
 
   /**
-   * @brief Update the setpoint with full flexibility by passing a FwLateralLongitudinalSetpointType
+   * @brief Update the setpoint with full flexibility by passing a FwLateralLongitudinalSetpoint
    * and FwControlConfiguration struct.
    *
    * @param setpoint a FwLateralLongitudinalSetpoint object where course, airspeed
@@ -57,7 +57,7 @@ public:
     const FwControlConfiguration & config);
 
   /**
- * @brief Update the setpoint with full flexibility by passing a FwLateralLongitudinalSetpointType
+ * @brief Update the setpoint with full flexibility by passing a FwLateralLongitudinalSetpoint
  *
  * @param setpoint a FwLateralLongitudinalSetpoint object where course, airspeed
  * direction, lateral acceleration, altitude, height rate and equivalent airspeed
