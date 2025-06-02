@@ -8,6 +8,7 @@ When activated, there are two steps:
   This uses a rate setpoint with a constant pitch rate and dynamic thrust.
 
 Via RC Roll stick, the radius of the loop can be adjusted dynamically.
+And the yaw rate can be adjusted via RC Yaw stick.
 
 ### Requirements
 
@@ -18,6 +19,9 @@ The multicopter must fulfill the following requirements:
 - Set the hover thrust in the code or via ROS parameter according to the vehicle's hover thrust.
   Ideally, the hover thrust is <= 0.25. A hover thrust of 0.3 will still work, but significantly above that leads to performance degradation.
   See below for details.
+- If desired, increase `MC_YAWRATE_MAX` to the maximum yaw rate you want to use.
+  Be aware that a higher yaw rate will require more thrust, and if too high, the vehicle will start to lose altitude.
+- Increase the maximum velocity `MPC_XY_VEL_MAX` to e.g. 20 m/s.
 
 #### Thrust feasibility
 There are two requirements in order not to exceed the minimum or maximum thrust:
@@ -54,3 +58,4 @@ The thrust consists of three parts:
 3. A PD controller based on the position error w.r.t. the center of the loop
 
 Note: Roll is not controlled, and thus the vehicle can drift sidewards with respect to the loop over time.
+Similarly, absolute yaw is not controlled either.

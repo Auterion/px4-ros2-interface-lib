@@ -199,6 +199,8 @@ public:
           // Check if we reached the velocity
           if (_local_position->velocityNed().head<2>().norm() > target_velocity) {
             RCLCPP_INFO(node().get_logger(), "Target velocity reached (%.1f m/s)", target_velocity);
+            _yaw = 0.0f;
+            _yaw_rate_sp = 0.0f;
             _state = State::RotateToZero;
           }
         }
@@ -244,13 +246,22 @@ public:
             }
           }
 
+          if (_state == State::Powerloop) {
+            // yaw rotation
+            _yaw += _yaw_rate_sp * dt_s;
+          }
+
           const float gravity_compensation_force = mass * gravity_vector.dot(
             centripetal_acceleration) /
             acceleration * gravity_compensation_factor;
 
-          const Eigen::Vector3f rate_sp{0, angular_rate, 0};
-          const Eigen::Vector3f thrust_sp{0, 0,
-            -centripetal_force - gravity_compensation_force - thrust_controller_output};
+          const Eigen::Vector3f rate_sp_before_yaw{0, angular_rate, _yaw_rate_sp};
+          const Eigen::Vector3f rate_sp =
+            Eigen::AngleAxisf(-_yaw, Eigen::Vector3f::UnitZ()) * rate_sp_before_yaw;
+
+          const float thrust_total = centripetal_force + gravity_compensation_force +
+            thrust_controller_output;
+          const Eigen::Vector3f thrust_sp{0, 0, -std::min(1.0f, std::max(0.0f, thrust_total))};
           _rates_setpoint->update(rate_sp, thrust_sp);
 
           // Allow the parameters to be changed dynamically via RC
@@ -261,6 +272,12 @@ public:
               RCLCPP_INFO_THROTTLE(
                 node().get_logger(),
                 *node().get_clock(), 200, "Radius: %.2f m, Velocity: %.2f m/s", _radius, _velocity);
+            }
+            if (std::abs(_manual_control_input->yaw()) > 0.05f) {
+              _yaw_rate_sp += dt_s * _manual_control_input->yaw() / 3.0f;
+              RCLCPP_INFO_THROTTLE(
+                node().get_logger(),
+                *node().get_clock(), 200, "Yaw rate: %.0f deg/s", px4_ros2::radToDeg(_yaw_rate_sp));
             }
           }
           break;
@@ -285,6 +302,9 @@ private:
 
   std::shared_ptr<rclcpp::ParameterEventHandler> _param_subscriber;
   std::vector<std::shared_ptr<rclcpp::ParameterCallbackHandle>> _cb_handles;
+
+  float _yaw_rate_sp{};
+  float _yaw{};
 
   // Config
   float _radius{};
