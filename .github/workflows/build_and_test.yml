@@ -12,7 +12,7 @@ defaults:
 jobs:
   build_and_test:
     name: Build and test
-    runs-on: ubuntu-latest
+    runs-on: [runs-on,"runner=${{ vars.RUNSON_CI_BUILDER_DEFAULT_X64 }}","run-id=${{ github.run_id }}"]
     container:
       image: rostooling/setup-ros-docker:ubuntu-jammy-latest
     steps:
