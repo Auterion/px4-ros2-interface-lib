@@ -18,6 +18,8 @@ jobs:
           - ubuntu: jammy
             ros2: humble
           - ubuntu: noble
+            ros2: jazzy
+          - ubuntu: noble
             ros2: rolling
           - ubuntu: focal
             ros2: foxy
