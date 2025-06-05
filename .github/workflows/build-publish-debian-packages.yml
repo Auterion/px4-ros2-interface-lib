@@ -19,14 +19,14 @@ jobs:
           - platform: linux/amd64
             runner: "${{ vars.RUNSON_CI_BUILDER_DEFAULT_X64 }}"
         distro:
+          - ubuntu: focal
+            ros2: foxy
           - ubuntu: jammy
             ros2: humble
           - ubuntu: noble
             ros2: jazzy
           - ubuntu: noble
             ros2: rolling
-          - ubuntu: focal
-            ros2: foxy
 
     uses: Auterion/ros-debian-workflow/.github/workflows/build-ros-debian.yml@main
     with:
