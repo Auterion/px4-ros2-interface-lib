@@ -165,6 +165,20 @@ float VTOL::computePitchSetpointDuringBacktransition(
     _decel_error_bt_int = 0.f;
   }
 
+  if (std::isnan(deceleration)) {
+
+    // If no local position samples were ever received by
+    // _vehicle_local_position_sub, the deceleration here is NaN. To guard
+    // against that, we return the pitch setpoint but don't update it in that
+    // case.
+
+    // Usually we will then have valid local position within a couple samples.
+    // To avoid this case entirely, instantiate the VTOL object significantly
+    // before the first call of this function.
+
+    return _decel_error_bt_int;
+  }
+
   // Update back-transition deceleration error integrator
   _decel_error_bt_int +=
     (_config.back_transition_deceleration_setpoint_to_pitch_i * deceleration_error) * dt;
