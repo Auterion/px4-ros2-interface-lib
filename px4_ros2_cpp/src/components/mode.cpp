@@ -63,7 +63,7 @@ bool ModeBase::doRegister()
 {
   assert(!_registration->registered());
 
-  if (!_skip_message_compatibility_check && (!waitForFMU(node(), 15s) ||
+  if (!_skip_message_compatibility_check && (!waitForFMU(node(), 15s, topicNamespacePrefix()) ||
     !messageCompatibilityCheck(node(), {ALL_PX4_ROS2_MESSAGES}, topicNamespacePrefix())))
   {
     return false;

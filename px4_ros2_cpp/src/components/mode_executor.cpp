@@ -53,7 +53,7 @@ bool ModeExecutorBase::doRegister()
 
   assert(!_registration->registered());
 
-  if (!waitForFMU(node(), 15s) ||
+  if (!waitForFMU(node(), 15s, _topic_namespace_prefix) ||
     !messageCompatibilityCheck(node(), {ALL_PX4_ROS2_MESSAGES}, _topic_namespace_prefix))
   {
     return false;
