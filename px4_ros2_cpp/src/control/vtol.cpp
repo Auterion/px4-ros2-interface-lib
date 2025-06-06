@@ -168,13 +168,10 @@ float VTOL::computePitchSetpointDuringBacktransition(
   if (std::isnan(deceleration)) {
 
     // Deceleration is sometimes NaN for just the initial few samples in a
-    // backtransition. To avoid _decel_error_bt_int == NaN forever (causing
-    // maximum deceleration and a very aggressive backtransition), we return the
-    // existing pitch setpoint but skip updating it.
-
-    // If NaN inputs occur at the start of the backtransition, this means 0
-    // pitch setpoint; if they occur in the middle of it (not sure if this ever
-    // happens) we keep applying the last valid pitch setpoint.
+    // backtransition (before getting valid local position samples). To avoid
+    // _decel_error_bt_int == NaN forever (causing maximum deceleration and a
+    // very aggressive backtransition), we return the existing pitch setpoint
+    // (which is 0 initially) but skip updating it.
 
     return _decel_error_bt_int;
   }
