@@ -13,7 +13,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [{runner: buildjet-2vcpu-ubuntu-2204-arm, platform: linux/arm64}, {runner: buildjet-2vcpu-ubuntu-2204, platform: linux/amd64}]
+        platform:
+          - platform: linux/arm64
+            runner: "${{ vars.RUNSON_CI_BUILDER_DEFAULT_ARM64 }}"
+          - platform: linux/amd64
+            runner: "${{ vars.RUNSON_CI_BUILDER_DEFAULT_X64 }}"
         distro:
           - ubuntu: jammy
             ros2: humble
