@@ -11,7 +11,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: [runs-on,"runner=${{ vars.RUNSON_CI_RUNNER_DEFAULT }}","run-id=${{ github.run_id }}"]
     steps:
       - uses: actions/checkout@v3
         with:
