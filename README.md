@@ -14,6 +14,8 @@ To ensure compatibility, you must either:
 
 1. Use latest `main` on the PX4 and px4_ros2/px4_msgs sides, which should define matching messages
 1. (Experimental) Run the PX4 [message translation node](https://github.com/PX4/PX4-Autopilot/tree/main/msg/translation_node), which dynamically monitors and translates PX4 messages when different message version are used within the same ROS 2 domain
+1. There are branches in the form of `release/<version>` matching the PX4 releases.
+  For example https://github.com/Auterion/px4-ros2-interface-lib/tree/release/1.16
 
 ### Option 1: Match Messages
 
