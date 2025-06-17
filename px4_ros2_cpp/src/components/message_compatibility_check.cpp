@@ -16,6 +16,127 @@
 #include <regex>
 #include <unistd.h>
 
+#include <px4_msgs/msg/actuator_motors.hpp>
+#include <px4_msgs/msg/actuator_servos.hpp>
+#include <px4_msgs/msg/arming_check_reply.hpp>
+#include <px4_msgs/msg/vehicle_global_position.hpp>
+#include <px4_msgs/msg/vehicle_control_mode.hpp>
+#include <px4_msgs/msg/config_overrides.hpp>
+#include <px4_msgs/msg/fixed_wing_lateral_setpoint.hpp>
+#include <px4_msgs/msg/fixed_wing_longitudinal_setpoint.hpp>
+#include <px4_msgs/msg/goto_setpoint.hpp>
+#include <px4_msgs/msg/lateral_control_configuration.hpp>
+#include <px4_msgs/msg/longitudinal_control_configuration.hpp>
+#include <px4_msgs/msg/mode_completed.hpp>
+#include <px4_msgs/msg/register_ext_component_request.hpp>
+#include <px4_msgs/msg/trajectory_setpoint.hpp>
+#include <px4_msgs/msg/unregister_ext_component.hpp>
+#include <px4_msgs/msg/vehicle_attitude_setpoint.hpp>
+#include <px4_msgs/msg/vehicle_command.hpp>
+#include <px4_msgs/msg/vehicle_rates_setpoint.hpp>
+#include <px4_msgs/msg/vehicle_odometry.hpp>
+#include <px4_msgs/msg/airspeed_validated.hpp>
+#include <px4_msgs/msg/arming_check_request.hpp>
+#include <px4_msgs/msg/battery_status.hpp>
+#include <px4_msgs/msg/home_position.hpp>
+#include <px4_msgs/msg/manual_control_setpoint.hpp>
+#include <px4_msgs/msg/register_ext_component_reply.hpp>
+#include <px4_msgs/msg/vehicle_attitude.hpp>
+#include <px4_msgs/msg/vehicle_angular_velocity.hpp>
+#include <px4_msgs/msg/vehicle_command_ack.hpp>
+#include <px4_msgs/msg/vehicle_land_detected.hpp>
+#include <px4_msgs/msg/vehicle_local_position.hpp>
+#include <px4_msgs/msg/vehicle_status.hpp>
+#include <px4_msgs/msg/vtol_vehicle_status.hpp>
+
+#include "rosidl_typesupport_cpp/message_type_support.hpp"
+#include "rosidl_runtime_c/type_hash.h"
+
+bool type_hash_is_equal(const rosidl_type_hash_t *a, const rosidl_type_hash_t *b)
+{
+  return a->version == b->version &&
+         std::memcmp(a->value, b->value, ROSIDL_TYPE_HASH_SIZE) == 0;
+}
+struct TopicTypeSupport
+{
+  const char * topic_name;
+  const rosidl_message_type_support_t * ts_handle;
+};
+
+static TopicTypeSupport all_px4_ros2_messages[] = {
+  {"fmu/in/actuator_motors",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::ActuatorMotors>()},
+  {"fmu/in/actuator_servos",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::ActuatorServos>()},
+  {"fmu/in/arming_check_reply",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::ArmingCheckReply>()},
+  {"fmu/in/aux_global_position",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::VehicleGlobalPosition>()},
+  {"fmu/in/config_control_setpoints",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::VehicleControlMode>()},
+  {"fmu/in/config_overrides_request",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::ConfigOverrides>()},
+  {"fmu/in/fixed_wing_lateral_setpoint",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::FixedWingLateralSetpoint>()},
+  {"fmu/in/fixed_wing_longitudinal_setpoint",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::FixedWingLongitudinalSetpoint>()},
+  {"fmu/in/goto_setpoint",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::GotoSetpoint>()},
+  {"fmu/in/lateral_control_configuration",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::LateralControlConfiguration>()},
+  {"fmu/in/longitudinal_control_configuration",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::LongitudinalControlConfiguration>()},
+  {"fmu/in/mode_completed",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::ModeCompleted>()},
+  {"fmu/in/register_ext_component_request",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::RegisterExtComponentRequest>()},
+  {"fmu/in/trajectory_setpoint",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::TrajectorySetpoint>()},
+  {"fmu/in/unregister_ext_component",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::UnregisterExtComponent>()},
+  {"fmu/in/vehicle_attitude_setpoint",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::VehicleAttitudeSetpoint>()},
+  {"fmu/in/vehicle_command",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::VehicleCommand>()},
+  {"fmu/in/vehicle_command_mode_executor",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::VehicleCommand>()},
+  {"fmu/in/vehicle_rates_setpoint",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::VehicleRatesSetpoint>()},
+  {"fmu/in/vehicle_visual_odometry",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::VehicleOdometry>()},
+  {"fmu/out/airspeed_validated",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::AirspeedValidated>()},
+  {"fmu/out/arming_check_request",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::ArmingCheckRequest>()},
+  {"fmu/out/battery_status",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::BatteryStatus>()},
+  {"fmu/out/home_position",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::HomePosition>()},
+  {"fmu/out/manual_control_setpoint",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::ManualControlSetpoint>()},
+  {"fmu/out/mode_completed",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::ModeCompleted>()},
+  {"fmu/out/register_ext_component_reply",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::RegisterExtComponentReply>()},
+  {"fmu/out/vehicle_attitude",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::VehicleAttitude>()},
+  {"fmu/out/vehicle_angular_velocity",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::VehicleAngularVelocity>()},
+  {"fmu/out/vehicle_command_ack",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::VehicleCommandAck>()},
+  {"fmu/out/vehicle_global_position",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::VehicleGlobalPosition>()},
+  {"fmu/out/vehicle_land_detected",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::VehicleLandDetected>()},
+  {"fmu/out/vehicle_local_position",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::VehicleLocalPosition>()},
+  {"fmu/out/vehicle_status",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::VehicleStatus>()},
+  {"fmu/out/vtol_vehicle_status",
+    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::VtolVehicleStatus>()}
+};
+
+
 namespace
 {
 std::string messageFieldsStrForMessageHash(
@@ -229,89 +350,116 @@ bool messageCompatibilityCheck(
   const std::string & topic_namespace_prefix)
 {
   RCLCPP_DEBUG(node.get_logger(), "Checking message compatibility...");
-  const rclcpp::Subscription<px4_msgs::msg::MessageFormatResponse>::SharedPtr
-    message_format_response_sub
-    =
-    node.create_subscription<px4_msgs::msg::MessageFormatResponse>(
-      topic_namespace_prefix + "fmu/out/message_format_response" +
-      px4_ros2::getMessageNameVersion<px4_msgs::msg::MessageFormatResponse>(), rclcpp::QoS(
-        1).best_effort(),
-      [](px4_msgs::msg::MessageFormatResponse::UniquePtr msg) {});
-
-  const rclcpp::Publisher<px4_msgs::msg::MessageFormatRequest>::SharedPtr message_format_request_pub
-    =
-    node.create_publisher<px4_msgs::msg::MessageFormatRequest>(
-      topic_namespace_prefix + "fmu/in/message_format_request" +
-      px4_ros2::getMessageNameVersion<px4_msgs::msg::MessageFormatRequest>(),
-      1);
-
-  const std::string msgs_dir = ament_index_cpp::get_package_share_directory("px4_msgs");
-  if (msgs_dir.empty()) {
-    RCLCPP_FATAL(node.get_logger(), "Failed to get installation directory for 'px4_msgs' package");
-    return false;
-  }
 
   bool ret = true;
   std::string mismatched_topics;
-  bool first_message = true;
 
-  for (const auto & message_to_check : messages_to_check) {
-    std::string topic_type = message_to_check.topic_type;
-    if (topic_type.empty()) {
-      // Infer topic type from topic_name
-      auto last_slash = message_to_check.topic_name.find_last_of('/');
-      if (last_slash == std::string::npos) {
-        topic_type = message_to_check.topic_name;
-      } else {
-        topic_type = message_to_check.topic_name.substr(last_slash + 1);
-      }
-      topic_type = snakeToCamelCase(topic_type);
-    }
-    // Read the local message definition and get the hash
-    const uint32_t expected_message_hash = messageHash(node, topic_type, msgs_dir);
+  if(px4_ros2::is_rmw_zenoh()) {
+    for (const auto & entry : all_px4_ros2_messages) {
+      auto publishers_info = node.get_publishers_info_by_topic(entry.topic_name);
+      const rosidl_type_hash_t *pub_hash;
 
-    // Ask for the message hash from PX4
-    px4_msgs::msg::MessageFormatRequest request;
-    request.protocol_version = px4_msgs::msg::MessageFormatRequest::LATEST_PROTOCOL_VERSION;
-    strncpy(
-      reinterpret_cast<char *>(request.topic_name.data()),
-      message_to_check.topic_name.c_str(), request.topic_name.size() - 1);
-    request.topic_name.back() = '\0';
-    request.timestamp = 0; // Let PX4 set the timestamp
-    px4_msgs::msg::MessageFormatResponse response;
-    switch (requestMessageFormat(
-        node, request, message_format_response_sub, message_format_request_pub,
-        response, first_message))
-    {
-      case RequestMessageFormatReturn::Timeout:
-        RCLCPP_FATAL(
-          node.get_logger(),
-          "Timed out waiting for message format. Is the FMU running?");
-        // Do not try to check the other formats
-        return false;
-      case RequestMessageFormatReturn::ProtocolVersionMismatch:
-        // Error already reported
-        return false;
-      case RequestMessageFormatReturn::GotReply:
-        if (response.success) {
-          if (response.message_hash != expected_message_hash) {
-            mismatched_topics += "\n  - " + message_to_check.topic_name;
+      if (!publishers_info.empty()) {
+
+        for (const auto & info : publishers_info) {
+          pub_hash = &info.topic_type_hash(); // Take last
+        }
+
+        if (entry.ts_handle && entry.ts_handle->get_type_hash_func) {
+          const rosidl_type_hash_t *hash = entry.ts_handle->get_type_hash_func(entry.ts_handle);
+          if (!hash || !type_hash_is_equal(hash, pub_hash)) {
+            mismatched_topics += "\n  - " + std::string(entry.topic_name);
             ret = false;
           }
-        } else {
-          RCLCPP_FATAL(node.get_logger(), "MessageFormatResponse::success == false");
-          ret = false;
         }
-        break;
+      }
+
     }
-    first_message = false;
+  } else {
+
+    const rclcpp::Subscription<px4_msgs::msg::MessageFormatResponse>::SharedPtr
+      message_format_response_sub
+      =
+      node.create_subscription<px4_msgs::msg::MessageFormatResponse>(
+        topic_namespace_prefix + "fmu/out/message_format_response" +
+        px4_ros2::getMessageNameVersion<px4_msgs::msg::MessageFormatResponse>(), rclcpp::QoS(
+          1).best_effort(),
+        [](px4_msgs::msg::MessageFormatResponse::UniquePtr msg) {});
+
+    const rclcpp::Publisher<px4_msgs::msg::MessageFormatRequest>::SharedPtr
+      message_format_request_pub
+      =
+      node.create_publisher<px4_msgs::msg::MessageFormatRequest>(
+        topic_namespace_prefix + "fmu/in/message_format_request" +
+        px4_ros2::getMessageNameVersion<px4_msgs::msg::MessageFormatRequest>(),
+        1);
+
+    const std::string msgs_dir = ament_index_cpp::get_package_share_directory("px4_msgs");
+    if (msgs_dir.empty()) {
+      RCLCPP_FATAL(node.get_logger(),
+          "Failed to get installation directory for 'px4_msgs' package");
+      return false;
+    }
+    bool first_message = true;
+
+    for (const auto & message_to_check : messages_to_check) {
+      std::string topic_type = message_to_check.topic_type;
+      if (topic_type.empty()) {
+        // Infer topic type from topic_name
+        auto last_slash = message_to_check.topic_name.find_last_of('/');
+        if (last_slash == std::string::npos) {
+          topic_type = message_to_check.topic_name;
+        } else {
+          topic_type = message_to_check.topic_name.substr(last_slash + 1);
+        }
+        topic_type = snakeToCamelCase(topic_type);
+      }
+      // Read the local message definition and get the hash
+      const uint32_t expected_message_hash = messageHash(node, topic_type, msgs_dir);
+
+      // Ask for the message hash from PX4
+      px4_msgs::msg::MessageFormatRequest request;
+      request.protocol_version = px4_msgs::msg::MessageFormatRequest::LATEST_PROTOCOL_VERSION;
+      strncpy(
+        reinterpret_cast<char *>(request.topic_name.data()),
+        message_to_check.topic_name.c_str(), request.topic_name.size() - 1);
+      request.topic_name.back() = '\0';
+      request.timestamp = 0; // Let PX4 set the timestamp
+      px4_msgs::msg::MessageFormatResponse response;
+      switch (requestMessageFormat(
+          node, request, message_format_response_sub, message_format_request_pub,
+          response, first_message))
+      {
+        case RequestMessageFormatReturn::Timeout:
+          RCLCPP_FATAL(
+            node.get_logger(),
+            "Timed out waiting for message format. Is the FMU running?");
+          // Do not try to check the other formats
+          return false;
+        case RequestMessageFormatReturn::ProtocolVersionMismatch:
+          // Error already reported
+          return false;
+        case RequestMessageFormatReturn::GotReply:
+          if (response.success) {
+            if (response.message_hash != expected_message_hash) {
+              mismatched_topics += "\n  - " + message_to_check.topic_name;
+              ret = false;
+            }
+          } else {
+            RCLCPP_FATAL(node.get_logger(), "MessageFormatResponse::success == false");
+            ret = false;
+          }
+          break;
+      }
+      first_message = false;
+    }
   }
 
   if (!mismatched_topics.empty()) {
     RCLCPP_ERROR(
-      node.get_logger(),
-      "Mismatch for the following topics, update PX4 or the px4_ros2 library and px4_msgs:%s",
-      mismatched_topics.c_str());
+        node.get_logger(),
+        "Mismatch for the following topics, update PX4 or the px4_ros2 library and px4_msgs:%s",
+        mismatched_topics.c_str());
   }
 
   return ret;
