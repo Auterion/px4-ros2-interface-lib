@@ -108,6 +108,9 @@ Compatibility with PX4</h1>
 <ol type="1">
 <li>(Experimental) Run the PX4 <a href="https://github.com/PX4/PX4-Autopilot/tree/main/msg/translation_node">message translation node</a>, which dynamically monitors and translates PX4 messages when different message version are used within the same ROS 2 domain</li>
 </ol>
+<ol type="1">
+<li>There are branches in the form of <code>release/&lt;version&gt;</code> matching the PX4 releases. For example <a href="https://github.com/Auterion/px4-ros2-interface-lib/tree/release/1.16">https://github.com/Auterion/px4-ros2-interface-lib/tree/release/1.16</a></li>
+</ol>
 <h2><a class="anchor" id="autotoc_md3"></a>
 Option 1: Match Messages</h2>
 <p>The library checks for message compatibility on startup when registering a mode. <code>ALL_PX4_ROS2_MESSAGES</code> defines the set of checked messages. If you use other messages, you can check them using: </p><div class="fragment"><div class="line"><span class="keywordflow">if</span> (!<a class="code hl_function" href="group__components.html#gacb3cd80960c70f09a1acf1e10d9f1d21">px4_ros2::messageCompatibilityCheck</a>(node, {{<span class="stringliteral">&quot;fmu/in/vehicle_rates_setpoint&quot;</span>}})) {</div>
