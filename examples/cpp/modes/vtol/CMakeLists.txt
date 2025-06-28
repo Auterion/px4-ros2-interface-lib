@@ -21,9 +21,9 @@ include_directories(include ${Eigen3_INCLUDE_DIRS})
 add_executable(example_mode_vtol
         src/main.cpp)
 target_link_libraries(example_mode_vtol PUBLIC
-	Eigen3::Eigen
-	px4_ros2_cpp::px4_ros2_cpp
-	rclcpp::rclcpp)
+        Eigen3::Eigen
+        px4_ros2_cpp::px4_ros2_cpp
+        rclcpp::rclcpp)
 
 install(TARGETS
         example_mode_vtol
