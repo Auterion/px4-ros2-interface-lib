@@ -419,6 +419,36 @@ public:
   const Mission & mission() const {return _mission_executor.mission();}
 
   /**
+   * @brief enable/disable deferral of failsafes
+   *
+   * @param enabled
+   * @param timeout_s 0=system default, -1=no timeout
+   * @return true on success
+   */
+  bool deferFailsafes(bool enabled, int timeout_s = 0)
+  {
+    if (!_valid) {
+      RCLCPP_WARN(_mission_executor._node.get_logger(), "ActionHandler is not valid anymore");
+      return false;
+    }
+    return _mission_executor.deferFailsafes(enabled, timeout_s);
+  }
+
+  /**
+   * @brief register callback for failsafe notification
+   *
+   * The callback is triggerd when a failsafe occurs while deferral is enabled.
+   */
+  void onFailsafeDeferred(const std::function<void()> & callback)
+  {
+    if (!_valid) {
+      RCLCPP_WARN(_mission_executor._node.get_logger(), "ActionHandler is not valid anymore");
+      return;
+    }
+    _mission_executor.onFailsafeDeferred(callback);
+  }
+
+  /**
    * @brief Check if the handler is still valid
    *
    * If the handler is invalid, it cannot be used anymore. It will be set invalid when the mission is aborted,
