@@ -95,6 +95,7 @@ RegistrationSettings ModeBase::getRegistrationSettings() const
     settings.enable_replace_internal_mode = true;
     settings.replace_internal_mode = _settings.replace_internal_mode;
   }
+  settings.user_selectable = _settings.user_selectable;
 
   return settings;
 }

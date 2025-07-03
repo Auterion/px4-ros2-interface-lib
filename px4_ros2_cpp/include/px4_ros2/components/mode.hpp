@@ -92,11 +92,13 @@ public:
     // NOLINTNEXTLINE allow implicit conversion
     Settings(
       std::string mode_name, bool want_activate_even_while_disarmed = false,
-      ModeID request_replace_internal_mode = kModeIDInvalid)
+      ModeID request_replace_internal_mode = kModeIDInvalid, bool request_user_selectable = true)
     : name(std::move(mode_name)), activate_even_while_disarmed(want_activate_even_while_disarmed),
+      user_selectable(request_user_selectable),
       replace_internal_mode(request_replace_internal_mode) {}
     std::string name;             ///< Name of the mode with length < 25 characters
     bool activate_even_while_disarmed{true};             ///< If true, the mode is also activated while disarmed if selected
+    bool user_selectable{true};                     ///< If true, the mode is selectable by the user
     ModeID replace_internal_mode{kModeIDInvalid};             ///< Can be used to replace an fmu-internal mode
   };
 
