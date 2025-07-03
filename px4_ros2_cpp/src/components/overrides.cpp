@@ -33,6 +33,12 @@ void ConfigOverrides::deferFailsafes(bool enabled, int timeout_s)
   update();
 }
 
+void ConfigOverrides::userSelectable(bool selectable)
+{
+  _current_overrides.not_user_selectable = !selectable;
+  update();
+}
+
 void ConfigOverrides::update()
 {
   if (_is_setup) {

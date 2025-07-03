@@ -161,6 +161,15 @@ public:
    */
   RequirementFlags & modeRequirements() {return _health_and_arming_checks.modeRequirements();}
 
+  /**
+   * Configure if the mode can be selected by the user.
+   *
+   * This can be used to hide a mode, e.g. when it should only be run with a mode executor.
+   *
+   * @param selectable
+   */
+  void userSelectable(bool selectable) {_config_overrides.userSelectable(selectable);}
+
 protected:
   void setSkipMessageCompatibilityCheck() {_skip_message_compatibility_check = true;}
   void overrideRegistration(const std::shared_ptr<Registration> & registration);

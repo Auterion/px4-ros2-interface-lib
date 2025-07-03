@@ -28,6 +28,7 @@ private:
   friend class ModeBase;
   friend class ModeExecutorBase;
   void deferFailsafes(bool enabled, int timeout_s = 0);
+  void userSelectable(bool selectable);
   void setup(uint8_t type, uint8_t id);
 
   rclcpp::Node & _node;
