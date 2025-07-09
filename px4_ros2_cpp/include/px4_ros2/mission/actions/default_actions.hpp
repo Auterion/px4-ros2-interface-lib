@@ -77,6 +77,48 @@ public:
 };
 
 /**
+ * @brief Default action to trigger the Hold (Loiter) mode
+ * @ingroup mission_default_actions
+ */
+class Hold : public ActionInterface
+{
+public:
+  explicit Hold(ModeBase & mode)
+  : _node(mode.node())
+  {
+  }
+  ~Hold() override = default;
+  std::string name() const override {return "hold";}
+
+  bool shouldStopAtWaypoint(const ActionArguments & arguments) override {return true;}
+
+  void run(
+    const std::shared_ptr<ActionHandler> & handler, const ActionArguments & arguments,
+    const std::function<void()> & on_completed) override
+  {
+    float delay_s = 1.0f;
+    if (arguments.contains("delay")) {
+      delay_s = arguments.at<float>("delay");
+    }
+    handler->runMode(ModeBase::kModeIDLoiter, [] {});
+    _timer = _node.create_wall_timer(
+      std::chrono::duration<float>(delay_s), [this, on_completed] {
+        _timer.reset();
+        on_completed();
+      });
+  }
+
+  void deactivate() override
+  {
+    _timer.reset();
+  }
+
+private:
+  rclcpp::Node & _node;
+  std::shared_ptr<rclcpp::TimerBase> _timer;
+};
+
+/**
  * @brief Default action to resume missions
  * @ingroup mission_default_actions
  */
