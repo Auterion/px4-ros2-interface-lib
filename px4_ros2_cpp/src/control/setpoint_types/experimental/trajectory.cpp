@@ -90,8 +90,8 @@ SetpointBase::Configuration TrajectorySetpointType::getConfiguration()
   config.rates_enabled = true;
   config.attitude_enabled = true;
   config.acceleration_enabled = true;
-  config.velocity_enabled = true;
-  config.position_enabled = true;
+  config.velocity_enabled = false;
+  config.position_enabled = false;
   config.altitude_enabled = true;
   config.climb_rate_enabled = true;
   return config;

@@ -245,16 +245,22 @@ void ModeBase::updateModeRequirementsFromSetpoints()
 {
   // Set a mode requirement if at least one setypoint type requires it
   RequirementFlags & requirements = modeRequirements();
-  for (const auto & setpoint_type : _setpoint_types) {
-    const auto config = setpoint_type->getConfiguration();
 
-    requirements.angular_velocity |= config.rates_enabled;
-    requirements.attitude |= config.attitude_enabled;
-    requirements.local_alt |= config.altitude_enabled;
-    requirements.local_position |= config.velocity_enabled;
-    requirements.local_position |= config.position_enabled;
-    requirements.local_alt |= config.climb_rate_enabled;
-  }
+  requirements.angular_velocity = true;
+  requirements.attitude = true;
+  requirements.local_alt = true;
+  // requirements.manual_control = true;
+
+  // for (const auto & setpoint_type : _setpoint_types) {
+  //   const auto config = setpoint_type->getConfiguration();
+
+  //   requirements.angular_velocity |= config.rates_enabled;
+  //   requirements.attitude |= config.attitude_enabled;
+  //   requirements.local_alt |= config.altitude_enabled;
+  //   requirements.local_position |= config.velocity_enabled;
+  //   requirements.local_position |= config.position_enabled;
+  //   requirements.local_alt |= config.climb_rate_enabled;
+  // }
 
   if (requirements.manual_control) {
     // Use relaxed local position accuracy if a manual mode
