@@ -146,6 +146,17 @@ properties:
                   resetAll:
                     description: Reset all settings to the mission defaults
                     type: boolean
+            - if:
+                properties: { type: { const: "hold" } }
+              then:
+                description: |
+                  Enter Hold (aka Loiter) for a certain duration
+                properties:
+                  delay:
+                    description: |
+                      Delay in seconds. Default: 1 second
+                    type: number
+                    minimum: 0
 
             # Allow defining any other action with arbitrary parameters
             # Note: parameters starting with 'internal:' are reserved for internal use

@@ -90,6 +90,8 @@ MissionExecutor::MissionExecutor(
     } else if (default_action == "onResume") {
       _actions[default_action] =
         std::make_shared<default_actions::OnResume>(*_mode, _land_detected);
+    } else if (default_action == "hold") {
+      _actions[default_action] = std::make_shared<default_actions::Hold>(*_mode);
     } else if (default_action == "changeSettings") {
       _actions[default_action] = std::make_shared<default_actions::ChangeSettings>();
 
