@@ -35,7 +35,7 @@ public:
     std::vector<std::function<std::shared_ptr<ActionInterface>(ModeBase & mode)>>
     custom_actions_factory;
     std::set<std::string> default_actions{"changeSettings", "onResume", "onFailure", "takeoff",
-      "rtl", "land"};
+      "rtl", "land", "hold"};
     std::function<std::shared_ptr<TrajectoryExecutorInterface>(ModeBase & mode)>
     trajectory_executor_factory;
     std::string persistence_filename;
