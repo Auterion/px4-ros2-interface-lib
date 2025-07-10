@@ -70,7 +70,11 @@ public:
     const std::shared_ptr<ActionHandler> & handler, const ActionArguments & arguments,
     const std::function<void()> & on_completed) override
   {
-    handler->runMode(ModeBase::kModeIDTakeoff, on_completed);
+    float altitude = NAN;
+    if (arguments.contains("altitude")) {
+      altitude = arguments.at<float>("altitude");
+    }
+    handler->runModeTakeoff(altitude, NAN, on_completed);
   }
 };
 

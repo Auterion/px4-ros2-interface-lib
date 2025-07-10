@@ -171,7 +171,7 @@ FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -245,7 +245,7 @@ FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -321,7 +321,7 @@ FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -443,7 +443,7 @@ FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -530,7 +530,7 @@ FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -627,7 +627,7 @@ FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -653,7 +653,7 @@ Mode executor 'my mission' activated
 Setting current mission item to 4
 Running action 'onResume'
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -751,7 +751,7 @@ FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -780,7 +780,7 @@ Resume: skipping action rtl
 Setting current mission item to 0
 onResume: index changed, not restoring actions
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -876,7 +876,7 @@ FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -996,7 +996,7 @@ FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -1121,7 +1121,7 @@ FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -1147,7 +1147,7 @@ FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -1357,7 +1357,7 @@ FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -1408,7 +1408,7 @@ Mode executor 'my mission' activated
 Setting current mission item to 8
 Running action 'onResume'
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -1464,7 +1464,7 @@ Mode executor 'my mission' activated
 Setting current mission item to 15
 Running action 'onResume'
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -1609,7 +1609,7 @@ FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -1717,7 +1717,7 @@ FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)
@@ -1825,7 +1825,7 @@ FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
 Running action 'takeoff'
-Running mode 17
+Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
 FakeAutopilot: setting landed to 0
 FakeAutopilot: sending mode completed (id=17)

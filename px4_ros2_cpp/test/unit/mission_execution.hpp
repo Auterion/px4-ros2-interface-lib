@@ -95,6 +95,10 @@ public:
             const int nav_state = std::round(param1);
             return mode_change_request(nav_state);
           }
+        } else if (command == px4_msgs::msg::VehicleCommand::VEHICLE_CMD_NAV_TAKEOFF) {
+          if (mode_change_request) {
+            return mode_change_request(px4_ros2::ModeBase::kModeIDTakeoff);
+          }
         }
 
         RCLCPP_DEBUG(_node.get_logger(), "Handling command %i (accepting)", command);
