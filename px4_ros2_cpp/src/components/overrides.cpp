@@ -33,6 +33,12 @@ void ConfigOverrides::deferFailsafes(bool enabled, int timeout_s)
   update();
 }
 
+void ConfigOverrides::controlAutoSetHome(bool enabled)
+{
+  _current_overrides.disable_auto_set_home = !enabled;
+  update();
+}
+
 void ConfigOverrides::update()
 {
   if (_is_setup) {
