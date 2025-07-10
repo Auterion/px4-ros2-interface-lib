@@ -245,12 +245,6 @@ void ModeBase::updateModeRequirementsFromSetpoints()
 {
   // Set a mode requirement if at least one setypoint type requires it
   RequirementFlags & requirements = modeRequirements();
-
-  requirements.angular_velocity = true;
-  requirements.attitude = true;
-  requirements.local_alt = true;
-  // requirements.manual_control = true;
-
   // for (const auto & setpoint_type : _setpoint_types) {
   //   const auto config = setpoint_type->getConfiguration();
 
