@@ -226,6 +226,8 @@ private:
   void runMode(
     ModeBase::ModeID mode_id,
     const std::function<void()> & on_completed, const std::function<void()> & on_failure = nullptr);
+  void runModeTakeoff(float altitude, float heading,
+    const std::function<void()> & on_completed, const std::function<void()> & on_failure = nullptr);
   void runAction(
     const std::string & action_name, const ActionArguments & arguments,
     const std::function<void()> & on_completed);
@@ -346,6 +348,15 @@ public:
       return;
     }
     _mission_executor.runMode(mode_id, on_completed, on_failure);
+  }
+  void runModeTakeoff(float altitude, float heading,
+    const std::function<void()> & on_completed, const std::function<void()> & on_failure = nullptr)
+  {
+    if (!_valid) {
+      RCLCPP_WARN(_mission_executor._node.get_logger(), "ActionHandler is not valid anymore");
+      return;
+    }
+    _mission_executor.runModeTakeoff(altitude, heading, on_completed, on_failure);
   }
   void runAction(
     const std::string & action_name, const ActionArguments & arguments,

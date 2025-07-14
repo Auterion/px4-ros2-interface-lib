@@ -611,6 +611,36 @@ void MissionExecutor::runMode(
     });
 }
 
+void MissionExecutor::runModeTakeoff(float altitude, float heading,
+  const std::function<void()> & on_completed, const std::function<void()> & on_failure)
+{
+  if (!_is_active) {
+    RCLCPP_ERROR(_node.get_logger(), "runMode: not active");
+    return;
+  }
+  RCLCPP_DEBUG(_node.get_logger(), "Running takeoff mode with altitude: %f, heading: %f",
+      altitude, heading);
+  _mission_item_state = MissionItemState::Other;
+  _active_mode = ModeBase::kModeIDTakeoff;
+  _mode_executor->takeoff(
+    [this, on_completed, on_failure](const Result & result)
+    {
+      if (result == Result::Success) {
+        on_completed();
+      } else if (result != Result::Deactivated) {
+        _active_mode = 0; // Reset active mode as we don't know which one is active now
+        if (on_failure) {
+          on_failure();
+        } else {
+          RCLCPP_ERROR(
+            _node.get_logger(), "Takeoff mode failed (%s), aborting",
+            resultToString(result));
+          abort(AbortReason::ModeFailure);
+        }
+      }
+    }, altitude, heading);
+}
+
 void MissionExecutor::runAction(
   const std::string & action_name, const ActionArguments & arguments,
   const std::function<void()> & on_completed)
