@@ -199,6 +199,11 @@ void MissionExecutor::onReadynessUpdate(
   checkReadynessAndReport();
 }
 
+bool MissionExecutor::controlAutoSetHome(bool enabled)
+{
+  return _mode_executor->controlAutoSetHome(enabled);
+}
+
 bool MissionExecutor::deferFailsafes(bool enabled, int timeout_s)
 {
   return _mode_executor->deferFailsafesSync(enabled, timeout_s);

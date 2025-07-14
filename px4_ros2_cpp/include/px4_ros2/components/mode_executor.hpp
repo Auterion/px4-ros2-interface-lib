@@ -132,6 +132,8 @@ public:
    */
   bool deferFailsafesSync(bool enabled, int timeout_s = 0);
 
+  bool controlAutoSetHome(bool enabled);
+
 protected:
   void setSkipMessageCompatibilityCheck() {_skip_message_compatibility_check = true;}
   void overrideRegistration(const std::shared_ptr<Registration> & registration);

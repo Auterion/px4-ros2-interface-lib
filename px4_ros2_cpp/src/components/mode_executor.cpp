@@ -457,6 +457,12 @@ bool ModeExecutorBase::deferFailsafesSync(bool enabled, int timeout_s)
   return true;
 }
 
+bool ModeExecutorBase::controlAutoSetHome(bool enabled)
+{
+  _config_overrides.controlAutoSetHome(enabled);
+  return true;
+}
+
 void ModeExecutorBase::overrideRegistration(const std::shared_ptr<Registration> & registration)
 {
   assert(!_registration->registered());
