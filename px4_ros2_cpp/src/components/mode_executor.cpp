@@ -27,7 +27,8 @@ ModeExecutorBase::ModeExecutorBase(
   _config_overrides(node, topic_namespace_prefix)
 {
   _vehicle_status_sub = _node.create_subscription<px4_msgs::msg::VehicleStatus>(
-    topic_namespace_prefix + "fmu/out/vehicle_status" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(), rclcpp::QoS(
+    topic_namespace_prefix + "fmu/out/vehicle_status" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(), rclcpp::QoS(
       1).best_effort(),
     [this](px4_msgs::msg::VehicleStatus::UniquePtr msg) {
       if (_registration->registered()) {
@@ -36,7 +37,8 @@ ModeExecutorBase::ModeExecutorBase(
     });
 
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
-    topic_namespace_prefix + "fmu/in/vehicle_command_mode_executor" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
+    topic_namespace_prefix + "fmu/in/vehicle_command_mode_executor" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
     1);
 
 }
@@ -51,7 +53,7 @@ bool ModeExecutorBase::doRegister()
 
   assert(!_registration->registered());
 
-  if (!waitForFMU(node(), 15s) ||
+  if (!waitForFMU(node(), 15s, _topic_namespace_prefix) ||
     !messageCompatibilityCheck(node(), {ALL_PX4_ROS2_MESSAGES}, _topic_namespace_prefix))
   {
     return false;
@@ -130,7 +132,8 @@ Result ModeExecutorBase::sendCommandSync(
   // (We could also use exchange_in_use_by_wait_set_state(), but that might cause an
   // inconsistent state)
   const auto vehicle_command_ack_sub = _node.create_subscription<px4_msgs::msg::VehicleCommandAck>(
-    _topic_namespace_prefix + "fmu/out/vehicle_command_ack" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommandAck>(), rclcpp::QoS(
+    _topic_namespace_prefix + "fmu/out/vehicle_command_ack" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommandAck>(), rclcpp::QoS(
       1).best_effort(),
     [](px4_msgs::msg::VehicleCommandAck::UniquePtr msg) {});
 
@@ -207,19 +210,19 @@ Result ModeExecutorBase::sendCommandSync(
 
 void ModeExecutorBase::scheduleMode(
   ModeBase::ModeID mode_id,
-  const CompletedCallback & on_completed)
+  const CompletedCallback & on_completed, bool forced)
 {
   px4_msgs::msg::VehicleCommand cmd{};
   cmd.command = px4_msgs::msg::VehicleCommand::VEHICLE_CMD_SET_NAV_STATE;
   cmd.param1 = mode_id;
-  scheduleMode(mode_id, cmd, on_completed);
+  scheduleMode(mode_id, cmd, on_completed, forced);
 }
 
 void ModeExecutorBase::scheduleMode(
   ModeBase::ModeID mode_id, const px4_msgs::msg::VehicleCommand & cmd,
-  const CompletedCallback & on_completed)
+  const CompletedCallback & on_completed, bool forced)
 {
-  if (!_is_armed) {
+  if (!_is_armed && !forced) {
     on_completed(Result::Rejected);
     return;
   }
@@ -269,16 +272,17 @@ void ModeExecutorBase::rtl(const CompletedCallback & on_completed)
   scheduleMode(ModeBase::kModeIDRtl, on_completed);
 }
 
-void ModeExecutorBase::arm(const CompletedCallback & on_completed)
+void ModeExecutorBase::arm(const CompletedCallback & on_completed, bool run_preflight_checks)
 {
   if (_is_armed) {
     on_completed(Result::Success);
     return;
   }
 
+  const float param2 = run_preflight_checks ? NAN : 21196.f;
   const Result result = sendCommandSync(
     px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
-    1.f);
+    1.f, param2);
 
   if (result != Result::Success) {
     on_completed(result);
@@ -288,6 +292,30 @@ void ModeExecutorBase::arm(const CompletedCallback & on_completed)
   // Wait until our internal state changes to armed
   _current_wait_vehicle_status.activate(
     [this](const px4_msgs::msg::VehicleStatus::UniquePtr & msg) {return _is_armed;}, on_completed);
+}
+
+void ModeExecutorBase::disarm(const CompletedCallback & on_completed, bool forced)
+{
+  if (!_is_armed) {
+    on_completed(Result::Success);
+    return;
+  }
+
+  const float param2 = forced ? 21196.f : NAN;
+  const Result result =
+    sendCommandSync(
+    px4_msgs::msg::VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM,
+    0.f, param2);
+
+
+  if (result != Result::Success) {
+    on_completed(result);
+    return;
+  }
+
+  // Wait until our internal state changes to disarmed
+  _current_wait_vehicle_status.activate(
+    [this](const px4_msgs::msg::VehicleStatus::UniquePtr & msg) {return !_is_armed;}, on_completed);
 }
 
 void ModeExecutorBase::waitReadyToArm(const CompletedCallback & on_completed)
@@ -434,7 +462,8 @@ ModeExecutorBase::ScheduledMode::ScheduledMode(
   const std::string & topic_namespace_prefix)
 {
   _mode_completed_sub = node.create_subscription<px4_msgs::msg::ModeCompleted>(
-    topic_namespace_prefix + "fmu/out/mode_completed" + px4_ros2::getMessageNameVersion<px4_msgs::msg::ModeCompleted>(), rclcpp::QoS(
+    topic_namespace_prefix + "fmu/out/mode_completed" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::ModeCompleted>(), rclcpp::QoS(
       1).best_effort(),
     [this, &node](px4_msgs::msg::ModeCompleted::UniquePtr msg) {
       if (active() && msg->nav_state == static_cast<uint8_t>(_mode_id)) {

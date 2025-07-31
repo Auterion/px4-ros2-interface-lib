@@ -9,8 +9,9 @@
 namespace px4_ros2
 {
 
-TrajectorySetpointType::TrajectorySetpointType(Context & context)
-: SetpointBase(context), _node(context.node())
+TrajectorySetpointType::TrajectorySetpointType(Context & context, bool local_position_is_optional)
+: SetpointBase(context), _node(context.node()), _local_position_is_optional(
+    local_position_is_optional)
 {
   _trajectory_setpoint_pub = context.node().create_publisher<px4_msgs::msg::TrajectorySetpoint>(
     context.topicNamespacePrefix() + "fmu/in/trajectory_setpoint" +
@@ -90,10 +91,11 @@ SetpointBase::Configuration TrajectorySetpointType::getConfiguration()
   config.rates_enabled = true;
   config.attitude_enabled = true;
   config.acceleration_enabled = true;
-  config.velocity_enabled = true;
   config.position_enabled = true;
+  config.velocity_enabled = true;
   config.altitude_enabled = true;
   config.climb_rate_enabled = true;
+  config.local_position_is_optional = _local_position_is_optional;
   return config;
 }
 } // namespace px4_ros2

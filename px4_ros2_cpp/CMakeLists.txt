@@ -36,9 +36,11 @@ set(HEADER_FILES
         include/px4_ros2/control/peripheral_actuators.hpp
         include/px4_ros2/control/setpoint_types/direct_actuators.hpp
         include/px4_ros2/control/setpoint_types/goto.hpp
+        include/px4_ros2/control/setpoint_types/fixedwing_lateral_longitudinal.hpp
         include/px4_ros2/control/setpoint_types/experimental/attitude.hpp
         include/px4_ros2/control/setpoint_types/experimental/rates.hpp
         include/px4_ros2/control/setpoint_types/experimental/trajectory.hpp
+        include/px4_ros2/control/vtol.hpp
         include/px4_ros2/navigation/experimental/global_position_measurement_interface.hpp
         include/px4_ros2/navigation/experimental/local_position_measurement_interface.hpp
         include/px4_ros2/navigation/experimental/navigation_interface_base.hpp
@@ -46,6 +48,7 @@ set(HEADER_FILES
         include/px4_ros2/odometry/global_position.hpp
         include/px4_ros2/odometry/local_position.hpp
         include/px4_ros2/odometry/angular_velocity.hpp
+        include/px4_ros2/odometry/airspeed.hpp
         include/px4_ros2/utils/frame_conversion.hpp
         include/px4_ros2/utils/geodesic.hpp
         include/px4_ros2/utils/geometry.hpp
@@ -68,8 +71,10 @@ add_library(px4_ros2_cpp
         src/components/registration.cpp
         src/components/wait_for_fmu.cpp
         src/control/peripheral_actuators.cpp
+        src/control/vtol.cpp
         src/control/setpoint_types/direct_actuators.cpp
         src/control/setpoint_types/goto.cpp
+        src/control/setpoint_types/fixedwing_lateral_longitudinal.cpp
         src/control/setpoint_types/experimental/attitude.cpp
         src/control/setpoint_types/experimental/rates.cpp
         src/control/setpoint_types/experimental/trajectory.cpp
@@ -79,10 +84,11 @@ add_library(px4_ros2_cpp
         src/odometry/global_position.cpp
         src/odometry/local_position.cpp
         src/odometry/angular_velocity.cpp
+        src/odometry/airspeed.cpp
         src/utils/geodesic.cpp
         src/utils/map_projection_impl.cpp
 )
-ament_target_dependencies(px4_ros2_cpp ament_index_cpp Eigen3 rclcpp px4_msgs)
+target_link_libraries(px4_ros2_cpp PUBLIC ament_index_cpp::ament_index_cpp Eigen3::Eigen rclcpp::rclcpp ${px4_msgs_TARGETS})
 
 ament_export_targets(px4_ros2_cpp HAS_LIBRARY_TARGET)
 ament_export_dependencies(
@@ -114,7 +120,7 @@ if(BUILD_TESTING)
             test/integration/util.cpp
     )
     include_directories(include)
-    ament_target_dependencies(integration_utils rclcpp px4_msgs)
+    target_link_libraries(integration_utils PUBLIC rclcpp::rclcpp ${px4_msgs_TARGETS})
 
     ament_add_gtest(integration_tests
             test/integration/arming_check.cpp
@@ -135,7 +141,7 @@ if(BUILD_TESTING)
             test/unit/utils/util.cpp
     )
     include_directories(include)
-    ament_target_dependencies(unit_utils Eigen3)
+    target_link_libraries(unit_utils PUBLIC Eigen3::Eigen)
 
     ament_add_gtest(${PROJECT_NAME}_unit_tests
             test/unit/global_navigation.cpp
@@ -148,10 +154,7 @@ if(BUILD_TESTING)
             test/unit/utils/map_projection_impl.cpp
     )
     target_include_directories(${PROJECT_NAME}_unit_tests PRIVATE ${CMAKE_CURRENT_LIST_DIR})
-    target_link_libraries(${PROJECT_NAME}_unit_tests ${PROJECT_NAME} unit_utils)
-    ament_target_dependencies(${PROJECT_NAME}_unit_tests
-            rclcpp px4_msgs
-    )
+    target_link_libraries(${PROJECT_NAME}_unit_tests ${PROJECT_NAME} unit_utils rclcpp::rclcpp ${px4_msgs_TARGETS})
 endif()
 
 ament_package()

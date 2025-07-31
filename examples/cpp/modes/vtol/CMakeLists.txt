@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(example_mode_manual_cpp)
+project(example_mode_vtol_cpp)
 
 if(NOT CMAKE_CXX_STANDARD)
     set(CMAKE_CXX_STANDARD 17)
@@ -18,12 +18,15 @@ find_package(rclcpp REQUIRED)
 find_package(px4_ros2_cpp REQUIRED)
 
 include_directories(include ${Eigen3_INCLUDE_DIRS})
-add_executable(example_mode_manual
+add_executable(example_mode_vtol
         src/main.cpp)
-target_link_libraries(example_mode_manual PUBLIC Eigen3::Eigen px4_ros2_cpp::px4_ros2_cpp rclcpp::rclcpp)
+target_link_libraries(example_mode_vtol PUBLIC
+        Eigen3::Eigen
+        px4_ros2_cpp::px4_ros2_cpp
+        rclcpp::rclcpp)
 
 install(TARGETS
-        example_mode_manual
+        example_mode_vtol
         DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

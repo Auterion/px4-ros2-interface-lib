@@ -90,14 +90,19 @@ public:
    * Switch to a mode with a callback when it is finished.
    * The callback is also executed when the mode is deactivated.
    * If there's already a mode scheduling active, the previous one is cancelled.
+   *
+   * The forced parameter, when set to true, allows to be able to force the scheduling of the modes when the drone is disarmed
    */
-  void scheduleMode(ModeBase::ModeID mode_id, const CompletedCallback & on_completed);
+  void scheduleMode(
+    ModeBase::ModeID mode_id, const CompletedCallback & on_completed,
+    bool forced = false);
 
   void takeoff(const CompletedCallback & on_completed, float altitude = NAN, float heading = NAN);
   void land(const CompletedCallback & on_completed);
   void rtl(const CompletedCallback & on_completed);
 
-  void arm(const CompletedCallback & on_completed);
+  void arm(const CompletedCallback & on_completed, bool run_preflight_checks = true);
+  void disarm(const CompletedCallback & on_completed, bool forced = false);
   void waitReadyToArm(const CompletedCallback & on_completed);
   void waitUntilDisarmed(const CompletedCallback & on_completed);
 
@@ -175,7 +180,7 @@ private:
 
   void scheduleMode(
     ModeBase::ModeID mode_id, const px4_msgs::msg::VehicleCommand & cmd,
-    const ModeExecutorBase::CompletedCallback & on_completed);
+    const ModeExecutorBase::CompletedCallback & on_completed, bool forced = false);
 
   rclcpp::Node & _node;
   const std::string _topic_namespace_prefix;

@@ -15,7 +15,8 @@ PeripheralActuatorControls::PeripheralActuatorControls(Context & context)
 : _node(context.node())
 {
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
-    context.topicNamespacePrefix() + "fmu/in/vehicle_command" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
+    context.topicNamespacePrefix() + "fmu/in/vehicle_command" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
     1);
   _last_update = _node.get_clock()->now();
 }

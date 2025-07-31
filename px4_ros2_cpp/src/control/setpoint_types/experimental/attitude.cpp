@@ -15,7 +15,8 @@ AttitudeSetpointType::AttitudeSetpointType(Context & context)
 {
   _vehicle_attitude_setpoint_pub =
     context.node().create_publisher<px4_msgs::msg::VehicleAttitudeSetpoint>(
-    context.topicNamespacePrefix() + "fmu/in/vehicle_attitude_setpoint" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleAttitudeSetpoint>(),
+    context.topicNamespacePrefix() + "fmu/in/vehicle_attitude_setpoint" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleAttitudeSetpoint>(),
     1);
 }
 
