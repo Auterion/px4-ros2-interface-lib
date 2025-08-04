@@ -199,50 +199,35 @@ $(document).ready(function(){initNavTree('geometry_8hpp_source.html',''); initRe
 <div class="foldopen" id="foldopen00148" data-start="{" data-end="}">
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno"><a class="line" href="group__geometry.html#ga6c0d59b58bc60adcdb56e89dd429c9d2">  148</a></span>Type <a class="code hl_function" href="group__geometry.html#ga6c0d59b58bc60adcdb56e89dd429c9d2">quaternionToRoll</a>(<span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; &amp; q)</div>
 <div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>{</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>  Type x = q.x();</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>  Type y = q.y();</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>  Type z = q.z();</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>  Type w = q.w();</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>  <span class="keywordflow">return</span> std::atan2(2.0 * (w * x + y * z), w * w - x * x - y * y + z * z);</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>}</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>  <span class="keywordflow">return</span> <a class="code hl_function" href="group__geometry.html#gac2f8c4e4922abb0cffd03e6fc746b5bf">quaternionToEulerRpy</a>(q)[0];</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>}</div>
 </div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type&gt;</div>
-<div class="foldopen" id="foldopen00165" data-start="{" data-end="}">
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno"><a class="line" href="group__geometry.html#gacb1a4e729a428bc56c848707aa495787">  165</a></span>Type <a class="code hl_function" href="group__geometry.html#gacb1a4e729a428bc56c848707aa495787">quaternionToPitch</a>(<span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; &amp; q)</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>{</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>  Type x = q.x();</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>  Type y = q.y();</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>  Type z = q.z();</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>  Type w = q.w();</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>  <span class="keywordflow">return</span> std::atan2(2.0 * (w * y - z * x), 1.0 - 2.0 * (x * x + y * y));</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>}</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type&gt;</div>
+<div class="foldopen" id="foldopen00160" data-start="{" data-end="}">
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno"><a class="line" href="group__geometry.html#gacb1a4e729a428bc56c848707aa495787">  160</a></span>Type <a class="code hl_function" href="group__geometry.html#gacb1a4e729a428bc56c848707aa495787">quaternionToPitch</a>(<span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; &amp; q)</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>{</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>  <span class="keywordflow">return</span> <a class="code hl_function" href="group__geometry.html#gac2f8c4e4922abb0cffd03e6fc746b5bf">quaternionToEulerRpy</a>(q)[1];</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>}</div>
 </div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type&gt;</div>
-<div class="foldopen" id="foldopen00182" data-start="{" data-end="}">
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno"><a class="line" href="group__geometry.html#gaf7e7ea1089241e844747111128658328">  182</a></span>Type <a class="code hl_function" href="group__geometry.html#gaf7e7ea1089241e844747111128658328">quaternionToYaw</a>(<span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; &amp; q)</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>{</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>  Type x = q.x();</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>  Type y = q.y();</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>  Type z = q.z();</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>  Type w = q.w();</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>  <span class="keywordflow">return</span> std::atan2(2.0 * (x * y + w * z), w * w + x * x - y * y - z * z);</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>}</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type&gt;</div>
+<div class="foldopen" id="foldopen00172" data-start="{" data-end="}">
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="group__geometry.html#gaf7e7ea1089241e844747111128658328">  172</a></span>Type <a class="code hl_function" href="group__geometry.html#gaf7e7ea1089241e844747111128658328">quaternionToYaw</a>(<span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; &amp; q)</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>{</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>  <span class="keywordflow">return</span> <a class="code hl_function" href="group__geometry.html#gac2f8c4e4922abb0cffd03e6fc746b5bf">quaternionToEulerRpy</a>(q)[2];</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>}</div>
 </div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>}  <span class="comment">// namespace px4_ros2</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>}  <span class="comment">// namespace px4_ros2</span></div>
 <div class="ttc" id="agroup__geometry_html_ga094c2be54a64c8a5903ee16246631181"><div class="ttname"><a href="group__geometry.html#ga094c2be54a64c8a5903ee16246631181">px4_ros2::eulerRpyToQuaternion</a></div><div class="ttdeci">Eigen::Quaternion&lt; Type &gt; eulerRpyToQuaternion(const Eigen::Matrix&lt; Type, 3, 1 &gt; &amp;euler)</div><div class="ttdoc">Converts RPY extrinsic Tait-Bryan Euler angles (YPR intrinsic) to quaternion.</div><div class="ttdef"><b>Definition</b> geometry.hpp:119</div></div>
 <div class="ttc" id="agroup__geometry_html_ga6c0d59b58bc60adcdb56e89dd429c9d2"><div class="ttname"><a href="group__geometry.html#ga6c0d59b58bc60adcdb56e89dd429c9d2">px4_ros2::quaternionToRoll</a></div><div class="ttdeci">Type quaternionToRoll(const Eigen::Quaternion&lt; Type &gt; &amp;q)</div><div class="ttdoc">Convert quaternion to roll angle in extrinsic RPY order (intrinsic YPR)</div><div class="ttdef"><b>Definition</b> geometry.hpp:148</div></div>
 <div class="ttc" id="agroup__geometry_html_ga9be9fa8a6e794134ff95264104bbb7f5"><div class="ttname"><a href="group__geometry.html#ga9be9fa8a6e794134ff95264104bbb7f5">px4_ros2::degToRad</a></div><div class="ttdeci">Type degToRad(Type deg)</div><div class="ttdoc">Converts degrees to radians.</div><div class="ttdef"><b>Definition</b> geometry.hpp:48</div></div>
 <div class="ttc" id="agroup__geometry_html_gab49f39205924f2c49455ebe42b1ac5a3"><div class="ttname"><a href="group__geometry.html#gab49f39205924f2c49455ebe42b1ac5a3">px4_ros2::wrapPi</a></div><div class="ttdeci">Type wrapPi(Type angle)</div><div class="ttdoc">Wraps an angle to the range [-pi, pi).</div><div class="ttdef"><b>Definition</b> geometry.hpp:72</div></div>
 <div class="ttc" id="agroup__geometry_html_gac2f8c4e4922abb0cffd03e6fc746b5bf"><div class="ttname"><a href="group__geometry.html#gac2f8c4e4922abb0cffd03e6fc746b5bf">px4_ros2::quaternionToEulerRpy</a></div><div class="ttdeci">Eigen::Matrix&lt; Type, 3, 1 &gt; quaternionToEulerRpy(const Eigen::Quaternion&lt; Type &gt; &amp;q)</div><div class="ttdoc">Converts a quaternion to RPY extrinsic Tait-Bryan Euler angles (YPR intrinsic) XYZ axes correspond to...</div><div class="ttdef"><b>Definition</b> geometry.hpp:91</div></div>
-<div class="ttc" id="agroup__geometry_html_gacb1a4e729a428bc56c848707aa495787"><div class="ttname"><a href="group__geometry.html#gacb1a4e729a428bc56c848707aa495787">px4_ros2::quaternionToPitch</a></div><div class="ttdeci">Type quaternionToPitch(const Eigen::Quaternion&lt; Type &gt; &amp;q)</div><div class="ttdoc">Convert quaternion to pitch angle in extrinsic RPY order (intrinsic YPR)</div><div class="ttdef"><b>Definition</b> geometry.hpp:165</div></div>
+<div class="ttc" id="agroup__geometry_html_gacb1a4e729a428bc56c848707aa495787"><div class="ttname"><a href="group__geometry.html#gacb1a4e729a428bc56c848707aa495787">px4_ros2::quaternionToPitch</a></div><div class="ttdeci">Type quaternionToPitch(const Eigen::Quaternion&lt; Type &gt; &amp;q)</div><div class="ttdoc">Convert quaternion to pitch angle in extrinsic RPY order (intrinsic YPR)</div><div class="ttdef"><b>Definition</b> geometry.hpp:160</div></div>
 <div class="ttc" id="agroup__geometry_html_gaebb5ddb7bd8196fe4481ff91cd792b84"><div class="ttname"><a href="group__geometry.html#gaebb5ddb7bd8196fe4481ff91cd792b84">px4_ros2::radToDeg</a></div><div class="ttdeci">Type radToDeg(Type rad)</div><div class="ttdoc">Converts radians to degrees.</div><div class="ttdef"><b>Definition</b> geometry.hpp:39</div></div>
-<div class="ttc" id="agroup__geometry_html_gaf7e7ea1089241e844747111128658328"><div class="ttname"><a href="group__geometry.html#gaf7e7ea1089241e844747111128658328">px4_ros2::quaternionToYaw</a></div><div class="ttdeci">Type quaternionToYaw(const Eigen::Quaternion&lt; Type &gt; &amp;q)</div><div class="ttdoc">Convert quaternion to yaw angle in extrinsic RPY order (intrinsic YPR)</div><div class="ttdef"><b>Definition</b> geometry.hpp:182</div></div>
+<div class="ttc" id="agroup__geometry_html_gaf7e7ea1089241e844747111128658328"><div class="ttname"><a href="group__geometry.html#gaf7e7ea1089241e844747111128658328">px4_ros2::quaternionToYaw</a></div><div class="ttdeci">Type quaternionToYaw(const Eigen::Quaternion&lt; Type &gt; &amp;q)</div><div class="ttdoc">Convert quaternion to yaw angle in extrinsic RPY order (intrinsic YPR)</div><div class="ttdef"><b>Definition</b> geometry.hpp:172</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
