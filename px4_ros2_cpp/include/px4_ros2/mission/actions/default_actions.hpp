@@ -12,14 +12,12 @@
 #include <rclcpp/rclcpp.hpp>
 
 
-namespace px4_ros2
+namespace px4_ros2::default_actions
 {
 /** \ingroup mission_default_actions
  *  @{
  */
 
-namespace default_actions
-{
 /**
  * @brief Default action to trigger the RTL mode
  * @ingroup mission_default_actions
@@ -186,8 +184,5 @@ private:
   std::unique_ptr<ActionStateKeeper> _state;
 };
 
-
-} // namespace default_actions
-
 /** @}*/
-} /* namespace px4_ros2 */
+} /* namespace px4_ros2::default_actions */

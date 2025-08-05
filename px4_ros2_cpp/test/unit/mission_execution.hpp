@@ -84,9 +84,9 @@ public:
 
   MissionExecutorTest(
     const std::string & mode_name, const Configuration & configuration,
-    rclcpp::Node & node, const std::shared_ptr<FakeAutopilot> & fake_autopilot)
+    rclcpp::Node & node, std::shared_ptr<FakeAutopilot> fake_autopilot)
   : MissionExecutor(mode_name, configuration, node, kTopicPrefix), _node(node), _fake_autopilot(
-      fake_autopilot)
+      std::move(fake_autopilot))
   {
     setCommandHandler(
       [this](uint32_t command, float param1)

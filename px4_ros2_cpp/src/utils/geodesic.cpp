@@ -155,7 +155,8 @@ Eigen::Vector2d globalPositionFromLineAndDist(
   const Eigen::Vector2d & global_position_line_end,
   float dist_from_start)
 {
-  float heading = headingToGlobalPosition(global_position_line_start, global_position_line_end);
+  const float heading =
+    headingToGlobalPosition(global_position_line_start, global_position_line_end);
   return globalPositionFromHeadingAndDist(global_position_line_start, heading, dist_from_start);
 }
 
@@ -191,8 +192,8 @@ Eigen::Vector2d addVectorToGlobalPosition(
 {
   Eigen::Vector2d global_position_res;
 
-  double lat_now_rad = degToRad(global_position.x());
-  double lon_now_rad = degToRad(global_position.y());
+  const double lat_now_rad = degToRad(global_position.x());
+  const double lon_now_rad = degToRad(global_position.y());
 
   global_position_res.x() =
     radToDeg(lat_now_rad + static_cast<double>(vector_ne.x()) / kRadiusOfEarth);
