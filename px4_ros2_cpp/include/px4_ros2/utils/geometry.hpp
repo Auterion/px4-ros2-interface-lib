@@ -91,7 +91,7 @@ template<typename Type>
 Eigen::Matrix<Type, 3, 1> quaternionToEulerRpy(const Eigen::Quaternion<Type> & q)
 {
   Eigen::Matrix<Type, 3, 1> angles;
-  Eigen::Matrix<Type, 3, 3> dcm = q.toRotationMatrix();
+  const Eigen::Matrix<Type, 3, 3> dcm = q.toRotationMatrix();
 
   angles.y() = asin(-dcm.coeff(2, 0));
 

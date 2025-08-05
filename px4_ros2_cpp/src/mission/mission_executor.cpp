@@ -253,7 +253,7 @@ nlohmann::json MissionExecutor::getOnResumeStateAndClear()
 {
   for (const auto & [id, action] : _state.continuous_actions) {
     if (action.name == "onResume") {
-      const auto ret = action.arguments.json();
+      auto ret = action.arguments.json();
       _state.continuous_actions.erase(id);
       return ret;
     }
