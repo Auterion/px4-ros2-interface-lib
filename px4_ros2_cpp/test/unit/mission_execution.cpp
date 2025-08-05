@@ -358,9 +358,9 @@ class CustomActionInterruptible : public px4_ros2::ActionInterface
 public:
   CustomActionInterruptible(
     px4_ros2::ModeBase & mode,
-    const std::function<bool(const px4_ros2::ActionArguments &)> & on_run, int & num_run_calls,
+    std::function<bool(const px4_ros2::ActionArguments &)> on_run, int & num_run_calls,
     bool supports_resume_from_landed = false)
-  : _on_run(on_run), _num_run_calls(num_run_calls), _supports_resume_from_landed(
+  : _on_run(std::move(on_run)), _num_run_calls(num_run_calls), _supports_resume_from_landed(
       supports_resume_from_landed) {}
   std::string name() const override {return "customActionInterruptible";}
 
@@ -1772,8 +1772,8 @@ Maximum abort recursion level reached
 class CustomActionReadyness : public px4_ros2::ActionInterface
 {
 public:
-  CustomActionReadyness(px4_ros2::ModeBase & mode, const std::function<bool()> & on_can_run)
-  : _on_can_run(on_can_run) {}
+  CustomActionReadyness(px4_ros2::ModeBase & mode, std::function<bool()> on_can_run)
+  : _on_can_run(std::move(on_can_run)) {}
   std::string name() const override {return "customActionReadyness";}
 
   bool canRun(

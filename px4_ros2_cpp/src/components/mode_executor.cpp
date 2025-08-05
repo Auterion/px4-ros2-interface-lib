@@ -109,6 +109,7 @@ int ModeExecutorBase::id() const
   return _registration->modeExecutorId();
 }
 
+// NOLINTNEXTLINE(google-default-arguments)
 Result ModeExecutorBase::sendCommandSync(
   uint32_t command, float param1, float param2, float param3, float param4,
   float param5, float param6, float param7)

@@ -81,6 +81,7 @@ public:
   /**
   * Send command and wait for ack/nack
   */
+  // NOLINTNEXTLINE(google-default-arguments)
   virtual Result sendCommandSync(
     uint32_t command, float param1 = NAN, float param2 = NAN, float param3 = NAN,
     float param4 = NAN,

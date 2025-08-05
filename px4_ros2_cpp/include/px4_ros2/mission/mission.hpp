@@ -160,9 +160,9 @@ public:
   Mission() = default;
 
   explicit Mission(
-    const std::vector<MissionItem> & mission_items,
+    std::vector<MissionItem> mission_items,
     MissionDefaults mission_defaults = {})
-  : _mission_defaults(mission_defaults), _mission_items(mission_items) {}
+  : _mission_defaults(mission_defaults), _mission_items(std::move(mission_items)) {}
 
   const MissionDefaults & defaults() const {return _mission_defaults;}
 

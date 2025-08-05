@@ -276,9 +276,7 @@ void ModeBase::setSetpointUpdateRateFromSetpointTypes()
   // Set update rate based on setpoint types
   float max_update_rate = -1.f;
   for (const auto & setpoint_type : _setpoint_types) {
-    if (setpoint_type->desiredUpdateRateHz() > max_update_rate) {
-      max_update_rate = setpoint_type->desiredUpdateRateHz();
-    }
+    max_update_rate = std::max(max_update_rate, setpoint_type->desiredUpdateRateHz());
   }
   if (max_update_rate > 0.f) {
     setSetpointUpdateRate(max_update_rate);
