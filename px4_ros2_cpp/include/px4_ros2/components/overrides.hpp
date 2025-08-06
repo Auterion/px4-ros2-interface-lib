@@ -27,6 +27,7 @@ private:
 
   friend class ModeBase;
   friend class ModeExecutorBase;
+  void controlAutoSetHome(bool enabled);
   void deferFailsafes(bool enabled, int timeout_s = 0);
   void setup(uint8_t type, uint8_t id);
 
