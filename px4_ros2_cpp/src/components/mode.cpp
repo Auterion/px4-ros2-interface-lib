@@ -28,6 +28,9 @@ ModeBase::ModeBase(
     },
     topic_namespace_prefix), _config_overrides(node, topic_namespace_prefix)
 {
+  if (_settings.prevent_arming) {
+    modeRequirements().prevent_arming = true;
+  }
   _vehicle_status_sub = node.create_subscription<px4_msgs::msg::VehicleStatus>(
     topic_namespace_prefix + "fmu/out/vehicle_status" +
     px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(), rclcpp::QoS(
