@@ -112,7 +112,11 @@ properties:
             - if:
                 properties: { type: { const: "takeoff" } }
               then:
-                properties: {}
+                properties:
+                  altitude:
+                    description: |
+                      optional ASML altitude in m. Default: vehicle-specific default altitude
+                    type: number
             - if:
                 properties: { type: { const: "rtl" } }
               then:
