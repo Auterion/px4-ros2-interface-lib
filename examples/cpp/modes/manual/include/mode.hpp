@@ -22,7 +22,7 @@ class FlightModeTest : public px4_ros2::ModeBase
 {
 public:
   explicit FlightModeTest(rclcpp::Node & node)
-  : ModeBase(node, kName)
+  : ModeBase(node, Settings{kName}.preventArming(true))
   {
     _manual_control_input = std::make_shared<px4_ros2::ManualControlInput>(*this);
     _rates_setpoint = std::make_shared<px4_ros2::RatesSetpointType>(*this);
