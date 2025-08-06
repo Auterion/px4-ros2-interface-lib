@@ -20,7 +20,7 @@ namespace px4_ros2
 /**
  * @brief Trait to check if a message type `T` has a `MESSAGE_VERSION` constant.
  *
- * If `T` has `MESSAGE_VERSION`, `HasMessageVersion<T>::value` is `true`;
+ * If `T` has `MESSAGE_VERSION`, \c HasMessageVersion<T>::value is `true`;
  * otherwise it is `false`.
  *
  * @tparam T The message type to check.
