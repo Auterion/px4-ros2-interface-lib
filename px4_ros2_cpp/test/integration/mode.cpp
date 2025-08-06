@@ -24,7 +24,8 @@ class FlightModeTest : public px4_ros2::ModeBase
 {
 public:
   explicit FlightModeTest(rclcpp::Node & node)
-  : ModeBase(node, Settings{kName, true, ModeBase::kModeIDDescend})
+  : ModeBase(node,
+      Settings{kName}.activateEvenWhileDisarmed(true).replaceInternalMode(ModeBase::kModeIDDescend))
   {
     _attitude_setpoint = std::make_shared<px4_ros2::AttitudeSetpointType>(*this);
   }
