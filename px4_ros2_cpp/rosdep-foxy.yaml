@@ -1,3 +1,0 @@
-px4_msgs:
-  ubuntu:
-    - ros-foxy-px4-msgs=3.3.1-0focal

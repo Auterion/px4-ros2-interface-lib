@@ -54,7 +54,7 @@ public:
     _mode = std::make_unique<ModeT>(*this);
 
     if (!_mode->doRegister()) {
-      throw std::runtime_error("Registration failed");
+      throw Exception("Registration failed");
     }
   }
 
@@ -121,7 +121,7 @@ public:
           // *INDENT-ON*
         }, _other_modes))
     {
-      throw std::runtime_error("Registration failed");
+      throw Exception("Registration failed");
     }
   }
 

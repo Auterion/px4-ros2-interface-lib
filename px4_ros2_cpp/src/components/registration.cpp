@@ -177,10 +177,14 @@ void Registration::doUnregister()
 
 void Registration::setRegistrationDetails(
   int arming_check_id, px4_ros2::ModeBase::ModeID mode_id,
-  int mode_executor_id)
+  int mode_executor_id, const std::string & name)
 {
   _unregister_ext_component.arming_check_id = arming_check_id;
   _unregister_ext_component.mode_id = mode_id;
   _unregister_ext_component.mode_executor_id = mode_executor_id;
+  strncpy(
+    reinterpret_cast<char *>(_unregister_ext_component.name.data()),
+    name.c_str(), _unregister_ext_component.name.size() - 1);
+  _unregister_ext_component.name.back() = '\0';
   _registered = true;
 }
