@@ -1,5 +1,13 @@
 var classpx4__ros2_1_1OdometryLocalPosition =
 [
     [ "OdometryLocalPosition", "classpx4__ros2_1_1OdometryLocalPosition.html#af05e8fd5845d7e7b34e209210e221ccc", null ],
-    [ "heading", "classpx4__ros2_1_1OdometryLocalPosition.html#a50193dab84758c3f08e5a5b947fad5f8", null ]
+    [ "accelerationNed", "classpx4__ros2_1_1OdometryLocalPosition.html#aa495438cfeabb2f559bb751ada2ce446", null ],
+    [ "distanceGround", "classpx4__ros2_1_1OdometryLocalPosition.html#a17ad207bdf91801ff047ed36e820a3ed", null ],
+    [ "heading", "classpx4__ros2_1_1OdometryLocalPosition.html#a50193dab84758c3f08e5a5b947fad5f8", null ],
+    [ "positionNed", "classpx4__ros2_1_1OdometryLocalPosition.html#a7e3b4ea403465950d6603dfbe566e65d", null ],
+    [ "positionXYValid", "classpx4__ros2_1_1OdometryLocalPosition.html#a31d56b5e4969f5428271d23463ea56de", null ],
+    [ "positionZValid", "classpx4__ros2_1_1OdometryLocalPosition.html#acded271012e402b6e11efa635ff4523c", null ],
+    [ "velocityNed", "classpx4__ros2_1_1OdometryLocalPosition.html#ab0cf7ace676bda55cd71129d0d322303", null ],
+    [ "velocityXYValid", "classpx4__ros2_1_1OdometryLocalPosition.html#a5eb67ac9a65bdfde28bfea692be7eb44", null ],
+    [ "velocityZValid", "classpx4__ros2_1_1OdometryLocalPosition.html#a4930a3958930079f335c239559220d01", null ]
 ];

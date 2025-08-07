@@ -37,7 +37,7 @@ var NAVTREE =
         [ "Linters (code formatting etc)", "index.html#autotoc_md10", null ]
       ] ]
     ] ],
-    [ "Topics", "topics.html", "topics" ],
+    [ "Modules", "modules.html", "modules" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -59,7 +59,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "airspeed_8hpp_source.html",
-"structpx4__ros2_1_1LocalPositionMeasurement.html#aaa49a96aac2b172e49c2036424422b6e"
+"classpx4__ros2_1_1VTOL.html#a1e93fc89ed2b9d550f53f93402c6d3f9",
+"structpx4__ros2_1_1VTOLConfig.html#a30a3f9ad1192a503230e0131cdde36a1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

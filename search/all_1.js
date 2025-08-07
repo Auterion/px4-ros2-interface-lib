@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['2_20interface_20library_0',['PX4 ROS 2 Interface Library',['../index.html',1,'']]],
-  ['2_3a_20translate_20messages_1',['Option 2: Translate Messages',['../index.html#autotoc_md4',1,'']]]
+  ['back_5ftransition_5fdeceleration_16',['back_transition_deceleration',['../structpx4__ros2_1_1VTOLConfig.html#a498a0d50044c43272a5b58dcbf5f5a3e',1,'px4_ros2::VTOLConfig']]],
+  ['back_5ftransition_5fdeceleration_5fsetpoint_5fto_5fpitch_5fi_17',['back_transition_deceleration_setpoint_to_pitch_i',['../structpx4__ros2_1_1VTOLConfig.html#add79bca2faccf489879f81a107e7486f',1,'px4_ros2::VTOLConfig']]],
+  ['battery_18',['Battery',['../classpx4__ros2_1_1Battery.html',1,'px4_ros2']]]
 ];
