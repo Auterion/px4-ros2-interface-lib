@@ -7,3 +7,8 @@
 \defgroup setpoint_types_experimental Experimental
 \ingroup setpoint_types
 */
+
+/*!
+\defgroup setpoint_types_rover Rover
+\ingroup setpoint_types
+*/

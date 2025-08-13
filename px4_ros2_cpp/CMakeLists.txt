@@ -40,6 +40,12 @@ set(HEADER_FILES
         include/px4_ros2/control/setpoint_types/experimental/attitude.hpp
         include/px4_ros2/control/setpoint_types/experimental/rates.hpp
         include/px4_ros2/control/setpoint_types/experimental/trajectory.hpp
+        include/px4_ros2/control/setpoint_types/rover/rover_position.hpp
+        include/px4_ros2/control/setpoint_types/rover/rover_velocity.hpp
+        include/px4_ros2/control/setpoint_types/rover/rover_attitude.hpp
+        include/px4_ros2/control/setpoint_types/rover/rover_rate.hpp
+        include/px4_ros2/control/setpoint_types/rover/rover_throttle.hpp
+        include/px4_ros2/control/setpoint_types/rover/rover_steering.hpp
         include/px4_ros2/control/vtol.hpp
         include/px4_ros2/navigation/experimental/global_position_measurement_interface.hpp
         include/px4_ros2/navigation/experimental/local_position_measurement_interface.hpp
@@ -78,6 +84,12 @@ add_library(px4_ros2_cpp
         src/control/setpoint_types/experimental/attitude.cpp
         src/control/setpoint_types/experimental/rates.cpp
         src/control/setpoint_types/experimental/trajectory.cpp
+        src/control/setpoint_types/rover/rover_position.cpp
+        src/control/setpoint_types/rover/rover_velocity.cpp
+        src/control/setpoint_types/rover/rover_attitude.cpp
+        src/control/setpoint_types/rover/rover_rate.cpp
+        src/control/setpoint_types/rover/rover_throttle.cpp
+        src/control/setpoint_types/rover/rover_steering.cpp
         src/navigation/experimental/global_position_measurement_interface.cpp
         src/navigation/experimental/local_position_measurement_interface.cpp
         src/odometry/attitude.cpp
