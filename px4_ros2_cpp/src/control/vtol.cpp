@@ -19,11 +19,13 @@ VTOL::VTOL(Context & context, const VTOLConfig & config)
 : _node(context.node()), _config(config)
 {
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
-    context.topicNamespacePrefix() + "fmu/in/vehicle_command" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
+    context.topicNamespacePrefix() + "fmu/in/vehicle_command" +
+      px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
     1);
 
   _vtol_vehicle_status_sub = _node.create_subscription<px4_msgs::msg::VtolVehicleStatus>(
-    context.topicNamespacePrefix() + "fmu/out/vtol_vehicle_status" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VtolVehicleStatus>(),
+    context.topicNamespacePrefix() + "fmu/out/vtol_vehicle_status" +
+      px4_ros2::getMessageNameVersion<px4_msgs::msg::VtolVehicleStatus>(),
     rclcpp::QoS(10).best_effort(),
     [this](px4_msgs::msg::VtolVehicleStatus::UniquePtr msg) {
 
@@ -48,7 +50,8 @@ VTOL::VTOL(Context & context, const VTOLConfig & config)
     });
 
   _vehicle_local_position_sub = _node.create_subscription<px4_msgs::msg::VehicleLocalPosition>(
-    context.topicNamespacePrefix() + "fmu/out/vehicle_local_position" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLocalPosition>(),
+    context.topicNamespacePrefix() + "fmu/out/vehicle_local_position" +
+      px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLocalPosition>(),
     rclcpp::QoS(10).best_effort(),
     [this](px4_msgs::msg::VehicleLocalPosition::UniquePtr msg) {
       _vehicle_heading = msg->heading;

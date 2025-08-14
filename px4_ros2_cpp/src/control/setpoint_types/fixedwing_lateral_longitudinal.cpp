@@ -14,20 +14,24 @@ FwLateralLongitudinalSetpointType::FwLateralLongitudinalSetpointType(Context & c
 {
   _fw_lateral_sp_pub =
     context.node().create_publisher<px4_msgs::msg::FixedWingLateralSetpoint>(
-    context.topicNamespacePrefix() + "fmu/in/fixed_wing_lateral_setpoint" + px4_ros2::getMessageNameVersion<px4_msgs::msg::FixedWingLateralSetpoint>(),
+    context.topicNamespacePrefix() + "fmu/in/fixed_wing_lateral_setpoint" +
+      px4_ros2::getMessageNameVersion<px4_msgs::msg::FixedWingLateralSetpoint>(),
     1);
   _fw_longitudinal_sp_pub =
     context.node().create_publisher<px4_msgs::msg::FixedWingLongitudinalSetpoint>(
-    context.topicNamespacePrefix() + "fmu/in/fixed_wing_longitudinal_setpoint" + px4_ros2::getMessageNameVersion<px4_msgs::msg::FixedWingLongitudinalSetpoint>(),
+    context.topicNamespacePrefix() + "fmu/in/fixed_wing_longitudinal_setpoint" +
+      px4_ros2::getMessageNameVersion<px4_msgs::msg::FixedWingLongitudinalSetpoint>(),
     1);
 
   _lateral_control_configuration_pub =
     context.node().create_publisher<px4_msgs::msg::LateralControlConfiguration>(
-    context.topicNamespacePrefix() + "fmu/in/lateral_control_configuration" + px4_ros2::getMessageNameVersion<px4_msgs::msg::LateralControlConfiguration>(),
+    context.topicNamespacePrefix() + "fmu/in/lateral_control_configuration" +
+      px4_ros2::getMessageNameVersion<px4_msgs::msg::LateralControlConfiguration>(),
     1);
   _longitudinal_control_configuration_pub =
     context.node().create_publisher<px4_msgs::msg::LongitudinalControlConfiguration>(
-    context.topicNamespacePrefix() + "fmu/in/longitudinal_control_configuration" + px4_ros2::getMessageNameVersion<px4_msgs::msg::LongitudinalControlConfiguration>(),
+    context.topicNamespacePrefix() + "fmu/in/longitudinal_control_configuration" +
+      px4_ros2::getMessageNameVersion<px4_msgs::msg::LongitudinalControlConfiguration>(),
     1);
 }
 
