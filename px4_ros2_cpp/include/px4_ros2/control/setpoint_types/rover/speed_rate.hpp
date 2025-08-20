@@ -27,7 +27,7 @@ public:
   ~RoverSpeedRateSetpointType() override = default;
 
   Configuration getConfiguration() override;
-  float desiredUpdateRateHz() override {return 100.f;}
+  float desiredUpdateRateHz() override {return 30.f;}
 
   /**
    * @brief Send a rover speed setpoint and a rover rate setpoint to the flight controller.

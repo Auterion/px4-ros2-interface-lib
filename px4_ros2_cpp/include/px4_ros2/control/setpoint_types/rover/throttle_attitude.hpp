@@ -27,7 +27,7 @@ public:
   ~RoverThrottleAttitudeSetpointType() override = default;
 
   Configuration getConfiguration() override;
-  float desiredUpdateRateHz() override {return 100.f;}
+  float desiredUpdateRateHz() override {return 30.f;}
 
   /**
    * @brief Send a rover throttle setpoint and a rover attitude setpoint to the flight controller.

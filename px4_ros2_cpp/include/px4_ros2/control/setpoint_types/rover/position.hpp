@@ -27,7 +27,7 @@ public:
   ~RoverPositionSetpointType() override = default;
 
   Configuration getConfiguration() override;
-  float desiredUpdateRateHz() override {return 100.f;}
+  float desiredUpdateRateHz() override {return 30.f;}
 
   /**
    * @brief Send a rover position setpoint to the flight controller.
