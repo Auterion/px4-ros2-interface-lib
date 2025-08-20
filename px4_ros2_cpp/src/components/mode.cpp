@@ -64,7 +64,7 @@ bool ModeBase::doRegister()
   assert(!_registration->registered());
 
   if (!_skip_message_compatibility_check && (!waitForFMU(node(), 15s, topicNamespacePrefix()) ||
-    !messageCompatibilityCheck(node(), {ALL_PX4_ROS2_MESSAGES}, topicNamespacePrefix())))
+    !defaultMessageCompatibilityCheck()))
   {
     return false;
   }
@@ -291,6 +291,14 @@ void ModeBase::activateSetpointType(SetpointBase & setpoint)
   setpoint.getConfiguration().fillControlMode(control_mode);
   control_mode.timestamp = 0; // Let PX4 set the timestamp
   _config_control_setpoints_pub->publish(control_mode);
+}
+
+bool ModeBase::defaultMessageCompatibilityCheck()
+{
+  // Call the compatibility check only once and store the result (in case there are multiple modes)
+  static const bool kResult = messageCompatibilityCheck(
+    node(), {ALL_PX4_ROS2_MESSAGES}, topicNamespacePrefix());
+  return kResult;
 }
 
 void ModeBase::addSetpointType(SetpointBase * setpoint)
