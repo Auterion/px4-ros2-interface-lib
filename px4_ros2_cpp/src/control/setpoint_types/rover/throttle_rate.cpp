@@ -27,14 +27,14 @@ RoverThrottleRateSetpointType::RoverThrottleRateSetpointType(Context & context)
 
 void RoverThrottleRateSetpointType::update(
   const float throttle_body_x,
-  const float throttle_body_y,
-  const float yaw_rate_setpoint)
+  const float yaw_rate_setpoint,
+  std::optional<float>  throttle_body_y)
 {
   onUpdate();
 
   px4_msgs::msg::RoverThrottleSetpoint sp_throttle{};
   sp_throttle.throttle_body_x = throttle_body_x;
-  sp_throttle.throttle_body_y = throttle_body_y;
+  sp_throttle.throttle_body_y = throttle_body_y.value_or(NAN);
   sp_throttle.timestamp = 0; // Let PX4 set the timestamp
   _rover_throttle_setpoint_pub->publish(sp_throttle);
 

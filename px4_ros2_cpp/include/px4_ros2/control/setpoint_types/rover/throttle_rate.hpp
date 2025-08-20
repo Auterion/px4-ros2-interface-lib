@@ -32,11 +32,11 @@ public:
   /**
    * @brief Send a rover throttle setpoint and a rover rate setpoint to the flight controller.
    *
-  * @param throttle_body_x [] [@range -1 (Backwards), 1 (Forwards)] [@frame Body] Throttle setpoint along body X axis
-   * @param throttle_body_y [] [@range -1 (Left), 1 (Right)] [@frame Body] [@invalid NaN If not mecanum] Mecanum only: Throttle setpoint along body Y axis
-   * @param yaw_rate_setpoint [rad/s] [@range -inf, inf] [@frame NED] Yaw rate setpoint
+   * @param throttle_body_x [-] Throttle setpoint along body X axis. Takes values in [-1 (Backwards), 1 (Forwards)].
+   * @param yaw_rate_setpoint [rad/s] Yaw rate setpoint in NED frame. Takes values in [-inf, inf].
+   * @param throttle_body_y [-] Mecanum only: Throttle setpoint along body Y axis (Only relevant for mecanum rovers). Takes values in [-1 (Left), 1 (Right)].
   */
-  void update(float throttle_body_x, float throttle_body_y, float yaw_rate_setpoint);
+  void update(float throttle_body_x, float yaw_rate_setpoint, std::optional<float> throttle_body_y = {});
 
 private:
   rclcpp::Node & _node;

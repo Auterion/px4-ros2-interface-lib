@@ -27,14 +27,14 @@ RoverSpeedSteeringSetpointType::RoverSpeedSteeringSetpointType(Context & context
 
 void RoverSpeedSteeringSetpointType::update(
   const float speed_body_x,
-  const float speed_body_y,
-  const float normalized_steering_setpoint)
+  const float normalized_steering_setpoint,
+  std::optional<float> speed_body_y)
 {
   onUpdate();
 
   px4_msgs::msg::RoverSpeedSetpoint sp_speed{};
   sp_speed.speed_body_x = speed_body_x;
-  sp_speed.speed_body_x = speed_body_x;
+  sp_speed.speed_body_y = speed_body_y.value_or(NAN);
   sp_speed.timestamp = 0; // Let PX4 set the timestamp
   _rover_speed_setpoint_pub->publish(sp_speed);
 

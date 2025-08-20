@@ -34,7 +34,7 @@ public:
   {
     const float speed_body_x = _manual_control_input->throttle() * kMaxSpeed;
     const float yaw_rate = _manual_control_input->roll() * kMaxYawRate * M_PI / 180.f;
-    _rover_speed_rate_setpoint->update(speed_body_x, NAN, yaw_rate);
+    _rover_speed_rate_setpoint->update(speed_body_x, yaw_rate);
   }
 
 private:

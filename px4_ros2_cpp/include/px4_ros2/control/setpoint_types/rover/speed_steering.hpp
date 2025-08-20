@@ -32,11 +32,11 @@ public:
   /**
    * @brief Send a rover speed setpoint and a rover steering setpoint to the flight controller.
    *
-   * @param speed_body_x [m/s] [@range -inf (Backwards), inf (Forwards)] [@frame Body] Speed setpoint in body x direction
-   * @param speed_body_y [m/s] [@range -inf (Left), inf (Right)] [@frame Body] [@invalid NaN If not mecanum] Mecanum only: Speed setpoint in body y direction
-   * @param normalized_steering_setpoint [@range -1 (Left), 1 (Right)] [@frame Body] Ackermann: Normalized steering angle, Differential/Mecanum: Normalized speed difference between the left and right wheels
+   * @param speed_body_x [m/s] Speed setpoint in body x direction. Takes values in [-inf (Backwards), inf (Forwards)].
+   * @param normalized_steering_setpoint [-] Ackermann: Normalized steering angle, Differential/Mecanum: Normalized speed difference between the left and right wheels. Takes values in [-1 (Left), 1 (Right)]. 
+   * @param speed_body_y [m/s] Mecanum only: Speed setpoint in body y direction (Only relevant for mecanum rovers). Takes values in [-inf (Left), inf (Right)].
   */
-  void update(float speed_body_x, float speed_body_y, float normalized_steering_setpoint);
+  void update(float speed_body_x, float normalized_steering_setpoint, std::optional<float> speed_body_y = {});
 
 private:
   rclcpp::Node & _node;

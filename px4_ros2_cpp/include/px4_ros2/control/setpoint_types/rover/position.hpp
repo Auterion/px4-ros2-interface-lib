@@ -32,15 +32,15 @@ public:
   /**
    * @brief Send a rover position setpoint to the flight controller.
    *
-   * @param position_ned [m] [@range -inf, inf] [@frame NED] Target position
-   * @param start_ned [m] [@range -inf, inf] [@frame NED] [@invalid NaN Defaults to vehicle position] Start position which specifies a line for the rover to track
-   * @param cruising_speed [m/s] [@range 0, inf] [@invalid NaN Defaults to maximum speed] Cruising speed
-   * @param arrival_speed [m/s] [@range 0, inf] [@invalid NaN Defaults to 0] Speed the rover should arrive at the target with
-   * @param yaw [rad] [@range -pi,pi] [@frame NED] [@invalid NaN Defaults to vehicle yaw] Mecanum only: Specify vehicle yaw during travel
+   * @param position_ned [m] Target position in NED frame. Takes values in [-inf, inf].
+   * @param start_ned [m] Start position which specifies a line for the rover to track (Optional, defaults to vehicle position). Takes values in [-inf, inf].
+   * @param cruising_speed [m/s] Cruising speed (Optional, defaults to maximum speed). Takes values in [0, inf].
+   * @param arrival_speed [m/s] Speed the rover should arrive at the target with (Optional, defaults to zero). Takes values in [0, inf].
+   * @param yaw [rad] Mecanum only: Specify vehicle yaw during travel (Optional, defaults to vehicle yaw). Takes values in [-pi,pi].
   */
   void update(
-    const Eigen::Vector2f & position_ned, const Eigen::Vector2f & start_ned,
-    float cruising_speed, float arrival_speed, float yaw);
+    const Eigen::Vector2f & position_ned, const Eigen::Vector2f start_ned,
+    std::optional<float> cruising_speed = {}, std::optional<float> arrival_speed = {}, std::optional<float> yaw = {});
 
 private:
   rclcpp::Node & _node;
