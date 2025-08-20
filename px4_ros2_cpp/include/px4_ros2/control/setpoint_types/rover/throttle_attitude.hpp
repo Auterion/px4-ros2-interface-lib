@@ -48,4 +48,3 @@ private:
 
 /** @}*/
 } /* namespace px4_ros2 */
-

@@ -39,7 +39,7 @@ public:
   void update(
     float throttle_body_x, float yaw_rate_setpoint,
     std::optional<float> throttle_body_y = {});
-    
+
 private:
   rclcpp::Node & _node;
   rclcpp::Publisher<px4_msgs::msg::RoverThrottleSetpoint>::SharedPtr

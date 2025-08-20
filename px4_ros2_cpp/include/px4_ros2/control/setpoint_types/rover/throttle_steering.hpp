@@ -40,7 +40,7 @@ public:
     float throttle_body_x, float normalized_steering_setpoint,
     std::optional<float> throttle_body_y = {});
 
-    private:
+private:
   rclcpp::Node & _node;
   rclcpp::Publisher<px4_msgs::msg::RoverThrottleSetpoint>::SharedPtr
     _rover_throttle_setpoint_pub;
