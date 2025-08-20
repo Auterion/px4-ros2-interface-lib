@@ -28,7 +28,7 @@ RoverThrottleSteeringSetpointType::RoverThrottleSteeringSetpointType(Context & c
 void RoverThrottleSteeringSetpointType::update(
   const float throttle_body_x,
   const float normalized_steering_setpoint,
-  std::optional<float>  throttle_body_y)
+  std::optional<float> throttle_body_y)
 {
   onUpdate();
 

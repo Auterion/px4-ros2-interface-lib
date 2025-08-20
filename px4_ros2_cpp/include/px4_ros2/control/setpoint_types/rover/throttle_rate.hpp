@@ -36,8 +36,10 @@ public:
    * @param yaw_rate_setpoint [rad/s] Yaw rate setpoint in NED frame. Takes values in [-inf, inf].
    * @param throttle_body_y [-] Mecanum only: Throttle setpoint along body Y axis (Only relevant for mecanum rovers). Takes values in [-1 (Left), 1 (Right)].
   */
-  void update(float throttle_body_x, float yaw_rate_setpoint, std::optional<float> throttle_body_y = {});
-
+  void update(
+    float throttle_body_x, float yaw_rate_setpoint,
+    std::optional<float> throttle_body_y = {});
+    
 private:
   rclcpp::Node & _node;
   rclcpp::Publisher<px4_msgs::msg::RoverThrottleSetpoint>::SharedPtr

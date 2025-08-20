@@ -28,7 +28,7 @@ RoverThrottleAttitudeSetpointType::RoverThrottleAttitudeSetpointType(Context & c
 void RoverThrottleAttitudeSetpointType::update(
   const float throttle_body_x,
   const float yaw_setpoint,
-  std::optional<float>  throttle_body_y)
+  std::optional<float> throttle_body_y)
 {
   onUpdate();
 
