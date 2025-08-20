@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(rover_velocity_mode_cpp)
+project(example_rover_velocity_mode_cpp)
 
 if(NOT CMAKE_CXX_STANDARD)
     set(CMAKE_CXX_STANDARD 17)
