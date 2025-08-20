@@ -26,9 +26,9 @@ using namespace std::chrono_literals; // NOLINT
   {"fmu/in/rover_attitude_setpoint"}, \
   {"fmu/in/rover_position_setpoint"}, \
   {"fmu/in/rover_rate_setpoint"}, \
+  {"fmu/in/rover_speed_setpoint"}, \
   {"fmu/in/rover_steering_setpoint"}, \
   {"fmu/in/rover_throttle_setpoint"}, \
-  {"fmu/in/rover_velocity_setpoint"}, \
   {"fmu/in/trajectory_setpoint"}, \
   {"fmu/in/unregister_ext_component"}, \
   {"fmu/in/vehicle_attitude_setpoint"}, \

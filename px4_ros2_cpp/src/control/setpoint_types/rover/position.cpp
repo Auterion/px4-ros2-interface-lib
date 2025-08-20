@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
-#include <px4_ros2/control/setpoint_types/rover/rover_position.hpp>
+#include <px4_ros2/control/setpoint_types/rover/position.hpp>
 #include <px4_ros2/utils/geometry.hpp>
 #include <px4_ros2/utils/message_version.hpp>
 
