@@ -167,6 +167,8 @@ protected:
 
   void disableWatchdogTimer() {_health_and_arming_checks.disableWatchdogTimer();}
 
+  bool defaultMessageCompatibilityCheck();
+
 private:
   void addSetpointType(SetpointBase * setpoint) override;
   void setRequirement(const RequirementFlags & requirement_flags) override;
