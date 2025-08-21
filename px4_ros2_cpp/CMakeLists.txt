@@ -154,6 +154,7 @@ if(BUILD_TESTING)
             test/integration/global_navigation.cpp
             test/integration/local_navigation.cpp
             test/integration/mode.cpp
+            test/integration/mission.cpp
             test/integration/mode_executor.cpp
             test/integration/overrides.cpp
     )
