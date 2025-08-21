@@ -67,7 +67,7 @@ class LocalPositionMeasurementInterface : public PositionMeasurementInterfaceBas
 public:
   explicit LocalPositionMeasurementInterface(
     rclcpp::Node & node, PoseFrame pose_frame,
-    VelocityFrame velocity_frame);
+    VelocityFrame velocity_frame, std::string topic_namespace_prefix = "");
   ~LocalPositionMeasurementInterface() override = default;
 
   /**
