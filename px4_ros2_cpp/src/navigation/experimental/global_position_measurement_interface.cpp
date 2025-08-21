@@ -12,8 +12,10 @@ using px4_msgs::msg::VehicleGlobalPosition;
 namespace px4_ros2
 {
 
-GlobalPositionMeasurementInterface::GlobalPositionMeasurementInterface(rclcpp::Node & node)
-: PositionMeasurementInterfaceBase(node)
+GlobalPositionMeasurementInterface::GlobalPositionMeasurementInterface(
+  rclcpp::Node & node,
+  std::string topic_namespace_prefix)
+: PositionMeasurementInterfaceBase(node, std::move(topic_namespace_prefix))
 {
   _aux_global_position_pub =
     node.create_publisher<VehicleGlobalPosition>(

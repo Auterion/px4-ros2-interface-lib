@@ -48,7 +48,9 @@ struct GlobalPositionMeasurement
 class GlobalPositionMeasurementInterface : public PositionMeasurementInterfaceBase
 {
 public:
-  explicit GlobalPositionMeasurementInterface(rclcpp::Node & node);
+  explicit GlobalPositionMeasurementInterface(
+    rclcpp::Node & node,
+    std::string topic_namespace_prefix = "");
   ~GlobalPositionMeasurementInterface() override = default;
 
   /**

@@ -14,8 +14,8 @@ namespace px4_ros2
 
 LocalPositionMeasurementInterface::LocalPositionMeasurementInterface(
   rclcpp::Node & node, const PoseFrame pose_frame,
-  const VelocityFrame velocity_frame)
-: PositionMeasurementInterfaceBase(node),
+  const VelocityFrame velocity_frame, std::string topic_namespace_prefix)
+: PositionMeasurementInterfaceBase(node, std::move(topic_namespace_prefix)),
   _pose_frame(poseFrameToMessageFrame(pose_frame)),
   _velocity_frame(velocityFrameToMessageFrame(velocity_frame))
 {
