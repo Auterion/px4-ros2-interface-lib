@@ -7,54 +7,13 @@
 #include <px4_ros2/mission/mission_executor.hpp>
 #include <px4_ros2/third_party/nlohmann/json.hpp>
 
+#include "actions/basic.hpp"
+#include "actions/camera_trigger.hpp"
+#include "actions/mode.hpp"
+#include "actions/pickup.hpp"
+#include "actions/trajectory.hpp"
+
 static const std::string kName = "Mission Example";
-
-class CustomAction : public px4_ros2::ActionInterface
-{
-public:
-  explicit CustomAction(px4_ros2::ModeBase & mode)
-  : _node(mode.node())
-  {
-  }
-  std::string name() const override {return "customAction";}
-
-  void run(
-    const std::shared_ptr<px4_ros2::ActionHandler> & handler,
-    const px4_ros2::ActionArguments & arguments,
-    const std::function<void()> & on_completed) override
-  {
-    RCLCPP_INFO(_node.get_logger(), "Running custom action");
-    if (arguments.contains("customArgument")) {
-      RCLCPP_INFO(
-        _node.get_logger(), "Custom argument: %s",
-        arguments.at<std::string>("customArgument").c_str());
-    }
-    // Directly continue
-    on_completed();
-  }
-
-private:
-  rclcpp::Node & _node;
-};
-
-class CustomTrajectoryAction : public px4_ros2::ActionInterface
-{
-public:
-  explicit CustomTrajectoryAction(px4_ros2::ModeBase & mode) {}
-  std::string name() const override {return "customTrajectory";}
-
-  void run(
-    const std::shared_ptr<px4_ros2::ActionHandler> & handler,
-    const px4_ros2::ActionArguments & arguments,
-    const std::function<void()> & on_completed) override
-  {
-    // Run a custom trajectory
-    auto mission = std::make_shared<px4_ros2::Mission>(
-      std::vector<px4_ros2::MissionItem>{px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-        px4_ros2::Waypoint({47.39820919, 8.54595214, 510})});
-    handler->runTrajectory(mission, on_completed);
-  }
-};
 
 class Mission
 {
@@ -94,7 +53,7 @@ public:
                "frame": "global"
            },
            {
-               "type": "customAction",
+               "type": "basicCustomAction",
                "customArgument": "custom value"
            },
            {
@@ -133,7 +92,10 @@ public:
 )"));
     _mission_executor = std::make_unique<px4_ros2::MissionExecutor>(
       kName,
-      px4_ros2::MissionExecutor::Configuration().addCustomAction<CustomAction>()
+      px4_ros2::MissionExecutor::Configuration().addCustomAction<BasicCustomAction>()
+      .addCustomAction<CameraTriggerAction>()
+      .addCustomAction<ModeAction>()
+      .addCustomAction<PickupAction>()
       .addCustomAction<CustomTrajectoryAction>(),
       *node);
 
