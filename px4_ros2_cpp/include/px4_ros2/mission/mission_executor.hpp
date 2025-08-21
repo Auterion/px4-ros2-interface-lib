@@ -203,6 +203,10 @@ private:
     _mode_executor->command_handler = command_handler;
   }
 
+  ModeBase::ModeID modeId() const {return _mode->id();}
+
+  ModeExecutorBase & modeExecutor() {return *_mode_executor;}
+
   std::shared_ptr<LandDetected> _land_detected;
 
 private:
