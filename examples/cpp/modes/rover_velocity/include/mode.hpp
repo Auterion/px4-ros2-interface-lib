@@ -10,7 +10,6 @@
 
 #include <rclcpp/rclcpp.hpp>
 
-using namespace std::chrono_literals; // NOLINT
 
 static const std::string kName = "Rover Velocity Mode";
 static const float kMaxSpeed = 2.5f; // [m/s] Set equal to RO_SPEED_LIM
@@ -33,7 +32,7 @@ public:
   void updateSetpoint(float dt_s) override
   {
     const float speed_body_x = _manual_control_input->throttle() * kMaxSpeed;
-    const float yaw_rate = _manual_control_input->roll() * kMaxYawRate * M_PI / 180.f;
+    const float yaw_rate = _manual_control_input->roll() * px4_ros2::degToRad(kMaxYawRate);
     _rover_speed_rate_setpoint->update(speed_body_x, yaw_rate);
   }
 

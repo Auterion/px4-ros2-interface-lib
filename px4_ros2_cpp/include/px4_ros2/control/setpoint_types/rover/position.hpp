@@ -39,7 +39,7 @@ public:
    * @param yaw [rad] Mecanum only: Specify vehicle yaw during travel (Optional, defaults to vehicle yaw). Takes values in [-pi,pi].
   */
   void update(
-    const Eigen::Vector2f & position_ned, const Eigen::Vector2f start_ned,
+    const Eigen::Vector2f & position_ned, const Eigen::Vector2f& start_ned,
     std::optional<float> cruising_speed = {}, std::optional<float> arrival_speed = {},
     std::optional<float> yaw = {});
 
