@@ -3,20 +3,20 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
-#include <px4_ros2/control/setpoint_types/rover/speed_rate.hpp>
+#include <px4_ros2/control/setpoint_types/experimental/rover/throttle_rate.hpp>
 #include <px4_ros2/utils/geometry.hpp>
 #include <px4_ros2/utils/message_version.hpp>
 
 namespace px4_ros2
 {
 
-RoverSpeedRateSetpointType::RoverSpeedRateSetpointType(Context & context)
+RoverThrottleRateSetpointType::RoverThrottleRateSetpointType(Context & context)
 : SetpointBase(context), _node(context.node())
 {
-  _rover_speed_setpoint_pub =
-    context.node().create_publisher<px4_msgs::msg::RoverSpeedSetpoint>(
-    context.topicNamespacePrefix() + "fmu/in/rover_speed_setpoint" +
-    px4_ros2::getMessageNameVersion<px4_msgs::msg::RoverSpeedSetpoint>(),
+  _rover_throttle_setpoint_pub =
+    context.node().create_publisher<px4_msgs::msg::RoverThrottleSetpoint>(
+    context.topicNamespacePrefix() + "fmu/in/rover_throttle_setpoint" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::RoverThrottleSetpoint>(),
     1);
   _rover_rate_setpoint_pub =
     context.node().create_publisher<px4_msgs::msg::RoverRateSetpoint>(
@@ -25,18 +25,18 @@ RoverSpeedRateSetpointType::RoverSpeedRateSetpointType(Context & context)
     1);
 }
 
-void RoverSpeedRateSetpointType::update(
-  const float speed_body_x,
+void RoverThrottleRateSetpointType::update(
+  const float throttle_body_x,
   const float yaw_rate_setpoint,
-  std::optional<float> speed_body_y)
+  std::optional<float> throttle_body_y)
 {
   onUpdate();
 
-  px4_msgs::msg::RoverSpeedSetpoint sp_speed{};
-  sp_speed.speed_body_x = speed_body_x;
-  sp_speed.speed_body_y = speed_body_y.value_or(NAN);
-  sp_speed.timestamp = 0; // Let PX4 set the timestamp
-  _rover_speed_setpoint_pub->publish(sp_speed);
+  px4_msgs::msg::RoverThrottleSetpoint sp_throttle{};
+  sp_throttle.throttle_body_x = throttle_body_x;
+  sp_throttle.throttle_body_y = throttle_body_y.value_or(NAN);
+  sp_throttle.timestamp = 0; // Let PX4 set the timestamp
+  _rover_throttle_setpoint_pub->publish(sp_throttle);
 
   px4_msgs::msg::RoverRateSetpoint sp_rate{};
   sp_rate.yaw_rate_setpoint = yaw_rate_setpoint;
@@ -44,7 +44,7 @@ void RoverSpeedRateSetpointType::update(
   _rover_rate_setpoint_pub->publish(sp_rate);
 }
 
-SetpointBase::Configuration RoverSpeedRateSetpointType::getConfiguration()
+SetpointBase::Configuration RoverThrottleRateSetpointType::getConfiguration()
 {
   Configuration config{};
   config.control_allocation_enabled = true;

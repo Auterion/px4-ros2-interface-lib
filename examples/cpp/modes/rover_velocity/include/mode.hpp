@@ -5,7 +5,7 @@
 #pragma once
 
 #include <px4_ros2/components/mode.hpp>
-#include <px4_ros2/control/setpoint_types/rover/speed_rate.hpp>
+#include <px4_ros2/control/setpoint_types/experimental/rover/speed_rate.hpp>
 #include <px4_ros2/utils/geometry.hpp>
 
 #include <rclcpp/rclcpp.hpp>
