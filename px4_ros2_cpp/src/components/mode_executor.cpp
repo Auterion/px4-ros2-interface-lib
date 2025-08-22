@@ -53,8 +53,8 @@ bool ModeExecutorBase::doRegister()
 
   assert(!_registration->registered());
 
-  if (!waitForFMU(node(), 15s, _topic_namespace_prefix) ||
-    !messageCompatibilityCheck(node(), {ALL_PX4_ROS2_MESSAGES}, _topic_namespace_prefix))
+  if (!_skip_message_compatibility_check && (!waitForFMU(node(), 15s, _topic_namespace_prefix) ||
+    !messageCompatibilityCheck(node(), {ALL_PX4_ROS2_MESSAGES}, _topic_namespace_prefix)))
   {
     return false;
   }
@@ -109,6 +109,7 @@ int ModeExecutorBase::id() const
   return _registration->modeExecutorId();
 }
 
+// NOLINTNEXTLINE(google-default-arguments)
 Result ModeExecutorBase::sendCommandSync(
   uint32_t command, float param1, float param2, float param3, float param4,
   float param5, float param6, float param7)
@@ -455,6 +456,13 @@ bool ModeExecutorBase::deferFailsafesSync(bool enabled, int timeout_s)
   }
 
   return true;
+}
+
+void ModeExecutorBase::overrideRegistration(const std::shared_ptr<Registration> & registration)
+{
+  assert(!_registration->registered());
+  _owned_mode.overrideRegistration(registration);
+  _registration = registration;
 }
 
 ModeExecutorBase::ScheduledMode::ScheduledMode(

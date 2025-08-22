@@ -299,7 +299,9 @@ bool messageCompatibilityCheck(
             ret = false;
           }
         } else {
-          RCLCPP_FATAL(node.get_logger(), "MessageFormatResponse::success == false");
+          RCLCPP_FATAL(
+            node.get_logger(), "MessageFormatResponse::success == false for %s",
+            message_to_check.topic_name.c_str());
           ret = false;
         }
         break;

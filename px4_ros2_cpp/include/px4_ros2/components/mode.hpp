@@ -165,6 +165,8 @@ protected:
   void setSkipMessageCompatibilityCheck() {_skip_message_compatibility_check = true;}
   void overrideRegistration(const std::shared_ptr<Registration> & registration);
 
+  void disableWatchdogTimer() {_health_and_arming_checks.disableWatchdogTimer();}
+
 private:
   void addSetpointType(SetpointBase * setpoint) override;
   void setRequirement(const RequirementFlags & requirement_flags) override;

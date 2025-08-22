@@ -91,7 +91,7 @@ void GotoGlobalSetpointType::update(
     return;
   }
 
-  Eigen::Vector3f local_position = _map_projection->globalToLocal(global_position);
+  const Eigen::Vector3f local_position = _map_projection->globalToLocal(global_position);
   _goto_setpoint->update(
     local_position, heading, max_horizontal_speed, max_vertical_speed,
     max_heading_rate);

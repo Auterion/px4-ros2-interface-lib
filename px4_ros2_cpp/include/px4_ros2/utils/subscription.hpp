@@ -6,6 +6,7 @@
 #pragma once
 
 #include <px4_ros2/common/context.hpp>
+#include <px4_ros2/common/exception.hpp>
 
 using namespace std::chrono_literals; // NOLINT
 
@@ -58,7 +59,7 @@ public:
   const RosMessageType & last() const
   {
     if (!hasReceivedMessages()) {
-      throw std::runtime_error("No messages received.");
+      throw Exception("No messages received.");
     }
     return _last;
   }
