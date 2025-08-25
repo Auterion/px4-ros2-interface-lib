@@ -8,5 +8,13 @@ var searchData=
   ['requirementflags_131',['RequirementFlags',['../structpx4__ros2_1_1RequirementFlags.html',1,'px4_ros2']]],
   ['reset_132',['reset',['../classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#af36b2d47a6a32c0534df1b67abac1d63',1,'px4_ros2::GlobalPositionMeasurementInterface']]],
   ['result_133',['Result',['../group__components.html#ga0d5805242f91956fd51e243091367f77',1,'px4_ros2']]],
-  ['roll_134',['roll',['../classpx4__ros2_1_1ManualControlInput.html#a377da17ccfb46fc042d5b1a98f9e4398',1,'px4_ros2::ManualControlInput::roll()'],['../classpx4__ros2_1_1OdometryAttitude.html#af40100c5121b4c584d347ccc4f6c95ac',1,'px4_ros2::OdometryAttitude::roll()']]]
+  ['roll_134',['roll',['../classpx4__ros2_1_1ManualControlInput.html#a377da17ccfb46fc042d5b1a98f9e4398',1,'px4_ros2::ManualControlInput::roll()'],['../classpx4__ros2_1_1OdometryAttitude.html#af40100c5121b4c584d347ccc4f6c95ac',1,'px4_ros2::OdometryAttitude::roll()']]],
+  ['rover_135',['Rover',['../group__setpoint__types__rover.html',1,'']]],
+  ['roverpositionsetpointtype_136',['RoverPositionSetpointType',['../classpx4__ros2_1_1RoverPositionSetpointType.html',1,'px4_ros2']]],
+  ['roverspeedattitudesetpointtype_137',['RoverSpeedAttitudeSetpointType',['../classpx4__ros2_1_1RoverSpeedAttitudeSetpointType.html',1,'px4_ros2']]],
+  ['roverspeedratesetpointtype_138',['RoverSpeedRateSetpointType',['../classpx4__ros2_1_1RoverSpeedRateSetpointType.html',1,'px4_ros2']]],
+  ['roverspeedsteeringsetpointtype_139',['RoverSpeedSteeringSetpointType',['../classpx4__ros2_1_1RoverSpeedSteeringSetpointType.html',1,'px4_ros2']]],
+  ['roverthrottleattitudesetpointtype_140',['RoverThrottleAttitudeSetpointType',['../classpx4__ros2_1_1RoverThrottleAttitudeSetpointType.html',1,'px4_ros2']]],
+  ['roverthrottleratesetpointtype_141',['RoverThrottleRateSetpointType',['../classpx4__ros2_1_1RoverThrottleRateSetpointType.html',1,'px4_ros2']]],
+  ['roverthrottlesteeringsetpointtype_142',['RoverThrottleSteeringSetpointType',['../classpx4__ros2_1_1RoverThrottleSteeringSetpointType.html',1,'px4_ros2']]]
 ];

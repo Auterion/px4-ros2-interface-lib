@@ -16,6 +16,13 @@ var hierarchy =
         [ "px4_ros2::FwLateralLongitudinalSetpointType", "classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html", null ],
         [ "px4_ros2::GotoSetpointType", "classpx4__ros2_1_1GotoSetpointType.html", null ],
         [ "px4_ros2::RatesSetpointType", "classpx4__ros2_1_1RatesSetpointType.html", null ],
+        [ "px4_ros2::RoverPositionSetpointType", "classpx4__ros2_1_1RoverPositionSetpointType.html", null ],
+        [ "px4_ros2::RoverSpeedAttitudeSetpointType", "classpx4__ros2_1_1RoverSpeedAttitudeSetpointType.html", null ],
+        [ "px4_ros2::RoverSpeedRateSetpointType", "classpx4__ros2_1_1RoverSpeedRateSetpointType.html", null ],
+        [ "px4_ros2::RoverSpeedSteeringSetpointType", "classpx4__ros2_1_1RoverSpeedSteeringSetpointType.html", null ],
+        [ "px4_ros2::RoverThrottleAttitudeSetpointType", "classpx4__ros2_1_1RoverThrottleAttitudeSetpointType.html", null ],
+        [ "px4_ros2::RoverThrottleRateSetpointType", "classpx4__ros2_1_1RoverThrottleRateSetpointType.html", null ],
+        [ "px4_ros2::RoverThrottleSteeringSetpointType", "classpx4__ros2_1_1RoverThrottleSteeringSetpointType.html", null ],
         [ "px4_ros2::TrajectorySetpointType", "classpx4__ros2_1_1TrajectorySetpointType.html", null ]
       ] ]
     ] ],
