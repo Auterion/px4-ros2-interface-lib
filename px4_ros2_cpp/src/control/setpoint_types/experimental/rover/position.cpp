@@ -32,8 +32,9 @@ void RoverPositionSetpointType::update(
   px4_msgs::msg::RoverPositionSetpoint sp{};
   sp.position_ned[0] = position_ned[0];
   sp.position_ned[1] = position_ned[1];
-  sp.start_ned[0] = start_ned.value_or(Eigen::Vector2f(NAN, NAN))[0];
-  sp.start_ned[1] = start_ned.value_or(Eigen::Vector2f(NAN, NAN))[1];
+  const auto start_ned_vector = start_ned.value_or(Eigen::Vector2f(NAN, NAN));
+  sp.start_ned[0] = start_ned_vector[0];
+  sp.start_ned[1] = start_ned_vector[1];
   sp.cruising_speed = cruising_speed.value_or(NAN);
   sp.arrival_speed = arrival_speed.value_or(NAN);
   sp.yaw = yaw.value_or(NAN);
