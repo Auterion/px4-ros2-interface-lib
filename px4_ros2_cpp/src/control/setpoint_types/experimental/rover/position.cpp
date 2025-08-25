@@ -22,7 +22,7 @@ RoverPositionSetpointType::RoverPositionSetpointType(Context & context)
 
 void RoverPositionSetpointType::update(
   const Eigen::Vector2f & position_ned,
-  std::optional<Eigen::Vector2f> start_ned,
+  const std::optional<Eigen::Vector2f> & start_ned,
   std::optional<float> cruising_speed,
   std::optional<float> arrival_speed,
   std::optional<float> yaw)
