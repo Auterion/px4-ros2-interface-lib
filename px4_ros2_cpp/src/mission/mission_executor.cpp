@@ -844,13 +844,15 @@ void MissionExecutor::abort(AbortReason reason)
     arguments["reason"] = reason_str;
     if (_state.current_index) {
       arguments["currentIndex"] = _state.current_index.value();
-      resetMissionState();
     }
     runAction(
       "onFailure", ActionArguments(arguments), [this]
       {
         RCLCPP_DEBUG(_node.get_logger(), "onFailure action completed");
         // We expect the failure action to handle everything, so do not try to do anything in addition here.
+        // We could reset the mission state here (resetMissionState()), but it might not be desired in all cases, for
+        // example when the flight controller deactivates the executor and at the same time the mission executor wants
+        // to switch modes (race condition).
       });
   }
   --_abort_recursion_level;
