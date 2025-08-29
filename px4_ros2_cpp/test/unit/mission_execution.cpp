@@ -1716,52 +1716,52 @@ Running action 'nonExistentAction'
 Trying to run nonexistent action 'nonExistentAction'
 Aborting mission (reason: actionDoesNotExist, recursion level: 1)
 Running action 'onFailure'
-Failure handling: recursion level: 2, reason: actionDoesNotExist, current index: -1
+Failure handling: recursion level: 2, reason: actionDoesNotExist, current index: 1
 Running action 'nonExistentAction'
 Trying to run nonexistent action 'nonExistentAction'
 Aborting mission (reason: actionDoesNotExist, recursion level: 2)
 Running action 'onFailure'
-Failure handling: recursion level: 3, reason: actionDoesNotExist, current index: -1
+Failure handling: recursion level: 3, reason: actionDoesNotExist, current index: 1
 Running action 'nonExistentAction'
 Trying to run nonexistent action 'nonExistentAction'
 Aborting mission (reason: actionDoesNotExist, recursion level: 3)
 Running action 'onFailure'
-Failure handling: recursion level: 4, reason: actionDoesNotExist, current index: -1
+Failure handling: recursion level: 4, reason: actionDoesNotExist, current index: 1
 Running action 'nonExistentAction'
 Trying to run nonexistent action 'nonExistentAction'
 Aborting mission (reason: actionDoesNotExist, recursion level: 4)
 Running action 'onFailure'
-Failure handling: recursion level: 5, reason: actionDoesNotExist, current index: -1
+Failure handling: recursion level: 5, reason: actionDoesNotExist, current index: 1
 Running action 'nonExistentAction'
 Trying to run nonexistent action 'nonExistentAction'
 Aborting mission (reason: actionDoesNotExist, recursion level: 5)
 Running action 'onFailure'
-Failure handling: recursion level: 6, reason: actionDoesNotExist, current index: -1
+Failure handling: recursion level: 6, reason: actionDoesNotExist, current index: 1
 Running action 'nonExistentAction'
 Trying to run nonexistent action 'nonExistentAction'
 Aborting mission (reason: actionDoesNotExist, recursion level: 6)
 Running action 'onFailure'
-Failure handling: recursion level: 7, reason: actionDoesNotExist, current index: -1
+Failure handling: recursion level: 7, reason: actionDoesNotExist, current index: 1
 Running action 'nonExistentAction'
 Trying to run nonexistent action 'nonExistentAction'
 Aborting mission (reason: actionDoesNotExist, recursion level: 7)
 Running action 'onFailure'
-Failure handling: recursion level: 8, reason: actionDoesNotExist, current index: -1
+Failure handling: recursion level: 8, reason: actionDoesNotExist, current index: 1
 Running action 'nonExistentAction'
 Trying to run nonexistent action 'nonExistentAction'
 Aborting mission (reason: actionDoesNotExist, recursion level: 8)
 Running action 'onFailure'
-Failure handling: recursion level: 9, reason: actionDoesNotExist, current index: -1
+Failure handling: recursion level: 9, reason: actionDoesNotExist, current index: 1
 Running action 'nonExistentAction'
 Trying to run nonexistent action 'nonExistentAction'
 Aborting mission (reason: actionDoesNotExist, recursion level: 9)
 Running action 'onFailure'
-Failure handling: recursion level: 10, reason: actionDoesNotExist, current index: -1
+Failure handling: recursion level: 10, reason: actionDoesNotExist, current index: 1
 Running action 'nonExistentAction'
 Trying to run nonexistent action 'nonExistentAction'
 Aborting mission (reason: actionDoesNotExist, recursion level: 10)
 Running action 'onFailure'
-Failure handling: recursion level: 11, reason: actionDoesNotExist, current index: -1
+Failure handling: recursion level: 11, reason: actionDoesNotExist, current index: 1
 Running action 'nonExistentAction'
 Trying to run nonexistent action 'nonExistentAction'
 Aborting mission (reason: actionDoesNotExist, recursion level: 11)
