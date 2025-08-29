@@ -17,6 +17,7 @@
 #include <functional>
 
 class Registration;
+class SharedVehicleStatusToken;
 
 namespace px4_ros2
 {
@@ -53,7 +54,7 @@ public:
     rclcpp::Node & node, const Settings & settings, ModeBase & owned_mode,
     const std::string & topic_namespace_prefix = "");
   ModeExecutorBase(const ModeExecutorBase &) = delete;
-  virtual ~ModeExecutorBase() = default;
+  virtual ~ModeExecutorBase();
 
   /**
    * Register the mode executor. Call this once on startup. This is a blocking method.
@@ -195,8 +196,9 @@ private:
 
   std::shared_ptr<Registration> _registration;
 
-  rclcpp::Subscription<px4_msgs::msg::VehicleStatus>::SharedPtr _vehicle_status_sub;
   rclcpp::Publisher<px4_msgs::msg::VehicleCommand>::SharedPtr _vehicle_command_pub;
+
+  std::unique_ptr<SharedVehicleStatusToken> _vehicle_status_sub_token;
 
   ScheduledMode _current_scheduled_mode;
   WaitForVehicleStatusCondition _current_wait_vehicle_status;

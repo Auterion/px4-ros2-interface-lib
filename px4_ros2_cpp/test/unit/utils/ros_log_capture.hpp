@@ -9,6 +9,8 @@
 #include <rcl_interfaces/msg/log.hpp>
 #include <gtest/gtest.h>
 
+using namespace std::chrono_literals; // NOLINT
+
 class RosLogCapture
 {
 public:

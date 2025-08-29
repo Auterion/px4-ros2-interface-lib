@@ -19,6 +19,7 @@
 
 class Registration;
 struct RegistrationSettings;
+class SharedVehicleStatusToken;
 
 namespace px4_ros2
 {
@@ -104,7 +105,7 @@ public:
     rclcpp::Node & node, Settings settings,
     const std::string & topic_namespace_prefix = "");
   ModeBase(const ModeBase &) = delete;
-  virtual ~ModeBase() = default;
+  virtual ~ModeBase();
 
   /**
    * Register the mode. Call this once on startup, unless there's an associated executor. This is a blocking method.
@@ -199,9 +200,10 @@ private:
 
   HealthAndArmingChecks _health_and_arming_checks;
 
-  rclcpp::Subscription<px4_msgs::msg::VehicleStatus>::SharedPtr _vehicle_status_sub;
   rclcpp::Publisher<px4_msgs::msg::ModeCompleted>::SharedPtr _mode_completed_pub;
   rclcpp::Publisher<px4_msgs::msg::VehicleControlMode>::SharedPtr _config_control_setpoints_pub;
+
+  std::unique_ptr<SharedVehicleStatusToken> _vehicle_status_sub_token;
 
   bool _is_active{false};       ///< Mode is currently selected
   bool _is_armed{false};       ///< Is vehicle armed?
