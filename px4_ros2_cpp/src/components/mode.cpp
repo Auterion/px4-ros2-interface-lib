@@ -7,6 +7,7 @@
 #include "px4_ros2/components/message_compatibility_check.hpp"
 #include "px4_ros2/components/wait_for_fmu.hpp"
 #include "px4_ros2/utils/message_version.hpp"
+#include "vehicle_status.hpp"
 
 #include "registration.hpp"
 
@@ -28,15 +29,14 @@ ModeBase::ModeBase(
     },
     topic_namespace_prefix), _config_overrides(node, topic_namespace_prefix)
 {
-  _vehicle_status_sub = node.create_subscription<px4_msgs::msg::VehicleStatus>(
-    topic_namespace_prefix + "fmu/out/vehicle_status" +
-    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(), rclcpp::QoS(
-      1).best_effort(),
-    [this](px4_msgs::msg::VehicleStatus::UniquePtr msg) {
-      if (_registration->registered()) {
-        vehicleStatusUpdated(msg);
-      }
-    });
+  _vehicle_status_sub_token = std::make_unique<SharedVehicleStatusToken>(
+    SharedVehicleStatus::instance(node, topic_namespace_prefix).registerVehicleStatusUpdatedCallback(
+      [this](
+        const px4_msgs::msg::VehicleStatus::UniquePtr & msg) {
+        if (_registration->registered()) {
+          vehicleStatusUpdated(msg);
+        }
+      }));
   _mode_completed_pub = node.create_publisher<px4_msgs::msg::ModeCompleted>(
     topic_namespace_prefix + "fmu/in/mode_completed" +
     px4_ros2::getMessageNameVersion<px4_msgs::msg::ModeCompleted>(),
@@ -57,6 +57,11 @@ void ModeBase::overrideRegistration(const std::shared_ptr<Registration> & regist
   assert(!_registration->registered());
   _health_and_arming_checks.overrideRegistration(registration);
   _registration = registration;
+}
+
+// NOLINTNEXTLINE Cannot use default constructor due to incomplete type VehicleStatusSingletonToken
+ModeBase::~ModeBase()
+{
 }
 
 bool ModeBase::doRegister()
@@ -155,7 +160,7 @@ void ModeBase::setSetpointUpdateRate(float rate_hz)
 
 void ModeBase::unsubscribeVehicleStatus()
 {
-  _vehicle_status_sub.reset();
+  _vehicle_status_sub_token.reset();
 }
 
 void ModeBase::vehicleStatusUpdated(

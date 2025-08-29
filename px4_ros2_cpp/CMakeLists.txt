@@ -78,6 +78,7 @@ add_library(px4_ros2_cpp
         src/components/mode_executor.cpp
         src/components/overrides.cpp
         src/components/registration.cpp
+        src/components/vehicle_status.cpp
         src/components/wait_for_fmu.cpp
         src/control/peripheral_actuators.cpp
         src/control/vtol.cpp
@@ -167,6 +168,7 @@ if(BUILD_TESTING)
             test/unit/utils/geodesic.cpp
             test/unit/utils/geometry.cpp
             test/unit/utils/map_projection_impl.cpp
+            test/unit/vehicle_status.cpp
     )
     target_include_directories(${PROJECT_NAME}_unit_tests PRIVATE ${CMAKE_CURRENT_LIST_DIR})
     target_link_libraries(${PROJECT_NAME}_unit_tests ${PROJECT_NAME} unit_utils rclcpp::rclcpp ${px4_msgs_TARGETS})

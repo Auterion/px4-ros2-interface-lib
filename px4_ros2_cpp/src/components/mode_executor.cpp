@@ -7,6 +7,7 @@
 #include "px4_ros2/components/message_compatibility_check.hpp"
 #include "px4_ros2/components/wait_for_fmu.hpp"
 #include "px4_ros2/utils/message_version.hpp"
+#include "vehicle_status.hpp"
 
 #include "registration.hpp"
 
@@ -26,21 +27,29 @@ ModeExecutorBase::ModeExecutorBase(
   _current_scheduled_mode(node, topic_namespace_prefix),
   _config_overrides(node, topic_namespace_prefix)
 {
-  _vehicle_status_sub = _node.create_subscription<px4_msgs::msg::VehicleStatus>(
-    topic_namespace_prefix + "fmu/out/vehicle_status" +
-    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(), rclcpp::QoS(
-      1).best_effort(),
-    [this](px4_msgs::msg::VehicleStatus::UniquePtr msg) {
-      if (_registration->registered()) {
-        vehicleStatusUpdated(msg);
-      }
-    });
+  // Ensure the nodes are the same as some state is shared (vehicle status)
+  assert(&owned_mode.node() == &node);
+  assert(owned_mode.topicNamespacePrefix() == topic_namespace_prefix);
+
+  _vehicle_status_sub_token = std::make_unique<SharedVehicleStatusToken>(
+    SharedVehicleStatus::instance(node, topic_namespace_prefix).registerVehicleStatusUpdatedCallback(
+      [this](
+        const px4_msgs::msg::VehicleStatus::UniquePtr & msg) {
+        if (_registration->registered()) {
+          vehicleStatusUpdated(msg);
+        }
+      }));
 
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
     topic_namespace_prefix + "fmu/in/vehicle_command_mode_executor" +
     px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
     1);
 
+}
+
+// NOLINTNEXTLINE Cannot use default constructor due to incomplete type VehicleStatusSingletonToken
+ModeExecutorBase::~ModeExecutorBase()
+{
 }
 
 bool ModeExecutorBase::doRegister()
@@ -414,7 +423,9 @@ bool ModeExecutorBase::deferFailsafesSync(bool enabled, int timeout_s)
     _prev_failsafe_defer_state == px4_msgs::msg::VehicleStatus::FAILSAFE_DEFER_STATE_DISABLED)
   {
     rclcpp::WaitSet wait_set;
-    wait_set.add_subscription(_vehicle_status_sub);
+    const auto vehicle_status_sub =
+      SharedVehicleStatus::instance(_node, _topic_namespace_prefix).getSubscription();
+    wait_set.add_subscription(vehicle_status_sub);
 
     bool got_message = false;
     auto start_time = _node.now();
@@ -434,7 +445,7 @@ bool ModeExecutorBase::deferFailsafesSync(bool enabled, int timeout_s)
         px4_msgs::msg::VehicleStatus msg;
         rclcpp::MessageInfo info;
 
-        if (_vehicle_status_sub->take(msg, info)) {
+        if (vehicle_status_sub->take(msg, info)) {
           if (msg.failsafe_defer_state !=
             px4_msgs::msg::VehicleStatus::FAILSAFE_DEFER_STATE_DISABLED)
           {
@@ -450,7 +461,7 @@ bool ModeExecutorBase::deferFailsafesSync(bool enabled, int timeout_s)
       }
     }
 
-    wait_set.remove_subscription(_vehicle_status_sub);
+    wait_set.remove_subscription(vehicle_status_sub);
 
     return got_message;
   }
