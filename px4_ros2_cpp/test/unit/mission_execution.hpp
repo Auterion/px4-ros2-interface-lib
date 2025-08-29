@@ -9,9 +9,8 @@
 #include "fake_autopilot.hpp"
 #include <px4_ros2/mission/mission_executor.hpp>
 #include <px4_ros2/control/setpoint_types/goto.hpp>
+#include <px4_ros2/utils/geometry.hpp>
 #include <px4_ros2/utils/visit.hpp>
-
-#include "px4_ros2/utils/geometry.hpp"
 
 class TrajectoryExecutorTest : public px4_ros2::TrajectoryExecutorInterface
 {
