@@ -579,7 +579,7 @@ void MissionExecutor::onDeactivate(ModeExecutorBase::DeactivateReason reason)
     runOnResumeStoreState();
     savePersistentState();
   }
-
+  _action_handler->clearActivityInfo();
   deactivateAllActions();
 
   // Call onDeactivated callback last (not async, to avoid potential reordering of events)
@@ -849,11 +849,13 @@ void MissionExecutor::setCurrentMissionIndex(int index)
       _reporting->callAsync([this, index] {_on_progress_update(index);});
     }
   }
+  _action_handler->clearActivityInfo();
 }
 
 void MissionExecutor::abort(AbortReason reason)
 {
   invalidateActionHandler();
+  _action_handler->clearActivityInfo();
   const std::string reason_str = abortReasonStr(reason);
   RCLCPP_DEBUG(
     _node.get_logger(), "Aborting mission (reason: %s, recursion level: %i)",
@@ -897,6 +899,14 @@ void MissionExecutor::invalidateActionHandler()
 {
   _action_handler->setInvalid();
   _action_handler = std::make_shared<ActionHandler>(*this);
+}
+
+void MissionExecutor::setActivityInfo(const std::optional<std::string>& activity_info) 
+{
+  if(_on_activity_info_change) 
+  {
+    _on_activity_info_change(activity_info);
+  }
 }
 
 void ActionHandler::runTrajectory(

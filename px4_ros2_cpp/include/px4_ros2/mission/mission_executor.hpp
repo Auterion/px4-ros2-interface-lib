@@ -97,7 +97,25 @@ public:
   void onReadynessUpdate(
     const std::function<void(bool ready,
     const std::vector<std::string> & errors)> & callback);
+  
+/**
+ * @brief Registers a callback to be invoked when the activity information changes.
+ *        This callback provides a way to react to updates in the current activity info.
+ * 
+ * @param callback The function to call with the new optional activity info string.
+ */
+  void onActivityInfoChange(const std::function<void(const std::optional<std::string>&)> & callback) { _on_activity_info_change = callback; }
 
+  /**
+   * @brief Sets a string with extra information about the current activity.
+   *        This provides more specific context than the generic navigation state from PX4. 
+   *        For example, while the navigation state might report "mission," this string can specify 
+   *        "takeoff," "landing," or "surveying." 
+   *        The string should be concise (around 30 characters) to be easily digestible.
+   * 
+   * @param activityInfo An optional string containing additional information about the current action.
+   */
+  void setActivityInfo(const std::optional<std::string>& activityInfo);
   /**
    * Enable/disable deferring failsafes. While enabled (and the mission executor is active),
    * most failsafes are prevented from being triggered until the given timeout is exceeded.
@@ -327,6 +345,7 @@ private:
   std::function<void()> _on_deactivated;
   std::function<void(int)> _on_progress_update;
   std::function<void()> _on_completed;
+  std::function<void(const std::optional<std::string>&)> _on_activity_info_change;
   std::function<void(bool ready, const std::vector<std::string> & errors)> _on_readyness_update;
 
   friend class ActionHandler;
@@ -429,6 +448,35 @@ public:
     _mission_executor.setTrajectoryOptions(options);
   }
 
+  /**
+   * @brief Sets the activity info for the mission executor.
+   *        This method forwards the provided activity string to the underlying mission executor, 
+   *        making it externally accessible. This string provides a concise description of the current action.
+   *
+   * @param activityInfo The string describing the current action.
+   */
+  void setActvityInfo(const std::string& activityInfo) 
+  {
+    if (!_valid) {
+      RCLCPP_WARN(_mission_executor._node.get_logger(), "ActionHandler is not valid anymore");
+      return;
+    }
+    _mission_executor.setActivityInfo(activityInfo);
+  }
+
+  /**
+   * @brief Clears the activity information.
+   *        This method sets the activity info of the mission executor to `std::nullopt`. 
+   *        It gets called when we switch to the next waypoint, mission deactivated or aborted .
+   */
+  void clearActivityInfo() 
+  {
+    if (!_valid) {
+      RCLCPP_WARN(_mission_executor._node.get_logger(), "ActionHandler is not valid anymore");
+      return;
+    }
+    _mission_executor.setActivityInfo(std::nullopt);
+  }
 
   std::optional<int> getCurrentMissionIndex() const;
 
