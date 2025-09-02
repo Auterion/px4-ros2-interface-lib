@@ -234,6 +234,16 @@ private:
   void runMode(
     ModeBase::ModeID mode_id,
     const std::function<void()> & on_completed, const std::function<void()> & on_failure = nullptr);
+  /**
+   * @brief Trigger a takeoff
+   * @param altitude optional altitude AMSL [m], set to NAN to use the vehicle default
+   * @param heading optional heading [rad] from North, set to NAN to use the current heading
+   * @param on_completed callback to execute when the takeoff is completed
+   * @param on_failure optional callback to execute when the takeoff fails (if not set, abort is called instead)
+   */
+  void runModeTakeoff(
+    float altitude, float heading,
+    const std::function<void()> & on_completed, const std::function<void()> & on_failure = nullptr);
   void runAction(
     const std::string & action_name, const ActionArguments & arguments,
     const std::function<void()> & on_completed);
@@ -358,6 +368,23 @@ public:
       return;
     }
     _mission_executor.runMode(mode_id, on_completed, on_failure);
+  }
+  /**
+   * @brief Trigger a takeoff
+   * @param altitude optional altitude AMSL [m], set to NAN to use the vehicle default
+   * @param heading optional heading [rad] from North, set to NAN to use the current heading
+   * @param on_completed callback to execute when the takeoff is completed
+   * @param on_failure optional callback to execute when the takeoff fails (if not set, abort is called instead)
+   */
+  void runModeTakeoff(
+    float altitude, float heading,
+    const std::function<void()> & on_completed, const std::function<void()> & on_failure = nullptr)
+  {
+    if (!_valid) {
+      RCLCPP_WARN(_mission_executor._node.get_logger(), "ActionHandler is not valid anymore");
+      return;
+    }
+    _mission_executor.runModeTakeoff(altitude, heading, on_completed, on_failure);
   }
   void runAction(
     const std::string & action_name, const ActionArguments & arguments,

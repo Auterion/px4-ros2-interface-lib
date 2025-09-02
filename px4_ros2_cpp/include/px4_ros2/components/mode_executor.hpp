@@ -99,6 +99,12 @@ public:
     ModeBase::ModeID mode_id, const CompletedCallback & on_completed,
     bool forced = false);
 
+  /**
+   * @brief Trigger a takeoff
+   * @param on_completed callback to execute when the takeoff is completed
+   * @param altitude optional altitude AMSL [m]
+   * @param heading optional heading [rad] from North
+   */
   void takeoff(const CompletedCallback & on_completed, float altitude = NAN, float heading = NAN);
   void land(const CompletedCallback & on_completed);
   void rtl(const CompletedCallback & on_completed);
