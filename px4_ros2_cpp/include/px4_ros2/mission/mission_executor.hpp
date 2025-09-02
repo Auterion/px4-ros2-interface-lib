@@ -110,6 +110,8 @@ public:
    */
   bool deferFailsafes(bool enabled, int timeout_s = 0);
 
+  bool controlAutoSetHome(bool enabled);
+
   /**
    * Abort a currently running mission. This will trigger the onFailure action (which can be customized).
    * The abort reason will be set to 'other'.
@@ -444,6 +446,15 @@ public:
       return false;
     }
     return _mission_executor.deferFailsafes(enabled, timeout_s);
+  }
+
+  bool controlAutoSetHome(bool enabled)
+  {
+    if (!_valid) {
+      RCLCPP_WARN(_mission_executor._node.get_logger(), "ActionHandler is not valid anymore");
+      return false;
+    }
+    return _mission_executor.controlAutoSetHome(enabled);
   }
 
   /**
