@@ -247,7 +247,7 @@ bool MissionExecutor::tryLoadPersistentState()
     file >> j;
     state.fromJson(j);
     if (state.mission_checksum == _mission->checksum() && state.current_index.has_value() &&
-      *state.current_index < static_cast<int>(_mission->items().size()))
+      _mission->indexValid(*state.current_index))
     {
       _state = state;
       RCLCPP_DEBUG(_node.get_logger(), "Restored mission state to index %i", *_state.current_index);
@@ -354,9 +354,7 @@ void MissionExecutor::savePersistentState()
     return;
   }
 
-  if (!_state.current_index.has_value() || *_state.current_index < 0 ||
-    *_state.current_index >= static_cast<int>(_mission->items().size()))
-  {
+  if (!_state.current_index.has_value() || !_mission->indexValid(*_state.current_index)) {
     clearPersistentState();
   } else {
     RCLCPP_DEBUG(
@@ -562,11 +560,19 @@ void MissionExecutor::onActivate()
     nlohmann::json arguments = getOnResumeStateAndClear();
     arguments["action"] = "resume";
     runAction(
-      "onResume", ActionArguments(arguments), [this, action_handler = _action_handler]()
+      "onResume", ActionArguments(arguments),
+      [this, action_handler = _action_handler, previous_index = _state.current_index]()
       {
         if (action_handler->isValid()) {
-          runStoredActions();
-          runCurrentMissionItem(true);
+          if (previous_index == _state.current_index) {
+            runStoredActions();
+            runCurrentMissionItem(true);
+          } else {
+            // The resume action changed the index, so we do not restore any actions
+            RCLCPP_DEBUG(_node.get_logger(), "onResume: index changed, not restoring actions");
+            _state.continuous_actions = {};
+            runCurrentMissionItem(false);
+          }
         }
       });
   }
@@ -696,9 +702,7 @@ void MissionExecutor::runCurrentMissionItem(bool resuming)
     runMode(ModeBase::kModeIDLoiter, []() {});
     return;
   }
-  if (*_state.current_index >= static_cast<int>(_mission->items().size()) ||
-    *_state.current_index < 0)
-  {
+  if (!_mission->indexValid(*_state.current_index)) {
     // Mission completed. If we were running a trajectory, switch into Hold.
     // Otherwise, we assume the previous mode triggered a landing (e.g. via RTL). This is not necessarily true,
     // but we cannot directly look at the landing state here, as it might not be set yet.
@@ -949,6 +953,16 @@ void ActionHandler::runTrajectory(
 std::optional<int> ActionHandler::getCurrentMissionIndex() const
 {
   return _mission_executor._state.current_index;
+}
+
+void ActionHandler::setCurrentMissionIndex(int index)
+{
+  if (!_mission_executor._mission->indexValid(index)) {
+    RCLCPP_ERROR(
+      _mission_executor._node.get_logger(), "setCurrentMissionIndex: invalid index %i", index);
+    return;
+  }
+  _mission_executor.setCurrentMissionIndex(index);
 }
 
 bool ActionHandler::currentActionSupportsResumeFromLanded() const

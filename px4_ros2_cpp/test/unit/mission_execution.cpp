@@ -359,10 +359,11 @@ public:
   CustomActionInterruptible(
     px4_ros2::ModeBase & mode,
     std::function<bool(const px4_ros2::ActionArguments &)> on_run, int & num_run_calls,
-    bool supports_resume_from_landed = false)
+    bool supports_resume_from_landed = false,
+    std::string name = "customActionInterruptible")
   : _on_run(std::move(on_run)), _num_run_calls(num_run_calls), _supports_resume_from_landed(
-      supports_resume_from_landed) {}
-  std::string name() const override {return "customActionInterruptible";}
+      supports_resume_from_landed), _name(std::move(name)) {}
+  std::string name() const override {return _name;}
 
   void run(
     const std::shared_ptr<px4_ros2::ActionHandler> & handler,
@@ -381,6 +382,7 @@ private:
   std::function<bool(const px4_ros2::ActionArguments &)> _on_run;
   int & _num_run_calls;
   const bool _supports_resume_from_landed;
+  const std::string _name;
 };
 
 TEST_F(MissionExecutionTester, resumeWithoutResumeAction)
@@ -677,6 +679,129 @@ FakeAutopilot: sending mode completed (id=5)
 Got matching ModeCompleted message, result: 0
 Setting current mission item to 7
 Mission completed
+)V0G0N");
+  log_capture->checkHasNoErrors();
+}
+
+TEST_F(MissionExecutionTester, resumeFromLandedInRtl)
+{
+  // Test resuming a mission from landed state when interrupted in rtl.
+  // The mission should then resume from the beginning, as rtl was the last item.
+  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
+      px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
+      px4_ros2::Waypoint({47.34720919, 8.54385214, 502}),
+      px4_ros2::Waypoint({47.34620919, 8.54375214, 501}),
+      px4_ros2::ActionItem("rtl", {})});
+
+  bool should_interrupt = true;
+  bool wait_for_deactivation = false;
+  int num_run_calls{0};
+  const auto on_action_run = [&](const px4_ros2::ActionArguments & arguments)
+    {
+      if (should_interrupt) {
+        // When the action is first activated, switch to position control, which deactivates the mission execution.
+        // Afterwards, switch back to the mission to finish it.
+        fake_autopilot->setLanded(true);
+        fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
+        should_interrupt = false;
+        wait_for_deactivation = true;
+        return false;
+      }
+      return true;
+    };
+  const bool supports_resume_from_landed = false;
+  const std::string action_name = "rtl";
+  MissionExecutorTest mission_executor("my mission",
+    px4_ros2::MissionExecutor::Configuration()
+    .addCustomAction<CustomActionInterruptible>(
+      on_action_run, num_run_calls,
+      supports_resume_from_landed, action_name)
+    .withTrajectoryExecutor<TrajectoryExecutorTest>(),
+    *node, fake_autopilot);
+  ASSERT_TRUE(mission_executor.doRegister());
+  mission_executor.setMission(mission);
+
+  bool mission_completed{false};
+  mission_executor.onCompleted([&mission_completed] {mission_completed = true;});
+
+  rclcpp::TimerBase::SharedPtr timer;
+  mission_executor.onDeactivated(
+    [&] {
+      EXPECT_TRUE(wait_for_deactivation);
+      wait_for_deactivation = false;
+      // Switch back to the mission, but async to avoid reordering of events
+      timer = node->create_wall_timer(
+        1ms, [&]
+        {
+          timer->cancel();
+          mission_executor.setModeAndArm(mission_executor.modeId());
+        });
+    });
+
+  mission_executor.setModeAndArm(mission_executor.modeId());
+
+  // Wait for the mission to complete
+  EXPECT_TRUE(waitFor(node, [&mission_completed] {return mission_completed;}));
+
+  EXPECT_EQ(num_run_calls, 2);
+
+  log_capture->expectEqual(
+    R"V0G0N(
+FakeAutopilot: setting mode (id=100)
+Mode executor 'my mission' activated
+Setting current mission item to 0
+Running action 'takeoff'
+Running mode 17
+FakeAutopilot: setting mode (id=17)
+FakeAutopilot: setting landed to 0
+FakeAutopilot: sending mode completed (id=17)
+Got matching ModeCompleted message, result: 0
+Setting current mission item to 1
+Running trajectory (start: 1, end: 3, stop: 1)
+Running mode 100
+FakeAutopilot: setting mode (id=100)
+Mode 'my mission' activated
+Waypoint[1]: 47.348209 8.543952 503.000, frame: 0
+Setting current mission item to 2
+Waypoint[2]: 47.347209 8.543852 502.000, frame: 0
+Setting current mission item to 3
+Waypoint[3]: 47.346209 8.543752 501.000, frame: 0
+Setting current mission item to 4
+Running action 'rtl'
+FakeAutopilot: setting landed to 1
+FakeAutopilot: setting mode (id=2)
+Mode executor 'my mission' deactivated (1)
+Mode 'my mission' deactivated
+FakeAutopilot: setting mode (id=100)
+Mode executor 'my mission' activated
+Setting current mission item to 4
+Running action 'onResume'
+Resume: skipping action rtl
+Setting current mission item to 0
+onResume: index changed, not restoring actions
+Running action 'takeoff'
+Running mode 17
+FakeAutopilot: setting mode (id=17)
+FakeAutopilot: setting landed to 0
+FakeAutopilot: sending mode completed (id=17)
+Got matching ModeCompleted message, result: 0
+Setting current mission item to 1
+Running trajectory (start: 1, end: 3, stop: 1)
+Running mode 100
+FakeAutopilot: setting mode (id=100)
+Mode 'my mission' activated
+Waypoint[1]: 47.348209 8.543952 503.000, frame: 0
+Setting current mission item to 2
+Waypoint[2]: 47.347209 8.543852 502.000, frame: 0
+Setting current mission item to 3
+Waypoint[3]: 47.346209 8.543752 501.000, frame: 0
+Setting current mission item to 4
+Running action 'rtl'
+Setting current mission item to 5
+Mission completed, entering Hold
+Running mode 4
+FakeAutopilot: setting mode (id=4)
+Mode 'my mission' deactivated
 )V0G0N");
   log_capture->checkHasNoErrors();
 }

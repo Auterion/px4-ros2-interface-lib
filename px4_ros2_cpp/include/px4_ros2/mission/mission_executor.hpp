@@ -404,6 +404,14 @@ public:
 
 
   std::optional<int> getCurrentMissionIndex() const;
+  /**
+   * @brief Set the current mission index
+   *
+   * This is primarily for the onResume action, in case the mission should be resumed at a different index.
+   *
+   * When called as part of another action, the index will still be increased, and thus continue at the *next* item.
+   */
+  void setCurrentMissionIndex(int index);
 
   bool currentActionSupportsResumeFromLanded() const;
 
