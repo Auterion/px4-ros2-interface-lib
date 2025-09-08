@@ -168,6 +168,11 @@ public:
 
   const std::vector<MissionItem> & items() const {return _mission_items;}
 
+  bool indexValid(int index) const
+  {
+    return index >= 0 && index < static_cast<int>(_mission_items.size());
+  }
+
   friend void from_json(const nlohmann::json & j, Mission & o); // NOLINT
   friend void to_json(nlohmann::json & j, const Mission & o); // NOLINT
 

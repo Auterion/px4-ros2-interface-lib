@@ -47,8 +47,29 @@ void OnResume::resumeFromLanded(
   const std::shared_ptr<ActionHandler> & handler,
   const std::function<void()> & on_completed, int current_mission_index)
 {
-  // Find takeoff action and run it
   const auto & mission = handler->mission();
+
+  // If the current action is rtl or land, skip it & continue
+  if (mission.indexValid(current_mission_index)) {
+    if (const auto * action_item =
+      std::get_if<ActionItem>(&mission.items()[current_mission_index]))
+    {
+      if (action_item->name == "rtl" || action_item->name == "land") {
+        RCLCPP_DEBUG(_node.get_logger(), "Resume: skipping action %s", action_item->name.c_str());
+        // Continue at the next index (or the first one)
+        if (current_mission_index + 1 >= static_cast<int>(mission.items().size())) {
+          handler->setCurrentMissionIndex(0);
+        } else {
+          handler->setCurrentMissionIndex(current_mission_index + 1);
+        }
+
+        on_completed();
+        return;
+      }
+    }
+  }
+
+  // Find takeoff action and run it
   const ActionItem * takeoff_action_item{nullptr};
   for (const auto & item : mission.items()) {
     if (const auto * action_item = std::get_if<ActionItem>(&item)) {
