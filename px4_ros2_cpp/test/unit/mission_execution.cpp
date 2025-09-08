@@ -1862,4 +1862,12 @@ TEST_F(MissionExecutionTester, readyness)
     const auto expected = std::vector<std::string>{};
     EXPECT_EQ(last_errors, expected);
   }
+
+  // Reset the mission
+  mission_executor.resetMission();
+  {
+    ASSERT_TRUE(waitFor(node, [&num_readyness_updates] {return num_readyness_updates == 5;}));
+    const auto expected = std::vector<std::string>{{"No mission"}};
+    EXPECT_EQ(last_errors, expected);
+  }
 }

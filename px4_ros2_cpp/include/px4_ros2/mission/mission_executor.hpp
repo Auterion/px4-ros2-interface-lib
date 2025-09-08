@@ -82,6 +82,7 @@ public:
   bool doRegister();
 
   void setMission(const Mission & mission);
+  void resetMission();
 
   const Mission & mission() const {return *_mission;}
 
@@ -300,7 +301,8 @@ private:
   std::shared_ptr<Mission> _mission;
   TrajectoryOptions _trajectory_options; ///< current trajectory options
   bool _has_valid_mission{false};
-  std::vector<std::string> _mission_errors{{"No mission"}};
+  static const std::vector<std::string> kNoMissionErrors;
+  std::vector<std::string> _mission_errors{kNoMissionErrors};
   bool _actions_ready{false};
   rclcpp::TimerBase::SharedPtr _readyness_timer;
   int _abort_recursion_level{0}; ///< abort() might be called recursively, this stores the current level

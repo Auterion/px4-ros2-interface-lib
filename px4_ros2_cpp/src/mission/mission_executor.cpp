@@ -50,6 +50,7 @@ private:
   rclcpp::Node & _node;
 };
 
+const std::vector<std::string> MissionExecutor::kNoMissionErrors = {"No mission"};
 
 MissionExecutor::MissionExecutor(
   const std::string & mode_name, const Configuration & configuration, rclcpp::Node & node,
@@ -186,6 +187,19 @@ void MissionExecutor::setMission(const Mission & mission)
   if (!tryLoadPersistentState()) {
     resetMissionState();
   }
+}
+
+void MissionExecutor::resetMission()
+{
+  if (_is_active) {
+    RCLCPP_ERROR(_node.get_logger(), "Cannot reset the mission, already active");
+    return;
+  }
+  // Make sure there's always a valid mission object
+  _mission = std::make_shared<Mission>();
+  _has_valid_mission = false;
+  _mission_errors = kNoMissionErrors;
+  resetMissionState();
 }
 
 void MissionExecutor::onFailsafeDeferred(const std::function<void()> & callback)
