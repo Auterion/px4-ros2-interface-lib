@@ -35,8 +35,8 @@ set(HEADER_FILES
         include/px4_ros2/components/wait_for_fmu.hpp
         include/px4_ros2/control/peripheral_actuators.hpp
         include/px4_ros2/control/setpoint_types/direct_actuators.hpp
-        include/px4_ros2/control/setpoint_types/goto.hpp
-        include/px4_ros2/control/setpoint_types/fixedwing_lateral_longitudinal.hpp
+        include/px4_ros2/control/setpoint_types/multicopter/goto.hpp
+        include/px4_ros2/control/setpoint_types/fixedwing/lateral_longitudinal.hpp
         include/px4_ros2/control/setpoint_types/experimental/attitude.hpp
         include/px4_ros2/control/setpoint_types/experimental/rates.hpp
         include/px4_ros2/control/setpoint_types/experimental/trajectory.hpp
@@ -99,8 +99,8 @@ add_library(px4_ros2_cpp
         src/control/setpoint_types/experimental/rover/throttle_rate.cpp
         src/control/setpoint_types/experimental/rover/throttle_steering.cpp
         src/control/setpoint_types/experimental/trajectory.cpp
-        src/control/setpoint_types/fixedwing_lateral_longitudinal.cpp
-        src/control/setpoint_types/goto.cpp
+        src/control/setpoint_types/fixedwing/lateral_longitudinal.cpp
+        src/control/setpoint_types/multicopter/goto.cpp
         src/control/vtol.cpp
         src/mission/actions/default_actions.cpp
         src/mission/mission.cpp

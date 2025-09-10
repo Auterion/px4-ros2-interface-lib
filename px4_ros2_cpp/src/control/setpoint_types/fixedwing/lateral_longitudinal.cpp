@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
-#include <px4_ros2/control/setpoint_types/fixedwing_lateral_longitudinal.hpp>
+#include <px4_ros2/control/setpoint_types/fixedwing/lateral_longitudinal.hpp>
 #include <px4_ros2/utils/message_version.hpp>
 
 namespace px4_ros2

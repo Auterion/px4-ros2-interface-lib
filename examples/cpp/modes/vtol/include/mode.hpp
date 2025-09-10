@@ -9,7 +9,7 @@
 #include <px4_ros2/components/mode.hpp>
 #include <px4_ros2/odometry/global_position.hpp>
 #include <px4_ros2/control/setpoint_types/experimental/trajectory.hpp>
-#include <px4_ros2/control/setpoint_types/fixedwing_lateral_longitudinal.hpp>
+#include <px4_ros2/control/setpoint_types/fixedwing/lateral_longitudinal.hpp>
 #include <px4_ros2/control/vtol.hpp>
 #include <px4_ros2/utils/geometry.hpp>
 

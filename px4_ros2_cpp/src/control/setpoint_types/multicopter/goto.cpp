@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
-#include <px4_ros2/control/setpoint_types/goto.hpp>
+#include <px4_ros2/control/setpoint_types/multicopter/goto.hpp>
 #include <px4_ros2/utils/message_version.hpp>
 
 
 namespace px4_ros2
 {
 
-GotoSetpointType::GotoSetpointType(Context & context)
+MulticopterGotoSetpointType::MulticopterGotoSetpointType(Context & context)
 : SetpointBase(context), _node(context.node())
 {
   _goto_setpoint_pub =
@@ -20,7 +20,7 @@ GotoSetpointType::GotoSetpointType(Context & context)
     1);
 }
 
-void GotoSetpointType::update(
+void MulticopterGotoSetpointType::update(
   const Eigen::Vector3f & position,
   const std::optional<float> & heading,
   const std::optional<float> & max_horizontal_speed,
@@ -54,7 +54,7 @@ void GotoSetpointType::update(
   _goto_setpoint_pub->publish(sp);
 }
 
-SetpointBase::Configuration GotoSetpointType::getConfiguration()
+SetpointBase::Configuration MulticopterGotoSetpointType::getConfiguration()
 {
   Configuration config{};
   config.control_allocation_enabled = true;
@@ -68,16 +68,16 @@ SetpointBase::Configuration GotoSetpointType::getConfiguration()
   return config;
 }
 
-GotoGlobalSetpointType::GotoGlobalSetpointType(Context & context)
+MulticopterGotoGlobalSetpointType::MulticopterGotoGlobalSetpointType(Context & context)
 : _node(context.node()), _map_projection(std::make_unique<MapProjection>(context)),
-  _goto_setpoint(std::make_shared<GotoSetpointType>(context))
+  _goto_setpoint(std::make_shared<MulticopterGotoSetpointType>(context))
 {
   RequirementFlags requirements{};
   requirements.global_position = true;
   context.setRequirement(requirements);
 }
 
-void GotoGlobalSetpointType::update(
+void MulticopterGotoGlobalSetpointType::update(
   const Eigen::Vector3d & global_position,
   const std::optional<float> & heading,
   const std::optional<float> & max_horizontal_speed,
