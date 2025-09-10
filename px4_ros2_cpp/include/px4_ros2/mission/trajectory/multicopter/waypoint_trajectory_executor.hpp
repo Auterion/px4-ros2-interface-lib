@@ -12,7 +12,7 @@
 #include <px4_ros2/components/mode.hpp>
 #include <px4_ros2/odometry/attitude.hpp>
 #include <px4_ros2/odometry/global_position.hpp>
-#include <px4_ros2/control/setpoint_types/goto.hpp>
+#include <px4_ros2/control/setpoint_types/multicopter/goto.hpp>
 
 /** \ingroup mission_multicopter
  *  @{
@@ -45,7 +45,7 @@ private:
   const float _acceptance_radius;
   std::shared_ptr<OdometryGlobalPosition> _vehicle_global_position;
   std::shared_ptr<OdometryAttitude> _vehicle_attitude;
-  std::shared_ptr<GotoGlobalSetpointType> _setpoint;
+  std::shared_ptr<MulticopterGotoGlobalSetpointType> _setpoint;
   std::optional<int> _current_index;
   rclcpp::Node & _node;
 };

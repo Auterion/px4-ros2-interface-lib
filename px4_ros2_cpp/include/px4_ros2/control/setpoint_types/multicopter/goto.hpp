@@ -21,12 +21,12 @@ namespace px4_ros2
 /**
  * @brief Setpoint type for smooth position and heading control
 */
-class GotoSetpointType : public SetpointBase
+class MulticopterGotoSetpointType : public SetpointBase
 {
 public:
-  explicit GotoSetpointType(Context & context);
+  explicit MulticopterGotoSetpointType(Context & context);
 
-  ~GotoSetpointType() override = default;
+  ~MulticopterGotoSetpointType() override = default;
 
   Configuration getConfiguration() override;
 
@@ -60,12 +60,12 @@ private:
 /**
  * @brief Setpoint type for smooth global position and heading control
 */
-class GotoGlobalSetpointType
+class MulticopterGotoGlobalSetpointType
 {
 public:
-  explicit GotoGlobalSetpointType(Context & context);
+  explicit MulticopterGotoGlobalSetpointType(Context & context);
 
-  ~GotoGlobalSetpointType() = default;
+  ~MulticopterGotoGlobalSetpointType() = default;
 
   /**
    * @brief Go-to global setpoint update
@@ -89,7 +89,7 @@ public:
 private:
   rclcpp::Node & _node;
   std::unique_ptr<MapProjection> _map_projection;
-  std::shared_ptr<GotoSetpointType> _goto_setpoint;
+  std::shared_ptr<MulticopterGotoSetpointType> _goto_setpoint;
 };
 
 /** @}*/

@@ -14,7 +14,7 @@ WaypointTrajectoryExecutor::WaypointTrajectoryExecutor(
   float acceptance_radius)
 : _acceptance_radius(acceptance_radius), _node(mode.node())
 {
-  _setpoint = std::make_shared<GotoGlobalSetpointType>(mode);
+  _setpoint = std::make_shared<MulticopterGotoGlobalSetpointType>(mode);
   _vehicle_global_position = std::make_shared<OdometryGlobalPosition>(mode);
   _vehicle_attitude = std::make_shared<OdometryAttitude>(mode);
 }

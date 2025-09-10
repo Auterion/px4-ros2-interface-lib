@@ -8,7 +8,7 @@
 #include <px4_ros2/mission/trajectory/trajectory_executor.hpp>
 #include "fake_autopilot.hpp"
 #include <px4_ros2/mission/mission_executor.hpp>
-#include <px4_ros2/control/setpoint_types/goto.hpp>
+#include <px4_ros2/control/setpoint_types/multicopter/goto.hpp>
 #include <px4_ros2/utils/geometry.hpp>
 #include <px4_ros2/utils/visit.hpp>
 
@@ -19,7 +19,7 @@ public:
   : _node(mode.node()), _verbose_settings(verbose_settings)
   {
     // We need to have some setpoint
-    _setpoint = std::make_shared<px4_ros2::GotoSetpointType>(mode);
+    _setpoint = std::make_shared<px4_ros2::MulticopterGotoSetpointType>(mode);
     // Set very high update rate for tests
     mode.setSetpointUpdateRate(1000.f);
   }
@@ -71,7 +71,7 @@ private:
   bool _has_config{false};
   TrajectoryConfig _current_config;
   int _index{};
-  std::shared_ptr<px4_ros2::GotoSetpointType> _setpoint;
+  std::shared_ptr<px4_ros2::MulticopterGotoSetpointType> _setpoint;
   rclcpp::Node & _node;
   const bool _verbose_settings;
 };

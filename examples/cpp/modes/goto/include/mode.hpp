@@ -5,7 +5,7 @@
 #pragma once
 
 #include <px4_ros2/components/mode.hpp>
-#include <px4_ros2/control/setpoint_types/goto.hpp>
+#include <px4_ros2/control/setpoint_types/multicopter/goto.hpp>
 #include <px4_ros2/odometry/local_position.hpp>
 #include <px4_ros2/utils/geometry.hpp>
 
@@ -23,7 +23,7 @@ public:
   explicit FlightModeTest(rclcpp::Node & node)
   : ModeBase(node, kName)
   {
-    _goto_setpoint = std::make_shared<px4_ros2::GotoSetpointType>(*this);
+    _goto_setpoint = std::make_shared<px4_ros2::MulticopterGotoSetpointType>(*this);
 
     _vehicle_local_position = std::make_shared<px4_ros2::OdometryLocalPosition>(*this);
   }
@@ -155,7 +155,7 @@ private:
   // used for heading initialization when dynamically updating heading setpoints
   bool _start_heading_set{false};
 
-  std::shared_ptr<px4_ros2::GotoSetpointType> _goto_setpoint;
+  std::shared_ptr<px4_ros2::MulticopterGotoSetpointType> _goto_setpoint;
   std::shared_ptr<px4_ros2::OdometryLocalPosition> _vehicle_local_position;
 
   bool positionReached(const Eigen::Vector3f & target_position_m) const
