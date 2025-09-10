@@ -1,0 +1,30 @@
+name: Validate mission schema & examples
+on:
+  push:
+    branches:
+    - 'main'
+    - 'release/*'
+  pull_request:
+    branches:
+    - '**'
+
+jobs:
+  validate_mission_schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup python
+        uses: actions/setup-python@v5
+
+      - name: Setup jsonschema
+        run: |
+          pip install check-jsonschema
+
+      - name: Validate
+        shell: bash
+        run: |
+          check-jsonschema --check-metaschema mission/schema.yaml
+          for file in mission/examples/*; do
+            check-jsonschema --schemafile mission/schema.yaml $file
+          done
