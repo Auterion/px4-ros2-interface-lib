@@ -7,7 +7,7 @@
 #include "px4_ros2/components/message_compatibility_check.hpp"
 #include "px4_ros2/components/wait_for_fmu.hpp"
 #include "px4_ros2/utils/message_version.hpp"
-#include "vehicle_status.hpp"
+#include "shared_vehicle_status.hpp"
 
 #include "registration.hpp"
 

@@ -5,7 +5,7 @@
 
 #include <gtest/gtest.h>
 #include <rclcpp/rclcpp.hpp>
-#include <src/components/vehicle_status.hpp>
+#include <src/components/shared_vehicle_status.hpp>
 #include <px4_ros2/utils/message_version.hpp>
 
 using namespace std::chrono_literals;
