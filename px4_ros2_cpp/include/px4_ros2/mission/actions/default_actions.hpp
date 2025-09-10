@@ -136,7 +136,7 @@ public:
     const std::function<void()> & on_completed) override;
 
 private:
-  void resumeFromLanded(
+  void resumeFromUnexpectedLanding(
     const std::shared_ptr<ActionHandler> & handler,
     const std::function<void()> & on_completed, int current_mission_index);
   void navigateToPreviousWaypoint(

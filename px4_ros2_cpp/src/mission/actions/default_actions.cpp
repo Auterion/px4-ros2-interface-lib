@@ -34,7 +34,7 @@ void OnResume::run(
         "Resume: current action supports resuming from landed, continuing directly");
       on_completed();
     } else {
-      resumeFromLanded(handler, on_completed, current_mission_index);
+      resumeFromUnexpectedLanding(handler, on_completed, current_mission_index);
     }
   } else {
     // This happens when the mission is resumed in-air
@@ -43,7 +43,7 @@ void OnResume::run(
   }
 }
 
-void OnResume::resumeFromLanded(
+void OnResume::resumeFromUnexpectedLanding(
   const std::shared_ptr<ActionHandler> & handler,
   const std::function<void()> & on_completed, int current_mission_index)
 {
@@ -69,13 +69,13 @@ void OnResume::resumeFromLanded(
     }
   }
 
-  // Find takeoff action and run it
+  // Find takeoff action and run it (if there are multiple, take the one closest to the current index)
   const ActionItem * takeoff_action_item{nullptr};
-  for (const auto & item : mission.items()) {
+  for (int i = 0; i < current_mission_index && mission.indexValid(i); ++i) {
+    const auto & item = mission.items()[i];
     if (const auto * action_item = std::get_if<ActionItem>(&item)) {
       if (action_item->name == "takeoff") {
         takeoff_action_item = action_item;
-        break;
       }
     }
   }
