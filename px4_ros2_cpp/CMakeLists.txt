@@ -88,13 +88,9 @@ add_library(px4_ros2_cpp
         src/components/shared_vehicle_status.cpp
         src/components/wait_for_fmu.cpp
         src/control/peripheral_actuators.cpp
-        src/control/vtol.cpp
         src/control/setpoint_types/direct_actuators.cpp
-        src/control/setpoint_types/goto.cpp
-        src/control/setpoint_types/fixedwing_lateral_longitudinal.cpp
         src/control/setpoint_types/experimental/attitude.cpp
         src/control/setpoint_types/experimental/rates.cpp
-        src/control/setpoint_types/experimental/trajectory.cpp
         src/control/setpoint_types/experimental/rover/position.cpp
         src/control/setpoint_types/experimental/rover/speed_attitude.cpp
         src/control/setpoint_types/experimental/rover/speed_rate.cpp
@@ -102,17 +98,21 @@ add_library(px4_ros2_cpp
         src/control/setpoint_types/experimental/rover/throttle_attitude.cpp
         src/control/setpoint_types/experimental/rover/throttle_rate.cpp
         src/control/setpoint_types/experimental/rover/throttle_steering.cpp
+        src/control/setpoint_types/experimental/trajectory.cpp
+        src/control/setpoint_types/fixedwing_lateral_longitudinal.cpp
+        src/control/setpoint_types/goto.cpp
+        src/control/vtol.cpp
         src/mission/actions/default_actions.cpp
         src/mission/mission.cpp
         src/mission/mission_executor.cpp
         src/mission/trajectory/multicopter/waypoint_trajectory_executor.cpp
         src/navigation/experimental/global_position_measurement_interface.cpp
         src/navigation/experimental/local_position_measurement_interface.cpp
+        src/odometry/airspeed.cpp
+        src/odometry/angular_velocity.cpp
         src/odometry/attitude.cpp
         src/odometry/global_position.cpp
         src/odometry/local_position.cpp
-        src/odometry/angular_velocity.cpp
-        src/odometry/airspeed.cpp
         src/utils/geodesic.cpp
         src/utils/map_projection_impl.cpp
 )
@@ -176,8 +176,8 @@ if(BUILD_TESTING)
             test/unit/global_navigation.cpp
             test/unit/local_navigation.cpp
             test/unit/main.cpp
-            test/unit/modes.cpp
             test/unit/mission_execution.cpp
+            test/unit/modes.cpp
             test/unit/shared_vehicle_status.cpp
             test/unit/utils/frame_conversion.cpp
             test/unit/utils/geodesic.cpp
