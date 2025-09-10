@@ -47,6 +47,10 @@ properties:
               description: |
                 Optional ID of the mission item, can be set to an arbitrary string
               type: string
+            type:
+              type: string
+              not:
+                pattern: "^internal:"
           allOf:
             - if:
                 properties:
@@ -152,9 +156,9 @@ properties:
                 description: |
                   Enter Hold (aka Loiter) for a certain duration
                 properties:
-                  delay:
+                  duration:
                     description: |
-                      Delay in seconds. Default: 1 second
+                      Duration in seconds. Default: 1 second
                     type: number
                     minimum: 0
 
