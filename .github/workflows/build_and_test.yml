@@ -21,7 +21,7 @@ jobs:
         with:
           required-ros-distributions: humble
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build and test
         id: ros-build
         uses: ros-tooling/action-ros-ci@v0.3
