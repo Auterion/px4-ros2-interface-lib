@@ -19,7 +19,6 @@
 
 using namespace std::chrono_literals; // NOLINT
 using namespace px4_ros2::literals; // NOLINT
-using namespace px4_ros2; // NOLINT
 
 static const std::string kName = "My VTOL Mode";
 
@@ -38,14 +37,14 @@ public:
 
   void onActivate() override
   {
-    VTOL::State initial_vtol_state = _vtol->getCurrentState();
+    const px4_ros2::VTOL::State initial_vtol_state = _vtol->getCurrentState();
 
-    if (initial_vtol_state == VTOL::State::FixedWing) {
+    if (initial_vtol_state == px4_ros2::VTOL::State::FixedWing) {
       _control_state = State::GoingNorth;
       RCLCPP_INFO(
         node().get_logger(),
         "VTOL Mode Activated. Flying North, climbing to 600m above sea level.");
-    } else if (initial_vtol_state == VTOL::State::Undefined) {
+    } else if (initial_vtol_state == px4_ros2::VTOL::State::Undefined) {
       throw std::runtime_error("VTOL state undefined.");
     } else {
       _control_state = State::TransitionToFixedWing;
@@ -63,7 +62,7 @@ public:
 
           _vtol->toFixedwing();
 
-          if (_vtol->getCurrentState() == VTOL::State::TransitionToFixedWing) {
+          if (_vtol->getCurrentState() == px4_ros2::VTOL::State::TransitionToFixedWing) {
 
             Eigen::Vector3f acceleration_sp =
               _vtol->computeAccelerationSetpointDuringTransition();
@@ -74,7 +73,7 @@ public:
             _trajectory_setpoint->update(velocity_sp, acceleration_sp);
             _fixed_wing_setpoint->updateWithHeightRate(height_rate_sp, course_sp);
 
-          } else if (_vtol->getCurrentState() == VTOL::State::FixedWing) {
+          } else if (_vtol->getCurrentState() == px4_ros2::VTOL::State::FixedWing) {
 
             float altitude_sp = 600.f;
             float course_sp = 0.f; // due north
@@ -108,7 +107,7 @@ public:
 
           _vtol->toMulticopter();
 
-          if (_vtol->getCurrentState() == VTOL::State::TransitionToMulticopter) {
+          if (_vtol->getCurrentState() == px4_ros2::VTOL::State::TransitionToMulticopter) {
 
             Eigen::Vector3f acceleration_sp =
               _vtol->computeAccelerationSetpointDuringTransition();
@@ -119,7 +118,7 @@ public:
             _trajectory_setpoint->update(velocity_sp, acceleration_sp);
             _fixed_wing_setpoint->updateWithHeightRate(height_rate_sp, course_sp);
 
-          } else if (_vtol->getCurrentState() == VTOL::State::Multicopter) {
+          } else if (_vtol->getCurrentState() == px4_ros2::VTOL::State::Multicopter) {
 
             Eigen::Vector3f velocity_sp{0.f, 0.f, 0.f};
             Eigen::Vector3f acceleration_sp{NAN, NAN, NAN};

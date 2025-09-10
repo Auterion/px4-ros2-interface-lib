@@ -76,7 +76,7 @@ public:
   Eigen::Vector3f computeAccelerationSetpointDuringTransition(
     std::optional<float> back_transition_deceleration_m_s2 = std::nullopt);
 
-  VTOL::State getCurrentState() const {return _current_state;}
+  State getCurrentState() const {return _current_state;}
 
 private:
   rclcpp::Node & _node;
@@ -92,7 +92,7 @@ private:
 
   Eigen::Vector2f _vehicle_acceleration_xy{NAN, NAN};
 
-  VTOL::State _current_state{VTOL::State::Undefined};
+  State _current_state{State::Undefined};
 
   float computePitchSetpointDuringBacktransition(
     std::optional<float> back_transition_deceleration_m_s2 = std::nullopt);
