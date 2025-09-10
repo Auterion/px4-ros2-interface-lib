@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
-#include "vehicle_status.hpp"
+#include "shared_vehicle_status.hpp"
 
 #include <px4_ros2/utils/message_version.hpp>
 
