@@ -94,13 +94,13 @@ public:
     const std::shared_ptr<ActionHandler> & handler, const ActionArguments & arguments,
     const std::function<void()> & on_completed) override
   {
-    float delay_s = 1.0f;
-    if (arguments.contains("delay")) {
-      delay_s = arguments.at<float>("delay");
+    float duration_s = 1.0f;
+    if (arguments.contains("duration")) {
+      duration_s = arguments.at<float>("duration");
     }
     handler->runMode(ModeBase::kModeIDLoiter, [] {});
     _timer = _node.create_wall_timer(
-      std::chrono::duration<float>(delay_s), [this, on_completed] {
+      std::chrono::duration<float>(duration_s), [this, on_completed] {
         _timer.reset();
         on_completed();
       });
