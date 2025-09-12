@@ -50,9 +50,7 @@ public:
     Other
   };
 
-  ModeExecutorBase(
-    rclcpp::Node & node, const Settings & settings, ModeBase & owned_mode,
-    const std::string & topic_namespace_prefix = "");
+  ModeExecutorBase(const Settings & settings, ModeBase & owned_mode);
   ModeExecutorBase(const ModeExecutorBase &) = delete;
   virtual ~ModeExecutorBase();
 

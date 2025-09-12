@@ -19,20 +19,21 @@ namespace px4_ros2
 {
 
 ModeExecutorBase::ModeExecutorBase(
-  rclcpp::Node & node, const ModeExecutorBase::Settings & settings,
-  ModeBase & owned_mode, const std::string & topic_namespace_prefix)
-: _node(node), _topic_namespace_prefix(topic_namespace_prefix), _settings(settings), _owned_mode(
+  const ModeExecutorBase::Settings & settings,
+  ModeBase & owned_mode)
+: _node(owned_mode.node()), _topic_namespace_prefix(owned_mode.topicNamespacePrefix()), _settings(
+    settings), _owned_mode(
     owned_mode),
-  _registration(std::make_shared<Registration>(node, topic_namespace_prefix)),
-  _current_scheduled_mode(node, topic_namespace_prefix),
-  _config_overrides(node, topic_namespace_prefix)
+  _registration(std::make_shared<Registration>(
+      owned_mode.node(),
+      owned_mode.topicNamespacePrefix())),
+  _current_scheduled_mode(owned_mode.node(), owned_mode.topicNamespacePrefix()),
+  _config_overrides(owned_mode.node(), owned_mode.topicNamespacePrefix())
 {
-  // Ensure the nodes are the same as some state is shared (vehicle status)
-  assert(&owned_mode.node() == &node);
-  assert(owned_mode.topicNamespacePrefix() == topic_namespace_prefix);
-
   _vehicle_status_sub_token = std::make_unique<SharedVehicleStatusToken>(
-    SharedVehicleStatus::instance(node, topic_namespace_prefix).registerVehicleStatusUpdatedCallback(
+    SharedVehicleStatus::instance(
+      _node,
+      _topic_namespace_prefix).registerVehicleStatusUpdatedCallback(
       [this](
         const px4_msgs::msg::VehicleStatus::UniquePtr & msg) {
         if (_registration->registered()) {
@@ -41,7 +42,7 @@ ModeExecutorBase::ModeExecutorBase(
       }));
 
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
-    topic_namespace_prefix + "fmu/in/vehicle_command_mode_executor" +
+    _topic_namespace_prefix + "fmu/in/vehicle_command_mode_executor" +
     px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
     1);
 
