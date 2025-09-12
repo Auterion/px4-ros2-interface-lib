@@ -154,7 +154,7 @@ public:
     MissionModeExecutor(
       rclcpp::Node & node, const Settings & settings, ModeBase & owned_mode,
       const std::string & topic_namespace_prefix, MissionExecutor & mission_executor)
-    : ModeExecutorBase(node, settings, owned_mode, topic_namespace_prefix), _mission_executor(
+    : ModeExecutorBase(settings, owned_mode), _mission_executor(
         mission_executor)
     {
     }

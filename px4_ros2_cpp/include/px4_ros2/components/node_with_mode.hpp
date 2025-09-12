@@ -140,9 +140,9 @@ private:
   auto createModeExecutor(std::index_sequence<Idx...>)
   {
     if constexpr (sizeof...(Idx) == 0) {
-      return std::make_unique<ModeExecutorT>(*this, *_owned_mode);
+      return std::make_unique<ModeExecutorT>(*_owned_mode);
     } else {
-      return std::make_unique<ModeExecutorT>(*this, *_owned_mode, *std::get<Idx>(_other_modes)...);
+      return std::make_unique<ModeExecutorT>(*_owned_mode, *std::get<Idx>(_other_modes)...);
     }
   }
 

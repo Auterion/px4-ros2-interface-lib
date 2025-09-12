@@ -11,10 +11,10 @@ class ModeExecutorTest : public px4_ros2::ModeExecutorBase
 {
 public:
   ModeExecutorTest(
-    rclcpp::Node & node, px4_ros2::ModeBase & owned_mode,
+    px4_ros2::ModeBase & owned_mode,
     px4_ros2::ModeBase & second_mode, px4_ros2::ModeBase & third_mode)
-  : ModeExecutorBase(node, px4_ros2::ModeExecutorBase::Settings{}, owned_mode),
-    _node(node), _second_mode(second_mode), _third_mode(third_mode)
+  : ModeExecutorBase(px4_ros2::ModeExecutorBase::Settings{}, owned_mode),
+    _node(owned_mode.node()), _second_mode(second_mode), _third_mode(third_mode)
   {
   }
 
