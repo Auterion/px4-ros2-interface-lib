@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['globalpositionmeasurement_223',['GlobalPositionMeasurement',['../structpx4__ros2_1_1GlobalPositionMeasurement.html',1,'px4_ros2']]],
-  ['globalpositionmeasurementinterface_224',['GlobalPositionMeasurementInterface',['../classpx4__ros2_1_1GlobalPositionMeasurementInterface.html',1,'px4_ros2']]],
-  ['gotoglobalsetpointtype_225',['GotoGlobalSetpointType',['../classpx4__ros2_1_1GotoGlobalSetpointType.html',1,'px4_ros2']]],
-  ['gotosetpointtype_226',['GotoSetpointType',['../classpx4__ros2_1_1GotoSetpointType.html',1,'px4_ros2']]]
+  ['fwcontrolconfiguration_271',['FwControlConfiguration',['../structpx4__ros2_1_1FwControlConfiguration.html',1,'px4_ros2']]],
+  ['fwlaterallongitudinalsetpoint_272',['FwLateralLongitudinalSetpoint',['../structpx4__ros2_1_1FwLateralLongitudinalSetpoint.html',1,'px4_ros2']]],
+  ['fwlaterallongitudinalsetpointtype_273',['FwLateralLongitudinalSetpointType',['../classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html',1,'px4_ros2']]]
 ];

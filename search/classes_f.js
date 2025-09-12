@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['vehiclestatus_275',['VehicleStatus',['../classpx4__ros2_1_1VehicleStatus.html',1,'px4_ros2']]],
-  ['vtol_276',['VTOL',['../classpx4__ros2_1_1VTOL.html',1,'px4_ros2']]],
-  ['vtolconfig_277',['VTOLConfig',['../structpx4__ros2_1_1VTOLConfig.html',1,'px4_ros2']]],
-  ['vtolstatus_278',['VtolStatus',['../classpx4__ros2_1_1VtolStatus.html',1,'px4_ros2']]]
+  ['takeoff_337',['Takeoff',['../classpx4__ros2_1_1default__actions_1_1Takeoff.html',1,'px4_ros2::default_actions']]],
+  ['trajectoryconfig_338',['TrajectoryConfig',['../structpx4__ros2_1_1TrajectoryExecutorInterface_1_1TrajectoryConfig.html',1,'px4_ros2::TrajectoryExecutorInterface']]],
+  ['trajectoryexecutorinterface_339',['TrajectoryExecutorInterface',['../classpx4__ros2_1_1TrajectoryExecutorInterface.html',1,'px4_ros2']]],
+  ['trajectoryoptions_340',['TrajectoryOptions',['../structpx4__ros2_1_1TrajectoryOptions.html',1,'px4_ros2']]],
+  ['trajectorysetpoint_341',['TrajectorySetpoint',['../structpx4__ros2_1_1TrajectorySetpoint.html',1,'px4_ros2']]],
+  ['trajectorysetpointtype_342',['TrajectorySetpointType',['../classpx4__ros2_1_1TrajectorySetpointType.html',1,'px4_ros2']]]
 ];

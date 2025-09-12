@@ -1,10 +1,26 @@
 var annotated_dup =
 [
     [ "px4_ros2", null, [
+      [ "default_actions", null, [
+        [ "Rtl", "classpx4__ros2_1_1default__actions_1_1Rtl.html", "classpx4__ros2_1_1default__actions_1_1Rtl" ],
+        [ "Land", "classpx4__ros2_1_1default__actions_1_1Land.html", "classpx4__ros2_1_1default__actions_1_1Land" ],
+        [ "Takeoff", "classpx4__ros2_1_1default__actions_1_1Takeoff.html", "classpx4__ros2_1_1default__actions_1_1Takeoff" ],
+        [ "Hold", "classpx4__ros2_1_1default__actions_1_1Hold.html", "classpx4__ros2_1_1default__actions_1_1Hold" ],
+        [ "OnResume", "classpx4__ros2_1_1default__actions_1_1OnResume.html", "classpx4__ros2_1_1default__actions_1_1OnResume" ],
+        [ "OnFailure", "classpx4__ros2_1_1default__actions_1_1OnFailure.html", "classpx4__ros2_1_1default__actions_1_1OnFailure" ],
+        [ "ChangeSettings", "classpx4__ros2_1_1default__actions_1_1ChangeSettings.html", "classpx4__ros2_1_1default__actions_1_1ChangeSettings" ]
+      ] ],
       [ "events", null, [
         [ "LogLevels", "structpx4__ros2_1_1events_1_1LogLevels.html", "structpx4__ros2_1_1events_1_1LogLevels" ]
       ] ],
+      [ "multicopter", null, [
+        [ "WaypointTrajectoryExecutor", "classpx4__ros2_1_1multicopter_1_1WaypointTrajectoryExecutor.html", "classpx4__ros2_1_1multicopter_1_1WaypointTrajectoryExecutor" ]
+      ] ],
+      [ "util", null, [
+        [ "Overloaded", "structpx4__ros2_1_1util_1_1Overloaded.html", null ]
+      ] ],
       [ "Context", "classpx4__ros2_1_1Context.html", "classpx4__ros2_1_1Context" ],
+      [ "Exception", "classpx4__ros2_1_1Exception.html", null ],
       [ "RequirementFlags", "structpx4__ros2_1_1RequirementFlags.html", "structpx4__ros2_1_1RequirementFlags" ],
       [ "SetpointBase", "classpx4__ros2_1_1SetpointBase.html", "classpx4__ros2_1_1SetpointBase" ],
       [ "HealthAndArmingCheckReporter", "classpx4__ros2_1_1HealthAndArmingCheckReporter.html", "classpx4__ros2_1_1HealthAndArmingCheckReporter" ],
@@ -36,6 +52,19 @@ var annotated_dup =
       [ "GotoGlobalSetpointType", "classpx4__ros2_1_1GotoGlobalSetpointType.html", "classpx4__ros2_1_1GotoGlobalSetpointType" ],
       [ "VTOLConfig", "structpx4__ros2_1_1VTOLConfig.html", "structpx4__ros2_1_1VTOLConfig" ],
       [ "VTOL", "classpx4__ros2_1_1VTOL.html", "classpx4__ros2_1_1VTOL" ],
+      [ "ActionInterface", "classpx4__ros2_1_1ActionInterface.html", "classpx4__ros2_1_1ActionInterface" ],
+      [ "ActionArguments", "classpx4__ros2_1_1ActionArguments.html", "classpx4__ros2_1_1ActionArguments" ],
+      [ "Waypoint", "structpx4__ros2_1_1Waypoint.html", "structpx4__ros2_1_1Waypoint" ],
+      [ "NavigationItem", "structpx4__ros2_1_1NavigationItem.html", "structpx4__ros2_1_1NavigationItem" ],
+      [ "ActionItem", "structpx4__ros2_1_1ActionItem.html", "structpx4__ros2_1_1ActionItem" ],
+      [ "TrajectoryOptions", "structpx4__ros2_1_1TrajectoryOptions.html", "structpx4__ros2_1_1TrajectoryOptions" ],
+      [ "MissionDefaults", "structpx4__ros2_1_1MissionDefaults.html", "structpx4__ros2_1_1MissionDefaults" ],
+      [ "Mission", "classpx4__ros2_1_1Mission.html", "classpx4__ros2_1_1Mission" ],
+      [ "MissionFileMonitor", "classpx4__ros2_1_1MissionFileMonitor.html", "classpx4__ros2_1_1MissionFileMonitor" ],
+      [ "MissionExecutor", "classpx4__ros2_1_1MissionExecutor.html", "classpx4__ros2_1_1MissionExecutor" ],
+      [ "ActionStateKeeper", "classpx4__ros2_1_1ActionStateKeeper.html", "classpx4__ros2_1_1ActionStateKeeper" ],
+      [ "ActionHandler", "classpx4__ros2_1_1ActionHandler.html", "classpx4__ros2_1_1ActionHandler" ],
+      [ "TrajectoryExecutorInterface", "classpx4__ros2_1_1TrajectoryExecutorInterface.html", "classpx4__ros2_1_1TrajectoryExecutorInterface" ],
       [ "GlobalPositionMeasurement", "structpx4__ros2_1_1GlobalPositionMeasurement.html", "structpx4__ros2_1_1GlobalPositionMeasurement" ],
       [ "GlobalPositionMeasurementInterface", "classpx4__ros2_1_1GlobalPositionMeasurementInterface.html", "classpx4__ros2_1_1GlobalPositionMeasurementInterface" ],
       [ "LocalPositionMeasurement", "structpx4__ros2_1_1LocalPositionMeasurement.html", "structpx4__ros2_1_1LocalPositionMeasurement" ],

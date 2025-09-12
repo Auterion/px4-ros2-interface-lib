@@ -126,7 +126,7 @@ $(document).ready(function(){initNavTree('node__with__mode_8hpp_source.html','')
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    _mode = std::make_unique&lt;ModeT&gt;(*<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">if</span> (!_mode-&gt;doRegister()) {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Registration failed&quot;</span>);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      <span class="keywordflow">throw</span> <a class="code" href="classpx4__ros2_1_1Exception.html">Exception</a>(<span class="stringliteral">&quot;Registration failed&quot;</span>);</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  }</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
@@ -174,7 +174,7 @@ $(document).ready(function(){initNavTree('node__with__mode_8hpp_source.html','')
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;          <span class="comment">// *INDENT-ON*</span></div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        }, _other_modes))</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    {</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Registration failed&quot;</span>);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      <span class="keywordflow">throw</span> <a class="code" href="classpx4__ros2_1_1Exception.html">Exception</a>(<span class="stringliteral">&quot;Registration failed&quot;</span>);</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    }</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  }</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
@@ -205,6 +205,7 @@ $(document).ready(function(){initNavTree('node__with__mode_8hpp_source.html','')
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;};</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;}  <span class="comment">// namespace px4_ros2</span></div>
+<div class="ttc" id="aclasspx4__ros2_1_1Exception_html"><div class="ttname"><a href="classpx4__ros2_1_1Exception.html">px4_ros2::Exception</a></div><div class="ttdef"><b>Definition:</b> exception.hpp:16</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1NodeWithModeExecutor_html"><div class="ttname"><a href="classpx4__ros2_1_1NodeWithModeExecutor.html">px4_ros2::NodeWithModeExecutor</a></div><div class="ttdoc">A ROS2 node which instantiates a mode executor and its owned mode, and handles their registration wit...</div><div class="ttdef"><b>Definition:</b> node_with_mode.hpp:91</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1NodeWithMode_html"><div class="ttname"><a href="classpx4__ros2_1_1NodeWithMode.html">px4_ros2::NodeWithMode</a></div><div class="ttdoc">A ROS2 node which instantiates a control mode and handles its registration with PX4.</div><div class="ttdef"><b>Definition:</b> node_with_mode.hpp:35</div></div>
 </div><!-- fragment --></div><!-- contents -->

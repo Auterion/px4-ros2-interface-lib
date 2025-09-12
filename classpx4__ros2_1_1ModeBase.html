@@ -106,7 +106,8 @@ Inheritance diagram for px4_ros2::ModeBase:</div>
  <div class="center">
   <img src="classpx4__ros2_1_1ModeBase.png" usemap="#px4_5Fros2::ModeBase_map" alt=""/>
   <map id="px4_5Fros2::ModeBase_map" name="px4_5Fros2::ModeBase_map">
-<area href="classpx4__ros2_1_1Context.html" alt="px4_ros2::Context" shape="rect" coords="0,0,130,24"/>
+<area href="classpx4__ros2_1_1Context.html" alt="px4_ros2::Context" shape="rect" coords="0,0,244,24"/>
+<area href="classpx4__ros2_1_1MissionExecutor_1_1MissionMode.html" alt="px4_ros2::MissionExecutor::MissionMode" shape="rect" coords="0,112,244,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -198,6 +199,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setSkipMessageCompati
 <tr class="memitem:a20735ebd2fadea15e4498755c24a0d0d"><td class="memItemLeft" align="right" valign="top"><a id="a20735ebd2fadea15e4498755c24a0d0d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>overrideRegistration</b> (const std::shared_ptr&lt; Registration &gt; &amp;registration)</td></tr>
 <tr class="separator:a20735ebd2fadea15e4498755c24a0d0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b0d081a31ae000ec6ce52e5ff78465b"><td class="memItemLeft" align="right" valign="top"><a id="a6b0d081a31ae000ec6ce52e5ff78465b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>disableWatchdogTimer</b> ()</td></tr>
+<tr class="separator:a6b0d081a31ae000ec6ce52e5ff78465b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac18a4bfda58584dee36f122a96f82e70"><td class="memItemLeft" align="right" valign="top"><a id="ac18a4bfda58584dee36f122a96f82e70"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>defaultMessageCompatibilityCheck</b> ()</td></tr>
+<tr class="separator:ac18a4bfda58584dee36f122a96f82e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -232,6 +239,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ModeExecutorBase</b>
 </table>
 </div><div class="memdoc">
 <p>Report any custom mode requirements. This is called regularly, also while the mode is active. </p>
+
+<p>Reimplemented in <a class="el" href="classpx4__ros2_1_1MissionExecutor_1_1MissionMode.html#ab41bd26324dda756884b43b29dab86bb">px4_ros2::MissionExecutor::MissionMode</a>.</p>
 
 </div>
 </div>
@@ -327,6 +336,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ModeExecutorBase</b>
 </div><div class="memdoc">
 <p>Called whenever the mode is activated, also if the vehicle is disarmed </p>
 
+<p>Implemented in <a class="el" href="classpx4__ros2_1_1MissionExecutor_1_1MissionMode.html#ae6ab723dace271cb3bd6277132d912aa">px4_ros2::MissionExecutor::MissionMode</a>.</p>
+
 </div>
 </div>
 <a id="a7c52ee6ef9afc418b0b063983107f0fb"></a>
@@ -352,6 +363,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ModeExecutorBase</b>
 </table>
 </div><div class="memdoc">
 <p>Called whenever the mode is deactivated, also if the vehicle is disarmed </p>
+
+<p>Implemented in <a class="el" href="classpx4__ros2_1_1MissionExecutor_1_1MissionMode.html#a36ad8e54c3a655c95148798f344d192f">px4_ros2::MissionExecutor::MissionMode</a>.</p>
 
 </div>
 </div>

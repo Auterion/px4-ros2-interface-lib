@@ -95,40 +95,42 @@ $(document).ready(function(){initNavTree('navigation__interface__base_8hpp_sourc
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;px4_ros2/common/context.hpp&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>px4_ros2</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1NavigationInterfaceInvalidArgument.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1NavigationInterfaceInvalidArgument.html">NavigationInterfaceInvalidArgument</a> : <span class="keyword">public</span> std::invalid_argument</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpx4__ros2_1_1NavigationInterfaceInvalidArgument.html">NavigationInterfaceInvalidArgument</a>(<span class="keyword">const</span> std::string &amp; message)</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  : std::invalid_argument(<span class="stringliteral">&quot;PX4 ROS2 navigation interface: invalid argument: &quot;</span> + message) {}</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;};</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html">   26</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html">PositionMeasurementInterfaceBase</a> : <span class="keyword">public</span> <a class="code" href="classpx4__ros2_1_1Context.html">Context</a></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html">PositionMeasurementInterfaceBase</a>(</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    rclcpp::Node &amp; node,</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    std::string topic_namespace_prefix = <span class="stringliteral">&quot;&quot;</span>)</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  : <a class="code" href="classpx4__ros2_1_1Context.html">Context</a>(node, std::move(topic_namespace_prefix)), _node(node) {}</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keyword">virtual</span> ~<a class="code" href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html">PositionMeasurementInterfaceBase</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html#aebceb4cf3f28e7b980120b8b69123d0b">   39</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html#aebceb4cf3f28e7b980120b8b69123d0b">doRegister</a>()</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  }</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  rclcpp::Node &amp; _node;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;};</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;} <span class="comment">// namespace px4_ros2</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;px4_ros2/common/exception.hpp&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span>px4_ros2</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1NavigationInterfaceInvalidArgument.html">   17</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1NavigationInterfaceInvalidArgument.html">NavigationInterfaceInvalidArgument</a> : <span class="keyword">public</span> <a class="code" href="classpx4__ros2_1_1Exception.html">Exception</a></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpx4__ros2_1_1NavigationInterfaceInvalidArgument.html">NavigationInterfaceInvalidArgument</a>(<span class="keyword">const</span> std::string &amp; message)</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  : <a class="code" href="classpx4__ros2_1_1Exception.html">Exception</a>(<span class="stringliteral">&quot;PX4 ROS2 navigation interface: invalid argument: &quot;</span> + message) {}</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;};</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html">   27</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html">PositionMeasurementInterfaceBase</a> : <span class="keyword">public</span> <a class="code" href="classpx4__ros2_1_1Context.html">Context</a></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html">PositionMeasurementInterfaceBase</a>(</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    rclcpp::Node &amp; node,</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    std::string topic_namespace_prefix = <span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  : <a class="code" href="classpx4__ros2_1_1Context.html">Context</a>(node, std::move(topic_namespace_prefix)), _node(node) {}</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keyword">virtual</span> ~<a class="code" href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html">PositionMeasurementInterfaceBase</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html#aebceb4cf3f28e7b980120b8b69123d0b">   40</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html#aebceb4cf3f28e7b980120b8b69123d0b">doRegister</a>()</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  rclcpp::Node &amp; _node;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;};</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;} <span class="comment">// namespace px4_ros2</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition:</b> context.hpp:20</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1NavigationInterfaceInvalidArgument_html"><div class="ttname"><a href="classpx4__ros2_1_1NavigationInterfaceInvalidArgument.html">px4_ros2::NavigationInterfaceInvalidArgument</a></div><div class="ttdoc">Thrown to report invalid arguments to measurement interface.</div><div class="ttdef"><b>Definition:</b> navigation_interface_base.hpp:17</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1PositionMeasurementInterfaceBase_html"><div class="ttname"><a href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html">px4_ros2::PositionMeasurementInterfaceBase</a></div><div class="ttdoc">Base class for position measurement interface.</div><div class="ttdef"><b>Definition:</b> navigation_interface_base.hpp:27</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1PositionMeasurementInterfaceBase_html_aebceb4cf3f28e7b980120b8b69123d0b"><div class="ttname"><a href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html#aebceb4cf3f28e7b980120b8b69123d0b">px4_ros2::PositionMeasurementInterfaceBase::doRegister</a></div><div class="ttdeci">bool doRegister()</div><div class="ttdef"><b>Definition:</b> navigation_interface_base.hpp:39</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1Exception_html"><div class="ttname"><a href="classpx4__ros2_1_1Exception.html">px4_ros2::Exception</a></div><div class="ttdef"><b>Definition:</b> exception.hpp:16</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1NavigationInterfaceInvalidArgument_html"><div class="ttname"><a href="classpx4__ros2_1_1NavigationInterfaceInvalidArgument.html">px4_ros2::NavigationInterfaceInvalidArgument</a></div><div class="ttdoc">Thrown to report invalid arguments to measurement interface.</div><div class="ttdef"><b>Definition:</b> navigation_interface_base.hpp:18</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1PositionMeasurementInterfaceBase_html"><div class="ttname"><a href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html">px4_ros2::PositionMeasurementInterfaceBase</a></div><div class="ttdoc">Base class for position measurement interface.</div><div class="ttdef"><b>Definition:</b> navigation_interface_base.hpp:28</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1PositionMeasurementInterfaceBase_html_aebceb4cf3f28e7b980120b8b69123d0b"><div class="ttname"><a href="classpx4__ros2_1_1PositionMeasurementInterfaceBase.html#aebceb4cf3f28e7b980120b8b69123d0b">px4_ros2::PositionMeasurementInterfaceBase::doRegister</a></div><div class="ttdeci">bool doRegister()</div><div class="ttdef"><b>Definition:</b> navigation_interface_base.hpp:40</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
