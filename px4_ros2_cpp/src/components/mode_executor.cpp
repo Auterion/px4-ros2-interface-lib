@@ -354,6 +354,35 @@ void ModeExecutorBase::waitUntilDisarmed(const CompletedCallback & on_completed)
     on_completed);
 }
 
+void ModeExecutorBase::changeMotorSpinDirection(
+  const CompletedCallback & on_completed,
+  int motor_num, int spin_direction)
+{
+  float param1 = NAN;
+  switch (spin_direction) {
+    case int(DshotSpinDirection::SpinDirection1):
+      param1 = 3.5;
+      break;
+
+    case int(DshotSpinDirection::SpinDirection2):
+      param1 = 4.5;
+      break;
+  }
+
+  const float param2 = NAN;
+  const float param3 = NAN;
+  const float param4 = NAN;
+
+  float param5 = (motor_num >= 0 && motor_num < kMaxNumMotors) ? motor_num - 0.5 : NAN;
+
+  const Result result = sendCommandSync(
+    px4_msgs::msg::VehicleCommand::VEHICLE_CMD_CONFIGURE_ACTUATOR,
+    param1, param2, param3, param4, param5);
+
+  on_completed(result);
+  return;
+}
+
 void ModeExecutorBase::vehicleStatusUpdated(const px4_msgs::msg::VehicleStatus::UniquePtr & msg)
 {
   // Update state

@@ -9,6 +9,7 @@
 #include "overrides.hpp"
 
 #include <rclcpp/rclcpp.hpp>
+#include <px4_msgs/msg/actuator_motors.hpp>
 #include <px4_msgs/msg/vehicle_status.hpp>
 #include <px4_msgs/msg/vehicle_command.hpp>
 #include <px4_msgs/msg/vehicle_command_ack.hpp>
@@ -48,6 +49,12 @@ public:
   {
     FailsafeActivated,
     Other
+  };
+
+  enum class DshotSpinDirection
+  {
+    SpinDirection1,
+    SpinDirection2
   };
 
   ModeExecutorBase(
@@ -107,6 +114,19 @@ public:
   void disarm(const CompletedCallback & on_completed, bool forced = false);
   void waitReadyToArm(const CompletedCallback & on_completed);
   void waitUntilDisarmed(const CompletedCallback & on_completed);
+
+  /**
+   * Change the motor spin direction.
+   * This function is useful for turtle mode after a crash. In fact, when the drone has flipped
+   * (tilt angle > 90°), there is a need to turtle mode. To do that, there is a need to turn some motors
+   * in the opposition direction to the default one for a normal flight.
+   *
+   * @params: the motor number (motor_num) and the spin direction
+   *
+   */
+  void changeMotorSpinDirection(
+    const CompletedCallback & on_completed, int motor_num,
+    int spin_direction);
 
   bool isInCharge() const {return _is_in_charge;}
 
@@ -208,6 +228,8 @@ private:
   bool _was_never_activated{true};
   ModeBase::ModeID _prev_nav_state{ModeBase::kModeIDInvalid};
   uint8_t _prev_failsafe_defer_state{px4_msgs::msg::VehicleStatus::FAILSAFE_DEFER_STATE_DISABLED};
+
+  static constexpr int kMaxNumMotors = px4_msgs::msg::ActuatorMotors::NUM_CONTROLS;
 
   ConfigOverrides _config_overrides;
 };
