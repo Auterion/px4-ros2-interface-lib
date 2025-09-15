@@ -30,7 +30,7 @@ var hierarchy =
         [ "px4_ros2::AttitudeSetpointType", "classpx4__ros2_1_1AttitudeSetpointType.html", null ],
         [ "px4_ros2::DirectActuatorsSetpointType", "classpx4__ros2_1_1DirectActuatorsSetpointType.html", null ],
         [ "px4_ros2::FwLateralLongitudinalSetpointType", "classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html", null ],
-        [ "px4_ros2::GotoSetpointType", "classpx4__ros2_1_1GotoSetpointType.html", null ],
+        [ "px4_ros2::MulticopterGotoSetpointType", "classpx4__ros2_1_1MulticopterGotoSetpointType.html", null ],
         [ "px4_ros2::RatesSetpointType", "classpx4__ros2_1_1RatesSetpointType.html", null ],
         [ "px4_ros2::RoverPositionSetpointType", "classpx4__ros2_1_1RoverPositionSetpointType.html", null ],
         [ "px4_ros2::RoverSpeedAttitudeSetpointType", "classpx4__ros2_1_1RoverSpeedAttitudeSetpointType.html", null ],
@@ -48,7 +48,6 @@ var hierarchy =
     [ "px4_ros2::FwControlConfiguration", "structpx4__ros2_1_1FwControlConfiguration.html", null ],
     [ "px4_ros2::FwLateralLongitudinalSetpoint", "structpx4__ros2_1_1FwLateralLongitudinalSetpoint.html", null ],
     [ "px4_ros2::GlobalPositionMeasurement", "structpx4__ros2_1_1GlobalPositionMeasurement.html", null ],
-    [ "px4_ros2::GotoGlobalSetpointType", "classpx4__ros2_1_1GotoGlobalSetpointType.html", null ],
     [ "px4_ros2::HealthAndArmingCheckReporter", "classpx4__ros2_1_1HealthAndArmingCheckReporter.html", null ],
     [ "px4_ros2::HealthAndArmingChecks", "classpx4__ros2_1_1HealthAndArmingChecks.html", null ],
     [ "px4_ros2::LocalPositionMeasurement", "structpx4__ros2_1_1LocalPositionMeasurement.html", null ],
@@ -63,6 +62,7 @@ var hierarchy =
     [ "px4_ros2::ModeExecutorBase", "classpx4__ros2_1_1ModeExecutorBase.html", [
       [ "px4_ros2::MissionExecutor::MissionModeExecutor", "classpx4__ros2_1_1MissionExecutor_1_1MissionModeExecutor.html", null ]
     ] ],
+    [ "px4_ros2::MulticopterGotoGlobalSetpointType", "classpx4__ros2_1_1MulticopterGotoGlobalSetpointType.html", null ],
     [ "px4_ros2::NavigationItem", "structpx4__ros2_1_1NavigationItem.html", null ],
     [ "rclcpp::Node", null, [
       [ "px4_ros2::NodeWithMode< ModeT >", "classpx4__ros2_1_1NodeWithMode.html", null ],

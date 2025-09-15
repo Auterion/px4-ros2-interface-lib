@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PX4 ROS 2 Interface Library: px4_ros2_cpp/include/px4_ros2/control/setpoint_types/fixedwing_lateral_longitudinal.hpp Source File</title>
+<title>PX4 ROS 2 Interface Library: px4_ros2_cpp/include/px4_ros2/control/setpoint_types/fixedwing/lateral_longitudinal.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -64,7 +64,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('fixedwing__lateral__longitudinal_8hpp_source.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('lateral__longitudinal_8hpp_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -84,7 +84,7 @@ $(document).ready(function(){initNavTree('fixedwing__lateral__longitudinal_8hpp_
 
 <div class="header">
   <div class="headertitle">
-<div class="title">fixedwing_lateral_longitudinal.hpp</div>  </div>
+<div class="title">lateral_longitudinal.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/****************************************************************************</span></div>
@@ -246,21 +246,21 @@ $(document).ready(function(){initNavTree('fixedwing__lateral__longitudinal_8hpp_
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition:</b> context.hpp:20</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1FwLateralLongitudinalSetpointType_html"><div class="ttname"><a href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html">px4_ros2::FwLateralLongitudinalSetpointType</a></div><div class="ttdoc">Setpoint type for fixedwing control.</div><div class="ttdef"><b>Definition:</b> fixedwing_lateral_longitudinal.hpp:30</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1FwLateralLongitudinalSetpointType_html"><div class="ttname"><a href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html">px4_ros2::FwLateralLongitudinalSetpointType</a></div><div class="ttdoc">Setpoint type for fixedwing control.</div><div class="ttdef"><b>Definition:</b> lateral_longitudinal.hpp:30</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1FwLateralLongitudinalSetpointType_html_a72a69fd4ac26d3975ab108423bc8294e"><div class="ttname"><a href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#a72a69fd4ac26d3975ab108423bc8294e">px4_ros2::FwLateralLongitudinalSetpointType::updateWithAltitude</a></div><div class="ttdeci">void updateWithAltitude(float altitude_amsl_sp, float course_sp, std::optional&lt; float &gt; equivalent_airspeed_sp={}, std::optional&lt; float &gt; lateral_acceleration_sp={})</div><div class="ttdoc">Update the setpoint with simplest set of inputs: Altitude and Course. Lateral acceleration setpoints ...</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1FwLateralLongitudinalSetpointType_html_aa4e64e3c9d31fdd145c277050e507d69"><div class="ttname"><a href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#aa4e64e3c9d31fdd145c277050e507d69">px4_ros2::FwLateralLongitudinalSetpointType::update</a></div><div class="ttdeci">void update(const FwLateralLongitudinalSetpoint &amp;setpoint)</div><div class="ttdoc">Update the setpoint with full flexibility by passing a FwLateralLongitudinalSetpoint.</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1FwLateralLongitudinalSetpointType_html_ab54335406b10896a920a42d0cfa79fcd"><div class="ttname"><a href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#ab54335406b10896a920a42d0cfa79fcd">px4_ros2::FwLateralLongitudinalSetpointType::update</a></div><div class="ttdeci">void update(const FwLateralLongitudinalSetpoint &amp;setpoint, const FwControlConfiguration &amp;config)</div><div class="ttdoc">Update the setpoint with full flexibility by passing a FwLateralLongitudinalSetpoint and FwControlCon...</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1FwLateralLongitudinalSetpointType_html_afaeffb29bf867a1f245cc87f7452aa06"><div class="ttname"><a href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#afaeffb29bf867a1f245cc87f7452aa06">px4_ros2::FwLateralLongitudinalSetpointType::updateWithHeightRate</a></div><div class="ttdeci">void updateWithHeightRate(float height_rate_sp, float course_sp, std::optional&lt; float &gt; equivalent_airspeed_sp={}, std::optional&lt; float &gt; lateral_acceleration_sp={})</div><div class="ttdoc">Update the setpoint with simplest set of inputs: Height rate and Course. Lateral acceleration setpoin...</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1SetpointBase_html"><div class="ttname"><a href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a></div><div class="ttdef"><b>Definition:</b> setpoint_base.hpp:21</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1FwControlConfiguration_html"><div class="ttname"><a href="structpx4__ros2_1_1FwControlConfiguration.html">px4_ros2::FwControlConfiguration</a></div><div class="ttdef"><b>Definition:</b> fixedwing_lateral_longitudinal.hpp:160</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1FwLateralLongitudinalSetpoint_html"><div class="ttname"><a href="structpx4__ros2_1_1FwLateralLongitudinalSetpoint.html">px4_ros2::FwLateralLongitudinalSetpoint</a></div><div class="ttdef"><b>Definition:</b> fixedwing_lateral_longitudinal.hpp:114</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1FwControlConfiguration_html"><div class="ttname"><a href="structpx4__ros2_1_1FwControlConfiguration.html">px4_ros2::FwControlConfiguration</a></div><div class="ttdef"><b>Definition:</b> lateral_longitudinal.hpp:160</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1FwLateralLongitudinalSetpoint_html"><div class="ttname"><a href="structpx4__ros2_1_1FwLateralLongitudinalSetpoint.html">px4_ros2::FwLateralLongitudinalSetpoint</a></div><div class="ttdef"><b>Definition:</b> lateral_longitudinal.hpp:114</div></div>
 <div class="ttc" id="astructpx4__ros2_1_1SetpointBase_1_1Configuration_html"><div class="ttname"><a href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">px4_ros2::SetpointBase::Configuration</a></div><div class="ttdef"><b>Definition:</b> setpoint_base.hpp:26</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_b4adda84387dc0fc0ee13f2f482eac98.html">px4_ros2_cpp</a></li><li class="navelem"><a class="el" href="dir_b7e881b133c7866aa1b0587ef5240a54.html">include</a></li><li class="navelem"><a class="el" href="dir_cc7c13f17ffdd9c3833a1819211ef352.html">px4_ros2</a></li><li class="navelem"><a class="el" href="dir_7139ba757cb9212317a0ed2995419464.html">control</a></li><li class="navelem"><a class="el" href="dir_2dcf731e1ba058dc4e36e77cc706cff8.html">setpoint_types</a></li><li class="navelem"><b>fixedwing_lateral_longitudinal.hpp</b></li>
+    <li class="navelem"><a class="el" href="dir_b4adda84387dc0fc0ee13f2f482eac98.html">px4_ros2_cpp</a></li><li class="navelem"><a class="el" href="dir_b7e881b133c7866aa1b0587ef5240a54.html">include</a></li><li class="navelem"><a class="el" href="dir_cc7c13f17ffdd9c3833a1819211ef352.html">px4_ros2</a></li><li class="navelem"><a class="el" href="dir_7139ba757cb9212317a0ed2995419464.html">control</a></li><li class="navelem"><a class="el" href="dir_2dcf731e1ba058dc4e36e77cc706cff8.html">setpoint_types</a></li><li class="navelem"><a class="el" href="dir_5b91ec2ed3b1ce2dee03f2af49d47de2.html">fixedwing</a></li><li class="navelem"><b>lateral_longitudinal.hpp</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

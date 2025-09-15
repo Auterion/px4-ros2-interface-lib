@@ -154,7 +154,7 @@ $(document).ready(function(){initNavTree('vtol_8hpp_source.html',''); initResiza
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  Eigen::Vector3f computeAccelerationSetpointDuringTransition(</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    std::optional&lt;float&gt; back_transition_deceleration_m_s2 = std::nullopt);</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  VTOL::State getCurrentState()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _current_state;}</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  State getCurrentState()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _current_state;}</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  rclcpp::Node &amp; _node;</div>
@@ -170,7 +170,7 @@ $(document).ready(function(){initNavTree('vtol_8hpp_source.html',''); initResiza
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  Eigen::Vector2f _vehicle_acceleration_xy{NAN, NAN};</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  VTOL::State _current_state{VTOL::State::Undefined};</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  State _current_state{State::Undefined};</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordtype">float</span> computePitchSetpointDuringBacktransition(</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    std::optional&lt;float&gt; back_transition_deceleration_m_s2 = std::nullopt);</div>

@@ -9,7 +9,7 @@ var classpx4__ros2_1_1VTOL =
     ] ],
     [ "VTOL", "classpx4__ros2_1_1VTOL.html#a1496855a8f68cb036842a5c2055ef781", null ],
     [ "computeAccelerationSetpointDuringTransition", "classpx4__ros2_1_1VTOL.html#a17325dfce72026c2b110fb779bee128c", null ],
-    [ "getCurrentState", "classpx4__ros2_1_1VTOL.html#afc863700326a54a531bfa456b2acd140", null ],
+    [ "getCurrentState", "classpx4__ros2_1_1VTOL.html#a237f9a399f5e147fba896e642aa28cf9", null ],
     [ "toFixedwing", "classpx4__ros2_1_1VTOL.html#ad5ed7a552c4b0c1b52dda187a5c80bbd", null ],
     [ "toMulticopter", "classpx4__ros2_1_1VTOL.html#ade092cc12d5660e73b1e7f872883b405", null ]
 ];

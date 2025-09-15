@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"group__components.html#ga4f1e20c551dab853d7efee42dae1a020":[3,0,8],
 "group__components.html#gacb3cd80960c70f09a1acf1e10d9f1d21":[3,0,7],
 "group__components.html#gga0d5805242f91956fd51e243091367f77a12c37c4278b8c0db6c2f65052569cd80":[3,0,6,1],
 "group__components.html#gga0d5805242f91956fd51e243091367f77a43c7582c40594c3fe32a6634ef9dcb07":[3,0,6,2],
@@ -68,6 +69,7 @@ var NAVTREEINDEX2 =
 "index.html#autotoc_md8":[2,0,0],
 "index.html#autotoc_md9":[2,0,1],
 "land__detected_8hpp_source.html":[5,0,0,0,0,7,2],
+"lateral__longitudinal_8hpp_source.html":[5,0,0,0,0,2,0,1,0],
 "local__position_8hpp_source.html":[5,0,0,0,0,5,4],
 "local__position__measurement__interface_8hpp_source.html":[5,0,0,0,0,4,0,1],
 "manual__control__input_8hpp_source.html":[5,0,0,0,0,1,2],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "structpx4__ros2_1_1TrajectorySetpoint.html#ae67b9351a241615b7e092443ff423ea2":[4,0,0,29,3],
 "structpx4__ros2_1_1TrajectorySetpoint.html#af2471f4305da0cd7efbdd36b08b9626d":[4,0,0,29,7],
 "structpx4__ros2_1_1TrajectorySetpoint.html#af91490f5b309183166fee1b2cfd4d458":[4,0,0,29,18],
-"structpx4__ros2_1_1VTOLConfig.html":[4,0,0,35],
-"structpx4__ros2_1_1VTOLConfig.html#a30a3f9ad1192a503230e0131cdde36a1":[4,0,0,35,1],
-"structpx4__ros2_1_1VTOLConfig.html#a498a0d50044c43272a5b58dcbf5f5a3e":[4,0,0,35,3]
+"structpx4__ros2_1_1VTOLConfig.html":[4,0,0,35]
 };

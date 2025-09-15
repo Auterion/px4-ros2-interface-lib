@@ -9,7 +9,5 @@ var searchData=
   ['globalpositionfromlineanddist_62',['globalPositionFromLineAndDist',['../group__geodesic.html#gae85bc381781adf133ebeaa360ea8ab11',1,'px4_ros2']]],
   ['globalpositionmeasurement_63',['GlobalPositionMeasurement',['../structpx4__ros2_1_1GlobalPositionMeasurement.html',1,'px4_ros2']]],
   ['globalpositionmeasurementinterface_64',['GlobalPositionMeasurementInterface',['../classpx4__ros2_1_1GlobalPositionMeasurementInterface.html',1,'px4_ros2']]],
-  ['globaltolocal_65',['globalToLocal',['../classpx4__ros2_1_1MapProjection.html#a3e0543785512cb358f1cdf13e5d31a94',1,'px4_ros2::MapProjection::globalToLocal(const Eigen::Vector2d &amp;global_position) const'],['../classpx4__ros2_1_1MapProjection.html#af288641107d8f2c7fe3e518a212a9e9a',1,'px4_ros2::MapProjection::globalToLocal(const Eigen::Vector3d &amp;global_position) const']]],
-  ['gotoglobalsetpointtype_66',['GotoGlobalSetpointType',['../classpx4__ros2_1_1GotoGlobalSetpointType.html',1,'px4_ros2']]],
-  ['gotosetpointtype_67',['GotoSetpointType',['../classpx4__ros2_1_1GotoSetpointType.html',1,'px4_ros2']]]
+  ['globaltolocal_65',['globalToLocal',['../classpx4__ros2_1_1MapProjection.html#a3e0543785512cb358f1cdf13e5d31a94',1,'px4_ros2::MapProjection::globalToLocal(const Eigen::Vector2d &amp;global_position) const'],['../classpx4__ros2_1_1MapProjection.html#af288641107d8f2c7fe3e518a212a9e9a',1,'px4_ros2::MapProjection::globalToLocal(const Eigen::Vector3d &amp;global_position) const']]]
 ];

@@ -12,11 +12,11 @@ var group__setpoint__types =
       [ "kMaxNumMotors", "classpx4__ros2_1_1DirectActuatorsSetpointType.html#a922c8169dda05cabebb67ab3910a1f24", null ],
       [ "kMaxNumServos", "classpx4__ros2_1_1DirectActuatorsSetpointType.html#aed0131686e9236157c206bf4df527bdf", null ]
     ] ],
-    [ "GotoSetpointType", "classpx4__ros2_1_1GotoSetpointType.html", [
-      [ "GotoSetpointType", "classpx4__ros2_1_1GotoSetpointType.html#aa4cec017cfc489fcffb1ca609ffe0150", null ],
-      [ "~GotoSetpointType", "classpx4__ros2_1_1GotoSetpointType.html#add5819ca7f11f5d73395c93b90cf4184", null ],
-      [ "desiredUpdateRateHz", "classpx4__ros2_1_1GotoSetpointType.html#a8df1db7854d17ec07b8499fd4f0d3aa6", null ],
-      [ "getConfiguration", "classpx4__ros2_1_1GotoSetpointType.html#a98c157d089be14010231a2bdb75bd9bb", null ],
-      [ "update", "classpx4__ros2_1_1GotoSetpointType.html#a2117abf2c58b3909776bef70338c42be", null ]
+    [ "MulticopterGotoSetpointType", "classpx4__ros2_1_1MulticopterGotoSetpointType.html", [
+      [ "MulticopterGotoSetpointType", "classpx4__ros2_1_1MulticopterGotoSetpointType.html#afdfbb6368ef4d10308a2d40edfd7f2db", null ],
+      [ "~MulticopterGotoSetpointType", "classpx4__ros2_1_1MulticopterGotoSetpointType.html#a106fb8d9da47db4dc87e381d68c08a51", null ],
+      [ "desiredUpdateRateHz", "classpx4__ros2_1_1MulticopterGotoSetpointType.html#a54d314fd804fb6d95c1c03b6d27fe763", null ],
+      [ "getConfiguration", "classpx4__ros2_1_1MulticopterGotoSetpointType.html#aa365da0ae878a46e3d912d26a5877912", null ],
+      [ "update", "classpx4__ros2_1_1MulticopterGotoSetpointType.html#a7a2f226366e8338a3419f17acb4e9e51", null ]
     ] ]
 ];
