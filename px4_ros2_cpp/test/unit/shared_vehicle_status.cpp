@@ -65,9 +65,9 @@ TEST_F(VehicleStatusTest, State) {
   pub_msg.timestamp = 1;
   vehicle_status_pub->publish(pub_msg);
   ASSERT_TRUE(waitForUpdate(got_message));
-  EXPECT_EQ(message_counters[0], 1);
-  EXPECT_EQ(message_counters[1], 0);
-  EXPECT_EQ(message_counters[2], 0);
+  EXPECT_EQ(message_counters[0], 1U);
+  EXPECT_EQ(message_counters[1], 0U);
+  EXPECT_EQ(message_counters[2], 0U);
 
   // Add another one
   tokens[1] = vehicle_status.registerVehicleStatusUpdatedCallback(
@@ -80,9 +80,9 @@ TEST_F(VehicleStatusTest, State) {
   pub_msg.timestamp++;
   vehicle_status_pub->publish(pub_msg);
   ASSERT_TRUE(waitForUpdate(got_message));
-  EXPECT_EQ(message_counters[0], 2);
-  EXPECT_EQ(message_counters[1], 3);
-  EXPECT_EQ(message_counters[2], 0);
+  EXPECT_EQ(message_counters[0], 2U);
+  EXPECT_EQ(message_counters[1], 3U);
+  EXPECT_EQ(message_counters[2], 0U);
 
   // Add another one
   tokens[2] = vehicle_status.registerVehicleStatusUpdatedCallback(
@@ -95,18 +95,18 @@ TEST_F(VehicleStatusTest, State) {
   pub_msg.timestamp++;
   vehicle_status_pub->publish(pub_msg);
   ASSERT_TRUE(waitForUpdate(got_message));
-  EXPECT_EQ(message_counters[0], 4);
-  EXPECT_EQ(message_counters[1], 5);
-  EXPECT_EQ(message_counters[2], 6);
+  EXPECT_EQ(message_counters[0], 4U);
+  EXPECT_EQ(message_counters[1], 5U);
+  EXPECT_EQ(message_counters[2], 6U);
 
   // Remove the second
   tokens[1].reset();
   pub_msg.timestamp++;
   vehicle_status_pub->publish(pub_msg);
   ASSERT_TRUE(waitForUpdate(got_message));
-  EXPECT_EQ(message_counters[0], 7);
-  EXPECT_EQ(message_counters[1], 5);
-  EXPECT_EQ(message_counters[2], 8);
+  EXPECT_EQ(message_counters[0], 7U);
+  EXPECT_EQ(message_counters[1], 5U);
+  EXPECT_EQ(message_counters[2], 8U);
 
   // Add second again
   tokens[1] = vehicle_status.registerVehicleStatusUpdatedCallback(
@@ -119,9 +119,9 @@ TEST_F(VehicleStatusTest, State) {
   pub_msg.timestamp++;
   vehicle_status_pub->publish(pub_msg);
   ASSERT_TRUE(waitForUpdate(got_message));
-  EXPECT_EQ(message_counters[0], 9);
-  EXPECT_EQ(message_counters[1], 11);
-  EXPECT_EQ(message_counters[2], 10);
+  EXPECT_EQ(message_counters[0], 9U);
+  EXPECT_EQ(message_counters[1], 11U);
+  EXPECT_EQ(message_counters[2], 10U);
 }
 
 TEST_F(VehicleStatusTest, MultiInstance) {
@@ -162,12 +162,12 @@ TEST_F(VehicleStatusTest, MultiInstance) {
   pub_msg.timestamp = 1;
   vehicle_status_pub1->publish(pub_msg);
   ASSERT_TRUE(waitForUpdate(got_message));
-  EXPECT_EQ(message_counters[0], 1);
-  EXPECT_EQ(message_counters[1], 0);
+  EXPECT_EQ(message_counters[0], 1U);
+  EXPECT_EQ(message_counters[1], 0U);
 
   pub_msg.timestamp++;
   vehicle_status_pub2->publish(pub_msg);
   ASSERT_TRUE(waitForUpdate(got_message));
-  EXPECT_EQ(message_counters[0], 1);
-  EXPECT_EQ(message_counters[1], 2);
+  EXPECT_EQ(message_counters[0], 1U);
+  EXPECT_EQ(message_counters[1], 2U);
 }
