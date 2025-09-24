@@ -20,6 +20,41 @@ find_package(rclcpp REQUIRED)
 find_package(px4_msgs REQUIRED)
 find_package(eigen3_cmake_module REQUIRED)
 find_package(Eigen3 REQUIRED)
+find_package(ament_index_cpp REQUIRED)
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+
+if($ENV{ROS_DISTRO} STREQUAL "humble")
+    add_compile_definitions(ROS2_HUMBLE)
+endif()
+
+ament_index_get_resource(MESSAGE_FILES "rosidl_interfaces" px4_msgs)
+
+# Split the message files into a list
+string(REPLACE "\n" ";" msg_file_list "${MESSAGE_FILES}")
+
+set(PX4_MSG_FILES "")
+foreach(file ${msg_file_list})
+  if("${file}" MATCHES "^msg/(.*\\.msg)$")
+    string(REGEX REPLACE "^msg/" "" cleaned_file "${file}")
+    list(APPEND PX4_MSG_FILES "${cleaned_file}")
+  endif()
+endforeach()
+
+# Convert list to Python-style list string
+string(REPLACE ";" "','" MESSAGE_NAMES_QUOTED "${PX4_MSG_FILES}")
+set(MESSAGE_NAMES_PYTHON "[\'${MESSAGE_NAMES_QUOTED}\']")
+
+add_custom_command(
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/px4_all_messages.hpp
+  COMMAND ${Python3_EXECUTABLE} -m em
+    -D message_names=\"${MESSAGE_NAMES_PYTHON}\"
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/px4_all_messages.hpp.em
+    > ${CMAKE_CURRENT_BINARY_DIR}/px4_all_messages.hpp
+  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/components/px4_all_messages.hpp.em
+  COMMENT "Generating px4_all_messages.hpp using empy"
+)
+
+add_custom_target(generate_px4_header DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/px4_all_messages.hpp)
 
 include_directories(include SYSTEM ${Eigen3_INCLUDE_DIRS})
 set(HEADER_FILES
@@ -116,6 +151,8 @@ add_library(px4_ros2_cpp
         src/utils/geodesic.cpp
         src/utils/map_projection_impl.cpp
 )
+add_dependencies(px4_ros2_cpp generate_px4_header)
+target_include_directories(px4_ros2_cpp PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
 target_link_libraries(px4_ros2_cpp PUBLIC ament_index_cpp::ament_index_cpp Eigen3::Eigen rclcpp::rclcpp ${px4_msgs_TARGETS})
 
 ament_export_targets(px4_ros2_cpp HAS_LIBRARY_TARGET)
