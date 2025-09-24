@@ -20,6 +20,42 @@ find_package(rclcpp REQUIRED)
 find_package(px4_msgs REQUIRED)
 find_package(eigen3_cmake_module REQUIRED)
 find_package(Eigen3 REQUIRED)
+find_package(ament_index_cpp REQUIRED)
+
+# Try to get the installed path of px4_msgs
+ament_index_get_resource(PX4_MSGS_PATH "packages" "px4_msgs")
+get_filename_component(PX4_MSGS_PATH "${PX4_MSGS_PATH}" DIRECTORY)
+
+# Check if the msg directory exists in the installed location
+if(EXISTS "${PX4_MSGS_PATH}/msg")
+  message(STATUS "Using installed px4_msgs package at: ${PX4_MSGS_PATH}")
+  file(GLOB PX4_MSG_FILES RELATIVE "${PX4_MSGS_PATH}/msg" "${PX4_MSGS_PATH}/msg/*.msg")
+else()
+  # Fallback to workspace source path
+  set(PX4_MSGS_SOURCE_PATH "${CMAKE_SOURCE_DIR}/../../px4_msgs/msg")
+  if(EXISTS "${PX4_MSGS_SOURCE_PATH}")
+    message(STATUS "Using source px4_msgs package at: ${PX4_MSGS_SOURCE_PATH}")
+    file(GLOB PX4_MSG_FILES RELATIVE "${PX4_MSGS_SOURCE_PATH}" "${PX4_MSGS_SOURCE_PATH}/*.msg")
+  else()
+    message(ERROR "Could not find px4_msgs/msg directory in installed or source location.")
+  endif()
+endif()
+
+# Convert list to Python-style list string
+string(REPLACE ";" "','" MESSAGE_NAMES_QUOTED "${PX4_MSG_FILES}")
+set(MESSAGE_NAMES_PYTHON "[\'${MESSAGE_NAMES_QUOTED}\']")
+
+add_custom_command(
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/px4_all_messages.hpp
+  COMMAND /usr/bin/empy
+    -D message_names=\"${MESSAGE_NAMES_PYTHON}\"
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/px4_all_messages.hpp.em
+    > ${CMAKE_CURRENT_BINARY_DIR}/px4_all_messages.hpp
+  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/components/px4_all_messages.hpp.em
+  COMMENT "Generating px4_all_messages.hpp using empy"
+)
+
+add_custom_target(generate_px4_header DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/px4_all_messages.hpp)
 
 include_directories(include SYSTEM ${Eigen3_INCLUDE_DIRS})
 set(HEADER_FILES
@@ -116,6 +152,8 @@ add_library(px4_ros2_cpp
         src/utils/geodesic.cpp
         src/utils/map_projection_impl.cpp
 )
+add_dependencies(px4_ros2_cpp generate_px4_header)
+target_include_directories(px4_ros2_cpp PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
 target_link_libraries(px4_ros2_cpp PUBLIC ament_index_cpp::ament_index_cpp Eigen3::Eigen rclcpp::rclcpp ${px4_msgs_TARGETS})
 
 ament_export_targets(px4_ros2_cpp HAS_LIBRARY_TARGET)
