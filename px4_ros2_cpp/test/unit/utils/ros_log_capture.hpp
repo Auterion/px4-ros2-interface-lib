@@ -52,6 +52,10 @@ public:
     }
     expected += '\n';
 
+    rclcpp::executors::SingleThreadedExecutor executor;
+    executor.add_node(_node);
+
+
     // The full output might not have been captured yet. Count the lines and wait if needed
     const unsigned expected_num_lines =
       static_cast<unsigned>(std::count(expected.begin(), expected.end(), '\n'));
@@ -59,7 +63,7 @@ public:
     while (expected_num_lines > _captured_lines.size() ||
       _node->get_clock()->now() - start < 50ms)
     {
-      rclcpp::spin_some(_node);
+      executor.spin_some();
       std::this_thread::yield();
       if (_node->get_clock()->now() - start > 1s) {
         break;

@@ -16,6 +16,7 @@ protected:
   void SetUp() override
   {
     _node = std::make_shared<rclcpp::Node>("test_node");
+    _executor.add_node(_node);
   }
 
   bool waitForUpdate(bool & got_message)
@@ -24,7 +25,7 @@ protected:
     auto start_time = _node->get_clock()->now();
     while (!got_message) {
       rclcpp::sleep_for(kSleepInterval);
-      rclcpp::spin_some(_node);
+      _executor.spin_some();
       const auto elapsed_time = _node->get_clock()->now() - start_time;
       if (elapsed_time >= kTimeoutDuration) {
         return got_message;
@@ -34,6 +35,7 @@ protected:
   }
 
   std::shared_ptr<rclcpp::Node> _node;
+  rclcpp::executors::SingleThreadedExecutor _executor;
 
   static constexpr std::chrono::seconds kTimeoutDuration{3s};
   static constexpr std::chrono::milliseconds kSleepInterval{10ms};

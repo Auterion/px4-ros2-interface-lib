@@ -17,13 +17,15 @@ static inline bool waitFor(
   const std::shared_ptr<rclcpp::Node> & node,
   const std::function<bool()> & predicate)
 {
+  rclcpp::executors::SingleThreadedExecutor executor;
+  executor.add_node(node);
   const auto start = node->get_clock()->now();
 
   while (node->get_clock()->now() - start < 3s) {
     if (predicate()) {
       return true;
     }
-    rclcpp::spin_some(node);
+    executor.spin_some();
     std::this_thread::yield();
   }
   return false;
