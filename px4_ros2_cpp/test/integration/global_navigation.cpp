@@ -31,7 +31,7 @@ protected:
   void SetUp() override
   {
     _node = initNode();
-    
+
     _executor.add_node(_node);
 
     _global_navigation_interface = std::make_shared<GlobalPositionMeasurementInterface>(*_node);
