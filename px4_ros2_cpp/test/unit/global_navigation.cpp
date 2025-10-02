@@ -28,6 +28,8 @@ protected:
   {
     _node = std::make_shared<rclcpp::Node>("test_node");
 
+    _executor.add_node(_node);
+
     // Suppress logging for exception handling tests
     auto ret = rcutils_logging_set_logger_level(
       _node->get_logger().get_name(), RCUTILS_LOG_SEVERITY_FATAL);
@@ -56,7 +58,7 @@ protected:
     auto start_time = _node->get_clock()->now();
     while (!_update_msg) {
       rclcpp::sleep_for(kSleepInterval);
-      rclcpp::spin_some(_node);
+      _executor.spin_some();
       const auto elapsed_time = _node->get_clock()->now() - start_time;
       if (elapsed_time >= kTimeoutDuration) {
         return _update_msg != nullptr;
@@ -66,6 +68,7 @@ protected:
   }
 
   std::shared_ptr<rclcpp::Node> _node;
+  rclcpp::executors::SingleThreadedExecutor _executor;
   std::shared_ptr<px4_ros2::GlobalPositionMeasurementInterface> _global_navigation_interface;
   rclcpp::Subscription<px4_msgs::msg::VehicleGlobalPosition>::SharedPtr _subscriber;
   px4_msgs::msg::VehicleGlobalPosition::UniquePtr _update_msg;

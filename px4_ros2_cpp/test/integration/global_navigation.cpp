@@ -32,6 +32,8 @@ protected:
   {
     _node = initNode();
 
+    _executor.add_node(_node);
+
     _global_navigation_interface = std::make_shared<GlobalPositionMeasurementInterface>(*_node);
     _position_interface = std::make_shared<OdometryGlobalPosition>(*_global_navigation_interface);
 
@@ -54,7 +56,7 @@ protected:
 
     // Wait for PX4 to stop fusing external measurements
     while (_estimator_status_flags->cs_aux_gpos) {
-      rclcpp::spin_some(_node);
+      _executor.spin_some();
       rclcpp::sleep_for(kSleepInterval);
 
       const auto elapsed_time = _node->now() - start_time;
@@ -94,13 +96,14 @@ protected:
       ) << "Failed to send position measurement update via GlobalPositionMeasurementInterface.";
 
       rclcpp::sleep_for(kSleepInterval);
-      rclcpp::spin_some(_node);
+      _executor.spin_some();
     }
 
     waitUntilFlagsReset();
   }
 
   std::shared_ptr<rclcpp::Node> _node;
+  rclcpp::executors::SingleThreadedExecutor _executor;
   std::shared_ptr<GlobalPositionMeasurementInterface> _global_navigation_interface;
   std::shared_ptr<OdometryGlobalPosition> _position_interface;
   rclcpp::Subscription<EstimatorStatusFlags>::SharedPtr _subscriber;
@@ -122,7 +125,7 @@ TEST_F(GlobalPositionInterfaceTest, fuseAll) {
       break;
     }
 
-    rclcpp::spin_some(_node);
+    _executor.spin_some();
     rclcpp::sleep_for(kSleepInterval);
   }
   const auto position = _position_interface->position();

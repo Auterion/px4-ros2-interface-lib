@@ -33,6 +33,8 @@ protected:
   {
     _node = initNode();
 
+    _executor.add_node(_node);
+
     _local_navigation_interface = std::make_shared<LocalPositionMeasurementInterface>(
       *_node, px4_ros2::PoseFrame::LocalNED,
       px4_ros2::VelocityFrame::LocalNED);
@@ -57,7 +59,7 @@ protected:
     while (_estimator_status_flags->cs_ev_pos || _estimator_status_flags->cs_ev_hgt ||
       _estimator_status_flags->cs_ev_vel || _estimator_status_flags->cs_ev_yaw)
     {
-      rclcpp::spin_some(_node);
+      _executor.spin_some();
       rclcpp::sleep_for(kSleepInterval);
 
       const auto elapsed_time = _node->now() - start_time;
@@ -87,7 +89,7 @@ protected:
         _local_navigation_interface->update(*measurement)
       ) << "Failed to send position measurement update via LocalPositionMeasurementInterface.";
 
-      rclcpp::spin_some(_node);
+      _executor.spin_some();
 
       // Check timeout
       const auto elapsed_time = _node->now() - start_time;
@@ -107,6 +109,7 @@ protected:
   }
 
   std::shared_ptr<rclcpp::Node> _node;
+  rclcpp::executors::SingleThreadedExecutor _executor;
   std::shared_ptr<LocalPositionMeasurementInterface> _local_navigation_interface;
   rclcpp::Subscription<EstimatorStatusFlags>::SharedPtr _subscriber;
   EstimatorStatusFlags::UniquePtr _estimator_status_flags;
