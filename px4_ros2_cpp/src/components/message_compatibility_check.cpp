@@ -15,6 +15,18 @@
 #include <fstream>
 #include <regex>
 #include <unistd.h>
+#include <px4_all_messages.hpp>
+
+#ifndef ROS2_HUMBLE
+#include "rosidl_typesupport_cpp/message_type_support.hpp"
+#include "rosidl_runtime_c/type_hash.h"
+
+bool type_hash_is_equal(const rosidl_type_hash_t * a, const rosidl_type_hash_t * b)
+{
+  return a->version == b->version &&
+         std::memcmp(a->value, b->value, ROSIDL_TYPE_HASH_SIZE) == 0;
+}
+#endif
 
 namespace
 {
@@ -228,85 +240,142 @@ bool messageCompatibilityCheck(
   rclcpp::Node & node, const std::vector<MessageCompatibilityTopic> & messages_to_check,
   const std::string & topic_namespace_prefix)
 {
-  RCLCPP_DEBUG(node.get_logger(), "Checking message compatibility...");
-  const rclcpp::Subscription<px4_msgs::msg::MessageFormatResponse>::SharedPtr
-    message_format_response_sub
-    =
-    node.create_subscription<px4_msgs::msg::MessageFormatResponse>(
-      topic_namespace_prefix + "fmu/out/message_format_response" +
-      px4_ros2::getMessageNameVersion<px4_msgs::msg::MessageFormatResponse>(), rclcpp::QoS(
-        1).best_effort(),
-      [](px4_msgs::msg::MessageFormatResponse::UniquePtr msg) {});
-
-  const rclcpp::Publisher<px4_msgs::msg::MessageFormatRequest>::SharedPtr message_format_request_pub
-    =
-    node.create_publisher<px4_msgs::msg::MessageFormatRequest>(
-      topic_namespace_prefix + "fmu/in/message_format_request" +
-      px4_ros2::getMessageNameVersion<px4_msgs::msg::MessageFormatRequest>(),
-      1);
-
-  const std::string msgs_dir = ament_index_cpp::get_package_share_directory("px4_msgs");
-  if (msgs_dir.empty()) {
-    RCLCPP_FATAL(node.get_logger(), "Failed to get installation directory for 'px4_msgs' package");
-    return false;
-  }
-
   bool ret = true;
   std::string mismatched_topics;
-  bool first_message = true;
 
-  for (const auto & message_to_check : messages_to_check) {
-    std::string topic_type = message_to_check.topic_type;
-    if (topic_type.empty()) {
-      // Infer topic type from topic_name
-      auto last_slash = message_to_check.topic_name.find_last_of('/');
-      if (last_slash == std::string::npos) {
-        topic_type = message_to_check.topic_name;
-      } else {
-        topic_type = message_to_check.topic_name.substr(last_slash + 1);
+  RCLCPP_DEBUG(node.get_logger(), "Checking message compatibility...");
+
+  if (px4_ros2::isRmwZenoh()) {
+#ifdef ROS2_HUMBLE
+    RCLCPP_WARN(
+      node.get_logger(),
+      "ROS2 Humble doesn't support type hash, thus no type checking will occur when using Zenoh. It's recommended to use Zenoh with ROS2 Jazzy or later");
+#else
+    auto topics_and_types = node.get_topic_names_and_types();
+
+    for (const auto & topic : topics_and_types) {
+      for (const auto & type : topic.second) {
+        auto publishers_info = node.get_publishers_info_by_topic(topic.first);
+        auto subscribers_info = node.get_subscriptions_info_by_topic(topic.first);
+        const rosidl_type_hash_t * pub_hash;
+
+        if (!publishers_info.empty()) {
+          for (const auto & info : publishers_info) {
+            pub_hash = &info.topic_type_hash();     // Take last
+          }
+
+          auto topic_type = find_type_support(type);
+
+          if (topic_type && topic_type->ts_handle->get_type_hash_func) {
+            const rosidl_type_hash_t * hash =
+              topic_type->ts_handle->get_type_hash_func(topic_type->ts_handle);
+            if (!hash || !type_hash_is_equal(hash, pub_hash)) {
+              mismatched_topics += "\n  - " + std::string(topic.first);
+              ret = false;
+            }
+          }
+        }
+
+        if (!subscribers_info.empty()) {
+          for (const auto & info : subscribers_info) {
+            pub_hash = &info.topic_type_hash();     // Take last
+          }
+
+          auto topic_type = find_type_support(type);
+
+          if (topic_type && topic_type->ts_handle->get_type_hash_func) {
+            const rosidl_type_hash_t * hash =
+              topic_type->ts_handle->get_type_hash_func(topic_type->ts_handle);
+            if (!hash || !type_hash_is_equal(hash, pub_hash)) {
+              mismatched_topics += "\n  - " + std::string(topic.first);
+              ret = false;
+            }
+          }
+        }
       }
-      topic_type = snakeToCamelCase(topic_type);
     }
-    // Read the local message definition and get the hash
-    const uint32_t expected_message_hash = messageHash(node, topic_type, msgs_dir);
+#endif
+  } else {
+    const rclcpp::Subscription<px4_msgs::msg::MessageFormatResponse>::SharedPtr
+      message_format_response_sub
+      =
+      node.create_subscription<px4_msgs::msg::MessageFormatResponse>(
+        topic_namespace_prefix + "fmu/out/message_format_response" +
+        px4_ros2::getMessageNameVersion<px4_msgs::msg::MessageFormatResponse>(), rclcpp::QoS(
+          1).best_effort(),
+        [](px4_msgs::msg::MessageFormatResponse::UniquePtr msg) {});
 
-    // Ask for the message hash from PX4
-    px4_msgs::msg::MessageFormatRequest request;
-    request.protocol_version = px4_msgs::msg::MessageFormatRequest::LATEST_PROTOCOL_VERSION;
-    strncpy(
-      reinterpret_cast<char *>(request.topic_name.data()),
-      message_to_check.topic_name.c_str(), request.topic_name.size() - 1);
-    request.topic_name.back() = '\0';
-    request.timestamp = 0; // Let PX4 set the timestamp
-    px4_msgs::msg::MessageFormatResponse response;
-    switch (requestMessageFormat(
-        node, request, message_format_response_sub, message_format_request_pub,
-        response, first_message))
-    {
-      case RequestMessageFormatReturn::Timeout:
-        RCLCPP_FATAL(
-          node.get_logger(),
-          "Timed out waiting for message format. Is the FMU running?");
-        // Do not try to check the other formats
-        return false;
-      case RequestMessageFormatReturn::ProtocolVersionMismatch:
-        // Error already reported
-        return false;
-      case RequestMessageFormatReturn::GotReply:
-        if (response.success) {
-          if (response.message_hash != expected_message_hash) {
-            mismatched_topics += "\n  - " + message_to_check.topic_name;
+    const rclcpp::Publisher<px4_msgs::msg::MessageFormatRequest>::SharedPtr
+      message_format_request_pub
+      =
+      node.create_publisher<px4_msgs::msg::MessageFormatRequest>(
+        topic_namespace_prefix + "fmu/in/message_format_request" +
+        px4_ros2::getMessageNameVersion<px4_msgs::msg::MessageFormatRequest>(),
+        1);
+
+    const std::string msgs_dir = ament_index_cpp::get_package_share_directory("px4_msgs");
+    if (msgs_dir.empty()) {
+      RCLCPP_FATAL(
+        node.get_logger(),
+        "Failed to get installation directory for 'px4_msgs' package");
+      return false;
+    }
+
+    bool first_message = true;
+
+    for (const auto & message_to_check : messages_to_check) {
+      std::string topic_type = message_to_check.topic_type;
+      if (topic_type.empty()) {
+        // Infer topic type from topic_name
+        auto last_slash = message_to_check.topic_name.find_last_of('/');
+        if (last_slash == std::string::npos) {
+          topic_type = message_to_check.topic_name;
+        } else {
+          topic_type = message_to_check.topic_name.substr(last_slash + 1);
+        }
+        topic_type = snakeToCamelCase(topic_type);
+      }
+      // Read the local message definition and get the hash
+      const uint32_t expected_message_hash = messageHash(node, topic_type, msgs_dir);
+
+      // Ask for the message hash from PX4
+      px4_msgs::msg::MessageFormatRequest request;
+      request.protocol_version = px4_msgs::msg::MessageFormatRequest::LATEST_PROTOCOL_VERSION;
+      strncpy(
+        reinterpret_cast<char *>(request.topic_name.data()),
+        message_to_check.topic_name.c_str(), request.topic_name.size() - 1);
+      request.topic_name.back() = '\0';
+      request.timestamp = 0; // Let PX4 set the timestamp
+      px4_msgs::msg::MessageFormatResponse response;
+      switch (requestMessageFormat(
+          node, request, message_format_response_sub, message_format_request_pub,
+          response, first_message))
+      {
+        case RequestMessageFormatReturn::Timeout:
+          RCLCPP_FATAL(
+            node.get_logger(),
+            "Timed out waiting for message format. Is the FMU running?");
+          // Do not try to check the other formats
+          return false;
+        case RequestMessageFormatReturn::ProtocolVersionMismatch:
+          // Error already reported
+          return false;
+        case RequestMessageFormatReturn::GotReply:
+          if (response.success) {
+            if (response.message_hash != expected_message_hash) {
+              mismatched_topics += "\n  - " + message_to_check.topic_name;
+              ret = false;
+            }
+          } else {
+            RCLCPP_FATAL(
+              node.get_logger(), "MessageFormatResponse::success == false for %s",
+              message_to_check.topic_name.c_str());
             ret = false;
           }
-        } else {
-          RCLCPP_FATAL(
-            node.get_logger(), "MessageFormatResponse::success == false for %s",
-            message_to_check.topic_name.c_str());
-          ret = false;
-        }
-        break;
+          break;
+      }
+      first_message = false;
     }
-    first_message = false;
   }
 
   if (!mismatched_topics.empty()) {

@@ -32,6 +32,18 @@ struct HasMessageVersion : std::false_type {};
 template<typename T>
 struct HasMessageVersion<T, std::void_t<decltype(T::MESSAGE_VERSION)>>: std::true_type {};
 
+
+/**
+ * @brief Checks if the current RMW (ROS Middleware) implementation is `rmw_zenoh_cpp`.
+ *
+ * @return `true` if the current RMW implementation is `rmw_zenoh_cpp`, `false` otherwise.
+ */
+static bool isRmwZenoh()
+{
+  const char * rmw_id = rmw_get_implementation_identifier();
+  return std::string(rmw_id) == "rmw_zenoh_cpp";
+}
+
 /**
  * @brief Retrieves the version suffix for a given message type.
  *
@@ -41,6 +53,9 @@ struct HasMessageVersion<T, std::void_t<decltype(T::MESSAGE_VERSION)>>: std::tru
 template<typename T>
 std::string getMessageNameVersion()
 {
+  if (isRmwZenoh()) {
+    return "";
+  }
   if constexpr (HasMessageVersion<T>::value) {
     if (T::MESSAGE_VERSION == 0) {return "";}
     return "_v" + std::to_string(T::MESSAGE_VERSION);

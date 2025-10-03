@@ -66,7 +66,20 @@ struct MessageCompatibilityTopic
 };
 
 /**
- * Check for a set of messages that the definition matches with the one that PX4 is using.
+ * @brief Check for a set of messages that match the definitions used by PX4.
+ *
+ * This function verifies that the message definitions are compatible with those
+ * expected by the PX4 ROS 2 interface library. It returns true if all definitions match.
+ *
+ * @note Compared to rmw_fastrtps_cpp, rmw_zenoh_cpp behaves differently.
+ * PX4 Zenoh allows flexible topic name mapping, so topic names are not fixed.
+ * In this case, the function only verifies the hashes of the message types
+ * to ensure binary compatibility between the FMU and ROS 2.
+ *
+ * ROS 2 Humble does not support type hash, so no type checking will occur
+ * when using Zenoh. It is recommended to use Zenoh with ROS 2 Jazzy or later
+ * to ensure proper type compatibility verification.
+ *
  * @return true on success
  * @ingroup components
  */
