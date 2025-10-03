@@ -165,6 +165,7 @@ struct FwControlConfiguration
   std::optional<float> max_lateral_acceleration;
   std::optional<float> target_climb_rate;
   std::optional<float> target_sink_rate;
+  std::optional<float> speed_weight;
 
   FwControlConfiguration & withPitchLimits(float min_pitch_sp, float max_pitch_sp)
   {
@@ -202,6 +203,13 @@ struct FwControlConfiguration
   {
 
     target_climb_rate = target_climb_rate_sp;
+    return *this;
+  }
+
+  FwControlConfiguration & withSpeedWeight(float speed_weight_sp)
+  {
+
+    speed_weight = speed_weight_sp;
     return *this;
   }
 };
