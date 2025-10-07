@@ -1,0 +1,66 @@
+# This corresponds to the build steps in https://github.com/PX4/PX4-Autopilot/blob/main/.github/workflows/ros_integration_tests.yml
+name: Build with PX4 container
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: [runs-on,"runner=${{ vars.RUNSON_CI_BUILDER_DEFAULT_X64 }}","run-id=${{ github.run_id }}"]
+    container:
+      image: px4io/px4-dev-ros2-galactic:2021-09-08
+      options: --privileged --ulimit core=-1 --security-opt seccomp=unconfined
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          path: src/px4-ros2-interface-lib
+
+      - name: Git Ownership Workaround
+        run: git config --system --add safe.directory '*'
+
+      - name: Update ROS Keys
+        run: |
+          sudo rm /etc/apt/sources.list.d/ros2.list && \
+          sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
+      - name: Prepare ccache timestamp
+        id: ccache_cache_timestamp
+        shell: cmake -P {0}
+        run: |
+          string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
+          message("::set-output name=timestamp::${current_date}")
+      - name: ccache cache files
+        uses: actions/cache@v4
+        with:
+          path: ~/.ccache
+          key: px4_build-ccache-${{steps.ccache_cache_timestamp.outputs.timestamp}}
+          restore-keys: px4_build-ccache-
+      - name: setup ccache
+        run: |
+          mkdir -p ~/.ccache
+          echo "base_dir = ${GITHUB_WORKSPACE}" > ~/.ccache/ccache.conf
+          echo "compression = true" >> ~/.ccache/ccache.conf
+          echo "compression_level = 6" >> ~/.ccache/ccache.conf
+          echo "max_size = 300M" >> ~/.ccache/ccache.conf
+          echo "hash_dir = false" >> ~/.ccache/ccache.conf
+          ccache -s
+          ccache -z
+
+      - name: Get and build the ros2 interface library
+        shell: bash
+        run: |
+          WS_DIR="$GITHUB_WORKSPACE"
+          . /opt/ros/galactic/setup.bash
+          cd "$WS_DIR/src"
+          git clone --recursive https://github.com/PX4/px4_msgs.git
+          cd ..
+          colcon build --symlink-install
+      - name: ccache post-run ros workspace
+        run: ccache -s
+
