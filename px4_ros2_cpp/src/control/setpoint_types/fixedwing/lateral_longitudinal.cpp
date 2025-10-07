@@ -122,7 +122,7 @@ void FwLateralLongitudinalSetpointType::update(const FwLateralLongitudinalSetpoi
   longitudinal_sp.height_rate = setpoint.height_rate.value_or(NAN);
   longitudinal_sp.equivalent_airspeed = setpoint.equivalent_airspeed.value_or(NAN);
   longitudinal_sp.pitch_direct = NAN;
-  longitudinal_sp.throttle_direct = NAN;
+  longitudinal_sp.throttle_direct = setpoint.throttle_direct.value_or(NAN);
 
   _fw_longitudinal_sp_pub->publish(longitudinal_sp);
 }

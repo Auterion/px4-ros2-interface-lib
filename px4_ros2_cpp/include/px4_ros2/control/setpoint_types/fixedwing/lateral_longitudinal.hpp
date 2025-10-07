@@ -119,6 +119,7 @@ struct FwLateralLongitudinalSetpoint
   std::optional<float> altitude_msl;
   std::optional<float> height_rate;
   std::optional<float> equivalent_airspeed;
+  std::optional<float> throttle_direct;
 
   FwLateralLongitudinalSetpoint & withCourse(float course_sp)
   {
@@ -153,6 +154,13 @@ struct FwLateralLongitudinalSetpoint
   FwLateralLongitudinalSetpoint & withEquivalentAirspeed(float equivalent_airspeed_sp)
   {
     equivalent_airspeed = equivalent_airspeed_sp;
+    return *this;
+  }
+
+  FwLateralLongitudinalSetpoint & withThrottleDirect(float throttle_direct_sp)
+  {
+
+    throttle_direct = throttle_direct_sp;
     return *this;
   }
 };
