@@ -100,6 +100,7 @@ void FwLateralLongitudinalSetpointType::update(
   longitudinal_configuration.throttle_max = config.max_throttle.value_or(NAN);
   longitudinal_configuration.climb_rate_target = config.target_climb_rate.value_or(NAN);
   longitudinal_configuration.sink_rate_target = config.target_sink_rate.value_or(NAN);
+  longitudinal_configuration.speed_weight = config.speed_weight.value_or(NAN);
 
   _longitudinal_control_configuration_pub->publish(longitudinal_configuration);
 
