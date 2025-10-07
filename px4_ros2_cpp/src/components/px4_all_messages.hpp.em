@@ -5,11 +5,16 @@
 @{
 import re
 
+def remove_suffix(text: str, suffix: str) -> str:
+    if text.endswith(suffix):
+        return text[:-len(suffix)]
+    return text
+
 def camel_to_snake(name):
     return re.sub(r'(?<!^)(?=[A-Z])', '_', name).lower()
 
 for msg in message_names:
-    print("#include <px4_msgs/msg/" + camel_to_snake(msg.removesuffix(".msg")) + ".hpp>")
+    print("#include <px4_msgs/msg/" + camel_to_snake(remove_suffix(msg, ".msg")) + ".hpp>")
 }@
 
 struct TopicTypeSupport
@@ -21,7 +26,7 @@ struct TopicTypeSupport
 static TopicTypeSupport all_px4_ros2_messages[] = {
 @{
 for msg_file in message_names:
-    msg = msg_file.removesuffix(".msg")
+    msg = remove_suffix(msg_file, ".msg")
     print("  {\"px4_msgs/msg/" + msg + "\",")
     print("    rosidl_typesupport_cpp::get_message_type_support_handle<px4_msgs::msg::" + msg + ">()},")
 }@
