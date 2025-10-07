@@ -13,6 +13,7 @@
 #include <optional>
 
 #include <px4_ros2/common/setpoint_base.hpp>
+#include <px4_ros2/common/exception.hpp>
 
 namespace px4_ros2
 {
@@ -208,7 +209,9 @@ struct FwControlConfiguration
 
   FwControlConfiguration & withSpeedWeight(float speed_weight_sp)
   {
-
+    if (speed_weight_sp < 0.0 || speed_weight_sp > 2.0) {
+      throw Exception("Speed weight can only set to values between 0 to 2");
+    }
     speed_weight = speed_weight_sp;
     return *this;
   }
