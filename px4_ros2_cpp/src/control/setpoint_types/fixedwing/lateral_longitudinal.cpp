@@ -100,6 +100,7 @@ void FwLateralLongitudinalSetpointType::update(
   longitudinal_configuration.throttle_max = config.max_throttle.value_or(NAN);
   longitudinal_configuration.climb_rate_target = config.target_climb_rate.value_or(NAN);
   longitudinal_configuration.sink_rate_target = config.target_sink_rate.value_or(NAN);
+  longitudinal_configuration.speed_weight = config.speed_weight.value_or(NAN);
 
   _longitudinal_control_configuration_pub->publish(longitudinal_configuration);
 
@@ -121,7 +122,7 @@ void FwLateralLongitudinalSetpointType::update(const FwLateralLongitudinalSetpoi
   longitudinal_sp.height_rate = setpoint.height_rate.value_or(NAN);
   longitudinal_sp.equivalent_airspeed = setpoint.equivalent_airspeed.value_or(NAN);
   longitudinal_sp.pitch_direct = NAN;
-  longitudinal_sp.throttle_direct = NAN;
+  longitudinal_sp.throttle_direct = setpoint.throttle_direct.value_or(NAN);
 
   _fw_longitudinal_sp_pub->publish(longitudinal_sp);
 }
