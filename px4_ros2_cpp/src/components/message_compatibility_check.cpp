@@ -17,7 +17,7 @@
 #include <unistd.h>
 #include <px4_all_messages.hpp>
 
-#ifndef ROS2_HUMBLE
+#ifndef ROS2_HUMBLE_OR_GALACTIC
 #include "rosidl_typesupport_cpp/message_type_support.hpp"
 #include "rosidl_runtime_c/type_hash.h"
 
@@ -246,10 +246,10 @@ bool messageCompatibilityCheck(
   RCLCPP_DEBUG(node.get_logger(), "Checking message compatibility...");
 
   if (px4_ros2::isRmwZenoh()) {
-#ifdef ROS2_HUMBLE
+#ifdef ROS2_HUMBLE_OR_GALACTIC
     RCLCPP_WARN(
       node.get_logger(),
-      "ROS2 Humble doesn't support type hash, thus no type checking will occur when using Zenoh. It's recommended to use Zenoh with ROS2 Jazzy or later");
+      "ROS2 Humble and earlier do not support type hash, thus no type checking will occur when using Zenoh. It's recommended to use Zenoh with ROS2 Jazzy or later");
 #else
     auto topics_and_types = node.get_topic_names_and_types();
 

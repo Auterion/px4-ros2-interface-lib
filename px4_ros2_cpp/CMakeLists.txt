@@ -23,8 +23,8 @@ find_package(Eigen3 REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
-if($ENV{ROS_DISTRO} STREQUAL "humble")
-    add_compile_definitions(ROS2_HUMBLE)
+if($ENV{ROS_DISTRO} STREQUAL "humble" OR $ENV{ROS_DISTRO} STREQUAL "galactic")
+    add_compile_definitions(ROS2_HUMBLE_OR_GALACTIC)
 endif()
 
 ament_index_get_resource(MESSAGE_FILES "rosidl_interfaces" px4_msgs)
