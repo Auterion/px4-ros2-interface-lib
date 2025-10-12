@@ -207,6 +207,11 @@ struct FwControlConfiguration
     return *this;
   }
 
+  /**
+   * @brief Configure the speed weight for TECS (Total Energy Control System). For more information on TECS, see https://docs.px4.io/main/en/flight_stack/controller_diagrams.html#total-energy-control-system-tecs
+   * 
+   * @param speed_weight_sp speed weight setpoint in the range of [0.0, 2.0]. Speedweight is 1.0 by default. Set speedweight to 0.0 for altitude priority, 2.0 for airspeed priority.
+   */
   FwControlConfiguration & withSpeedWeight(float speed_weight_sp)
   {
     if (speed_weight_sp < 0.0 || speed_weight_sp > 2.0) {
