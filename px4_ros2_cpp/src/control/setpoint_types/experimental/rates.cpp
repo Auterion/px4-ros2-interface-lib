@@ -20,15 +20,15 @@ RatesSetpointType::RatesSetpointType(Context & context)
 }
 
 void RatesSetpointType::update(
-  const Eigen::Vector3f & rate_setpoints_ned_rad,
+  const Eigen::Vector3f & rate_setpoints_frd_rad,
   const Eigen::Vector3f & thrust_setpoint_frd)
 {
   onUpdate();
 
   px4_msgs::msg::VehicleRatesSetpoint sp{};
-  sp.roll = rate_setpoints_ned_rad(0);
-  sp.pitch = rate_setpoints_ned_rad(1);
-  sp.yaw = rate_setpoints_ned_rad(2);
+  sp.roll = rate_setpoints_frd_rad(0);
+  sp.pitch = rate_setpoints_frd_rad(1);
+  sp.yaw = rate_setpoints_frd_rad(2);
   sp.thrust_body[0] = thrust_setpoint_frd(0);
   sp.thrust_body[1] = thrust_setpoint_frd(1);
   sp.thrust_body[2] = thrust_setpoint_frd(2);
