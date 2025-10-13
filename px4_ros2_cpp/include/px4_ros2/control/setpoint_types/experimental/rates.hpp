@@ -30,7 +30,7 @@ public:
   float desiredUpdateRateHz() override {return 200.f;}
 
   void update(
-    const Eigen::Vector3f & rate_setpoints_ned_rad,
+    const Eigen::Vector3f & rate_setpoints_frd_rad,
     const Eigen::Vector3f & thrust_setpoint_frd);
 
 private:
