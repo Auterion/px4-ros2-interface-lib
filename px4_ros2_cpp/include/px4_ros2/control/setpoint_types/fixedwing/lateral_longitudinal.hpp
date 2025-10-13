@@ -215,7 +215,7 @@ struct FwControlConfiguration
   FwControlConfiguration & withSpeedWeight(float speed_weight_sp)
   {
     if (speed_weight_sp < 0.0 || speed_weight_sp > 2.0) {
-      throw Exception("Speed weight can only set to values between 0 to 2");
+      throw Exception("Speed weight must be between 0 and 2.");
     }
     speed_weight = speed_weight_sp;
     return *this;
