@@ -14,11 +14,12 @@ var searchData=
   ['withpositionx_242',['withPositionX',['../structpx4__ros2_1_1TrajectorySetpoint.html#a9a4ec69bfa4ac111dc81844c6ba1154d',1,'px4_ros2::TrajectorySetpoint']]],
   ['withpositiony_243',['withPositionY',['../structpx4__ros2_1_1TrajectorySetpoint.html#ab9a26aac9d7717bdd84afc9972b54364',1,'px4_ros2::TrajectorySetpoint']]],
   ['withpositionz_244',['withPositionZ',['../structpx4__ros2_1_1TrajectorySetpoint.html#a652622f7d411a7b8b2426d26a2f7ef26',1,'px4_ros2::TrajectorySetpoint']]],
-  ['withvelocity_245',['withVelocity',['../structpx4__ros2_1_1TrajectorySetpoint.html#a076ce25ca0255f53ab7641a4ff038861',1,'px4_ros2::TrajectorySetpoint']]],
-  ['withvelocityx_246',['withVelocityX',['../structpx4__ros2_1_1TrajectorySetpoint.html#adcc21fbc721daa8bc7072cf14169cddb',1,'px4_ros2::TrajectorySetpoint']]],
-  ['withvelocityy_247',['withVelocityY',['../structpx4__ros2_1_1TrajectorySetpoint.html#a863ef47e9a91afe1dcab18b93b5c2894',1,'px4_ros2::TrajectorySetpoint']]],
-  ['withvelocityz_248',['withVelocityZ',['../structpx4__ros2_1_1TrajectorySetpoint.html#acf0b871f5170c598951998fdd0b2ed7a',1,'px4_ros2::TrajectorySetpoint']]],
-  ['withyaw_249',['withYaw',['../structpx4__ros2_1_1TrajectorySetpoint.html#ae0dcca3ad1d9863167e3c054c6c53cf4',1,'px4_ros2::TrajectorySetpoint']]],
-  ['withyawrate_250',['withYawRate',['../structpx4__ros2_1_1TrajectorySetpoint.html#a7fa7898dc4ef5ec4c6cee6a672f8ee30',1,'px4_ros2::TrajectorySetpoint']]],
-  ['wrappi_251',['wrapPi',['../group__geometry.html#gab49f39205924f2c49455ebe42b1ac5a3',1,'px4_ros2']]]
+  ['withspeedweight_245',['withSpeedWeight',['../structpx4__ros2_1_1FwControlConfiguration.html#a53f864e168e906c93eaa7a8ac40303bc',1,'px4_ros2::FwControlConfiguration']]],
+  ['withvelocity_246',['withVelocity',['../structpx4__ros2_1_1TrajectorySetpoint.html#a076ce25ca0255f53ab7641a4ff038861',1,'px4_ros2::TrajectorySetpoint']]],
+  ['withvelocityx_247',['withVelocityX',['../structpx4__ros2_1_1TrajectorySetpoint.html#adcc21fbc721daa8bc7072cf14169cddb',1,'px4_ros2::TrajectorySetpoint']]],
+  ['withvelocityy_248',['withVelocityY',['../structpx4__ros2_1_1TrajectorySetpoint.html#a863ef47e9a91afe1dcab18b93b5c2894',1,'px4_ros2::TrajectorySetpoint']]],
+  ['withvelocityz_249',['withVelocityZ',['../structpx4__ros2_1_1TrajectorySetpoint.html#acf0b871f5170c598951998fdd0b2ed7a',1,'px4_ros2::TrajectorySetpoint']]],
+  ['withyaw_250',['withYaw',['../structpx4__ros2_1_1TrajectorySetpoint.html#ae0dcca3ad1d9863167e3c054c6c53cf4',1,'px4_ros2::TrajectorySetpoint']]],
+  ['withyawrate_251',['withYawRate',['../structpx4__ros2_1_1TrajectorySetpoint.html#a7fa7898dc4ef5ec4c6cee6a672f8ee30',1,'px4_ros2::TrajectorySetpoint']]],
+  ['wrappi_252',['wrapPi',['../group__geometry.html#gab49f39205924f2c49455ebe42b1ac5a3',1,'px4_ros2']]]
 ];

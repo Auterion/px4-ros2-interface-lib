@@ -109,6 +109,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a29b063771595feecbeef5572950bb0aa"><td class="memItemLeft" align="right" valign="top"><a id="a29b063771595feecbeef5572950bb0aa"></a>
 <a class="el" href="structpx4__ros2_1_1FwControlConfiguration.html">FwControlConfiguration</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>withTargetClimbRate</b> (float target_climb_rate_sp)</td></tr>
 <tr class="separator:a29b063771595feecbeef5572950bb0aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53f864e168e906c93eaa7a8ac40303bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structpx4__ros2_1_1FwControlConfiguration.html">FwControlConfiguration</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpx4__ros2_1_1FwControlConfiguration.html#a53f864e168e906c93eaa7a8ac40303bc">withSpeedWeight</a> (float speed_weight_sp)</td></tr>
+<tr class="memdesc:a53f864e168e906c93eaa7a8ac40303bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the speed weight for TECS (Total Energy Control System). For more information on TECS, see <a href="https://docs.px4.io/main/en/flight_stack/controller_diagrams.html#total-energy-control-system-tecs">https://docs.px4.io/main/en/flight_stack/controller_diagrams.html#total-energy-control-system-tecs</a>.  <a href="structpx4__ros2_1_1FwControlConfiguration.html#a53f864e168e906c93eaa7a8ac40303bc">More...</a><br /></td></tr>
+<tr class="separator:a53f864e168e906c93eaa7a8ac40303bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -133,7 +136,45 @@ std::optional&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom">
 <tr class="memitem:a9a542b14e8b11c756d5c983b952c32ea"><td class="memItemLeft" align="right" valign="top"><a id="a9a542b14e8b11c756d5c983b952c32ea"></a>
 std::optional&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>target_sink_rate</b></td></tr>
 <tr class="separator:a9a542b14e8b11c756d5c983b952c32ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4a6931df8ccd6186cc3f5946ec75d01"><td class="memItemLeft" align="right" valign="top"><a id="ad4a6931df8ccd6186cc3f5946ec75d01"></a>
+std::optional&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>speed_weight</b></td></tr>
+<tr class="separator:ad4a6931df8ccd6186cc3f5946ec75d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a53f864e168e906c93eaa7a8ac40303bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53f864e168e906c93eaa7a8ac40303bc">&#9670;&nbsp;</a></span>withSpeedWeight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structpx4__ros2_1_1FwControlConfiguration.html">FwControlConfiguration</a>&amp; px4_ros2::FwControlConfiguration::withSpeedWeight </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>speed_weight_sp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Configure the speed weight for TECS (Total Energy Control System). For more information on TECS, see <a href="https://docs.px4.io/main/en/flight_stack/controller_diagrams.html#total-energy-control-system-tecs">https://docs.px4.io/main/en/flight_stack/controller_diagrams.html#total-energy-control-system-tecs</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">speed_weight_sp</td><td>speed weight setpoint in the range of [0.0, 2.0]. Speedweight is 1.0 by default. Set speedweight to 0.0 for altitude priority, 2.0 for airspeed priority. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>px4_ros2_cpp/include/px4_ros2/control/setpoint_types/fixedwing/<a class="el" href="lateral__longitudinal_8hpp_source.html">lateral_longitudinal.hpp</a></li>
 </ul>
