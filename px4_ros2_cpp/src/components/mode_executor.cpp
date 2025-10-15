@@ -30,6 +30,10 @@ ModeExecutorBase::ModeExecutorBase(
   _current_scheduled_mode(owned_mode.node(), owned_mode.topicNamespacePrefix()),
   _config_overrides(owned_mode.node(), owned_mode.topicNamespacePrefix())
 {
+  if (owned_mode._settings.replace_internal_mode != ModeBase::kModeIDInvalid) {
+    throw Exception(
+            "A mode executor cannot be used in combination with a mode that replaces an internal mode. See https://github.com/PX4/PX4-Autopilot/issues/25707");
+  }
   _vehicle_status_sub_token = std::make_unique<SharedVehicleStatusToken>(
     SharedVehicleStatus::instance(
       _node,
