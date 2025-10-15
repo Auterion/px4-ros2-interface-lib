@@ -16,6 +16,7 @@
 #include <Eigen/Core>
 
 using namespace std::chrono_literals;
+using Activation = px4_ros2::ModeExecutorBase::Settings::Activation;
 
 static const std::string kName = "Test Flight Mode";
 
@@ -79,11 +80,8 @@ private:
 class ModeExecutorTest : public px4_ros2::ModeExecutorBase
 {
 public:
-  ModeExecutorTest(rclcpp::Node & node, FlightModeTest & owned_mode, bool activate_immediately)
-  : ModeExecutorBase(
-      ModeExecutorBase::Settings{activate_immediately ? Settings::Activation::ActivateImmediately :
-        Settings::Activation::ActivateOnlyWhenArmed},
-      owned_mode),
+  ModeExecutorTest(rclcpp::Node & node, FlightModeTest & owned_mode, Activation activation)
+  : ModeExecutorBase(ModeExecutorBase::Settings{}.activate(activation), owned_mode),
     _node(node)
   {}
 
@@ -197,7 +195,8 @@ void TestExecutionAutonomous::run()
     });
 
   _mode = std::make_unique<FlightModeTest>(_node);
-  _mode_executor = std::make_unique<ModeExecutorTest>(_node, *_mode, true);
+  _mode_executor =
+    std::make_unique<ModeExecutorTest>(_node, *_mode, Activation::ActivateImmediately);
 
 
   // The executor is expected to be activated and then run through its states (successfully)
@@ -268,7 +267,9 @@ void TestExecutionInCharge::run()
     });
 
   _mode = std::make_unique<FlightModeTest>(_node);
-  _mode_executor = std::make_unique<ModeExecutorTest>(_node, *_mode, false);
+  _mode_executor = std::make_unique<ModeExecutorTest>(
+    _node, *_mode,
+    Activation::ActivateOnlyWhenArmed);
 
 
   // Testing steps:
@@ -426,7 +427,8 @@ void TestExecutionFailsafe::run()
     });
 
   _mode = std::make_unique<FlightModeTest>(_node);
-  _mode_executor = std::make_unique<ModeExecutorTest>(_node, *_mode, true);
+  _mode_executor =
+    std::make_unique<ModeExecutorTest>(_node, *_mode, Activation::ActivateImmediately);
 
 
   // Run the executor and trigger a failsafe (descend) while it's in the custom mode
