@@ -29,6 +29,9 @@ ModeBase::ModeBase(
     },
     topic_namespace_prefix), _config_overrides(node, topic_namespace_prefix)
 {
+  if (_settings.prevent_arming) {
+    modeRequirements().prevent_arming = true;
+  }
   _vehicle_status_sub_token = std::make_unique<SharedVehicleStatusToken>(
     SharedVehicleStatus::instance(node, topic_namespace_prefix).registerVehicleStatusUpdatedCallback(
       [this](

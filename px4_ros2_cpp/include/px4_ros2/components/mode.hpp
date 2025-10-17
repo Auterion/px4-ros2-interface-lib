@@ -91,14 +91,29 @@ public:
   struct Settings
   {
     // NOLINTNEXTLINE allow implicit conversion
-    Settings(
-      std::string mode_name, bool want_activate_even_while_disarmed = false,
-      ModeID request_replace_internal_mode = kModeIDInvalid)
-    : name(std::move(mode_name)), activate_even_while_disarmed(want_activate_even_while_disarmed),
-      replace_internal_mode(request_replace_internal_mode) {}
-    std::string name;             ///< Name of the mode with length < 25 characters
-    bool activate_even_while_disarmed{true};             ///< If true, the mode is also activated while disarmed if selected
+    Settings(std::string mode_name)
+    : name(std::move(mode_name)) {}
+
+    const std::string name;             ///< Name of the mode with length < 25 characters
+    bool activate_even_while_disarmed{false};             ///< If true, the mode is also activated while disarmed if selected
     ModeID replace_internal_mode{kModeIDInvalid};             ///< Can be used to replace an fmu-internal mode
+    bool prevent_arming{false}; ///< Prevent arming while in this mode
+
+    Settings & activateEvenWhileDisarmed(bool activate)
+    {
+      activate_even_while_disarmed = activate;
+      return *this;
+    }
+    Settings & replaceInternalMode(ModeID mode)
+    {
+      replace_internal_mode = mode;
+      return *this;
+    }
+    Settings & preventArming(bool prevent)
+    {
+      prevent_arming = prevent;
+      return *this;
+    }
   };
 
   ModeBase(

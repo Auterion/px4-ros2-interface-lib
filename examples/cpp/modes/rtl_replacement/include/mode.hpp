@@ -23,7 +23,8 @@ class FlightModeTest : public px4_ros2::ModeBase
 {
 public:
   explicit FlightModeTest(rclcpp::Node & node)
-  : ModeBase(node, Settings{kName, true, ModeBase::kModeIDRtl})
+  : ModeBase(node, Settings{kName}.preventArming(true).activateEvenWhileDisarmed(
+        true).replaceInternalMode(ModeBase::kModeIDRtl))
   {
     _land_detected = std::make_shared<px4_ros2::LandDetected>(*this);
     _trajectory_setpoint = std::make_shared<px4_ros2::TrajectorySetpointType>(*this);

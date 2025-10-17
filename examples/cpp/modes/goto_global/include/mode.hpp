@@ -23,7 +23,7 @@ class FlightModeTest : public px4_ros2::ModeBase
 {
 public:
   explicit FlightModeTest(rclcpp::Node & node)
-  : ModeBase(node, kName)
+  : ModeBase(node, Settings{kName}.preventArming(true))
   {
     _goto_setpoint = std::make_shared<px4_ros2::MulticopterGotoGlobalSetpointType>(*this);
 

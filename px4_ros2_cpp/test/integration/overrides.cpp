@@ -16,6 +16,7 @@
 #include <Eigen/Core>
 
 using namespace std::chrono_literals;
+using Activation = px4_ros2::ModeExecutorBase::Settings::Activation;
 
 static const std::string kName = "Test Flight Mode";
 
@@ -26,7 +27,7 @@ class FlightModeTest : public px4_ros2::ModeBase
 {
 public:
   explicit FlightModeTest(rclcpp::Node & node)
-  : ModeBase(node, Settings{kName, false})
+  : ModeBase(node, kName)
   {
     _trajectory_setpoint = std::make_shared<px4_ros2::TrajectorySetpointType>(*this);
   }
@@ -78,11 +79,8 @@ private:
 class ModeExecutorTest : public px4_ros2::ModeExecutorBase
 {
 public:
-  ModeExecutorTest(rclcpp::Node & node, FlightModeTest & owned_mode, bool activate_immediately)
-  : ModeExecutorBase(
-      ModeExecutorBase::Settings{activate_immediately ? Settings::Activation::ActivateImmediately :
-        Settings::Activation::ActivateOnlyWhenArmed},
-      owned_mode),
+  ModeExecutorTest(rclcpp::Node & node, FlightModeTest & owned_mode, Activation activation)
+  : ModeExecutorBase(ModeExecutorBase::Settings{}.activate(activation), owned_mode),
     _node(node)
   {}
 
@@ -223,7 +221,8 @@ void TestExecutionOverrides::run()
     });
 
   _mode = std::make_unique<FlightModeTest>(_node);
-  _mode_executor = std::make_unique<ModeExecutorTest>(_node, *_mode, true);
+  _mode_executor =
+    std::make_unique<ModeExecutorTest>(_node, *_mode, Activation::ActivateImmediately);
 
 
   // Testing steps:

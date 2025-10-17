@@ -42,6 +42,12 @@ public:
       ActivateImmediately, ///< Activate the mode and executor immediately after registration. Only use this for fully autonomous executors that also arm the vehicle
     };
     Activation activation{Activation::ActivateOnlyWhenArmed};
+
+    Settings & activate(Activation activation_option)
+    {
+      activation = activation_option;
+      return *this;
+    }
   };
 
   enum class DeactivateReason
