@@ -61,7 +61,7 @@ var NAVTREEINDEX =
 "action_8hpp_source.html",
 "classpx4__ros2_1_1ModeExecutorBase.html#ad80a234c8cb2f4c186fa2b7bffd1a1dd",
 "group__components.html#ga4f1e20c551dab853d7efee42dae1a020",
-"structpx4__ros2_1_1TrajectorySetpoint.html#ae67b9351a241615b7e092443ff423ea2"
+"structpx4__ros2_1_1TrajectorySetpoint.html#ac395022e29e4bc3470c7625a57d47ed7"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

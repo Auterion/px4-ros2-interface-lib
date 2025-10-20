@@ -94,24 +94,37 @@ $(document).ready(function(){initNavTree('structpx4__ros2_1_1ModeBase_1_1Setting
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:abf69e6c1f30a817b0ae5de8046c69bdd"><td class="memItemLeft" align="right" valign="top"><a id="abf69e6c1f30a817b0ae5de8046c69bdd"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Settings</b> (std::string mode_name, bool want_activate_even_while_disarmed=false, <a class="el" href="classpx4__ros2_1_1ModeBase.html#a49de7d1d3872f1c7531abfe870483fb2">ModeID</a> request_replace_internal_mode=kModeIDInvalid)</td></tr>
-<tr class="separator:abf69e6c1f30a817b0ae5de8046c69bdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae075561b2af2478bca49d304dc2366dd"><td class="memItemLeft" align="right" valign="top"><a id="ae075561b2af2478bca49d304dc2366dd"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Settings</b> (std::string mode_name)</td></tr>
+<tr class="separator:ae075561b2af2478bca49d304dc2366dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf43d3c448837eccc09b81bb835aa806"><td class="memItemLeft" align="right" valign="top"><a id="abf43d3c448837eccc09b81bb835aa806"></a>
+<a class="el" href="structpx4__ros2_1_1ModeBase_1_1Settings.html">Settings</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>activateEvenWhileDisarmed</b> (bool activate)</td></tr>
+<tr class="separator:abf43d3c448837eccc09b81bb835aa806"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8e9ede3794f288f43db258aee5a6826"><td class="memItemLeft" align="right" valign="top"><a id="aa8e9ede3794f288f43db258aee5a6826"></a>
+<a class="el" href="structpx4__ros2_1_1ModeBase_1_1Settings.html">Settings</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>replaceInternalMode</b> (<a class="el" href="classpx4__ros2_1_1ModeBase.html#a49de7d1d3872f1c7531abfe870483fb2">ModeID</a> mode)</td></tr>
+<tr class="separator:aa8e9ede3794f288f43db258aee5a6826"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25bcb309323f92d825cd4294fe8425df"><td class="memItemLeft" align="right" valign="top"><a id="a25bcb309323f92d825cd4294fe8425df"></a>
+<a class="el" href="structpx4__ros2_1_1ModeBase_1_1Settings.html">Settings</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>preventArming</b> (bool prevent)</td></tr>
+<tr class="separator:a25bcb309323f92d825cd4294fe8425df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a52d24121ecefb1aa62d4c18d3f37dc19"><td class="memItemLeft" align="right" valign="top"><a id="a52d24121ecefb1aa62d4c18d3f37dc19"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpx4__ros2_1_1ModeBase_1_1Settings.html#a52d24121ecefb1aa62d4c18d3f37dc19">name</a></td></tr>
-<tr class="memdesc:a52d24121ecefb1aa62d4c18d3f37dc19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the mode with length &lt; 25 characters. <br /></td></tr>
-<tr class="separator:a52d24121ecefb1aa62d4c18d3f37dc19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae27bdeb9ad5e831daa0cbc9fb0df1af2"><td class="memItemLeft" align="right" valign="top"><a id="ae27bdeb9ad5e831daa0cbc9fb0df1af2"></a>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpx4__ros2_1_1ModeBase_1_1Settings.html#ae27bdeb9ad5e831daa0cbc9fb0df1af2">name</a></td></tr>
+<tr class="memdesc:ae27bdeb9ad5e831daa0cbc9fb0df1af2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the mode with length &lt; 25 characters. <br /></td></tr>
+<tr class="separator:ae27bdeb9ad5e831daa0cbc9fb0df1af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9b70687e48871121d6e239e6c52c8f0"><td class="memItemLeft" align="right" valign="top"><a id="ab9b70687e48871121d6e239e6c52c8f0"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpx4__ros2_1_1ModeBase_1_1Settings.html#ab9b70687e48871121d6e239e6c52c8f0">activate_even_while_disarmed</a> {true}</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpx4__ros2_1_1ModeBase_1_1Settings.html#ab9b70687e48871121d6e239e6c52c8f0">activate_even_while_disarmed</a> {false}</td></tr>
 <tr class="memdesc:ab9b70687e48871121d6e239e6c52c8f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">If true, the mode is also activated while disarmed if selected. <br /></td></tr>
 <tr class="separator:ab9b70687e48871121d6e239e6c52c8f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af61499f0183e347cb580407d64b4c3cd"><td class="memItemLeft" align="right" valign="top"><a id="af61499f0183e347cb580407d64b4c3cd"></a>
 <a class="el" href="classpx4__ros2_1_1ModeBase.html#a49de7d1d3872f1c7531abfe870483fb2">ModeID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpx4__ros2_1_1ModeBase_1_1Settings.html#af61499f0183e347cb580407d64b4c3cd">replace_internal_mode</a> {kModeIDInvalid}</td></tr>
 <tr class="memdesc:af61499f0183e347cb580407d64b4c3cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can be used to replace an fmu-internal mode. <br /></td></tr>
 <tr class="separator:af61499f0183e347cb580407d64b4c3cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0c8bbc8a1efa05df29166c0dfd21412"><td class="memItemLeft" align="right" valign="top"><a id="af0c8bbc8a1efa05df29166c0dfd21412"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpx4__ros2_1_1ModeBase_1_1Settings.html#af0c8bbc8a1efa05df29166c0dfd21412">prevent_arming</a> {false}</td></tr>
+<tr class="memdesc:af0c8bbc8a1efa05df29166c0dfd21412"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prevent arming while in this mode. <br /></td></tr>
+<tr class="separator:af0c8bbc8a1efa05df29166c0dfd21412"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>px4_ros2_cpp/include/px4_ros2/components/<a class="el" href="mode_8hpp_source.html">mode.hpp</a></li>

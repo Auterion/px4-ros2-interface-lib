@@ -20,9 +20,13 @@ var group__components =
     ] ],
     [ "ModeBase", "classpx4__ros2_1_1ModeBase.html", [
       [ "Settings", "structpx4__ros2_1_1ModeBase_1_1Settings.html", [
-        [ "Settings", "structpx4__ros2_1_1ModeBase_1_1Settings.html#abf69e6c1f30a817b0ae5de8046c69bdd", null ],
+        [ "Settings", "structpx4__ros2_1_1ModeBase_1_1Settings.html#ae075561b2af2478bca49d304dc2366dd", null ],
+        [ "activateEvenWhileDisarmed", "structpx4__ros2_1_1ModeBase_1_1Settings.html#abf43d3c448837eccc09b81bb835aa806", null ],
+        [ "preventArming", "structpx4__ros2_1_1ModeBase_1_1Settings.html#a25bcb309323f92d825cd4294fe8425df", null ],
+        [ "replaceInternalMode", "structpx4__ros2_1_1ModeBase_1_1Settings.html#aa8e9ede3794f288f43db258aee5a6826", null ],
         [ "activate_even_while_disarmed", "structpx4__ros2_1_1ModeBase_1_1Settings.html#ab9b70687e48871121d6e239e6c52c8f0", null ],
-        [ "name", "structpx4__ros2_1_1ModeBase_1_1Settings.html#a52d24121ecefb1aa62d4c18d3f37dc19", null ],
+        [ "name", "structpx4__ros2_1_1ModeBase_1_1Settings.html#ae27bdeb9ad5e831daa0cbc9fb0df1af2", null ],
+        [ "prevent_arming", "structpx4__ros2_1_1ModeBase_1_1Settings.html#af0c8bbc8a1efa05df29166c0dfd21412", null ],
         [ "replace_internal_mode", "structpx4__ros2_1_1ModeBase_1_1Settings.html#af61499f0183e347cb580407d64b4c3cd", null ]
       ] ],
       [ "ModeID", "classpx4__ros2_1_1ModeBase.html#a49de7d1d3872f1c7531abfe870483fb2", null ],
@@ -62,6 +66,7 @@ var group__components =
           [ "ActivateAlways", "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12a0da934c06c4ffb982ea2c2b7f5f1fa5b", null ],
           [ "ActivateImmediately", "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#ad2a971ced081b751758cc0060c950c12adf1e022bdf2028e2c6572e934c1b196a", null ]
         ] ],
+        [ "activate", "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#a57b67b74fb4e44494d191d92668eff53", null ],
         [ "activation", "structpx4__ros2_1_1ModeExecutorBase_1_1Settings.html#a688d6a05b3e1bf6130cc1ecec1e43b92", null ]
       ] ],
       [ "CompletedCallback", "classpx4__ros2_1_1ModeExecutorBase.html#a393bd12468b70d8b6c68c0accdbf5f2c", null ],
