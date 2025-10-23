@@ -8,6 +8,7 @@
  #include <px4_msgs/msg/vehicle_command.hpp>
  #include <px4_msgs/msg/vtol_vehicle_status.hpp>
  #include <px4_msgs/msg/vehicle_local_position.hpp>
+#include <px4_ros2/components/shared_subscription.hpp>
  #include <Eigen/Core>
 
  #include <px4_ros2/common/context.hpp>
@@ -82,7 +83,7 @@ private:
   rclcpp::Node & _node;
   rclcpp::Publisher<px4_msgs::msg::VehicleCommand>::SharedPtr _vehicle_command_pub;
   rclcpp::Subscription<px4_msgs::msg::VtolVehicleStatus>::SharedPtr _vtol_vehicle_status_sub;
-  rclcpp::Subscription<px4_msgs::msg::VehicleLocalPosition>::SharedPtr _vehicle_local_position_sub;
+  SharedSubscriptionCallbackInstance _vehicle_local_position_cb;
   rclcpp::Time _last_command_sent;
   rclcpp::Time _last_vtol_vehicle_status_received;
   rclcpp::Time _last_pitch_integrator_update{0, 0, _node.get_clock()->get_clock_type()};
