@@ -7,7 +7,7 @@
 #include "px4_ros2/components/message_compatibility_check.hpp"
 #include "px4_ros2/components/wait_for_fmu.hpp"
 #include "px4_ros2/utils/message_version.hpp"
-#include "shared_vehicle_status.hpp"
+#include <px4_msgs/msg/vehicle_status.hpp>
 
 #include "registration.hpp"
 
@@ -32,14 +32,16 @@ ModeBase::ModeBase(
   if (_settings.prevent_arming) {
     modeRequirements().prevent_arming = true;
   }
-  _vehicle_status_sub_token = std::make_unique<SharedVehicleStatusToken>(
-    SharedVehicleStatus::instance(node, topic_namespace_prefix).registerVehicleStatusUpdatedCallback(
-      [this](
-        const px4_msgs::msg::VehicleStatus::UniquePtr & msg) {
-        if (_registration->registered()) {
-          vehicleStatusUpdated(msg);
-        }
-      }));
+  // Use a globally shared vehicle status instance for consistent callback ordering when using multiple modes/executors
+  _vehicle_status_sub_cb = SharedSubscription<px4_msgs::msg::VehicleStatus>::create(
+    node, topic_namespace_prefix + "fmu/out/vehicle_status" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(),
+    [this](
+      const px4_msgs::msg::VehicleStatus::UniquePtr & msg) {
+      if (_registration->registered()) {
+        vehicleStatusUpdated(msg);
+      }
+    });
   _mode_completed_pub = node.create_publisher<px4_msgs::msg::ModeCompleted>(
     topic_namespace_prefix + "fmu/in/mode_completed" +
     px4_ros2::getMessageNameVersion<px4_msgs::msg::ModeCompleted>(),
@@ -163,7 +165,7 @@ void ModeBase::setSetpointUpdateRate(float rate_hz)
 
 void ModeBase::unsubscribeVehicleStatus()
 {
-  _vehicle_status_sub_token.reset();
+  _vehicle_status_sub_cb.reset();
 }
 
 void ModeBase::vehicleStatusUpdated(

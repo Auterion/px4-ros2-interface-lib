@@ -67,6 +67,7 @@ set(HEADER_FILES
         include/px4_ros2/components/mode_executor.hpp
         include/px4_ros2/components/node_with_mode.hpp
         include/px4_ros2/components/overrides.hpp
+        include/px4_ros2/components/shared_subscription.hpp
         include/px4_ros2/components/wait_for_fmu.hpp
         include/px4_ros2/control/peripheral_actuators.hpp
         include/px4_ros2/control/setpoint_types/direct_actuators.hpp
@@ -120,7 +121,6 @@ add_library(px4_ros2_cpp
         src/components/mode_executor.cpp
         src/components/overrides.cpp
         src/components/registration.cpp
-        src/components/shared_vehicle_status.cpp
         src/components/wait_for_fmu.cpp
         src/control/peripheral_actuators.cpp
         src/control/setpoint_types/direct_actuators.cpp
@@ -215,7 +215,7 @@ if(BUILD_TESTING)
             test/unit/main.cpp
             test/unit/mission_execution.cpp
             test/unit/modes.cpp
-            test/unit/shared_vehicle_status.cpp
+            test/unit/shared_subscription.cpp
             test/unit/utils/frame_conversion.cpp
             test/unit/utils/geodesic.cpp
             test/unit/utils/geometry.cpp

@@ -24,6 +24,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <px4_msgs/msg/vehicle_local_position.hpp>
 #include <px4_ros2/common/context.hpp>
+#include <px4_ros2/components/shared_subscription.hpp>
 
 namespace px4_ros2
 {
@@ -102,11 +103,11 @@ private:
    *
    * @param msg the VehicleLocalPosition message
   */
-  void vehicleLocalPositionCallback(px4_msgs::msg::VehicleLocalPosition::UniquePtr msg);
+  void vehicleLocalPositionCallback(const px4_msgs::msg::VehicleLocalPosition::UniquePtr & msg);
 
   rclcpp::Node & _node;
   std::unique_ptr<MapProjectionImpl> _map_projection_math;
-  rclcpp::Subscription<px4_msgs::msg::VehicleLocalPosition>::SharedPtr _vehicle_local_position_sub;
+  SharedSubscriptionCallbackInstance _vehicle_local_position_cb;
 };
 
 /**

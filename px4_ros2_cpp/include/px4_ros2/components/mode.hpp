@@ -16,10 +16,10 @@
 #include "manual_control_input.hpp"
 #include <px4_ros2/common/setpoint_base.hpp>
 #include <px4_ros2/common/context.hpp>
+#include <px4_ros2/components/shared_subscription.hpp>
 
 class Registration;
 struct RegistrationSettings;
-class SharedVehicleStatusToken;
 
 namespace px4_ros2
 {
@@ -218,7 +218,7 @@ private:
   rclcpp::Publisher<px4_msgs::msg::ModeCompleted>::SharedPtr _mode_completed_pub;
   rclcpp::Publisher<px4_msgs::msg::VehicleControlMode>::SharedPtr _config_control_setpoints_pub;
 
-  std::unique_ptr<SharedVehicleStatusToken> _vehicle_status_sub_token;
+  SharedSubscriptionCallbackInstance _vehicle_status_sub_cb;
 
   bool _is_active{false};       ///< Mode is currently selected
   bool _is_armed{false};       ///< Is vehicle armed?

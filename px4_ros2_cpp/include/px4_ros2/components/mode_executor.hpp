@@ -13,11 +13,11 @@
 #include <px4_msgs/msg/vehicle_command.hpp>
 #include <px4_msgs/msg/vehicle_command_ack.hpp>
 #include <px4_msgs/msg/mode_completed.hpp>
+#include <px4_ros2/components/shared_subscription.hpp>
 
 #include <functional>
 
 class Registration;
-class SharedVehicleStatusToken;
 
 namespace px4_ros2
 {
@@ -202,7 +202,7 @@ private:
 
   rclcpp::Publisher<px4_msgs::msg::VehicleCommand>::SharedPtr _vehicle_command_pub;
 
-  std::unique_ptr<SharedVehicleStatusToken> _vehicle_status_sub_token;
+  SharedSubscriptionCallbackInstance _vehicle_status_sub_cb;
 
   ScheduledMode _current_scheduled_mode;
   WaitForVehicleStatusCondition _current_wait_vehicle_status;
