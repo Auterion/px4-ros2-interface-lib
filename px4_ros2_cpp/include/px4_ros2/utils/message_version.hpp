@@ -38,7 +38,7 @@ struct HasMessageVersion<T, std::void_t<decltype(T::MESSAGE_VERSION)>>: std::tru
  *
  * @return `true` if the current RMW implementation is `rmw_zenoh_cpp`, `false` otherwise.
  */
-static bool isRmwZenoh()
+static inline bool isRmwZenoh()
 {
   const char * rmw_id = rmw_get_implementation_identifier();
   return std::string(rmw_id) == "rmw_zenoh_cpp";
