@@ -16,18 +16,20 @@ MapProjection::MapProjection(Context & context)
 : _node(context.node())
 {
   _map_projection_math = std::make_unique<MapProjectionImpl>();
-  _vehicle_local_position_sub = _node.create_subscription<px4_msgs::msg::VehicleLocalPosition>(
+  // Use a shared subscription instance as this is a higher-rate topic
+  _vehicle_local_position_cb = SharedSubscription<px4_msgs::msg::VehicleLocalPosition>::create(
+    _node,
     "fmu/out/vehicle_local_position" +
-    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLocalPosition>(), rclcpp::QoS(
-      1).best_effort(),
-    [this](px4_msgs::msg::VehicleLocalPosition::UniquePtr msg) {
-      vehicleLocalPositionCallback(std::move(msg));
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLocalPosition>(),
+    [this](const px4_msgs::msg::VehicleLocalPosition::UniquePtr & msg) {
+      vehicleLocalPositionCallback(msg);
     });
 }
 
 MapProjection::~MapProjection() = default;
 
-void MapProjection::vehicleLocalPositionCallback(px4_msgs::msg::VehicleLocalPosition::UniquePtr msg)
+void MapProjection::vehicleLocalPositionCallback(
+  const px4_msgs::msg::VehicleLocalPosition::UniquePtr & msg)
 {
   const uint64_t timestamp_cur = msg->ref_timestamp;
   const uint64_t timestamp_ref = _map_projection_math->getProjectionReferenceTimestamp();

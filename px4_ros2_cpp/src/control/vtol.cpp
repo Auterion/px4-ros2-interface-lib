@@ -47,13 +47,13 @@ VTOL::VTOL(Context & context, const VTOLConfig & config)
       }
     });
 
-  _vehicle_local_position_sub = _node.create_subscription<px4_msgs::msg::VehicleLocalPosition>(
+  // Use a shared subscription instance as this is a higher-rate topic
+  _vehicle_local_position_cb = SharedSubscription<px4_msgs::msg::VehicleLocalPosition>::create(
+    _node,
     context.topicNamespacePrefix() + "fmu/out/vehicle_local_position" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLocalPosition>(),
-    rclcpp::QoS(10).best_effort(),
-    [this](px4_msgs::msg::VehicleLocalPosition::UniquePtr msg) {
+    [this](const px4_msgs::msg::VehicleLocalPosition::UniquePtr & msg) {
       _vehicle_heading = msg->heading;
       _vehicle_acceleration_xy = {msg->ax, msg->ay};
-
     });
 
   _last_command_sent = _node.get_clock()->now();
@@ -167,8 +167,8 @@ float VTOL::computePitchSetpointDuringBacktransition(
 
   if (std::isnan(deceleration)) {
 
-    // If no local position samples were ever received by
-    // _vehicle_local_position_sub, the deceleration here is NaN. To guard
+    // If no local position samples were ever received by the
+    // vehicle local position, the deceleration here is NaN. To guard
     // against that, we return the pitch setpoint but don't update it in that
     // case.
 

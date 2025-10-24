@@ -7,7 +7,6 @@
 #include "px4_ros2/components/message_compatibility_check.hpp"
 #include "px4_ros2/components/wait_for_fmu.hpp"
 #include "px4_ros2/utils/message_version.hpp"
-#include "shared_vehicle_status.hpp"
 
 #include "registration.hpp"
 
@@ -34,16 +33,16 @@ ModeExecutorBase::ModeExecutorBase(
     throw Exception(
             "A mode executor cannot be used in combination with a mode that replaces an internal mode. See https://github.com/PX4/PX4-Autopilot/issues/25707");
   }
-  _vehicle_status_sub_token = std::make_unique<SharedVehicleStatusToken>(
-    SharedVehicleStatus::instance(
-      _node,
-      _topic_namespace_prefix).registerVehicleStatusUpdatedCallback(
-      [this](
-        const px4_msgs::msg::VehicleStatus::UniquePtr & msg) {
-        if (_registration->registered()) {
-          vehicleStatusUpdated(msg);
-        }
-      }));
+  // Use a globally shared vehicle status instance for consistent callback ordering when using multiple modes/executors
+  _vehicle_status_sub_cb = SharedSubscription<px4_msgs::msg::VehicleStatus>::create(
+    _node, _topic_namespace_prefix + "fmu/out/vehicle_status" +
+    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(),
+    [this](
+      const px4_msgs::msg::VehicleStatus::UniquePtr & msg) {
+      if (_registration->registered()) {
+        vehicleStatusUpdated(msg);
+      }
+    });
 
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
     _topic_namespace_prefix + "fmu/in/vehicle_command_mode_executor" +
@@ -428,8 +427,9 @@ bool ModeExecutorBase::deferFailsafesSync(bool enabled, int timeout_s)
     _prev_failsafe_defer_state == px4_msgs::msg::VehicleStatus::FAILSAFE_DEFER_STATE_DISABLED)
   {
     rclcpp::WaitSet wait_set;
-    const auto vehicle_status_sub =
-      SharedVehicleStatus::instance(_node, _topic_namespace_prefix).getSubscription();
+    const auto vehicle_status_sub = SharedSubscription<px4_msgs::msg::VehicleStatus>::instance(
+      _node, _topic_namespace_prefix + "fmu/out/vehicle_status" +
+      px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>()).getSubscription();
     wait_set.add_subscription(vehicle_status_sub);
 
     bool got_message = false;
