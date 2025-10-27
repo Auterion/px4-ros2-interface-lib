@@ -85,5 +85,6 @@ var annotated_dup =
       [ "LandDetected", "classpx4__ros2_1_1LandDetected.html", "classpx4__ros2_1_1LandDetected" ],
       [ "VehicleStatus", "classpx4__ros2_1_1VehicleStatus.html", "classpx4__ros2_1_1VehicleStatus" ],
       [ "VtolStatus", "classpx4__ros2_1_1VtolStatus.html", "classpx4__ros2_1_1VtolStatus" ]
-    ] ]
+    ] ],
+    [ "SharedSubscription", "classSharedSubscription.html", "classSharedSubscription" ]
 ];

@@ -26,6 +26,7 @@ var hierarchy =
       ] ]
     ] ],
     [ "std::enable_shared_from_this", null, [
+      [ "SharedSubscription< RosMessageType >", "classSharedSubscription.html", null ],
       [ "px4_ros2::SetpointBase", "classpx4__ros2_1_1SetpointBase.html", [
         [ "px4_ros2::AttitudeSetpointType", "classpx4__ros2_1_1AttitudeSetpointType.html", null ],
         [ "px4_ros2::DirectActuatorsSetpointType", "classpx4__ros2_1_1DirectActuatorsSetpointType.html", null ],

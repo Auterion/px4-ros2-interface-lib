@@ -1,5 +1,12 @@
 var NAVTREEINDEX3 =
 {
+"structpx4__ros2_1_1TrajectorySetpoint.html#a9a4ec69bfa4ac111dc81844c6ba1154d":[4,0,0,29,8],
+"structpx4__ros2_1_1TrajectorySetpoint.html#aaa9c183a487436fed33f5acae51e9bba":[4,0,0,29,19],
+"structpx4__ros2_1_1TrajectorySetpoint.html#aab47291bb40e84dd0b0e70cb0cc5ba5b":[4,0,0,29,1],
+"structpx4__ros2_1_1TrajectorySetpoint.html#aaff6095950e69ba4954a1ff0195b483a":[4,0,0,29,23],
+"structpx4__ros2_1_1TrajectorySetpoint.html#ab52b6c30f319eef934bcb80cebe197df":[4,0,0,29,4],
+"structpx4__ros2_1_1TrajectorySetpoint.html#ab9a26aac9d7717bdd84afc9972b54364":[4,0,0,29,9],
+"structpx4__ros2_1_1TrajectorySetpoint.html#abeee54d880891b65dfbd2451b3a935f9":[4,0,0,29,27],
 "structpx4__ros2_1_1TrajectorySetpoint.html#ac395022e29e4bc3470c7625a57d47ed7":[4,0,0,29,22],
 "structpx4__ros2_1_1TrajectorySetpoint.html#acf0b871f5170c598951998fdd0b2ed7a":[4,0,0,29,14],
 "structpx4__ros2_1_1TrajectorySetpoint.html#adcc21fbc721daa8bc7072cf14169cddb":[4,0,0,29,12],
@@ -39,6 +46,6 @@ var NAVTREEINDEX3 =
 "visit_8hpp_source.html":[5,0,0,0,0,6,5],
 "vtol_8hpp_source.html":[5,0,0,0,0,2,2],
 "vtol__status_8hpp_source.html":[5,0,0,0,0,7,4],
-"wait__for__fmu_8hpp_source.html":[5,0,0,0,0,1,8],
+"wait__for__fmu_8hpp_source.html":[5,0,0,0,0,1,9],
 "waypoint__trajectory__executor_8hpp_source.html":[5,0,0,0,0,3,1,0,0]
 };

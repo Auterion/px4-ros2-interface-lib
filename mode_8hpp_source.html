@@ -105,10 +105,10 @@ $(document).ready(function(){initNavTree('mode_8hpp_source.html',''); initResiza
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;manual_control_input.hpp&quot;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;px4_ros2/common/setpoint_base.hpp&gt;</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;px4_ros2/common/context.hpp&gt;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">class </span>Registration;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">struct </span>RegistrationSettings;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">class </span>SharedVehicleStatusToken;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;px4_ros2/components/shared_subscription.hpp&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">class </span>Registration;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">struct </span>RegistrationSettings;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span>px4_ros2</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
@@ -272,7 +272,7 @@ $(document).ready(function(){initNavTree('mode_8hpp_source.html',''); initResiza
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::ModeCompleted&gt;::SharedPtr _mode_completed_pub;</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::VehicleControlMode&gt;::SharedPtr _config_control_setpoints_pub;</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  std::unique_ptr&lt;SharedVehicleStatusToken&gt; _vehicle_status_sub_token;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  SharedSubscriptionCallbackInstance _vehicle_status_sub_cb;</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  <span class="keywordtype">bool</span> _is_active{<span class="keyword">false</span>};       </div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  <span class="keywordtype">bool</span> _is_armed{<span class="keyword">false</span>};       </div>
