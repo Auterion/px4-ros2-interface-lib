@@ -25,6 +25,7 @@ struct RegistrationSettings
   bool enable_replace_internal_mode{false};
   px4_ros2::ModeBase::ModeID replace_internal_mode{};
   bool activate_mode_immediately{false};
+  bool user_selectable{true};
 };
 
 class Registration
