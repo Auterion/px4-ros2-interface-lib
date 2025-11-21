@@ -65,6 +65,7 @@ bool Registration::doRegister(const RegistrationSettings & settings)
   request.enable_replace_internal_mode = settings.enable_replace_internal_mode;
   request.replace_internal_mode = settings.replace_internal_mode;
   request.activate_mode_immediately = settings.activate_mode_immediately;
+  request.not_user_selectable = !settings.user_selectable;
   request.px4_ros2_api_version = kLatestPX4ROS2ApiVersion;
 
   std::random_device rd;
