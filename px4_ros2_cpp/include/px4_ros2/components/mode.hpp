@@ -98,6 +98,7 @@ public:
     bool activate_even_while_disarmed{false};             ///< If true, the mode is also activated while disarmed if selected
     ModeID replace_internal_mode{kModeIDInvalid};             ///< Can be used to replace an fmu-internal mode
     bool prevent_arming{false}; ///< Prevent arming while in this mode
+    bool user_selectable{true}; ///< If true, the mode is selectable by the user
 
     Settings & activateEvenWhileDisarmed(bool activate)
     {
@@ -112,6 +113,11 @@ public:
     Settings & preventArming(bool prevent)
     {
       prevent_arming = prevent;
+      return *this;
+    }
+    Settings & userSelectable(bool selectable)
+    {
+      user_selectable = selectable;
       return *this;
     }
   };
