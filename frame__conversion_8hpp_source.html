@@ -104,9 +104,9 @@ $(document).ready(function(){initNavTree('frame__conversion_8hpp_source.html',''
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keyword">static</span> constexpr Type kHalfSqrt2 = <span class="keyword">static_cast&lt;</span>Type<span class="keyword">&gt;</span>(0.7071067811865476);</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; q_ned_to_enu {0.0, kHalfSqrt2, kHalfSqrt2, 0.0};  <span class="comment">// 180 deg along X, -90 deg along Z (intrinsic)</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; q_yaw_minus_pi_2{kHalfSqrt2, 0.0, 0.0, -kHalfSqrt2};  <span class="comment">// -90 deg along Z</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; q_flu_to_frd{0.0, 1.0, 0.0, 0.0};  <span class="comment">// 180 deg along X</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordflow">return</span> q_ned_to_enu * q_ned * q_yaw_minus_pi_2 * q_ned_to_enu.inverse();</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordflow">return</span> q_ned_to_enu * q_ned * q_flu_to_frd;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type&gt;</div>
@@ -114,9 +114,9 @@ $(document).ready(function(){initNavTree('frame__conversion_8hpp_source.html',''
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;{</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keyword">static</span> constexpr Type kHalfSqrt2 = <span class="keyword">static_cast&lt;</span>Type<span class="keyword">&gt;</span>(0.7071067811865476);</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; q_enu_to_ned {0.0, kHalfSqrt2, kHalfSqrt2, 0.0};  <span class="comment">// 180 deg along X, -90 deg along Z (intrinsic)</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; q_yaw_minus_pi_2{kHalfSqrt2, 0.0, 0.0, -kHalfSqrt2};  <span class="comment">// -90 deg along Z</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; q_frd_to_flu{0.0, 1.0, 0.0, 0.0};  <span class="comment">// 180 deg along X</span></div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">return</span> q_enu_to_ned * q_enu * q_yaw_minus_pi_2 * q_enu_to_ned.inverse();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">return</span> q_enu_to_ned * q_enu * q_frd_to_flu;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type&gt;</div>
