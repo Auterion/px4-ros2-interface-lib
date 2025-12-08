@@ -116,18 +116,19 @@ $(document).ready(function(){initNavTree('overrides_8hpp_source.html',''); initR
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1ModeBase.html">ModeBase</a>;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classpx4__ros2_1_1ModeExecutorBase.html">ModeExecutorBase</a>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">void</span> deferFailsafes(<span class="keywordtype">bool</span> enabled, <span class="keywordtype">int</span> timeout_s = 0);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordtype">void</span> setup(uint8_t type, uint8_t <span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  rclcpp::Node &amp; _node;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  px4_msgs::msg::ConfigOverrides _current_overrides{};</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::ConfigOverrides&gt;::SharedPtr _config_overrides_pub;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordtype">bool</span> _is_setup{<span class="keyword">false</span>};</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordtype">bool</span> _require_update_after_setup{<span class="keyword">false</span>};</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;};</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;} <span class="comment">// namespace px4_ros2</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">void</span> controlAutoSetHome(<span class="keywordtype">bool</span> enabled);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordtype">void</span> deferFailsafes(<span class="keywordtype">bool</span> enabled, <span class="keywordtype">int</span> timeout_s = 0);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">void</span> setup(uint8_t type, uint8_t <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  rclcpp::Node &amp; _node;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  px4_msgs::msg::ConfigOverrides _current_overrides{};</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  rclcpp::Publisher&lt;px4_msgs::msg::ConfigOverrides&gt;::SharedPtr _config_overrides_pub;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordtype">bool</span> _is_setup{<span class="keyword">false</span>};</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordtype">bool</span> _require_update_after_setup{<span class="keyword">false</span>};</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;};</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;} <span class="comment">// namespace px4_ros2</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1ConfigOverrides_html"><div class="ttname"><a href="classpx4__ros2_1_1ConfigOverrides.html">px4_ros2::ConfigOverrides</a></div><div class="ttdef"><b>Definition:</b> overrides.hpp:19</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1ModeBase_html"><div class="ttname"><a href="classpx4__ros2_1_1ModeBase.html">px4_ros2::ModeBase</a></div><div class="ttdoc">Base class for a mode.</div><div class="ttdef"><b>Definition:</b> mode.hpp:71</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1ModeExecutorBase_html"><div class="ttname"><a href="classpx4__ros2_1_1ModeExecutorBase.html">px4_ros2::ModeExecutorBase</a></div><div class="ttdoc">Base class for a mode executor.</div><div class="ttdef"><b>Definition:</b> mode_executor.hpp:32</div></div>

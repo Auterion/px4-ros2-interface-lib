@@ -24,10 +24,12 @@ var group__components =
         [ "activateEvenWhileDisarmed", "structpx4__ros2_1_1ModeBase_1_1Settings.html#abf43d3c448837eccc09b81bb835aa806", null ],
         [ "preventArming", "structpx4__ros2_1_1ModeBase_1_1Settings.html#a25bcb309323f92d825cd4294fe8425df", null ],
         [ "replaceInternalMode", "structpx4__ros2_1_1ModeBase_1_1Settings.html#aa8e9ede3794f288f43db258aee5a6826", null ],
+        [ "userSelectable", "structpx4__ros2_1_1ModeBase_1_1Settings.html#aed256baf46e6f06a28eb47824c30a16b", null ],
         [ "activate_even_while_disarmed", "structpx4__ros2_1_1ModeBase_1_1Settings.html#ab9b70687e48871121d6e239e6c52c8f0", null ],
         [ "name", "structpx4__ros2_1_1ModeBase_1_1Settings.html#ae27bdeb9ad5e831daa0cbc9fb0df1af2", null ],
         [ "prevent_arming", "structpx4__ros2_1_1ModeBase_1_1Settings.html#af0c8bbc8a1efa05df29166c0dfd21412", null ],
-        [ "replace_internal_mode", "structpx4__ros2_1_1ModeBase_1_1Settings.html#af61499f0183e347cb580407d64b4c3cd", null ]
+        [ "replace_internal_mode", "structpx4__ros2_1_1ModeBase_1_1Settings.html#af61499f0183e347cb580407d64b4c3cd", null ],
+        [ "user_selectable", "structpx4__ros2_1_1ModeBase_1_1Settings.html#a60cf6c9cfa550c8bb8129857ff86d3e7", null ]
       ] ],
       [ "ModeID", "classpx4__ros2_1_1ModeBase.html#a49de7d1d3872f1c7531abfe870483fb2", null ],
       [ "ModeBase", "classpx4__ros2_1_1ModeBase.html#a33f25f7c337c4b50350a6fa11723099c", null ],
@@ -79,6 +81,7 @@ var group__components =
       [ "~ModeExecutorBase", "classpx4__ros2_1_1ModeExecutorBase.html#a7071ecb14a36b42bc6c237cbb72eff8a", null ],
       [ "arm", "classpx4__ros2_1_1ModeExecutorBase.html#a21cbd9fb9a8f87e82d784e0e5d25e486", null ],
       [ "configOverrides", "classpx4__ros2_1_1ModeExecutorBase.html#a5cab0b36d43246cae20d937ae1545680", null ],
+      [ "controlAutoSetHome", "classpx4__ros2_1_1ModeExecutorBase.html#adae44672a835a6e30cd3061cfa3626e5", null ],
       [ "deferFailsafesSync", "classpx4__ros2_1_1ModeExecutorBase.html#a16ec5be6ebe70e1d0625bf696c3e29ae", null ],
       [ "disarm", "classpx4__ros2_1_1ModeExecutorBase.html#a2d54a114c83b802c7aeb1e77d7be20d3", null ],
       [ "doRegister", "classpx4__ros2_1_1ModeExecutorBase.html#a297207bf9068f26035d6a73c5a63a0e4", null ],

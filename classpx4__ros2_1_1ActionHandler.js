@@ -2,6 +2,7 @@ var classpx4__ros2_1_1ActionHandler =
 [
     [ "ActionHandler", "classpx4__ros2_1_1ActionHandler.html#ae3c484af67bd372e0a55114b42b90688", null ],
     [ "clearTrajectoryOptions", "classpx4__ros2_1_1ActionHandler.html#a5d69473ae62a7720cd008b49d9164110", null ],
+    [ "controlAutoSetHome", "classpx4__ros2_1_1ActionHandler.html#a67065154e3b718852192672e1ca318ea", null ],
     [ "currentActionSupportsResumeFromLanded", "classpx4__ros2_1_1ActionHandler.html#aed32efe3e293e0d69e5aa7a2ebdefb5d", null ],
     [ "deferFailsafes", "classpx4__ros2_1_1ActionHandler.html#a58268d2b42766c3d44108ef527b1a969", null ],
     [ "getCurrentMissionIndex", "classpx4__ros2_1_1ActionHandler.html#a1a964d968f160427f7e0a26764721c69", null ],

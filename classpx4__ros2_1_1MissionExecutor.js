@@ -6,6 +6,7 @@ var classpx4__ros2_1_1MissionExecutor =
     [ "MissionExecutor", "classpx4__ros2_1_1MissionExecutor.html#ac4fdbbe77c4e7d5b2d641bb2d59e5b93", null ],
     [ "~MissionExecutor", "classpx4__ros2_1_1MissionExecutor.html#a55183e730fc8934d6ac79611dd153bf4", null ],
     [ "abort", "classpx4__ros2_1_1MissionExecutor.html#a135105c92a6a5b870f523ac1a2233a90", null ],
+    [ "controlAutoSetHome", "classpx4__ros2_1_1MissionExecutor.html#aa985c5adf6484b7fe8c19c1aa4ecb490", null ],
     [ "deferFailsafes", "classpx4__ros2_1_1MissionExecutor.html#a5fc79e799b09642fcd7c6cb87e782d3f", null ],
     [ "doRegister", "classpx4__ros2_1_1MissionExecutor.html#a23805a6cea5be253d48da6eadfb5af13", null ],
     [ "doRegisterImpl", "classpx4__ros2_1_1MissionExecutor.html#a330ff98045f05c7f3d58982f2e46e835", null ],

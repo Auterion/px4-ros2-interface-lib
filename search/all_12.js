@@ -6,5 +6,6 @@ var searchData=
   ['updateservos_213',['updateServos',['../classpx4__ros2_1_1DirectActuatorsSetpointType.html#a61a798f80721433dbafd15e629eea448',1,'px4_ros2::DirectActuatorsSetpointType']]],
   ['updatewithaltitude_214',['updateWithAltitude',['../classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#a72a69fd4ac26d3975ab108423bc8294e',1,'px4_ros2::FwLateralLongitudinalSetpointType']]],
   ['updatewithheightrate_215',['updateWithHeightRate',['../classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#afaeffb29bf867a1f245cc87f7452aa06',1,'px4_ros2::FwLateralLongitudinalSetpointType']]],
-  ['utils_216',['Utils',['../group__utils.html',1,'']]]
+  ['user_5fselectable_216',['user_selectable',['../structpx4__ros2_1_1ModeBase_1_1Settings.html#a60cf6c9cfa550c8bb8129857ff86d3e7',1,'px4_ros2::ModeBase::Settings']]],
+  ['utils_217',['Utils',['../group__utils.html',1,'']]]
 ];

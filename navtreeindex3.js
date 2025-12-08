@@ -1,5 +1,10 @@
 var NAVTREEINDEX3 =
 {
+"structpx4__ros2_1_1TrajectorySetpoint.html#a79a0418b637a1f30975dd821a48a6e51":[4,0,0,29,2],
+"structpx4__ros2_1_1TrajectorySetpoint.html#a7fa7898dc4ef5ec4c6cee6a672f8ee30":[4,0,0,29,16],
+"structpx4__ros2_1_1TrajectorySetpoint.html#a8060e682605e4ab2462c8ed20411c9b4":[4,0,0,29,26],
+"structpx4__ros2_1_1TrajectorySetpoint.html#a863ef47e9a91afe1dcab18b93b5c2894":[4,0,0,29,13],
+"structpx4__ros2_1_1TrajectorySetpoint.html#a99e279251bd56111f2864929c15fd627":[4,0,0,29,25],
 "structpx4__ros2_1_1TrajectorySetpoint.html#a9a4ec69bfa4ac111dc81844c6ba1154d":[4,0,0,29,8],
 "structpx4__ros2_1_1TrajectorySetpoint.html#aaa9c183a487436fed33f5acae51e9bba":[4,0,0,29,19],
 "structpx4__ros2_1_1TrajectorySetpoint.html#aab47291bb40e84dd0b0e70cb0cc5ba5b":[4,0,0,29,1],

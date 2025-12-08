@@ -11,6 +11,7 @@ var classpx4__ros2_1_1ModeExecutorBase =
     [ "~ModeExecutorBase", "classpx4__ros2_1_1ModeExecutorBase.html#a7071ecb14a36b42bc6c237cbb72eff8a", null ],
     [ "arm", "classpx4__ros2_1_1ModeExecutorBase.html#a21cbd9fb9a8f87e82d784e0e5d25e486", null ],
     [ "configOverrides", "classpx4__ros2_1_1ModeExecutorBase.html#a5cab0b36d43246cae20d937ae1545680", null ],
+    [ "controlAutoSetHome", "classpx4__ros2_1_1ModeExecutorBase.html#adae44672a835a6e30cd3061cfa3626e5", null ],
     [ "deferFailsafesSync", "classpx4__ros2_1_1ModeExecutorBase.html#a16ec5be6ebe70e1d0625bf696c3e29ae", null ],
     [ "disarm", "classpx4__ros2_1_1ModeExecutorBase.html#a2d54a114c83b802c7aeb1e77d7be20d3", null ],
     [ "doRegister", "classpx4__ros2_1_1ModeExecutorBase.html#a297207bf9068f26035d6a73c5a63a0e4", null ],
