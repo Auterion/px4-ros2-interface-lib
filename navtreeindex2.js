@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"functions_func.html":[4,3,1],
 "functions_type.html":[4,3,3],
 "functions_vars.html":[4,3,2],
 "geodesic_8hpp_source.html":[5,0,0,0,0,6,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "structpx4__ros2_1_1TrajectorySetpoint.html#a2051060f7520d66c4e592e4f70abd86d":[4,0,0,29,21],
 "structpx4__ros2_1_1TrajectorySetpoint.html#a49811a49a9a6d92bd12218460a162728":[4,0,0,29,20],
 "structpx4__ros2_1_1TrajectorySetpoint.html#a652622f7d411a7b8b2426d26a2f7ef26":[4,0,0,29,10],
-"structpx4__ros2_1_1TrajectorySetpoint.html#a6d4b03e446e3cb4128529eec842f8395":[4,0,0,29,5],
-"structpx4__ros2_1_1TrajectorySetpoint.html#a6ddd6af0d030a4531bedd76d4aad5f4d":[4,0,0,29,0]
+"structpx4__ros2_1_1TrajectorySetpoint.html#a6d4b03e446e3cb4128529eec842f8395":[4,0,0,29,5]
 };

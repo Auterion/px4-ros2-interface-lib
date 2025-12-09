@@ -101,6 +101,7 @@ var group__mission =
       [ "onFailsafeDeferred", "classpx4__ros2_1_1ActionHandler.html#a8c8738f132464c76623ef635bea4b357", null ],
       [ "runAction", "classpx4__ros2_1_1ActionHandler.html#a1cd8bf3ca28e7f229307c367ea1bc8f4", null ],
       [ "runMode", "classpx4__ros2_1_1ActionHandler.html#af23b5695bb2433a932736a15bf356c2f", null ],
+      [ "runModeTakeoff", "classpx4__ros2_1_1ActionHandler.html#a96cb4d2a246b77d417329f67f4cc1f4f", null ],
       [ "runTrajectory", "classpx4__ros2_1_1ActionHandler.html#ae4af2b95c31dae92b0dca2b2abafbbf3", null ],
       [ "setCurrentMissionIndex", "classpx4__ros2_1_1ActionHandler.html#af12d18ba756be7733f3b5b008158f4fb", null ],
       [ "setTrajectoryOptions", "classpx4__ros2_1_1ActionHandler.html#a10e9095bd8ae33c5e8f906150ed43476", null ],
