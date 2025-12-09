@@ -696,15 +696,27 @@ TEST_F(MissionExecutionTester, resumeFromLandedInRtl)
   bool should_interrupt = true;
   bool wait_for_deactivation = false;
   int num_run_calls{0};
+  MissionExecutorTest * mission_executor_test{nullptr};
   const auto on_action_run = [&](const px4_ros2::ActionArguments & arguments)
     {
       if (should_interrupt) {
         // When the action is first activated, switch to position control, which deactivates the mission execution.
         // Afterwards, switch back to the mission to finish it.
+
+        // Wait for the landed state update before continuing to avoid race conditions
+        EXPECT_TRUE(mission_executor_test);
+        if (mission_executor_test) {
+          mission_executor_test->landDetected()->onUpdate(
+            [&](const px4_msgs::msg::VehicleLandDetected & landed)
+            {
+              if (landed.landed) {
+                fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
+                should_interrupt = false;
+                wait_for_deactivation = true;
+              }
+            });
+        }
         fake_autopilot->setLanded(true);
-        fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
-        should_interrupt = false;
-        wait_for_deactivation = true;
         return false;
       }
       return true;
@@ -718,6 +730,7 @@ TEST_F(MissionExecutionTester, resumeFromLandedInRtl)
       supports_resume_from_landed, action_name)
     .withTrajectoryExecutor<TrajectoryExecutorTest>(),
     *node, fake_autopilot);
+  mission_executor_test = &mission_executor;
   ASSERT_TRUE(mission_executor.doRegister());
   mission_executor.setMission(mission);
 
@@ -774,11 +787,7 @@ Mode executor 'my mission' deactivated (1)
 Mode 'my mission' deactivated
 FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
-Setting current mission item to 4
-Running action 'onResume'
-Resume: skipping action rtl
 Setting current mission item to 0
-onResume: index changed, not restoring actions
 Running action 'takeoff'
 Running takeoff mode with altitude: nan, heading: nan
 FakeAutopilot: setting mode (id=17)
