@@ -143,6 +143,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onFailsafeDeferred</b
 <tr class="memitem:af33eb40abed1e0f1c3d09f91d1588895"><td class="memItemLeft" align="right" valign="top"><a id="af33eb40abed1e0f1c3d09f91d1588895"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>onReadynessUpdate</b> (const std::function&lt; void(bool ready, const std::vector&lt; std::string &gt; &amp;errors)&gt; &amp;callback)</td></tr>
 <tr class="separator:af33eb40abed1e0f1c3d09f91d1588895"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a580f2076b449af00b769a9025bcb8b9d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1MissionExecutor.html#a580f2076b449af00b769a9025bcb8b9d">onActivityInfoChange</a> (const std::function&lt; void(const std::optional&lt; std::string &gt; &amp;)&gt; &amp;callback)</td></tr>
+<tr class="memdesc:a580f2076b449af00b769a9025bcb8b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a callback to be invoked when the activity information changes. This callback provides a way to react to updates in the current activity info.  <a href="classpx4__ros2_1_1MissionExecutor.html#a580f2076b449af00b769a9025bcb8b9d">More...</a><br /></td></tr>
+<tr class="separator:a580f2076b449af00b769a9025bcb8b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4762806daf87fa93231f7651470ae53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1MissionExecutor.html#ac4762806daf87fa93231f7651470ae53">setActivityInfo</a> (const std::optional&lt; std::string &gt; &amp;activity_info)</td></tr>
+<tr class="memdesc:ac4762806daf87fa93231f7651470ae53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a string with extra information about the current activity. This provides more specific context than the generic navigation state from PX4. For example, while the navigation state might report "mission," this string can specify "takeoff," "landing," or "surveying." The string should be concise (around 30 characters) to be easily digestible.  <a href="classpx4__ros2_1_1MissionExecutor.html#ac4762806daf87fa93231f7651470ae53">More...</a><br /></td></tr>
+<tr class="separator:ac4762806daf87fa93231f7651470ae53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5fc79e799b09642fcd7c6cb87e782d3f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1MissionExecutor.html#a5fc79e799b09642fcd7c6cb87e782d3f">deferFailsafes</a> (bool enabled, int timeout_s=0)</td></tr>
 <tr class="separator:a5fc79e799b09642fcd7c6cb87e782d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa985c5adf6484b7fe8c19c1aa4ecb490"><td class="memItemLeft" align="right" valign="top"><a id="aa985c5adf6484b7fe8c19c1aa4ecb490"></a>
@@ -242,6 +248,40 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ActionStateKeeper</b
 
 </div>
 </div>
+<a id="a580f2076b449af00b769a9025bcb8b9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a580f2076b449af00b769a9025bcb8b9d">&#9670;&nbsp;</a></span>onActivityInfoChange()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void px4_ros2::MissionExecutor::onActivityInfoChange </td>
+          <td>(</td>
+          <td class="paramtype">const std::function&lt; void(const std::optional&lt; std::string &gt; &amp;)&gt; &amp;&#160;</td>
+          <td class="paramname"><em>callback</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Registers a callback to be invoked when the activity information changes. This callback provides a way to react to updates in the current activity info. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">callback</td><td>The function to call with the new optional activity info string. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ab593e7317e3d29e8be5a0fec5a85f0ec"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab593e7317e3d29e8be5a0fec5a85f0ec">&#9670;&nbsp;</a></span>onProgressUpdate()</h2>
 
@@ -266,6 +306,32 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ActionStateKeeper</b
 </table>
 </div><div class="memdoc">
 <p>Get notified when the current mission item changes. This is the index into the current mission items that is currently being executed (i.e. if it is a waypoint, the current target waypoint) </p>
+
+</div>
+</div>
+<a id="ac4762806daf87fa93231f7651470ae53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4762806daf87fa93231f7651470ae53">&#9670;&nbsp;</a></span>setActivityInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void px4_ros2::MissionExecutor::setActivityInfo </td>
+          <td>(</td>
+          <td class="paramtype">const std::optional&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>activity_info</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets a string with extra information about the current activity. This provides more specific context than the generic navigation state from PX4. For example, while the navigation state might report "mission," this string can specify "takeoff," "landing," or "surveying." The string should be concise (around 30 characters) to be easily digestible. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">activity_info</td><td>An optional string containing additional information about the current action. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

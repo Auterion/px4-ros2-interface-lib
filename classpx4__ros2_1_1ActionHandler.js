@@ -1,6 +1,7 @@
 var classpx4__ros2_1_1ActionHandler =
 [
     [ "ActionHandler", "classpx4__ros2_1_1ActionHandler.html#ae3c484af67bd372e0a55114b42b90688", null ],
+    [ "clearActivityInfo", "classpx4__ros2_1_1ActionHandler.html#a4423ea07c036edffe911d13acd017569", null ],
     [ "clearTrajectoryOptions", "classpx4__ros2_1_1ActionHandler.html#a5d69473ae62a7720cd008b49d9164110", null ],
     [ "controlAutoSetHome", "classpx4__ros2_1_1ActionHandler.html#a67065154e3b718852192672e1ca318ea", null ],
     [ "currentActionSupportsResumeFromLanded", "classpx4__ros2_1_1ActionHandler.html#aed32efe3e293e0d69e5aa7a2ebdefb5d", null ],
@@ -14,6 +15,7 @@ var classpx4__ros2_1_1ActionHandler =
     [ "runMode", "classpx4__ros2_1_1ActionHandler.html#af23b5695bb2433a932736a15bf356c2f", null ],
     [ "runModeTakeoff", "classpx4__ros2_1_1ActionHandler.html#a96cb4d2a246b77d417329f67f4cc1f4f", null ],
     [ "runTrajectory", "classpx4__ros2_1_1ActionHandler.html#ae4af2b95c31dae92b0dca2b2abafbbf3", null ],
+    [ "setActvityInfo", "classpx4__ros2_1_1ActionHandler.html#a2bb9ff526c9a87c692426851e7647bf0", null ],
     [ "setCurrentMissionIndex", "classpx4__ros2_1_1ActionHandler.html#af12d18ba756be7733f3b5b008158f4fb", null ],
     [ "setTrajectoryOptions", "classpx4__ros2_1_1ActionHandler.html#a10e9095bd8ae33c5e8f906150ed43476", null ],
     [ "storeState", "classpx4__ros2_1_1ActionHandler.html#adbf3b1e5ceebcddf918dbdf95cf16166", null ],

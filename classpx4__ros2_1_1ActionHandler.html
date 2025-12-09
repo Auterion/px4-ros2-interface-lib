@@ -125,6 +125,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a10e9095bd8ae33c5e8f906150ed43476"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1ActionHandler.html#a10e9095bd8ae33c5e8f906150ed43476">setTrajectoryOptions</a> (const <a class="el" href="structpx4__ros2_1_1TrajectoryOptions.html">TrajectoryOptions</a> &amp;options)</td></tr>
 <tr class="memdesc:a10e9095bd8ae33c5e8f906150ed43476"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override the trajectory config options.  <a href="classpx4__ros2_1_1ActionHandler.html#a10e9095bd8ae33c5e8f906150ed43476">More...</a><br /></td></tr>
 <tr class="separator:a10e9095bd8ae33c5e8f906150ed43476"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bb9ff526c9a87c692426851e7647bf0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1ActionHandler.html#a2bb9ff526c9a87c692426851e7647bf0">setActvityInfo</a> (const std::string &amp;activity_info)</td></tr>
+<tr class="memdesc:a2bb9ff526c9a87c692426851e7647bf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the activity info for the mission executor. This method forwards the provided activity string to the underlying mission executor, making it externally accessible. This string provides a concise description of the current action.  <a href="classpx4__ros2_1_1ActionHandler.html#a2bb9ff526c9a87c692426851e7647bf0">More...</a><br /></td></tr>
+<tr class="separator:a2bb9ff526c9a87c692426851e7647bf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4423ea07c036edffe911d13acd017569"><td class="memItemLeft" align="right" valign="top"><a id="a4423ea07c036edffe911d13acd017569"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1ActionHandler.html#a4423ea07c036edffe911d13acd017569">clearActivityInfo</a> ()</td></tr>
+<tr class="memdesc:a4423ea07c036edffe911d13acd017569"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the activity information. This method sets the activity info of the mission executor to <code>std::nullopt</code>. It gets called when we switch to the next waypoint, mission deactivated or aborted . <br /></td></tr>
+<tr class="separator:a4423ea07c036edffe911d13acd017569"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a964d968f160427f7e0a26764721c69"><td class="memItemLeft" align="right" valign="top"><a id="a1a964d968f160427f7e0a26764721c69"></a>
 std::optional&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getCurrentMissionIndex</b> () const</td></tr>
 <tr class="separator:a1a964d968f160427f7e0a26764721c69"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -318,6 +325,40 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>MissionExecutor</b><
     <tr><td class="paramname">heading</td><td>optional heading [rad] from North, set to NAN to use the current heading </td></tr>
     <tr><td class="paramname">on_completed</td><td>callback to execute when the takeoff is completed </td></tr>
     <tr><td class="paramname">on_failure</td><td>optional callback to execute when the takeoff fails (if not set, abort is called instead) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2bb9ff526c9a87c692426851e7647bf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bb9ff526c9a87c692426851e7647bf0">&#9670;&nbsp;</a></span>setActvityInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void px4_ros2::ActionHandler::setActvityInfo </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>activity_info</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the activity info for the mission executor. This method forwards the provided activity string to the underlying mission executor, making it externally accessible. This string provides a concise description of the current action. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">activity_info</td><td>The string describing the current action. </td></tr>
   </table>
   </dd>
 </dl>
