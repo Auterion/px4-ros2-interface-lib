@@ -25,6 +25,7 @@ repos:
       - id: check-symlinks
       - id: check-xml
       - id: check-yaml
+        args: [--allow-multiple-documents]
       - id: debug-statements
       - id: mixed-line-ending
       - id: trailing-whitespace
@@ -39,15 +40,10 @@ repos:
       -   id: flake8
 
   # CPP hooks
-  - repo: local
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: 'v21.1.5'
     hooks:
-      - id: ament_uncrustify
-        name: ament_uncrustify
-        description: Format files with uncrustify.
-        entry: ament_uncrustify
-        language: system
-        files: \.(c|cc|cxx|cpp|frag|glsl|h|hpp|hxx|ih|ispc|ipp|java|js|m|proto|vert)$
-        args: ["--reformat"]
+      - id: clang-format
 
   # cmake hooks
   - repo: local
