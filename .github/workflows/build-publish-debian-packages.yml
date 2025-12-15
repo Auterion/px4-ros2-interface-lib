@@ -6,6 +6,11 @@ on:
   pull_request:
     branches:
       - '*'
+    paths:
+      # Only build the package when the px4_msgs version is updated, as the
+      # configured px4_msgs package is typically older, which makes the build
+      # fail for most PRs.
+      - 'px4_ros2_cpp/rosdep-*.yaml'
 
 jobs:
   build:
