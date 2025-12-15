@@ -1,22 +1,24 @@
 /****************************************************************************
-* Copyright (c) 2024 PX4 Development Team.
+ * Copyright (c) 2024 PX4 Development Team.
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
+
+#include "mission_execution.hpp"
+
+#include <algorithm>
+#include <cmath>
+#include <fstream>
+#include <px4_ros2/mission/actions/action.hpp>
+#include <px4_ros2/third_party/nlohmann/json.hpp>
 
 #include "fake_registration.hpp"
 #include "utils/ros_log_capture.hpp"
 #include "utils/wait_for.hpp"
-#include "mission_execution.hpp"
-#include <cmath>
-#include <algorithm>
-#include <fstream>
-#include <px4_ros2/third_party/nlohmann/json.hpp>
-#include <px4_ros2/mission/actions/action.hpp>
 
 TEST(MissionExecutor, json)
 {
-  const auto * const json_str =
-    R"({
+  const auto* const json_str =
+      R"({
     "mission": {
         "defaults": {
             "horizontalVelocity": 12.5,
@@ -70,9 +72,8 @@ TEST(MissionExecutor, json)
 })";
   const auto mission = nlohmann::json::parse(json_str).get<px4_ros2::Mission>();
   EXPECT_FALSE(mission.checksum().empty());
-  EXPECT_TRUE(
-    fabsf(
-      mission.defaults().trajectory_options.horizontal_velocity.value() - 12.5f) < 0.00001f);
+  EXPECT_TRUE(fabsf(mission.defaults().trajectory_options.horizontal_velocity.value() - 12.5f) <
+              0.00001f);
   ASSERT_EQ(mission.items().size(), 5U);
   const nlohmann::json mission_json = mission;
   const std::string mission_str = mission_json.dump(4);
@@ -81,8 +82,8 @@ TEST(MissionExecutor, json)
 
 TEST(MissionExecutor, jsonError)
 {
-  const auto * const json_str =
-    R"(
+  const auto* const json_str =
+      R"(
   {
     "version": 1,
     "mission": {
@@ -107,15 +108,12 @@ TEST(MissionExecutor, fileMonitor)
   }
 
   std::shared_ptr<px4_ros2::Mission> mission;
-  const px4_ros2::MissionFileMonitor monitor(node, kFilename,
-    [&](const std::shared_ptr<px4_ros2::Mission> & m)
-    {
-      mission = m;
-    });
+  const px4_ros2::MissionFileMonitor monitor(
+      node, kFilename, [&](const std::shared_ptr<px4_ros2::Mission>& m) { mission = m; });
 
   // Create JSON file
-  const auto * const json_str =
-    R"({
+  const auto* const json_str =
+      R"({
     "mission": {
         "items": [
             {
@@ -137,36 +135,34 @@ TEST(MissionExecutor, fileMonitor)
   file << json_str;
   file.close();
 
-  ASSERT_TRUE(waitFor(node, [&] {return mission != nullptr;}));
+  ASSERT_TRUE(waitFor(node, [&] { return mission != nullptr; }));
   EXPECT_EQ(mission->items().size(), 2U);
 }
 
 TEST_F(MissionExecutionTester, basicMission)
 {
-  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-      px4_ros2::Waypoint({47.39810924, 8.54598000, 501}),
-      px4_ros2::Waypoint({47.39920293, 8.54395194, 505}),
-      px4_ros2::ActionItem("land")});
+  const px4_ros2::Mission mission(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
+       px4_ros2::Waypoint({47.39810924, 8.54598000, 501}),
+       px4_ros2::Waypoint({47.39920293, 8.54395194, 505}), px4_ros2::ActionItem("land")});
 
-  MissionExecutorTest mission_executor("my mission",
-    px4_ros2::MissionExecutor::Configuration()
-    .withTrajectoryExecutor<TrajectoryExecutorTest>(),
-    *node, fake_autopilot);
+  MissionExecutorTest mission_executor(
+      "my mission",
+      px4_ros2::MissionExecutor::Configuration().withTrajectoryExecutor<TrajectoryExecutorTest>(),
+      *node, fake_autopilot);
   ASSERT_TRUE(mission_executor.doRegister());
   mission_executor.setMission(mission);
 
   bool mission_completed{false};
-  mission_executor.onCompleted([&mission_completed] {mission_completed = true;});
+  mission_executor.onCompleted([&mission_completed] { mission_completed = true; });
 
   mission_executor.setModeAndArm(mission_executor.modeId());
 
   // Wait for the mission to complete
-  EXPECT_TRUE(waitFor(node, [&mission_completed] {return mission_completed;}));
-
+  EXPECT_TRUE(waitFor(node, [&mission_completed] { return mission_completed; }));
 
   log_capture->expectEqual(
-    R"V0G0N(
+      R"V0G0N(
 FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
@@ -200,16 +196,14 @@ Mission completed
   log_capture->checkHasNoErrors();
 }
 
-class CustomActionTest : public px4_ros2::ActionInterface
-{
-public:
-  explicit CustomActionTest(px4_ros2::ModeBase & mode) {}
-  std::string name() const override {return "customAction";}
+class CustomActionTest : public px4_ros2::ActionInterface {
+ public:
+  explicit CustomActionTest(px4_ros2::ModeBase& mode) {}
+  std::string name() const override { return "customAction"; }
 
-  void run(
-    const std::shared_ptr<px4_ros2::ActionHandler> & handler,
-    const px4_ros2::ActionArguments & arguments,
-    const std::function<void()> & on_completed) override
+  void run(const std::shared_ptr<px4_ros2::ActionHandler>& handler,
+           const px4_ros2::ActionArguments& arguments,
+           const std::function<void()>& on_completed) override
   {
     EXPECT_EQ(arguments.at<int>("customArgument"), 1234);
     on_completed();
@@ -217,30 +211,29 @@ public:
 };
 TEST_F(MissionExecutionTester, customAction)
 {
-  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-      px4_ros2::ActionItem("customAction", px4_ros2::ActionArguments{{{"customArgument", 1234}}}),
-      px4_ros2::ActionItem("rtl")});
+  const px4_ros2::Mission mission(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
+       px4_ros2::ActionItem("customAction", px4_ros2::ActionArguments{{{"customArgument", 1234}}}),
+       px4_ros2::ActionItem("rtl")});
 
   MissionExecutorTest mission_executor("my mission",
-    px4_ros2::MissionExecutor::Configuration()
-    .addCustomAction<CustomActionTest>()
-    .withTrajectoryExecutor<TrajectoryExecutorTest>(),
-    *node, fake_autopilot);
+                                       px4_ros2::MissionExecutor::Configuration()
+                                           .addCustomAction<CustomActionTest>()
+                                           .withTrajectoryExecutor<TrajectoryExecutorTest>(),
+                                       *node, fake_autopilot);
   ASSERT_TRUE(mission_executor.doRegister());
   mission_executor.setMission(mission);
 
   bool mission_completed{false};
-  mission_executor.onCompleted([&mission_completed] {mission_completed = true;});
+  mission_executor.onCompleted([&mission_completed] { mission_completed = true; });
 
   mission_executor.setModeAndArm(mission_executor.modeId());
 
   // Wait for the mission to complete
-  EXPECT_TRUE(waitFor(node, [&mission_completed] {return mission_completed;}));
-
+  EXPECT_TRUE(waitFor(node, [&mission_completed] { return mission_completed; }));
 
   log_capture->expectEqual(
-    R"V0G0N(
+      R"V0G0N(
 FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
@@ -272,51 +265,46 @@ Mission completed
   log_capture->checkHasNoErrors();
 }
 
+class CustomActionTrajectoryTest : public px4_ros2::ActionInterface {
+ public:
+  explicit CustomActionTrajectoryTest(px4_ros2::ModeBase& mode) {}
+  std::string name() const override { return "customActionTrajectory"; }
 
-class CustomActionTrajectoryTest : public px4_ros2::ActionInterface
-{
-public:
-  explicit CustomActionTrajectoryTest(px4_ros2::ModeBase & mode) {}
-  std::string name() const override {return "customActionTrajectory";}
-
-  void run(
-    const std::shared_ptr<px4_ros2::ActionHandler> & handler,
-    const px4_ros2::ActionArguments & arguments,
-    const std::function<void()> & on_completed) override
+  void run(const std::shared_ptr<px4_ros2::ActionHandler>& handler,
+           const px4_ros2::ActionArguments& arguments,
+           const std::function<void()>& on_completed) override
   {
     // Run a custom trajectory
     auto mission = std::make_shared<px4_ros2::Mission>(
-      std::vector<px4_ros2::MissionItem>{px4_ros2::Waypoint({47.39820919, 8.54595214, 400}),
-        px4_ros2::Waypoint({47.39820919, 8.54595214, 410})});
+        std::vector<px4_ros2::MissionItem>{px4_ros2::Waypoint({47.39820919, 8.54595214, 400}),
+                                           px4_ros2::Waypoint({47.39820919, 8.54595214, 410})});
     handler->runTrajectory(mission, on_completed);
   }
 };
 TEST_F(MissionExecutionTester, customActionTrajectory)
 {
-  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::ActionItem("customActionTrajectory", {}),
-      px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-      px4_ros2::ActionItem("rtl")});
+  const px4_ros2::Mission mission(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::ActionItem("customActionTrajectory", {}),
+       px4_ros2::Waypoint({47.39820919, 8.54595214, 500}), px4_ros2::ActionItem("rtl")});
 
   MissionExecutorTest mission_executor("my mission",
-    px4_ros2::MissionExecutor::Configuration()
-    .addCustomAction<CustomActionTrajectoryTest>()
-    .withTrajectoryExecutor<TrajectoryExecutorTest>(),
-    *node, fake_autopilot);
+                                       px4_ros2::MissionExecutor::Configuration()
+                                           .addCustomAction<CustomActionTrajectoryTest>()
+                                           .withTrajectoryExecutor<TrajectoryExecutorTest>(),
+                                       *node, fake_autopilot);
   ASSERT_TRUE(mission_executor.doRegister());
   mission_executor.setMission(mission);
 
   bool mission_completed{false};
-  mission_executor.onCompleted([&mission_completed] {mission_completed = true;});
+  mission_executor.onCompleted([&mission_completed] { mission_completed = true; });
 
   mission_executor.setModeAndArm(mission_executor.modeId());
 
   // Wait for the mission to complete
-  EXPECT_TRUE(waitFor(node, [&mission_completed] {return mission_completed;}));
-
+  EXPECT_TRUE(waitFor(node, [&mission_completed] { return mission_completed; }));
 
   log_capture->expectEqual(
-    R"V0G0N(
+      R"V0G0N(
 FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
@@ -352,23 +340,23 @@ Mission completed
   log_capture->checkHasNoErrors();
 }
 
+class CustomActionInterruptible : public px4_ros2::ActionInterface {
+ public:
+  CustomActionInterruptible(px4_ros2::ModeBase& mode,
+                            std::function<bool(const px4_ros2::ActionArguments&)> on_run,
+                            int& num_run_calls, bool supports_resume_from_landed = false,
+                            std::string name = "customActionInterruptible")
+      : _on_run(std::move(on_run)),
+        _num_run_calls(num_run_calls),
+        _supports_resume_from_landed(supports_resume_from_landed),
+        _name(std::move(name))
+  {
+  }
+  std::string name() const override { return _name; }
 
-class CustomActionInterruptible : public px4_ros2::ActionInterface
-{
-public:
-  CustomActionInterruptible(
-    px4_ros2::ModeBase & mode,
-    std::function<bool(const px4_ros2::ActionArguments &)> on_run, int & num_run_calls,
-    bool supports_resume_from_landed = false,
-    std::string name = "customActionInterruptible")
-  : _on_run(std::move(on_run)), _num_run_calls(num_run_calls), _supports_resume_from_landed(
-      supports_resume_from_landed), _name(std::move(name)) {}
-  std::string name() const override {return _name;}
-
-  void run(
-    const std::shared_ptr<px4_ros2::ActionHandler> & handler,
-    const px4_ros2::ActionArguments & arguments,
-    const std::function<void()> & on_completed) override
+  void run(const std::shared_ptr<px4_ros2::ActionHandler>& handler,
+           const px4_ros2::ActionArguments& arguments,
+           const std::function<void()>& on_completed) override
   {
     ++_num_run_calls;
     if (_on_run(arguments)) {
@@ -376,11 +364,11 @@ public:
     }
   }
 
-  bool supportsResumeFromLanded() override {return _supports_resume_from_landed;}
+  bool supportsResumeFromLanded() override { return _supports_resume_from_landed; }
 
-private:
-  std::function<bool(const px4_ros2::ActionArguments &)> _on_run;
-  int & _num_run_calls;
+ private:
+  std::function<bool(const px4_ros2::ActionArguments&)> _on_run;
+  int& _num_run_calls;
   const bool _supports_resume_from_landed;
   const std::string _name;
 };
@@ -388,57 +376,54 @@ private:
 TEST_F(MissionExecutionTester, resumeWithoutResumeAction)
 {
   // Test resuming a mission without 'onResume' action
-  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::ActionItem("customActionInterruptible", {}),
-      px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-      px4_ros2::ActionItem("rtl")});
+  const px4_ros2::Mission mission(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::ActionItem("customActionInterruptible", {}),
+       px4_ros2::Waypoint({47.39820919, 8.54595214, 500}), px4_ros2::ActionItem("rtl")});
 
   bool should_interrupt = true;
   bool wait_for_deactivation = false;
   int num_run_calls{0};
   auto config = px4_ros2::MissionExecutor::Configuration();
-  config.default_actions = {"rtl", "takeoff"}; // Disable default actions except rtl and takeoff
-  const auto on_action_run = [&](const px4_ros2::ActionArguments & arguments)
-    {
-      if (should_interrupt) {
-        // When the action is first activated, switch to position control, which deactivates the mission execution.
-        // Afterwards, switch back to the mission to finish it.
-        fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
-        should_interrupt = false;
-        wait_for_deactivation = true;
-        EXPECT_FALSE(arguments.resuming());
-        return false;
-      }
-      EXPECT_TRUE(arguments.resuming());
-      return true;
-    };
-  MissionExecutorTest mission_executor("my mission",
-    config
-    .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
-    .withTrajectoryExecutor<TrajectoryExecutorTest>(),
-    *node, fake_autopilot);
+  config.default_actions = {"rtl", "takeoff"};  // Disable default actions except rtl and takeoff
+  const auto on_action_run = [&](const px4_ros2::ActionArguments& arguments) {
+    if (should_interrupt) {
+      // When the action is first activated, switch to position control, which deactivates the
+      // mission execution. Afterwards, switch back to the mission to finish it.
+      fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
+      should_interrupt = false;
+      wait_for_deactivation = true;
+      EXPECT_FALSE(arguments.resuming());
+      return false;
+    }
+    EXPECT_TRUE(arguments.resuming());
+    return true;
+  };
+  MissionExecutorTest mission_executor(
+      "my mission",
+      config.addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
+          .withTrajectoryExecutor<TrajectoryExecutorTest>(),
+      *node, fake_autopilot);
   ASSERT_TRUE(mission_executor.doRegister());
   mission_executor.setMission(mission);
 
   bool mission_completed{false};
-  mission_executor.onCompleted([&mission_completed] {mission_completed = true;});
+  mission_executor.onCompleted([&mission_completed] { mission_completed = true; });
 
-  mission_executor.onDeactivated(
-    [&] {
-      EXPECT_TRUE(wait_for_deactivation);
-      wait_for_deactivation = false;
-      mission_executor.setModeAndArm(mission_executor.modeId());
-    });
+  mission_executor.onDeactivated([&] {
+    EXPECT_TRUE(wait_for_deactivation);
+    wait_for_deactivation = false;
+    mission_executor.setModeAndArm(mission_executor.modeId());
+  });
 
   mission_executor.setModeAndArm(mission_executor.modeId());
 
   // Wait for the mission to complete
-  EXPECT_TRUE(waitFor(node, [&mission_completed] {return mission_completed;}));
+  EXPECT_TRUE(waitFor(node, [&mission_completed] { return mission_completed; }));
 
   EXPECT_EQ(num_run_calls, 2);
 
   log_capture->expectEqual(
-    R"V0G0N(
+      R"V0G0N(
 FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
@@ -477,55 +462,53 @@ Mission completed
 TEST_F(MissionExecutionTester, resumeInAir)
 {
   // Test resuming a mission in-air
-  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::ActionItem("customActionInterruptible", {}),
-      px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-      px4_ros2::ActionItem("rtl")});
+  const px4_ros2::Mission mission(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::ActionItem("customActionInterruptible", {}),
+       px4_ros2::Waypoint({47.39820919, 8.54595214, 500}), px4_ros2::ActionItem("rtl")});
 
   bool should_interrupt = true;
   bool wait_for_deactivation = false;
   int num_run_calls{0};
-  const auto on_action_run = [&](const px4_ros2::ActionArguments & arguments)
-    {
-      if (should_interrupt) {
-        // When the action is first activated, switch to position control, which deactivates the mission execution.
-        // Afterwards, switch back to the mission to finish it.
-        fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
-        should_interrupt = false;
-        wait_for_deactivation = true;
-        EXPECT_FALSE(arguments.resuming());
-        return false;
-      }
-      EXPECT_TRUE(arguments.resuming());
-      return true;
-    };
-  MissionExecutorTest mission_executor("my mission",
-    px4_ros2::MissionExecutor::Configuration()
-    .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
-    .withTrajectoryExecutor<TrajectoryExecutorTest>(),
-    *node, fake_autopilot);
+  const auto on_action_run = [&](const px4_ros2::ActionArguments& arguments) {
+    if (should_interrupt) {
+      // When the action is first activated, switch to position control, which deactivates the
+      // mission execution. Afterwards, switch back to the mission to finish it.
+      fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
+      should_interrupt = false;
+      wait_for_deactivation = true;
+      EXPECT_FALSE(arguments.resuming());
+      return false;
+    }
+    EXPECT_TRUE(arguments.resuming());
+    return true;
+  };
+  MissionExecutorTest mission_executor(
+      "my mission",
+      px4_ros2::MissionExecutor::Configuration()
+          .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
+          .withTrajectoryExecutor<TrajectoryExecutorTest>(),
+      *node, fake_autopilot);
   ASSERT_TRUE(mission_executor.doRegister());
   mission_executor.setMission(mission);
 
   bool mission_completed{false};
-  mission_executor.onCompleted([&mission_completed] {mission_completed = true;});
+  mission_executor.onCompleted([&mission_completed] { mission_completed = true; });
 
-  mission_executor.onDeactivated(
-    [&] {
-      EXPECT_TRUE(wait_for_deactivation);
-      wait_for_deactivation = false;
-      mission_executor.setModeAndArm(mission_executor.modeId());
-    });
+  mission_executor.onDeactivated([&] {
+    EXPECT_TRUE(wait_for_deactivation);
+    wait_for_deactivation = false;
+    mission_executor.setModeAndArm(mission_executor.modeId());
+  });
 
   mission_executor.setModeAndArm(mission_executor.modeId());
 
   // Wait for the mission to complete
-  EXPECT_TRUE(waitFor(node, [&mission_completed] {return mission_completed;}));
+  EXPECT_TRUE(waitFor(node, [&mission_completed] { return mission_completed; }));
 
   EXPECT_EQ(num_run_calls, 2);
 
   log_capture->expectEqual(
-    R"V0G0N(
+      R"V0G0N(
 FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
@@ -565,64 +548,60 @@ Mission completed
 TEST_F(MissionExecutionTester, resumeFromLanded)
 {
   // Test resuming a mission from landed state
-  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
-      px4_ros2::Waypoint({47.34720919, 8.54385214, 502}),
-      px4_ros2::Waypoint({47.34620919, 8.54375214, 501}),
-      px4_ros2::ActionItem("customActionInterruptible", {}),
-      px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-      px4_ros2::ActionItem("rtl")});
+  const px4_ros2::Mission mission(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
+       px4_ros2::Waypoint({47.34720919, 8.54385214, 502}),
+       px4_ros2::Waypoint({47.34620919, 8.54375214, 501}),
+       px4_ros2::ActionItem("customActionInterruptible", {}),
+       px4_ros2::Waypoint({47.39820919, 8.54595214, 500}), px4_ros2::ActionItem("rtl")});
 
   bool should_interrupt = true;
   bool wait_for_deactivation = false;
   int num_run_calls{0};
-  const auto on_action_run = [&](const px4_ros2::ActionArguments & arguments)
-    {
-      if (should_interrupt) {
-        // When the action is first activated, switch to position control, which deactivates the mission execution.
-        // Afterwards, switch back to the mission to finish it.
-        fake_autopilot->setLanded(true);
-        fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
-        should_interrupt = false;
-        wait_for_deactivation = true;
-        return false;
-      }
-      return true;
-    };
-  MissionExecutorTest mission_executor("my mission",
-    px4_ros2::MissionExecutor::Configuration()
-    .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
-    .withTrajectoryExecutor<TrajectoryExecutorTest>(),
-    *node, fake_autopilot);
+  const auto on_action_run = [&](const px4_ros2::ActionArguments& arguments) {
+    if (should_interrupt) {
+      // When the action is first activated, switch to position control, which deactivates the
+      // mission execution. Afterwards, switch back to the mission to finish it.
+      fake_autopilot->setLanded(true);
+      fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
+      should_interrupt = false;
+      wait_for_deactivation = true;
+      return false;
+    }
+    return true;
+  };
+  MissionExecutorTest mission_executor(
+      "my mission",
+      px4_ros2::MissionExecutor::Configuration()
+          .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
+          .withTrajectoryExecutor<TrajectoryExecutorTest>(),
+      *node, fake_autopilot);
   ASSERT_TRUE(mission_executor.doRegister());
   mission_executor.setMission(mission);
 
   bool mission_completed{false};
-  mission_executor.onCompleted([&mission_completed] {mission_completed = true;});
+  mission_executor.onCompleted([&mission_completed] { mission_completed = true; });
 
   rclcpp::TimerBase::SharedPtr timer;
-  mission_executor.onDeactivated(
-    [&] {
-      EXPECT_TRUE(wait_for_deactivation);
-      wait_for_deactivation = false;
-      // Switch back to the mission, but async to avoid reordering of events
-      timer = node->create_wall_timer(
-        1ms, [&]
-        {
-          timer->cancel();
-          mission_executor.setModeAndArm(mission_executor.modeId());
-        });
+  mission_executor.onDeactivated([&] {
+    EXPECT_TRUE(wait_for_deactivation);
+    wait_for_deactivation = false;
+    // Switch back to the mission, but async to avoid reordering of events
+    timer = node->create_wall_timer(1ms, [&] {
+      timer->cancel();
+      mission_executor.setModeAndArm(mission_executor.modeId());
     });
+  });
 
   mission_executor.setModeAndArm(mission_executor.modeId());
 
   // Wait for the mission to complete
-  EXPECT_TRUE(waitFor(node, [&mission_completed] {return mission_completed;}));
+  EXPECT_TRUE(waitFor(node, [&mission_completed] { return mission_completed; }));
 
   EXPECT_EQ(num_run_calls, 2);
 
   log_capture->expectEqual(
-    R"V0G0N(
+      R"V0G0N(
 FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
@@ -687,79 +666,73 @@ TEST_F(MissionExecutionTester, resumeFromLandedInRtl)
 {
   // Test resuming a mission from landed state when interrupted in rtl.
   // The mission should then resume from the beginning, as rtl was the last item.
-  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
-      px4_ros2::Waypoint({47.34720919, 8.54385214, 502}),
-      px4_ros2::Waypoint({47.34620919, 8.54375214, 501}),
-      px4_ros2::ActionItem("rtl", {})});
+  const px4_ros2::Mission mission(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
+       px4_ros2::Waypoint({47.34720919, 8.54385214, 502}),
+       px4_ros2::Waypoint({47.34620919, 8.54375214, 501}), px4_ros2::ActionItem("rtl", {})});
 
   bool should_interrupt = true;
   bool wait_for_deactivation = false;
   int num_run_calls{0};
-  MissionExecutorTest * mission_executor_test{nullptr};
-  const auto on_action_run = [&](const px4_ros2::ActionArguments & arguments)
-    {
-      if (should_interrupt) {
-        // When the action is first activated, switch to position control, which deactivates the mission execution.
-        // Afterwards, switch back to the mission to finish it.
+  MissionExecutorTest* mission_executor_test{nullptr};
+  const auto on_action_run = [&](const px4_ros2::ActionArguments& arguments) {
+    if (should_interrupt) {
+      // When the action is first activated, switch to position control, which deactivates the
+      // mission execution. Afterwards, switch back to the mission to finish it.
 
-        // Wait for the landed state update before continuing to avoid race conditions
-        EXPECT_TRUE(mission_executor_test);
-        if (mission_executor_test) {
-          mission_executor_test->landDetected()->onUpdate(
-            [&](const px4_msgs::msg::VehicleLandDetected & landed)
-            {
+      // Wait for the landed state update before continuing to avoid race conditions
+      EXPECT_TRUE(mission_executor_test);
+      if (mission_executor_test) {
+        mission_executor_test->landDetected()->onUpdate(
+            [&](const px4_msgs::msg::VehicleLandDetected& landed) {
               if (landed.landed) {
                 fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
                 should_interrupt = false;
                 wait_for_deactivation = true;
               }
             });
-        }
-        fake_autopilot->setLanded(true);
-        return false;
       }
-      return true;
-    };
+      fake_autopilot->setLanded(true);
+      return false;
+    }
+    return true;
+  };
   const bool supports_resume_from_landed = false;
   const std::string action_name = "rtl";
-  MissionExecutorTest mission_executor("my mission",
-    px4_ros2::MissionExecutor::Configuration()
-    .addCustomAction<CustomActionInterruptible>(
-      on_action_run, num_run_calls,
-      supports_resume_from_landed, action_name)
-    .withTrajectoryExecutor<TrajectoryExecutorTest>(),
-    *node, fake_autopilot);
+  MissionExecutorTest mission_executor(
+      "my mission",
+      px4_ros2::MissionExecutor::Configuration()
+          .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls,
+                                                      supports_resume_from_landed, action_name)
+          .withTrajectoryExecutor<TrajectoryExecutorTest>(),
+      *node, fake_autopilot);
   mission_executor_test = &mission_executor;
   ASSERT_TRUE(mission_executor.doRegister());
   mission_executor.setMission(mission);
 
   bool mission_completed{false};
-  mission_executor.onCompleted([&mission_completed] {mission_completed = true;});
+  mission_executor.onCompleted([&mission_completed] { mission_completed = true; });
 
   rclcpp::TimerBase::SharedPtr timer;
-  mission_executor.onDeactivated(
-    [&] {
-      EXPECT_TRUE(wait_for_deactivation);
-      wait_for_deactivation = false;
-      // Switch back to the mission, but async to avoid reordering of events
-      timer = node->create_wall_timer(
-        1ms, [&]
-        {
-          timer->cancel();
-          mission_executor.setModeAndArm(mission_executor.modeId());
-        });
+  mission_executor.onDeactivated([&] {
+    EXPECT_TRUE(wait_for_deactivation);
+    wait_for_deactivation = false;
+    // Switch back to the mission, but async to avoid reordering of events
+    timer = node->create_wall_timer(1ms, [&] {
+      timer->cancel();
+      mission_executor.setModeAndArm(mission_executor.modeId());
     });
+  });
 
   mission_executor.setModeAndArm(mission_executor.modeId());
 
   // Wait for the mission to complete
-  EXPECT_TRUE(waitFor(node, [&mission_completed] {return mission_completed;}));
+  EXPECT_TRUE(waitFor(node, [&mission_completed] { return mission_completed; }));
 
   EXPECT_EQ(num_run_calls, 2);
 
   log_capture->expectEqual(
-    R"V0G0N(
+      R"V0G0N(
 FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
@@ -817,70 +790,66 @@ Mode 'my mission' deactivated
 
 TEST_F(MissionExecutionTester, resumeFromLandedWithResumeSupport)
 {
-  // Test resuming a mission from landed state with a custom action that supports resuming from landed
-  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
-      px4_ros2::Waypoint({47.34720919, 8.54385214, 502}),
-      px4_ros2::Waypoint({47.34620919, 8.54375214, 501}),
-      px4_ros2::ActionItem("customActionInterruptible", {}),
-      px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-      px4_ros2::ActionItem("rtl")});
+  // Test resuming a mission from landed state with a custom action that supports resuming from
+  // landed
+  const px4_ros2::Mission mission(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
+       px4_ros2::Waypoint({47.34720919, 8.54385214, 502}),
+       px4_ros2::Waypoint({47.34620919, 8.54375214, 501}),
+       px4_ros2::ActionItem("customActionInterruptible", {}),
+       px4_ros2::Waypoint({47.39820919, 8.54595214, 500}), px4_ros2::ActionItem("rtl")});
 
   bool should_interrupt = true;
   bool wait_for_deactivation = false;
   int num_run_calls{0};
-  const auto on_action_run = [&](const px4_ros2::ActionArguments & arguments)
-    {
-      if (should_interrupt) {
-        // When the action is first activated, switch to position control, which deactivates the mission execution.
-        // Afterwards, switch back to the mission to finish it.
-        fake_autopilot->setLanded(true);
-        fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
-        should_interrupt = false;
-        wait_for_deactivation = true;
-        EXPECT_FALSE(arguments.resuming());
-        return false;
-      }
-      EXPECT_TRUE(arguments.resuming());
-      return true;
-    };
+  const auto on_action_run = [&](const px4_ros2::ActionArguments& arguments) {
+    if (should_interrupt) {
+      // When the action is first activated, switch to position control, which deactivates the
+      // mission execution. Afterwards, switch back to the mission to finish it.
+      fake_autopilot->setLanded(true);
+      fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
+      should_interrupt = false;
+      wait_for_deactivation = true;
+      EXPECT_FALSE(arguments.resuming());
+      return false;
+    }
+    EXPECT_TRUE(arguments.resuming());
+    return true;
+  };
   const bool supports_resume_from_landed = true;
-  MissionExecutorTest mission_executor("my mission",
-    px4_ros2::MissionExecutor::Configuration()
-    .addCustomAction<CustomActionInterruptible>(
-      on_action_run, num_run_calls,
-      supports_resume_from_landed)
-    .withTrajectoryExecutor<TrajectoryExecutorTest>(),
-    *node, fake_autopilot);
+  MissionExecutorTest mission_executor(
+      "my mission",
+      px4_ros2::MissionExecutor::Configuration()
+          .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls,
+                                                      supports_resume_from_landed)
+          .withTrajectoryExecutor<TrajectoryExecutorTest>(),
+      *node, fake_autopilot);
   ASSERT_TRUE(mission_executor.doRegister());
   mission_executor.setMission(mission);
 
   bool mission_completed{false};
-  mission_executor.onCompleted([&mission_completed] {mission_completed = true;});
+  mission_executor.onCompleted([&mission_completed] { mission_completed = true; });
 
   rclcpp::TimerBase::SharedPtr timer;
-  mission_executor.onDeactivated(
-    [&] {
-      EXPECT_TRUE(wait_for_deactivation);
-      wait_for_deactivation = false;
-      // Switch back to the mission, but async to avoid reordering of events
-      timer = node->create_wall_timer(
-        1ms, [&]
-        {
-          timer->cancel();
-          mission_executor.setModeAndArm(mission_executor.modeId());
-        });
+  mission_executor.onDeactivated([&] {
+    EXPECT_TRUE(wait_for_deactivation);
+    wait_for_deactivation = false;
+    // Switch back to the mission, but async to avoid reordering of events
+    timer = node->create_wall_timer(1ms, [&] {
+      timer->cancel();
+      mission_executor.setModeAndArm(mission_executor.modeId());
     });
+  });
 
   mission_executor.setModeAndArm(mission_executor.modeId());
 
   // Wait for the mission to complete
-  EXPECT_TRUE(waitFor(node, [&mission_completed] {return mission_completed;}));
+  EXPECT_TRUE(waitFor(node, [&mission_completed] { return mission_completed; }));
 
   EXPECT_EQ(num_run_calls, 2);
 
   log_capture->expectEqual(
-    R"V0G0N(
+      R"V0G0N(
 FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
@@ -933,74 +902,74 @@ Mission completed
 TEST_F(MissionExecutionTester, persistence)
 {
   // Test persistent state
-  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
-      px4_ros2::Waypoint({47.34720919, 8.54385214, 502}),
-      px4_ros2::ActionItem("customActionInterruptible", {}),
-      px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-      px4_ros2::ActionItem("rtl")});
+  const px4_ros2::Mission mission(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
+       px4_ros2::Waypoint({47.34720919, 8.54385214, 502}),
+       px4_ros2::ActionItem("customActionInterruptible", {}),
+       px4_ros2::Waypoint({47.39820919, 8.54595214, 500}), px4_ros2::ActionItem("rtl")});
 
   bool should_interrupt = true;
   int num_run_calls{0};
-  const auto on_action_run = [&](const px4_ros2::ActionArguments & arguments)
-    {
-      if (should_interrupt) {
-        // When the action is first activated, switch to position control, which deactivates the mission execution.
-        fake_autopilot->setLanded(true);
-        fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
-        should_interrupt = false;
-        EXPECT_FALSE(arguments.resuming());
-        return false;
-      }
-      EXPECT_TRUE(arguments.resuming());
-      return true;
-    };
+  const auto on_action_run = [&](const px4_ros2::ActionArguments& arguments) {
+    if (should_interrupt) {
+      // When the action is first activated, switch to position control, which deactivates the
+      // mission execution.
+      fake_autopilot->setLanded(true);
+      fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
+      should_interrupt = false;
+      EXPECT_FALSE(arguments.resuming());
+      return false;
+    }
+    EXPECT_TRUE(arguments.resuming());
+    return true;
+  };
   {
-    MissionExecutorTest mission_executor("my mission",
-      px4_ros2::MissionExecutor::Configuration().withPersistenceFile(persistence_file)
-      .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
-      .withTrajectoryExecutor<TrajectoryExecutorTest>(),
-      *node, fake_autopilot);
+    MissionExecutorTest mission_executor(
+        "my mission",
+        px4_ros2::MissionExecutor::Configuration()
+            .withPersistenceFile(persistence_file)
+            .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
+            .withTrajectoryExecutor<TrajectoryExecutorTest>(),
+        *node, fake_autopilot);
     ASSERT_TRUE(mission_executor.doRegister());
     mission_executor.setMission(mission);
 
     bool deactivated{false};
-    mission_executor.onDeactivated(
-      [&] {
-        deactivated = true;
-      });
+    mission_executor.onDeactivated([&] { deactivated = true; });
 
     mission_executor.setModeAndArm(mission_executor.modeId());
 
     // Wait for deactivation
-    EXPECT_TRUE(waitFor(node, [&deactivated] {return deactivated;}));
+    EXPECT_TRUE(waitFor(node, [&deactivated] { return deactivated; }));
 
     EXPECT_EQ(num_run_calls, 1);
   }
 
   // Simulate reboot. The mission should be continued
   {
-    MissionExecutorTest mission_executor("my mission",
-      px4_ros2::MissionExecutor::Configuration().withPersistenceFile(persistence_file)
-      .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
-      .withTrajectoryExecutor<TrajectoryExecutorTest>(),
-      *node, fake_autopilot);
+    MissionExecutorTest mission_executor(
+        "my mission",
+        px4_ros2::MissionExecutor::Configuration()
+            .withPersistenceFile(persistence_file)
+            .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
+            .withTrajectoryExecutor<TrajectoryExecutorTest>(),
+        *node, fake_autopilot);
     ASSERT_TRUE(mission_executor.doRegister());
     mission_executor.setMission(mission);
 
     bool mission_completed{false};
-    mission_executor.onCompleted([&mission_completed] {mission_completed = true;});
+    mission_executor.onCompleted([&mission_completed] { mission_completed = true; });
 
     mission_executor.setModeAndArm(mission_executor.modeId());
 
     // Wait for the mission to complete
-    EXPECT_TRUE(waitFor(node, [&mission_completed] {return mission_completed;}));
+    EXPECT_TRUE(waitFor(node, [&mission_completed] { return mission_completed; }));
 
     EXPECT_EQ(num_run_calls, 2);
   }
 
   log_capture->expectEqual(
-    R"V0G0N(
+      R"V0G0N(
 FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
@@ -1056,76 +1025,75 @@ TEST_F(MissionExecutionTester, persistenceWithChange)
   // Test persistent state with a different mission
   bool should_interrupt = true;
   int num_run_calls{0};
-  const auto on_action_run = [&](const px4_ros2::ActionArguments & arguments)
-    {
-      if (should_interrupt) {
-        // When the action is first activated, switch to position control, which deactivates the mission execution.
-        fake_autopilot->setLanded(true);
-        fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
-        should_interrupt = false;
-        return false;
-      }
-      return true;
-    };
+  const auto on_action_run = [&](const px4_ros2::ActionArguments& arguments) {
+    if (should_interrupt) {
+      // When the action is first activated, switch to position control, which deactivates the
+      // mission execution.
+      fake_autopilot->setLanded(true);
+      fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
+      should_interrupt = false;
+      return false;
+    }
+    return true;
+  };
   {
-    const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-        px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
-        px4_ros2::Waypoint({47.34720919, 8.54385214, 502}),
-        px4_ros2::ActionItem("customActionInterruptible", {}),
-        px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-        px4_ros2::ActionItem("rtl")});
+    const px4_ros2::Mission mission(
+        {px4_ros2::ActionItem("takeoff"), px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
+         px4_ros2::Waypoint({47.34720919, 8.54385214, 502}),
+         px4_ros2::ActionItem("customActionInterruptible", {}),
+         px4_ros2::Waypoint({47.39820919, 8.54595214, 500}), px4_ros2::ActionItem("rtl")});
 
-    MissionExecutorTest mission_executor("my mission",
-      px4_ros2::MissionExecutor::Configuration().withPersistenceFile(persistence_file)
-      .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
-      .withTrajectoryExecutor<TrajectoryExecutorTest>(),
-      *node, fake_autopilot);
+    MissionExecutorTest mission_executor(
+        "my mission",
+        px4_ros2::MissionExecutor::Configuration()
+            .withPersistenceFile(persistence_file)
+            .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
+            .withTrajectoryExecutor<TrajectoryExecutorTest>(),
+        *node, fake_autopilot);
     ASSERT_TRUE(mission_executor.doRegister());
     mission_executor.setMission(mission);
 
     bool deactivated{false};
-    mission_executor.onDeactivated(
-      [&] {
-        deactivated = true;
-      });
+    mission_executor.onDeactivated([&] { deactivated = true; });
 
     mission_executor.setModeAndArm(mission_executor.modeId());
 
     // Wait for deactivation
-    EXPECT_TRUE(waitFor(node, [&deactivated] {return deactivated;}));
+    EXPECT_TRUE(waitFor(node, [&deactivated] { return deactivated; }));
 
     EXPECT_EQ(num_run_calls, 1);
   }
 
   // Simulate reboot. The stored mission state should be discarded as the mission is different
   {
-    const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-        px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
-        px4_ros2::ActionItem("customActionInterruptible", {}),
-        px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-        px4_ros2::ActionItem("rtl")});
+    const px4_ros2::Mission mission(
+        {px4_ros2::ActionItem("takeoff"), px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
+         px4_ros2::ActionItem("customActionInterruptible", {}),
+         px4_ros2::Waypoint({47.39820919, 8.54595214, 500}), px4_ros2::ActionItem("rtl")});
 
-    MissionExecutorTest mission_executor("my mission",
-      px4_ros2::MissionExecutor::Configuration().withPersistenceFile(persistence_file)
-      .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
-      .withTrajectoryExecutor<TrajectoryExecutorTest>(),
-      *node, fake_autopilot);
+    MissionExecutorTest mission_executor(
+        "my mission",
+        px4_ros2::MissionExecutor::Configuration()
+            .withPersistenceFile(persistence_file)
+            .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
+            .withTrajectoryExecutor<TrajectoryExecutorTest>(),
+        *node, fake_autopilot);
     ASSERT_TRUE(mission_executor.doRegister());
     mission_executor.setMission(mission);
 
     bool mission_completed{false};
-    mission_executor.onCompleted([&mission_completed] {mission_completed = true;});
+    mission_executor.onCompleted([&mission_completed] { mission_completed = true; });
 
     mission_executor.setModeAndArm(mission_executor.modeId());
 
     // Wait for the mission to complete
-    EXPECT_TRUE(waitFor(node, [&mission_completed] {return mission_completed;}));
+    EXPECT_TRUE(waitFor(node, [&mission_completed] { return mission_completed; }));
 
     EXPECT_EQ(num_run_calls, 2);
   }
 
   log_capture->expectEqual(
-    R"V0G0N(
+      R"V0G0N(
 FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
@@ -1187,17 +1155,14 @@ Unregistering
   log_capture->checkHasNoErrors();
 }
 
-class CustomActionCameraTriggerTest : public px4_ros2::ActionInterface
-{
-public:
-  explicit CustomActionCameraTriggerTest(px4_ros2::ModeBase & mode)
-  : _node(mode.node()) {}
-  std::string name() const override {return "customActionCameraTrigger";}
+class CustomActionCameraTriggerTest : public px4_ros2::ActionInterface {
+ public:
+  explicit CustomActionCameraTriggerTest(px4_ros2::ModeBase& mode) : _node(mode.node()) {}
+  std::string name() const override { return "customActionCameraTrigger"; }
 
-  void run(
-    const std::shared_ptr<px4_ros2::ActionHandler> & handler,
-    const px4_ros2::ActionArguments & arguments,
-    const std::function<void()> & on_completed) override
+  void run(const std::shared_ptr<px4_ros2::ActionHandler>& handler,
+           const px4_ros2::ActionArguments& arguments,
+           const std::function<void()>& on_completed) override
   {
     const auto action = arguments.at<std::string>("action");
     if (action == "start") {
@@ -1211,19 +1176,18 @@ public:
     }
     on_completed();
   }
-  bool shouldStopAtWaypoint(const px4_ros2::ActionArguments & arguments) override {return false;}
+  bool shouldStopAtWaypoint(const px4_ros2::ActionArguments& arguments) override { return false; }
 
   void deactivate() override
   {
-    RCLCPP_INFO(
-      _node.get_logger(), "Stopping camera trigger (from deactivate), was active: %s",
-      _state ? "yes" : "no");
+    RCLCPP_INFO(_node.get_logger(), "Stopping camera trigger (from deactivate), was active: %s",
+                _state ? "yes" : "no");
     _state.reset();
   }
 
-private:
+ private:
   std::unique_ptr<px4_ros2::ActionStateKeeper> _state;
-  rclcpp::Node & _node;
+  rclcpp::Node& _node;
 };
 
 TEST_F(MissionExecutionTester, resumeWithActions)
@@ -1232,81 +1196,73 @@ TEST_F(MissionExecutionTester, resumeWithActions)
   px4_ros2::MissionDefaults defaults{};
   defaults.trajectory_options.horizontal_velocity = 10.0;
   defaults.trajectory_options.vertical_velocity = 5.0;
-  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
-      px4_ros2::ActionItem(
-        "changeSettings",
-        px4_ros2::ActionArguments{{{"horizontalVelocity", 15.0}}}),
-      px4_ros2::Waypoint({47.34820919, 8.54395214, 504}),
-      px4_ros2::ActionItem(
-        "customActionCameraTrigger",
-        px4_ros2::ActionArguments{{{"action", "start"}}}),
-      px4_ros2::ActionItem(
-        "changeSettings",
-        px4_ros2::ActionArguments{{{"horizontalVelocity", 18.0}}}),
-      px4_ros2::ActionItem("changeSettings", px4_ros2::ActionArguments{{{"maxHeadingRate", 55.0}}}),
-      px4_ros2::Waypoint({47.34720919, 8.54385214, 502}),
-      px4_ros2::ActionItem("customActionInterruptible", {}),
-      px4_ros2::ActionItem(
-        "customActionCameraTrigger",
-        px4_ros2::ActionArguments{{{"action", "stop"}}}),
-      px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-      px4_ros2::ActionItem("changeSettings", px4_ros2::ActionArguments{{{"resetAll", true}}}),
-      px4_ros2::Waypoint({47.39820919, 8.54595214, 501}),
-      px4_ros2::ActionItem(
-        "changeSettings",
-        px4_ros2::ActionArguments{{{"verticalVelocity", 7.5}}}),
-      px4_ros2::Waypoint({47.39820919, 8.54595214, 502}),
-      px4_ros2::ActionItem("customActionInterruptible", {}),
-      px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-      px4_ros2::ActionItem("rtl")},
-    defaults);
+  const px4_ros2::Mission mission(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
+       px4_ros2::ActionItem("changeSettings",
+                            px4_ros2::ActionArguments{{{"horizontalVelocity", 15.0}}}),
+       px4_ros2::Waypoint({47.34820919, 8.54395214, 504}),
+       px4_ros2::ActionItem("customActionCameraTrigger",
+                            px4_ros2::ActionArguments{{{"action", "start"}}}),
+       px4_ros2::ActionItem("changeSettings",
+                            px4_ros2::ActionArguments{{{"horizontalVelocity", 18.0}}}),
+       px4_ros2::ActionItem("changeSettings",
+                            px4_ros2::ActionArguments{{{"maxHeadingRate", 55.0}}}),
+       px4_ros2::Waypoint({47.34720919, 8.54385214, 502}),
+       px4_ros2::ActionItem("customActionInterruptible", {}),
+       px4_ros2::ActionItem("customActionCameraTrigger",
+                            px4_ros2::ActionArguments{{{"action", "stop"}}}),
+       px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
+       px4_ros2::ActionItem("changeSettings", px4_ros2::ActionArguments{{{"resetAll", true}}}),
+       px4_ros2::Waypoint({47.39820919, 8.54595214, 501}),
+       px4_ros2::ActionItem("changeSettings",
+                            px4_ros2::ActionArguments{{{"verticalVelocity", 7.5}}}),
+       px4_ros2::Waypoint({47.39820919, 8.54595214, 502}),
+       px4_ros2::ActionItem("customActionInterruptible", {}),
+       px4_ros2::Waypoint({47.39820919, 8.54595214, 500}), px4_ros2::ActionItem("rtl")},
+      defaults);
 
   bool should_interrupt = true;
   int num_run_calls{0};
-  const auto on_action_run = [&](const px4_ros2::ActionArguments & arguments)
-    {
-      if (should_interrupt) {
-        // When the action is activated, switch to position control, which deactivates the mission execution.
-        fake_autopilot->setLanded(true);
-        fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
-        should_interrupt = false;
-        EXPECT_FALSE(arguments.resuming());
-        return false;
-      }
-      EXPECT_TRUE(arguments.resuming());
-      should_interrupt = true;
-      return true;
-    };
-  auto init_mission_executor = [&]
-    {
-      const bool verbose_trajectory_output = true;
-      auto mission_executor = std::make_shared<MissionExecutorTest>(
+  const auto on_action_run = [&](const px4_ros2::ActionArguments& arguments) {
+    if (should_interrupt) {
+      // When the action is activated, switch to position control, which deactivates the mission
+      // execution.
+      fake_autopilot->setLanded(true);
+      fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
+      should_interrupt = false;
+      EXPECT_FALSE(arguments.resuming());
+      return false;
+    }
+    EXPECT_TRUE(arguments.resuming());
+    should_interrupt = true;
+    return true;
+  };
+  auto init_mission_executor = [&] {
+    const bool verbose_trajectory_output = true;
+    auto mission_executor = std::make_shared<MissionExecutorTest>(
         "my mission",
-        px4_ros2::MissionExecutor::Configuration().withPersistenceFile(persistence_file)
-        .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
-        .addCustomAction<CustomActionCameraTriggerTest>()
-        .withTrajectoryExecutor<TrajectoryExecutorTest>(verbose_trajectory_output),
+        px4_ros2::MissionExecutor::Configuration()
+            .withPersistenceFile(persistence_file)
+            .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
+            .addCustomAction<CustomActionCameraTriggerTest>()
+            .withTrajectoryExecutor<TrajectoryExecutorTest>(verbose_trajectory_output),
         *node, fake_autopilot);
-      EXPECT_TRUE(mission_executor->doRegister());
-      mission_executor->setMission(mission);
-      return mission_executor;
-    };
+    EXPECT_TRUE(mission_executor->doRegister());
+    mission_executor->setMission(mission);
+    return mission_executor;
+  };
 
   // Run the mission until the first interruption
   {
     auto mission_executor = init_mission_executor();
 
     bool deactivated{false};
-    mission_executor->onDeactivated(
-      [&] {
-        deactivated = true;
-      });
+    mission_executor->onDeactivated([&] { deactivated = true; });
 
     mission_executor->setModeAndArm(mission_executor->modeId());
 
     // Wait for deactivation
-    EXPECT_TRUE(waitFor(node, [&deactivated] {return deactivated;}));
+    EXPECT_TRUE(waitFor(node, [&deactivated] { return deactivated; }));
 
     EXPECT_EQ(num_run_calls, 1);
   }
@@ -1316,23 +1272,21 @@ TEST_F(MissionExecutionTester, resumeWithActions)
     auto mission_executor = init_mission_executor();
 
     bool deactivated{false};
-    mission_executor->onDeactivated(
-      [&] {
-        deactivated = true;
-      });
+    mission_executor->onDeactivated([&] { deactivated = true; });
 
     // Wait for land detected (this ensures the onResume action goes through the takeoff sequence)
     bool land_detected = false;
     fake_autopilot->setLanded(true);
     mission_executor->landDetected()->onUpdate(
-      [&land_detected](const px4_msgs::msg::
-      VehicleLandDetected & vehicle_land_detected) {land_detected = vehicle_land_detected.landed;});
-    EXPECT_TRUE(waitFor(node, [&land_detected] {return land_detected;}));
+        [&land_detected](const px4_msgs::msg::VehicleLandDetected& vehicle_land_detected) {
+          land_detected = vehicle_land_detected.landed;
+        });
+    EXPECT_TRUE(waitFor(node, [&land_detected] { return land_detected; }));
 
     mission_executor->setModeAndArm(mission_executor->modeId());
 
     // Wait for deactivation
-    EXPECT_TRUE(waitFor(node, [&deactivated] {return deactivated;}));
+    EXPECT_TRUE(waitFor(node, [&deactivated] { return deactivated; }));
 
     EXPECT_EQ(num_run_calls, 3);
   }
@@ -1345,23 +1299,24 @@ TEST_F(MissionExecutionTester, resumeWithActions)
     bool land_detected = false;
     fake_autopilot->setLanded(true);
     mission_executor->landDetected()->onUpdate(
-      [&land_detected](const px4_msgs::msg::
-      VehicleLandDetected & vehicle_land_detected) {land_detected = vehicle_land_detected.landed;});
-    EXPECT_TRUE(waitFor(node, [&land_detected] {return land_detected;}));
+        [&land_detected](const px4_msgs::msg::VehicleLandDetected& vehicle_land_detected) {
+          land_detected = vehicle_land_detected.landed;
+        });
+    EXPECT_TRUE(waitFor(node, [&land_detected] { return land_detected; }));
 
     bool mission_completed{false};
-    mission_executor->onCompleted([&mission_completed] {mission_completed = true;});
+    mission_executor->onCompleted([&mission_completed] { mission_completed = true; });
 
     mission_executor->setModeAndArm(mission_executor->modeId());
 
     // Wait for the mission to complete
-    EXPECT_TRUE(waitFor(node, [&mission_completed] {return mission_completed;}));
+    EXPECT_TRUE(waitFor(node, [&mission_completed] { return mission_completed; }));
 
     EXPECT_EQ(num_run_calls, 4);
   }
 
   log_capture->expectEqual(
-    R"V0G0N(
+      R"V0G0N(
 FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
@@ -1509,22 +1464,16 @@ Removing continuous action id 0
   log_capture->checkHasNoErrors();
 }
 
-
-class OnResumeWithState : public px4_ros2::ActionInterface
-{
-public:
-  explicit OnResumeWithState(px4_ros2::ModeBase & mode)
-  : _node(mode.node())
-  {
-  }
+class OnResumeWithState : public px4_ros2::ActionInterface {
+ public:
+  explicit OnResumeWithState(px4_ros2::ModeBase& mode) : _node(mode.node()) {}
 
   ~OnResumeWithState() override = default;
-  std::string name() const override {return "onResume";}
+  std::string name() const override { return "onResume"; }
 
-  void run(
-    const std::shared_ptr<px4_ros2::ActionHandler> & handler,
-    const px4_ros2::ActionArguments & arguments,
-    const std::function<void()> & on_completed) override
+  void run(const std::shared_ptr<px4_ros2::ActionHandler>& handler,
+           const px4_ros2::ActionArguments& arguments,
+           const std::function<void()>& on_completed) override
   {
     const auto action = arguments.at<std::string>("action");
     if (action == "storeState") {
@@ -1542,78 +1491,78 @@ public:
     on_completed();
   }
 
-private:
-  rclcpp::Node & _node;
+ private:
+  rclcpp::Node& _node;
   std::unique_ptr<px4_ros2::ActionStateKeeper> _state;
 };
 
 TEST_F(MissionExecutionTester, resumeWithState)
 {
   // Test a custom onResume action that stores and restores a custom state
-  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
-      px4_ros2::Waypoint({47.34720919, 8.54385214, 502}),
-      px4_ros2::ActionItem("customActionInterruptible", {}),
-      px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-      px4_ros2::ActionItem("rtl")});
+  const px4_ros2::Mission mission(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::Waypoint({47.34820919, 8.54395214, 503}),
+       px4_ros2::Waypoint({47.34720919, 8.54385214, 502}),
+       px4_ros2::ActionItem("customActionInterruptible", {}),
+       px4_ros2::Waypoint({47.39820919, 8.54595214, 500}), px4_ros2::ActionItem("rtl")});
 
   bool should_interrupt = true;
   int num_run_calls{0};
-  const auto on_action_run = [&](const px4_ros2::ActionArguments & arguments)
-    {
-      if (should_interrupt) {
-        // When the action is first activated, switch to position control, which deactivates the mission execution.
-        fake_autopilot->setLanded(true);
-        fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
-        should_interrupt = false;
-        return false;
-      }
-      return true;
-    };
+  const auto on_action_run = [&](const px4_ros2::ActionArguments& arguments) {
+    if (should_interrupt) {
+      // When the action is first activated, switch to position control, which deactivates the
+      // mission execution.
+      fake_autopilot->setLanded(true);
+      fake_autopilot->setModeAndArm(px4_ros2::ModeBase::kModeIDPosctl, 0);
+      should_interrupt = false;
+      return false;
+    }
+    return true;
+  };
   {
-    MissionExecutorTest mission_executor("my mission",
-      px4_ros2::MissionExecutor::Configuration().withPersistenceFile(persistence_file)
-      .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
-      .addCustomAction<OnResumeWithState>()
-      .withTrajectoryExecutor<TrajectoryExecutorTest>(),
-      *node, fake_autopilot);
+    MissionExecutorTest mission_executor(
+        "my mission",
+        px4_ros2::MissionExecutor::Configuration()
+            .withPersistenceFile(persistence_file)
+            .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
+            .addCustomAction<OnResumeWithState>()
+            .withTrajectoryExecutor<TrajectoryExecutorTest>(),
+        *node, fake_autopilot);
     ASSERT_TRUE(mission_executor.doRegister());
     mission_executor.setMission(mission);
 
     bool deactivated{false};
-    mission_executor.onDeactivated(
-      [&] {
-        deactivated = true;
-      });
+    mission_executor.onDeactivated([&] { deactivated = true; });
 
     mission_executor.setModeAndArm(mission_executor.modeId());
 
     // Wait for deactivation
-    EXPECT_TRUE(waitFor(node, [&deactivated] {return deactivated;}));
+    EXPECT_TRUE(waitFor(node, [&deactivated] { return deactivated; }));
   }
 
   // Simulate reboot. The mission should be continued, and the onResume state restored
   {
-    MissionExecutorTest mission_executor("my mission",
-      px4_ros2::MissionExecutor::Configuration().withPersistenceFile(persistence_file)
-      .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
-      .addCustomAction<OnResumeWithState>()
-      .withTrajectoryExecutor<TrajectoryExecutorTest>(),
-      *node, fake_autopilot);
+    MissionExecutorTest mission_executor(
+        "my mission",
+        px4_ros2::MissionExecutor::Configuration()
+            .withPersistenceFile(persistence_file)
+            .addCustomAction<CustomActionInterruptible>(on_action_run, num_run_calls)
+            .addCustomAction<OnResumeWithState>()
+            .withTrajectoryExecutor<TrajectoryExecutorTest>(),
+        *node, fake_autopilot);
     ASSERT_TRUE(mission_executor.doRegister());
     mission_executor.setMission(mission);
 
     bool mission_completed{false};
-    mission_executor.onCompleted([&mission_completed] {mission_completed = true;});
+    mission_executor.onCompleted([&mission_completed] { mission_completed = true; });
 
     mission_executor.setModeAndArm(mission_executor.modeId());
 
     // Wait for the mission to complete
-    EXPECT_TRUE(waitFor(node, [&mission_completed] {return mission_completed;}));
+    EXPECT_TRUE(waitFor(node, [&mission_completed] { return mission_completed; }));
   }
 
   log_capture->expectEqual(
-    R"V0G0N(
+      R"V0G0N(
 FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
@@ -1666,62 +1615,58 @@ Unregistering
   log_capture->checkHasNoErrors();
 }
 
-class CustomActionTriggerFailure : public px4_ros2::ActionInterface
-{
-public:
-  explicit CustomActionTriggerFailure(px4_ros2::ModeBase & mode) {}
-  std::string name() const override {return "customActionTriggerFailure";}
+class CustomActionTriggerFailure : public px4_ros2::ActionInterface {
+ public:
+  explicit CustomActionTriggerFailure(px4_ros2::ModeBase& mode) {}
+  std::string name() const override { return "customActionTriggerFailure"; }
 
-  void run(
-    const std::shared_ptr<px4_ros2::ActionHandler> & handler,
-    const px4_ros2::ActionArguments & arguments,
-    const std::function<void()> & on_completed) override
+  void run(const std::shared_ptr<px4_ros2::ActionHandler>& handler,
+           const px4_ros2::ActionArguments& arguments,
+           const std::function<void()>& on_completed) override
   {
     _handler = handler;
-    handler->runAction(
-      "nonExistentAction", {}, []
-      {
-        EXPECT_TRUE(false) << "on_completed called, but should never be";
-      });
+    handler->runAction("nonExistentAction", {},
+                       [] { EXPECT_TRUE(false) << "on_completed called, but should never be"; });
 
     // Call on_completed, which must not do anything, since the action failed and abort was called
     on_completed();
   }
 
-  std::shared_ptr<px4_ros2::ActionHandler> handler() {return _handler;}
+  std::shared_ptr<px4_ros2::ActionHandler> handler() { return _handler; }
 
-private:
+ private:
   std::shared_ptr<px4_ros2::ActionHandler> _handler;
 };
 
 TEST_F(MissionExecutionTester, failureDefault)
 {
   // Test that the default failure action is triggered by trying to run an unknown action.
-  // The failure action is expected to run RTL first (which fails), then fall back to Descend (which succeeds)
-  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::ActionItem("customActionTriggerFailure")});
+  // The failure action is expected to run RTL first (which fails), then fall back to Descend (which
+  // succeeds)
+  const px4_ros2::Mission mission(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::ActionItem("customActionTriggerFailure")});
 
-  MissionExecutorTest mission_executor("my mission",
-    px4_ros2::MissionExecutor::Configuration().addCustomAction<CustomActionTriggerFailure>(), *node,
-    fake_autopilot);
+  MissionExecutorTest mission_executor(
+      "my mission",
+      px4_ros2::MissionExecutor::Configuration().addCustomAction<CustomActionTriggerFailure>(),
+      *node, fake_autopilot);
   ASSERT_TRUE(mission_executor.doRegister());
   mission_executor.setMission(mission);
 
-  mission_executor.mode_change_request = [&](int nav_state)
-    {
-      if (nav_state == px4_ros2::ModeBase::kModeIDRtl) {
-        RCLCPP_INFO(node->get_logger(), "Rejecting mode %i", nav_state);
-        return false;
-      }
-      mission_executor.setModeAndArm(nav_state, true);
-      return true;
-    };
+  mission_executor.mode_change_request = [&](int nav_state) {
+    if (nav_state == px4_ros2::ModeBase::kModeIDRtl) {
+      RCLCPP_INFO(node->get_logger(), "Rejecting mode %i", nav_state);
+      return false;
+    }
+    mission_executor.setModeAndArm(nav_state, true);
+    return true;
+  };
 
   mission_executor.setModeAndArm(mission_executor.modeId());
 
   // Mission will not complete, just check the log output
   log_capture->expectEqual(
-    R"V0G0N(
+      R"V0G0N(
 FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
@@ -1750,48 +1695,37 @@ onFailure action completed
 TEST_F(MissionExecutionTester, failureInvalidHandler)
 {
   // Test that the action handler becomes invalid after a failure/abort.
-  // It ensures that actions using timers to run actions after being activated are canceled when interrupted
-  // (either by an abort or deactivation).
-  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::ActionItem("customActionTriggerFailure")});
+  // It ensures that actions using timers to run actions after being activated are canceled when
+  // interrupted (either by an abort or deactivation).
+  const px4_ros2::Mission mission(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::ActionItem("customActionTriggerFailure")});
 
   px4_ros2::MissionExecutor::Configuration config;
   std::shared_ptr<CustomActionTriggerFailure> action;
-  config.custom_actions_factory.emplace_back(
-    [&action](px4_ros2::ModeBase & mode)
-    {
-      action = std::make_shared<CustomActionTriggerFailure>(mode);
-      return action;
-    });
+  config.custom_actions_factory.emplace_back([&action](px4_ros2::ModeBase& mode) {
+    action = std::make_shared<CustomActionTriggerFailure>(mode);
+    return action;
+  });
   MissionExecutorTest mission_executor("my mission", config, *node, fake_autopilot);
   ASSERT_TRUE(mission_executor.doRegister());
   mission_executor.setMission(mission);
 
   mission_executor.setModeAndArm(mission_executor.modeId());
 
-  ASSERT_TRUE(
-    waitFor(
-      node, [&action]
-      {
-        return action->handler() != nullptr;
-      }));
+  ASSERT_TRUE(waitFor(node, [&action] { return action->handler() != nullptr; }));
 
   EXPECT_FALSE(action->handler()->isValid());
 }
 
-class CustomOnFailureAction : public px4_ros2::ActionInterface
-{
-public:
-  explicit CustomOnFailureAction(px4_ros2::ModeBase & mode)
-  : _node(mode.node())
-  {}
+class CustomOnFailureAction : public px4_ros2::ActionInterface {
+ public:
+  explicit CustomOnFailureAction(px4_ros2::ModeBase& mode) : _node(mode.node()) {}
 
-  std::string name() const override {return "onFailure";}
+  std::string name() const override { return "onFailure"; }
 
-  void run(
-    const std::shared_ptr<px4_ros2::ActionHandler> & handler,
-    const px4_ros2::ActionArguments & arguments,
-    const std::function<void()> & on_completed) override
+  void run(const std::shared_ptr<px4_ros2::ActionHandler>& handler,
+           const px4_ros2::ActionArguments& arguments,
+           const std::function<void()>& on_completed) override
   {
     const int recursion_level = arguments.at<int>("recursionLevel");
     const std::string reason = arguments.at<std::string>("reason");
@@ -1799,29 +1733,28 @@ public:
     if (arguments.contains("currentIndex")) {
       index = arguments.at<int>("currentIndex");
     }
-    RCLCPP_INFO(
-      _node.get_logger(), "Failure handling: recursion level: %i, reason: %s, current index: %i", recursion_level,
-      reason.c_str(), index);
-    handler->runAction(
-      "nonExistentAction", {}, []
-      {
-        EXPECT_TRUE(false) << "on_completed called, but should never be";
-      });
+    RCLCPP_INFO(_node.get_logger(),
+                "Failure handling: recursion level: %i, reason: %s, current index: %i",
+                recursion_level, reason.c_str(), index);
+    handler->runAction("nonExistentAction", {},
+                       [] { EXPECT_TRUE(false) << "on_completed called, but should never be"; });
   }
 
-private:
-  rclcpp::Node & _node;
+ private:
+  rclcpp::Node& _node;
 };
 
 TEST_F(MissionExecutionTester, failureCustom)
 {
   // Test the recursion limit with a custom failure action
-  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::ActionItem("customActionTriggerFailure")});
+  const px4_ros2::Mission mission(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::ActionItem("customActionTriggerFailure")});
 
   MissionExecutorTest mission_executor("my mission",
-    px4_ros2::MissionExecutor::Configuration().addCustomAction<CustomActionTriggerFailure>().
-    addCustomAction<CustomOnFailureAction>(), *node, fake_autopilot);
+                                       px4_ros2::MissionExecutor::Configuration()
+                                           .addCustomAction<CustomActionTriggerFailure>()
+                                           .addCustomAction<CustomOnFailureAction>(),
+                                       *node, fake_autopilot);
   ASSERT_TRUE(mission_executor.doRegister());
   mission_executor.setMission(mission);
 
@@ -1829,7 +1762,7 @@ TEST_F(MissionExecutionTester, failureCustom)
 
   // Mission will not complete, just check the log output
   log_capture->expectEqual(
-    R"V0G0N(
+      R"V0G0N(
 FakeAutopilot: setting mode (id=100)
 Mode executor 'my mission' activated
 Setting current mission item to 0
@@ -1903,65 +1836,57 @@ Maximum abort recursion level reached
 )V0G0N");
 }
 
-class CustomActionReadyness : public px4_ros2::ActionInterface
-{
-public:
-  CustomActionReadyness(px4_ros2::ModeBase & mode, std::function<bool()> on_can_run)
-  : _on_can_run(std::move(on_can_run)) {}
-  std::string name() const override {return "customActionReadyness";}
+class CustomActionReadyness : public px4_ros2::ActionInterface {
+ public:
+  CustomActionReadyness(px4_ros2::ModeBase& mode, std::function<bool()> on_can_run)
+      : _on_can_run(std::move(on_can_run))
+  {
+  }
+  std::string name() const override { return "customActionReadyness"; }
 
-  bool canRun(
-    const px4_ros2::ActionArguments & arguments,
-    std::vector<std::string> & errors) override
+  bool canRun(const px4_ros2::ActionArguments& arguments, std::vector<std::string>& errors) override
   {
     return _on_can_run();
   }
 
-  void run(
-    const std::shared_ptr<px4_ros2::ActionHandler> & handler,
-    const px4_ros2::ActionArguments & arguments,
-    const std::function<void()> & on_completed) override
+  void run(const std::shared_ptr<px4_ros2::ActionHandler>& handler,
+           const px4_ros2::ActionArguments& arguments,
+           const std::function<void()>& on_completed) override
   {
     on_completed();
   }
 
-private:
+ private:
   std::function<bool()> _on_can_run;
 };
 
 TEST_F(MissionExecutionTester, readyness)
 {
   // Test onReadynessUpdate callback
-  const px4_ros2::Mission mission({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::ActionItem("customActionReadyness", {}),
-      px4_ros2::ActionItem("unknownAction", {}),
-      px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-      px4_ros2::ActionItem("rtl")});
+  const px4_ros2::Mission mission(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::ActionItem("customActionReadyness", {}),
+       px4_ros2::ActionItem("unknownAction", {}),
+       px4_ros2::Waypoint({47.39820919, 8.54595214, 500}), px4_ros2::ActionItem("rtl")});
 
   bool action_can_run = false;
-  const auto on_can_run = [&]
-    {
-      return action_can_run;
-    };
+  const auto on_can_run = [&] { return action_can_run; };
   MissionExecutorTest mission_executor("my mission",
-    px4_ros2::MissionExecutor::Configuration()
-    .addCustomAction<CustomActionReadyness>(on_can_run)
-    .withTrajectoryExecutor<TrajectoryExecutorTest>(),
-    *node, fake_autopilot);
+                                       px4_ros2::MissionExecutor::Configuration()
+                                           .addCustomAction<CustomActionReadyness>(on_can_run)
+                                           .withTrajectoryExecutor<TrajectoryExecutorTest>(),
+                                       *node, fake_autopilot);
   ASSERT_TRUE(mission_executor.doRegister());
 
   int num_readyness_updates{0};
   std::vector<std::string> last_errors;
-  mission_executor.onReadynessUpdate(
-    [&](bool ready, const std::vector<std::string> & errors)
-    {
-      ++num_readyness_updates;
-      last_errors = errors;
-    });
+  mission_executor.onReadynessUpdate([&](bool ready, const std::vector<std::string>& errors) {
+    ++num_readyness_updates;
+    last_errors = errors;
+  });
 
   // Ensure we get a report even before setting a mission
   {
-    ASSERT_TRUE(waitFor(node, [&num_readyness_updates] {return num_readyness_updates == 1;}));
+    ASSERT_TRUE(waitFor(node, [&num_readyness_updates] { return num_readyness_updates == 1; }));
     EXPECT_EQ(last_errors, std::vector<std::string>{{std::string("No mission")}});
   }
 
@@ -1969,30 +1894,29 @@ TEST_F(MissionExecutionTester, readyness)
 
   // The mission contains some errors
   {
-    ASSERT_TRUE(waitFor(node, [&num_readyness_updates] {return num_readyness_updates == 2;}));
-    const auto expected = std::vector<std::string>{{std::string(
-        "Mission contains unknown action 'unknownAction'"),
-      "Action 'customActionReadyness' is not ready yet"}};
+    ASSERT_TRUE(waitFor(node, [&num_readyness_updates] { return num_readyness_updates == 2; }));
+    const auto expected =
+        std::vector<std::string>{{std::string("Mission contains unknown action 'unknownAction'"),
+                                  "Action 'customActionReadyness' is not ready yet"}};
     EXPECT_EQ(last_errors, expected);
   }
 
   // Change action readyness
   action_can_run = true;
   {
-    ASSERT_TRUE(waitFor(node, [&num_readyness_updates] {return num_readyness_updates == 3;}));
-    const auto expected = std::vector<std::string>{{std::string(
-        "Mission contains unknown action 'unknownAction'")}};
+    ASSERT_TRUE(waitFor(node, [&num_readyness_updates] { return num_readyness_updates == 3; }));
+    const auto expected =
+        std::vector<std::string>{{std::string("Mission contains unknown action 'unknownAction'")}};
     EXPECT_EQ(last_errors, expected);
   }
 
   // Change the mission
-  const px4_ros2::Mission mission_updated({px4_ros2::ActionItem("takeoff"),
-      px4_ros2::ActionItem("customActionReadyness", {}),
-      px4_ros2::Waypoint({47.39820919, 8.54595214, 500}),
-      px4_ros2::ActionItem("rtl")});
+  const px4_ros2::Mission mission_updated(
+      {px4_ros2::ActionItem("takeoff"), px4_ros2::ActionItem("customActionReadyness", {}),
+       px4_ros2::Waypoint({47.39820919, 8.54595214, 500}), px4_ros2::ActionItem("rtl")});
   mission_executor.setMission(mission_updated);
   {
-    ASSERT_TRUE(waitFor(node, [&num_readyness_updates] {return num_readyness_updates == 4;}));
+    ASSERT_TRUE(waitFor(node, [&num_readyness_updates] { return num_readyness_updates == 4; }));
     const auto expected = std::vector<std::string>{};
     EXPECT_EQ(last_errors, expected);
   }
@@ -2000,7 +1924,7 @@ TEST_F(MissionExecutionTester, readyness)
   // Reset the mission
   mission_executor.resetMission();
   {
-    ASSERT_TRUE(waitFor(node, [&num_readyness_updates] {return num_readyness_updates == 5;}));
+    ASSERT_TRUE(waitFor(node, [&num_readyness_updates] { return num_readyness_updates == 5; }));
     const auto expected = std::vector<std::string>{{"No mission"}};
     EXPECT_EQ(last_errors, expected);
   }

@@ -7,11 +7,10 @@
 
 #include <px4_msgs/msg/vehicle_land_detected.hpp>
 #include <px4_ros2/common/context.hpp>
-#include <px4_ros2/utils/subscription.hpp>
 #include <px4_ros2/utils/message_version.hpp>
+#include <px4_ros2/utils/subscription.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 /** \ingroup vehicle_state
  *  @{
  */
@@ -21,24 +20,21 @@ namespace px4_ros2
  *
  * @ingroup vehicle_state
  */
-class LandDetected : public Subscription<px4_msgs::msg::VehicleLandDetected>
-{
-public:
-  explicit LandDetected(Context & context)
-  : Subscription<px4_msgs::msg::VehicleLandDetected>(context,
-      "fmu/out/vehicle_land_detected" +
-      px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLandDetected>()) {}
+class LandDetected : public Subscription<px4_msgs::msg::VehicleLandDetected> {
+ public:
+  explicit LandDetected(Context& context)
+      : Subscription<px4_msgs::msg::VehicleLandDetected>(
+            context, "fmu/out/vehicle_land_detected" +
+                         px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLandDetected>())
+  {
+  }
 
   /**
    * @brief Check if vehicle is landed on the ground.
    *
    * @return true if landed, false otherwise
    */
-  bool landed() const
-  {
-    return last().landed;
-  }
-
+  bool landed() const { return last().landed; }
 };
 
 /** @}*/

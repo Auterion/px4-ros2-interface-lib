@@ -4,20 +4,20 @@
  ****************************************************************************/
 
 #include <gtest/gtest.h>
-#include <px4_ros2/utils/geometry.hpp>
 
+#include <px4_ros2/utils/geometry.hpp>
 #include <src/utils/map_projection_impl.hpp>
+
 #include "util.hpp"
 
-class MapProjectionImplTest : public ::testing::Test
-{
-public:
+class MapProjectionImplTest : public ::testing::Test {
+ public:
   void SetUp() override
   {
     _map_projection.initReference(kLatRef, kLonRef, kAltAmslRef, kTimestampRef);
   }
 
-protected:
+ protected:
   static constexpr double kLatRef = 47.3566094;
   static constexpr double kLonRef = 8.5190237;
   static constexpr double kAltAmslRef = 151.3;
@@ -26,23 +26,23 @@ protected:
   px4_ros2::MapProjectionImpl _map_projection;
 };
 
-
-TEST_F(MapProjectionImplTest, isInitialized) {
+TEST_F(MapProjectionImplTest, isInitialized)
+{
   ASSERT_TRUE(_map_projection.isInitialized());
 }
 
-TEST_F(MapProjectionImplTest, getters) {
+TEST_F(MapProjectionImplTest, getters)
+{
   EXPECT_EQ(kLatRef, _map_projection.getProjectionReferenceLat());
   EXPECT_EQ(kLonRef, _map_projection.getProjectionReferenceLon());
   EXPECT_EQ(kAltAmslRef, _map_projection.getProjectionReferenceAlt());
   EXPECT_EQ(kTimestampRef, _map_projection.getProjectionReferenceTimestamp());
-  vectorsApproxEqualTest(
-    Eigen::Vector3d{kLatRef, kLonRef, kAltAmslRef},
-    _map_projection.getProjectionReferencePosition());
+  vectorsApproxEqualTest(Eigen::Vector3d{kLatRef, kLonRef, kAltAmslRef},
+                         _map_projection.getProjectionReferencePosition());
 }
 
-TEST_F(MapProjectionImplTest, localToGlobal) {
-
+TEST_F(MapProjectionImplTest, localToGlobal)
+{
   const Eigen::Vector3f local_position = {0.5f, 1.f, -2.f};
   const Eigen::Vector3d global_position = _map_projection.localToGlobal(local_position);
   const Eigen::Vector3f local_position_new = _map_projection.globalToLocal(global_position);
@@ -57,8 +57,8 @@ TEST_F(MapProjectionImplTest, localToGlobal) {
   vectorsApproxEqualTest(global_position, global_position_new);
 }
 
-TEST_F(MapProjectionImplTest, globalToLocal) {
-
+TEST_F(MapProjectionImplTest, globalToLocal)
+{
   const Eigen::Vector3d global_position = {47.356616973876953, 8.5190505981445313, 163.7};
   const Eigen::Vector3f local_position = _map_projection.globalToLocal(global_position);
   const Eigen::Vector3d global_position_new = _map_projection.localToGlobal(local_position);

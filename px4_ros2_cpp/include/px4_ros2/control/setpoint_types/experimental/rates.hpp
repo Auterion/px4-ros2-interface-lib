@@ -5,36 +5,32 @@
 
 #pragma once
 
-#include <px4_msgs/msg/vehicle_rates_setpoint.hpp>
 #include <Eigen/Core>
-
+#include <px4_msgs/msg/vehicle_rates_setpoint.hpp>
 #include <px4_ros2/common/setpoint_base.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 /** \ingroup setpoint_types_experimental
  *  @{
  */
 
 /**
  * @brief Setpoint type for direct rate control
-*/
-class RatesSetpointType : public SetpointBase
-{
-public:
-  explicit RatesSetpointType(Context & context);
+ */
+class RatesSetpointType : public SetpointBase {
+ public:
+  explicit RatesSetpointType(Context& context);
 
   ~RatesSetpointType() override = default;
 
   Configuration getConfiguration() override;
-  float desiredUpdateRateHz() override {return 200.f;}
+  float desiredUpdateRateHz() override { return 200.f; }
 
-  void update(
-    const Eigen::Vector3f & rate_setpoints_frd_rad,
-    const Eigen::Vector3f & thrust_setpoint_frd);
+  void update(const Eigen::Vector3f& rate_setpoints_frd_rad,
+              const Eigen::Vector3f& thrust_setpoint_frd);
 
-private:
-  rclcpp::Node & _node;
+ private:
+  rclcpp::Node& _node;
   rclcpp::Publisher<px4_msgs::msg::VehicleRatesSetpoint>::SharedPtr _vehicle_rates_setpoint_pub;
 };
 

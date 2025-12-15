@@ -6,22 +6,20 @@
 #include <px4_ros2/control/setpoint_types/experimental/rates.hpp>
 #include <px4_ros2/utils/message_version.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 
-RatesSetpointType::RatesSetpointType(Context & context)
-: SetpointBase(context), _node(context.node())
+RatesSetpointType::RatesSetpointType(Context& context)
+    : SetpointBase(context), _node(context.node())
 {
   _vehicle_rates_setpoint_pub =
-    context.node().create_publisher<px4_msgs::msg::VehicleRatesSetpoint>(
-    context.topicNamespacePrefix() + "fmu/in/vehicle_rates_setpoint" +
-    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleRatesSetpoint>(),
-    1);
+      context.node().create_publisher<px4_msgs::msg::VehicleRatesSetpoint>(
+          context.topicNamespacePrefix() + "fmu/in/vehicle_rates_setpoint" +
+              px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleRatesSetpoint>(),
+          1);
 }
 
-void RatesSetpointType::update(
-  const Eigen::Vector3f & rate_setpoints_frd_rad,
-  const Eigen::Vector3f & thrust_setpoint_frd)
+void RatesSetpointType::update(const Eigen::Vector3f& rate_setpoints_frd_rad,
+                               const Eigen::Vector3f& thrust_setpoint_frd)
 {
   onUpdate();
 
@@ -32,7 +30,7 @@ void RatesSetpointType::update(
   sp.thrust_body[0] = thrust_setpoint_frd(0);
   sp.thrust_body[1] = thrust_setpoint_frd(1);
   sp.thrust_body[2] = thrust_setpoint_frd(2);
-  sp.timestamp = 0; // Let PX4 set the timestamp
+  sp.timestamp = 0;  // Let PX4 set the timestamp
   _vehicle_rates_setpoint_pub->publish(sp);
 }
 
@@ -47,4 +45,4 @@ SetpointBase::Configuration RatesSetpointType::getConfiguration()
   config.position_enabled = false;
   return config;
 }
-} // namespace px4_ros2
+}  // namespace px4_ros2

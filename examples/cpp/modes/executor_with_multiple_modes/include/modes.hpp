@@ -4,35 +4,28 @@
  ****************************************************************************/
 #pragma once
 
+#include <Eigen/Core>
 #include <px4_ros2/components/mode.hpp>
 #include <px4_ros2/control/setpoint_types/experimental/rates.hpp>
 #include <px4_ros2/control/setpoint_types/experimental/trajectory.hpp>
-
 #include <rclcpp/rclcpp.hpp>
 
-#include <Eigen/Core>
-
-using namespace std::chrono_literals; // NOLINT
+using namespace std::chrono_literals;  // NOLINT
 
 static const std::string kNameFirst = "Auto-Executor-Start";
 static const std::string kNameSecond = "Auto-Executor-Segment";
 static const std::string kNameThird = "Auto-Executor-End";
 
-class FlightModeTestStart : public px4_ros2::ModeBase
-{
-public:
-  explicit FlightModeTestStart(rclcpp::Node & node)
-  : ModeBase(node, kNameFirst)
+class FlightModeTestStart : public px4_ros2::ModeBase {
+ public:
+  explicit FlightModeTestStart(rclcpp::Node& node) : ModeBase(node, kNameFirst)
   {
     _trajectory_setpoint = std::make_shared<px4_ros2::TrajectorySetpointType>(*this);
   }
 
   ~FlightModeTestStart() override = default;
 
-  void onActivate() override
-  {
-    _activation_time = node().get_clock()->now();
-  }
+  void onActivate() override { _activation_time = node().get_clock()->now(); }
 
   void onDeactivate() override {}
 
@@ -50,26 +43,21 @@ public:
     _trajectory_setpoint->update(velocity);
   }
 
-private:
+ private:
   rclcpp::Time _activation_time{};
   std::shared_ptr<px4_ros2::TrajectorySetpointType> _trajectory_setpoint;
 };
 
-class FlightModeTestSegment : public px4_ros2::ModeBase
-{
-public:
-  explicit FlightModeTestSegment(rclcpp::Node & node)
-  : ModeBase(node, kNameSecond)
+class FlightModeTestSegment : public px4_ros2::ModeBase {
+ public:
+  explicit FlightModeTestSegment(rclcpp::Node& node) : ModeBase(node, kNameSecond)
   {
     _rates_setpoint = std::make_shared<px4_ros2::RatesSetpointType>(*this);
   }
 
   ~FlightModeTestSegment() override = default;
 
-  void onActivate() override
-  {
-    _activation_time = node().get_clock()->now();
-  }
+  void onActivate() override { _activation_time = node().get_clock()->now(); }
 
   void onDeactivate() override {}
 
@@ -87,26 +75,21 @@ public:
     _rates_setpoint->update(rate, thrust);
   }
 
-private:
+ private:
   rclcpp::Time _activation_time{};
   std::shared_ptr<px4_ros2::RatesSetpointType> _rates_setpoint;
 };
 
-class FlightModeTestEnd : public px4_ros2::ModeBase
-{
-public:
-  explicit FlightModeTestEnd(rclcpp::Node & node)
-  : ModeBase(node, kNameThird)
+class FlightModeTestEnd : public px4_ros2::ModeBase {
+ public:
+  explicit FlightModeTestEnd(rclcpp::Node& node) : ModeBase(node, kNameThird)
   {
     _trajectory_setpoint = std::make_shared<px4_ros2::TrajectorySetpointType>(*this);
   }
 
   ~FlightModeTestEnd() override = default;
 
-  void onActivate() override
-  {
-    _activation_time = node().get_clock()->now();
-  }
+  void onActivate() override { _activation_time = node().get_clock()->now(); }
 
   void onDeactivate() override {}
 
@@ -124,7 +107,7 @@ public:
     _trajectory_setpoint->update(velocity);
   }
 
-private:
+ private:
   rclcpp::Time _activation_time{};
   std::shared_ptr<px4_ros2::TrajectorySetpointType> _trajectory_setpoint;
 };

@@ -6,29 +6,28 @@
 #include <px4_ros2/control/setpoint_types/experimental/trajectory.hpp>
 #include <px4_ros2/utils/message_version.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 
-TrajectorySetpointType::TrajectorySetpointType(Context & context, bool local_position_is_optional)
-: SetpointBase(context), _node(context.node()), _local_position_is_optional(
-    local_position_is_optional)
+TrajectorySetpointType::TrajectorySetpointType(Context& context, bool local_position_is_optional)
+    : SetpointBase(context),
+      _node(context.node()),
+      _local_position_is_optional(local_position_is_optional)
 {
   _trajectory_setpoint_pub = context.node().create_publisher<px4_msgs::msg::TrajectorySetpoint>(
-    context.topicNamespacePrefix() + "fmu/in/trajectory_setpoint" +
-    px4_ros2::getMessageNameVersion<px4_msgs::msg::TrajectorySetpoint>(),
-    1);
+      context.topicNamespacePrefix() + "fmu/in/trajectory_setpoint" +
+          px4_ros2::getMessageNameVersion<px4_msgs::msg::TrajectorySetpoint>(),
+      1);
 }
 
-void TrajectorySetpointType::update(
-  const Eigen::Vector3f & velocity_ned_m_s,
-  const std::optional<Eigen::Vector3f> & acceleration_ned_m_s2,
-  std::optional<float> yaw_ned_rad,
-  std::optional<float> yaw_rate_ned_rad_s)
+void TrajectorySetpointType::update(const Eigen::Vector3f& velocity_ned_m_s,
+                                    const std::optional<Eigen::Vector3f>& acceleration_ned_m_s2,
+                                    std::optional<float> yaw_ned_rad,
+                                    std::optional<float> yaw_rate_ned_rad_s)
 {
   onUpdate();
 
   px4_msgs::msg::TrajectorySetpoint sp{};
-  sp.timestamp = 0; // Let PX4 set the timestamp
+  sp.timestamp = 0;  // Let PX4 set the timestamp
 
   sp.position[0] = sp.position[1] = sp.position[2] = NAN;
   sp.velocity[0] = velocity_ned_m_s.x();
@@ -44,12 +43,12 @@ void TrajectorySetpointType::update(
   _trajectory_setpoint_pub->publish(sp);
 }
 
-void TrajectorySetpointType::update(const TrajectorySetpoint & setpoint)
+void TrajectorySetpointType::update(const TrajectorySetpoint& setpoint)
 {
   onUpdate();
 
   px4_msgs::msg::TrajectorySetpoint sp{};
-  sp.timestamp = 0; // Let PX4 set the timestamp
+  sp.timestamp = 0;  // Let PX4 set the timestamp
 
   sp.position[0] = setpoint.position_ned_m_x.value_or(NAN);
   sp.position[1] = setpoint.position_ned_m_y.value_or(NAN);
@@ -66,13 +65,12 @@ void TrajectorySetpointType::update(const TrajectorySetpoint & setpoint)
   _trajectory_setpoint_pub->publish(sp);
 }
 
-void TrajectorySetpointType::updatePosition(
-  const Eigen::Vector3f & position_ned_m)
+void TrajectorySetpointType::updatePosition(const Eigen::Vector3f& position_ned_m)
 {
   onUpdate();
 
   px4_msgs::msg::TrajectorySetpoint sp{};
-  sp.timestamp = 0; // Let PX4 set the timestamp
+  sp.timestamp = 0;  // Let PX4 set the timestamp
 
   sp.position[0] = position_ned_m.x();
   sp.position[1] = position_ned_m.y();
@@ -98,4 +96,4 @@ SetpointBase::Configuration TrajectorySetpointType::getConfiguration()
   config.local_position_is_optional = _local_position_is_optional;
   return config;
 }
-} // namespace px4_ros2
+}  // namespace px4_ros2

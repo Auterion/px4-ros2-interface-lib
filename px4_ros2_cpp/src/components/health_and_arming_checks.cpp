@@ -3,81 +3,77 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
-#include "registration.hpp"
 #include "px4_ros2/components/health_and_arming_checks.hpp"
-#include "px4_ros2/utils/message_version.hpp"
 
 #include <cassert>
 #include <utility>
 
+#include "px4_ros2/utils/message_version.hpp"
+#include "registration.hpp"
+
 using namespace std::chrono_literals;
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 
-HealthAndArmingChecks::HealthAndArmingChecks(
-  rclcpp::Node & node, CheckCallback check_callback,
-  const std::string & topic_namespace_prefix)
-: _node(node), _registration(std::make_shared<Registration>(node, topic_namespace_prefix)),
-  _check_callback(std::move(check_callback))
+HealthAndArmingChecks::HealthAndArmingChecks(rclcpp::Node& node, CheckCallback check_callback,
+                                             const std::string& topic_namespace_prefix)
+    : _node(node),
+      _registration(std::make_shared<Registration>(node, topic_namespace_prefix)),
+      _check_callback(std::move(check_callback))
 {
   _arming_check_reply_pub = _node.create_publisher<px4_msgs::msg::ArmingCheckReply>(
-    topic_namespace_prefix + "fmu/in/arming_check_reply" +
-    px4_ros2::getMessageNameVersion<px4_msgs::msg::ArmingCheckReply>(),
-    1);
+      topic_namespace_prefix + "fmu/in/arming_check_reply" +
+          px4_ros2::getMessageNameVersion<px4_msgs::msg::ArmingCheckReply>(),
+      1);
 
   _arming_check_request_sub = _node.create_subscription<px4_msgs::msg::ArmingCheckRequest>(
-    topic_namespace_prefix + "fmu/out/arming_check_request" +
-    px4_ros2::getMessageNameVersion<px4_msgs::msg::ArmingCheckRequest>(),
-    rclcpp::QoS(1).best_effort(),
-    [this](px4_msgs::msg::ArmingCheckRequest::UniquePtr msg) {
+      topic_namespace_prefix + "fmu/out/arming_check_request" +
+          px4_ros2::getMessageNameVersion<px4_msgs::msg::ArmingCheckRequest>(),
+      rclcpp::QoS(1).best_effort(), [this](px4_msgs::msg::ArmingCheckRequest::UniquePtr msg) {
+        RCLCPP_DEBUG_ONCE(_node.get_logger(), "Arming check request (id=%i, only printed once)",
+                          msg->request_id);
 
-      RCLCPP_DEBUG_ONCE(
-        _node.get_logger(), "Arming check request (id=%i, only printed once)",
-        msg->request_id);
+        if (_registration->registered()) {
+          px4_msgs::msg::ArmingCheckReply reply{};
+          reply.registration_id = _registration->armingCheckId();
+          reply.request_id = msg->request_id;
+          reply.can_arm_and_run = true;
 
-      if (_registration->registered()) {
-        px4_msgs::msg::ArmingCheckReply reply{};
-        reply.registration_id = _registration->armingCheckId();
-        reply.request_id = msg->request_id;
-        reply.can_arm_and_run = true;
+          HealthAndArmingCheckReporter reporter(reply);
+          _check_callback(reporter);
 
-        HealthAndArmingCheckReporter reporter(reply);
-        _check_callback(reporter);
+          _mode_requirements.fillArmingCheckReply(reply);
 
-        _mode_requirements.fillArmingCheckReply(reply);
+          reply.timestamp = 0;  // Let PX4 set the timestamp
+          _arming_check_reply_pub->publish(reply);
 
-        reply.timestamp = 0; // Let PX4 set the timestamp
-        _arming_check_reply_pub->publish(reply);
+          // Check if our registration id is still valid. If not, we still send the reply,
+          // as it might be flagged as unresponsive, but we don't update the timer check.
+          // The first request might not have the bit set yet.
+          if (_first_request || (msg->valid_registrations_mask & (1U << reply.registration_id))) {
+            _check_triggered = true;
+          } else {
+            RCLCPP_ERROR_ONCE(_node.get_logger(),
+                              "Registration id %i is flagged as invalid (only printed once)",
+                              reply.registration_id);
+          }
+          _first_request = false;
 
-        // Check if our registration id is still valid. If not, we still send the reply,
-        // as it might be flagged as unresponsive, but we don't update the timer check.
-        // The first request might not have the bit set yet.
-        if (_first_request || (msg->valid_registrations_mask & (1U << reply.registration_id))) {
-          _check_triggered = true;
         } else {
-          RCLCPP_ERROR_ONCE(
-            _node.get_logger(), "Registration id %i is flagged as invalid (only printed once)",
-            reply.registration_id);
+          RCLCPP_DEBUG(_node.get_logger(), "...not registered yet");
         }
-        _first_request = false;
+      });
 
-      } else {
-        RCLCPP_DEBUG(_node.get_logger(), "...not registered yet");
-      }
-    });
-
-  _watchdog_timer =
-    _node.create_wall_timer(4s, [this] {watchdogTimerUpdate();});
+  _watchdog_timer = _node.create_wall_timer(4s, [this] { watchdogTimerUpdate(); });
 }
 
-void HealthAndArmingChecks::overrideRegistration(const std::shared_ptr<Registration> & registration)
+void HealthAndArmingChecks::overrideRegistration(const std::shared_ptr<Registration>& registration)
 {
   assert(!_registration->registered());
   _registration = registration;
 }
 
-bool HealthAndArmingChecks::doRegister(const std::string & name)
+bool HealthAndArmingChecks::doRegister(const std::string& name)
 {
   assert(!_registration->registered());
   RegistrationSettings settings{};
@@ -93,7 +89,7 @@ void HealthAndArmingChecks::watchdogTimerUpdate()
     if (!_check_triggered && _shutdown_on_timeout) {
       rclcpp::shutdown();
       throw Exception(
-              "Timeout, no request received from FMU, exiting (this can happen on FMU reboots)");
+          "Timeout, no request received from FMU, exiting (this can happen on FMU reboots)");
     }
 
     _check_triggered = false;
@@ -104,4 +100,4 @@ void HealthAndArmingChecks::watchdogTimerUpdate()
   }
 }
 
-} // namespace px4_ros2
+}  // namespace px4_ros2

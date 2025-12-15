@@ -5,13 +5,11 @@
 
 #pragma once
 
-#include <px4_msgs/msg/vehicle_command.hpp>
 #include <Eigen/Core>
-
+#include <px4_msgs/msg/vehicle_command.hpp>
 #include <px4_ros2/common/setpoint_base.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 /** \ingroup control
  *  @{
  */
@@ -22,18 +20,17 @@ namespace px4_ros2
  * It maps to the 'Peripheral Actuator Set' output functions on the PX4 side.
  * This can be used by a mode independent from the setpoints.
  */
-class PeripheralActuatorControls
-{
-public:
+class PeripheralActuatorControls {
+ public:
   static constexpr int kNumActuators = 6;
 
-  explicit PeripheralActuatorControls(Context & context);
+  explicit PeripheralActuatorControls(Context& context);
 
   /**
    * Control actuators
    * @param values range [-1, 1], NAN=ignore value
    */
-  void set(const Eigen::Matrix<float, kNumActuators, 1> & values);
+  void set(const Eigen::Matrix<float, kNumActuators, 1>& values);
 
   /**
    * Sets a single actuator output
@@ -42,8 +39,8 @@ public:
    */
   void set(float value, unsigned index = 0);
 
-private:
-  rclcpp::Node & _node;
+ private:
+  rclcpp::Node& _node;
   rclcpp::Publisher<px4_msgs::msg::VehicleCommand>::SharedPtr _vehicle_command_pub;
   rclcpp::Time _last_update{};
 };

@@ -5,26 +5,23 @@
 
 #pragma once
 
-#include <px4_msgs/msg/goto_setpoint.hpp>
 #include <Eigen/Eigen>
 #include <optional>
-
+#include <px4_msgs/msg/goto_setpoint.hpp>
 #include <px4_ros2/common/setpoint_base.hpp>
 #include <px4_ros2/utils/geodesic.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 /** \ingroup setpoint_types
  *  @{
  */
 
 /**
  * @brief Setpoint type for smooth position and heading control
-*/
-class MulticopterGotoSetpointType : public SetpointBase
-{
-public:
-  explicit MulticopterGotoSetpointType(Context & context);
+ */
+class MulticopterGotoSetpointType : public SetpointBase {
+ public:
+  explicit MulticopterGotoSetpointType(Context& context);
 
   ~MulticopterGotoSetpointType() override = default;
 
@@ -41,29 +38,24 @@ public:
    * @param max_vertical_speed [m/s] in D-axis of NED earth-fixed frame
    * @param max_heading_rate [rad/s] about D-axis of NED earth-fixed frame
    */
-  void update(
-    const Eigen::Vector3f & position,
-    const std::optional<float> & heading = {},
-    const std::optional<float> & max_horizontal_speed = {},
-    const std::optional<float> & max_vertical_speed = {},
-    const std::optional<float> & max_heading_rate = {}
-  );
+  void update(const Eigen::Vector3f& position, const std::optional<float>& heading = {},
+              const std::optional<float>& max_horizontal_speed = {},
+              const std::optional<float>& max_vertical_speed = {},
+              const std::optional<float>& max_heading_rate = {});
 
-  float desiredUpdateRateHz() override {return 30.f;}
+  float desiredUpdateRateHz() override { return 30.f; }
 
-private:
-  rclcpp::Node & _node;
-  rclcpp::Publisher<px4_msgs::msg::GotoSetpoint>::SharedPtr
-    _goto_setpoint_pub;
+ private:
+  rclcpp::Node& _node;
+  rclcpp::Publisher<px4_msgs::msg::GotoSetpoint>::SharedPtr _goto_setpoint_pub;
 };
 
 /**
  * @brief Setpoint type for smooth global position and heading control
-*/
-class MulticopterGotoGlobalSetpointType
-{
-public:
-  explicit MulticopterGotoGlobalSetpointType(Context & context);
+ */
+class MulticopterGotoGlobalSetpointType {
+ public:
+  explicit MulticopterGotoGlobalSetpointType(Context& context);
 
   ~MulticopterGotoGlobalSetpointType() = default;
 
@@ -78,16 +70,13 @@ public:
    * @param max_vertical_speed [m/s] in D-axis of NED earth-fixed frame
    * @param max_heading_rate [rad/s] about D-axis of NED earth-fixed frame
    */
-  void update(
-    const Eigen::Vector3d & global_position,
-    const std::optional<float> & heading = {},
-    const std::optional<float> & max_horizontal_speed = {},
-    const std::optional<float> & max_vertical_speed = {},
-    const std::optional<float> & max_heading_rate = {}
-  );
+  void update(const Eigen::Vector3d& global_position, const std::optional<float>& heading = {},
+              const std::optional<float>& max_horizontal_speed = {},
+              const std::optional<float>& max_vertical_speed = {},
+              const std::optional<float>& max_heading_rate = {});
 
-private:
-  rclcpp::Node & _node;
+ private:
+  rclcpp::Node& _node;
   std::unique_ptr<MapProjection> _map_projection;
   std::shared_ptr<MulticopterGotoSetpointType> _goto_setpoint;
 };

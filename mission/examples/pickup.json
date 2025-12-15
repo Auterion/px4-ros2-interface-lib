@@ -30,7 +30,11 @@
         "type": "pickup",
         "__comment__": "Pickup coordinate is the previous waypoint",
         "arg1": 4372,
-        "arg2": [1, 2, 3],
+        "arg2": [
+          1,
+          2,
+          3
+        ],
         "arg3": false,
         "id": "custom action item id 1"
       },

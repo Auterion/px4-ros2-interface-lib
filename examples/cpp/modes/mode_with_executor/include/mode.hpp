@@ -4,34 +4,27 @@
  ****************************************************************************/
 #pragma once
 
+#include <Eigen/Core>
 #include <px4_ros2/components/mode.hpp>
 #include <px4_ros2/components/mode_executor.hpp>
 #include <px4_ros2/components/wait_for_fmu.hpp>
 #include <px4_ros2/control/setpoint_types/experimental/trajectory.hpp>
-
 #include <rclcpp/rclcpp.hpp>
 
-#include <Eigen/Core>
-
-using namespace std::chrono_literals; // NOLINT
+using namespace std::chrono_literals;  // NOLINT
 
 static const std::string kName = "Autonomous Executor";
 
-class FlightModeTest : public px4_ros2::ModeBase
-{
-public:
-  explicit FlightModeTest(rclcpp::Node & node)
-  : ModeBase(node, kName)
+class FlightModeTest : public px4_ros2::ModeBase {
+ public:
+  explicit FlightModeTest(rclcpp::Node& node) : ModeBase(node, kName)
   {
     _trajectory_setpoint = std::make_shared<px4_ros2::TrajectorySetpointType>(*this);
   }
 
   ~FlightModeTest() override = default;
 
-  void onActivate() override
-  {
-    _activation_time = node().get_clock()->now();
-  }
+  void onActivate() override { _activation_time = node().get_clock()->now(); }
 
   void onDeactivate() override {}
 
@@ -49,22 +42,20 @@ public:
     _trajectory_setpoint->update(velocity);
   }
 
-private:
+ private:
   rclcpp::Time _activation_time{};
   std::shared_ptr<px4_ros2::TrajectorySetpointType> _trajectory_setpoint;
 };
 
-class ModeExecutorTest : public px4_ros2::ModeExecutorBase
-{
-public:
-  explicit ModeExecutorTest(px4_ros2::ModeBase & owned_mode)
-  : ModeExecutorBase(px4_ros2::ModeExecutorBase::Settings{}, owned_mode),
-    _node(owned_mode.node())
+class ModeExecutorTest : public px4_ros2::ModeExecutorBase {
+ public:
+  explicit ModeExecutorTest(px4_ros2::ModeBase& owned_mode)
+      : ModeExecutorBase(px4_ros2::ModeExecutorBase::Settings{}, owned_mode),
+        _node(owned_mode.node())
   {
   }
 
-  enum class State
-  {
+  enum class State {
     Reset,
     TakingOff,
     MyMode,
@@ -72,21 +63,15 @@ public:
     WaitUntilDisarmed,
   };
 
-  void onActivate() override
-  {
-    runState(State::TakingOff, px4_ros2::Result::Success);
-  }
+  void onActivate() override { runState(State::TakingOff, px4_ros2::Result::Success); }
 
-  void onDeactivate(DeactivateReason reason) override
-  {
-  }
+  void onDeactivate(DeactivateReason reason) override {}
 
   void runState(State state, px4_ros2::Result previous_result)
   {
     if (previous_result != px4_ros2::Result::Success) {
-      RCLCPP_ERROR(
-        _node.get_logger(), "State %i: previous state failed: %s", (int)state,
-        resultToString(previous_result));
+      RCLCPP_ERROR(_node.get_logger(), "State %i: previous state failed: %s", (int)state,
+                   resultToString(previous_result));
       return;
     }
 
@@ -97,29 +82,26 @@ public:
         break;
 
       case State::TakingOff:
-        takeoff([this](px4_ros2::Result result) {runState(State::MyMode, result);});
+        takeoff([this](px4_ros2::Result result) { runState(State::MyMode, result); });
         break;
 
       case State::MyMode:
-        scheduleMode(
-          ownedMode().id(), [this](px4_ros2::Result result) {
-            runState(State::RTL, result);
-          });
+        scheduleMode(ownedMode().id(),
+                     [this](px4_ros2::Result result) { runState(State::RTL, result); });
         break;
 
       case State::RTL:
-        rtl([this](px4_ros2::Result result) {runState(State::WaitUntilDisarmed, result);});
+        rtl([this](px4_ros2::Result result) { runState(State::WaitUntilDisarmed, result); });
         break;
 
       case State::WaitUntilDisarmed:
-        waitUntilDisarmed(
-          [this](px4_ros2::Result result) {
-            RCLCPP_INFO(_node.get_logger(), "All states complete (%s)", resultToString(result));
-          });
+        waitUntilDisarmed([this](px4_ros2::Result result) {
+          RCLCPP_INFO(_node.get_logger(), "All states complete (%s)", resultToString(result));
+        });
         break;
     }
   }
 
-private:
-  rclcpp::Node & _node;
+ private:
+  rclcpp::Node& _node;
 };

@@ -11,23 +11,23 @@
  *     1. FuseAll: Sends measurements with all fields set. Expects cs_aux_gpos to be set to true.
  */
 
-
 #include <gtest/gtest.h>
-#include <rclcpp/rclcpp.hpp>
+
 #include <px4_msgs/msg/estimator_status_flags.hpp>
 #include <px4_ros2/navigation/experimental/global_position_measurement_interface.hpp>
-#include <px4_ros2/utils/message_version.hpp>
 #include <px4_ros2/odometry/global_position.hpp>
+#include <px4_ros2/utils/message_version.hpp>
+#include <rclcpp/rclcpp.hpp>
+
 #include "util.hpp"
 
 using namespace std::chrono_literals;
-using px4_ros2::GlobalPositionMeasurement, px4_ros2::GlobalPositionMeasurementInterface,
-px4_ros2::OdometryGlobalPosition;
 using px4_msgs::msg::EstimatorStatusFlags;
+using px4_ros2::GlobalPositionMeasurement, px4_ros2::GlobalPositionMeasurementInterface,
+    px4_ros2::OdometryGlobalPosition;
 
-class GlobalPositionInterfaceTest : public BaseTest
-{
-protected:
+class GlobalPositionInterfaceTest : public BaseTest {
+ protected:
   void SetUp() override
   {
     _node = initNode();
@@ -37,17 +37,14 @@ protected:
     _global_navigation_interface = std::make_shared<GlobalPositionMeasurementInterface>(*_node);
     _position_interface = std::make_shared<OdometryGlobalPosition>(*_global_navigation_interface);
 
-    ASSERT_TRUE(_global_navigation_interface->doRegister()) <<
-      "Failed to register GlobalPositionMeasurementInterface.";
+    ASSERT_TRUE(_global_navigation_interface->doRegister())
+        << "Failed to register GlobalPositionMeasurementInterface.";
 
     // Subscribe to PX4 EKF estimator status flags
     _subscriber = _node->create_subscription<EstimatorStatusFlags>(
-      "fmu/out/estimator_status_flags" + px4_ros2::getMessageNameVersion<EstimatorStatusFlags>(),
-      rclcpp::QoS(
-        10).best_effort(),
-      [this](EstimatorStatusFlags::UniquePtr msg) {
-        _estimator_status_flags = std::move(msg);
-      });
+        "fmu/out/estimator_status_flags" + px4_ros2::getMessageNameVersion<EstimatorStatusFlags>(),
+        rclcpp::QoS(10).best_effort(),
+        [this](EstimatorStatusFlags::UniquePtr msg) { _estimator_status_flags = std::move(msg); });
   }
 
   void waitUntilFlagsReset()
@@ -71,9 +68,8 @@ protected:
   }
 
   void waitForMeasurementUpdate(
-    std::unique_ptr<GlobalPositionMeasurement> measurement,
-    const std::function<bool(const EstimatorStatusFlags::UniquePtr &)> & is_fused_getter
-  )
+      std::unique_ptr<GlobalPositionMeasurement> measurement,
+      const std::function<bool(const EstimatorStatusFlags::UniquePtr&)>& is_fused_getter)
   {
     auto start_time = _node->now();
 
@@ -82,18 +78,18 @@ protected:
       // Check timeout
       const auto elapsed_time = _node->now() - start_time;
       if (elapsed_time >= kTimeoutDuration) {
-        ASSERT_NE(_estimator_status_flags, nullptr) <<
-          "Missing feedback from PX4: no estimator status flags published over fmu/out/estimator_status_flags.";
-        EXPECT_TRUE(is_fused_getter(_estimator_status_flags)) <<
-          "Position measurement update was not fused into the PX4 EKF.";
+        ASSERT_NE(_estimator_status_flags, nullptr)
+            << "Missing feedback from PX4: no estimator status flags published over "
+               "fmu/out/estimator_status_flags.";
+        EXPECT_TRUE(is_fused_getter(_estimator_status_flags))
+            << "Position measurement update was not fused into the PX4 EKF.";
         break;
       }
 
       // Send measurement
       measurement->timestamp_sample = _node->get_clock()->now();
-      ASSERT_NO_THROW(
-        _global_navigation_interface->update(*measurement)
-      ) << "Failed to send position measurement update via GlobalPositionMeasurementInterface.";
+      ASSERT_NO_THROW(_global_navigation_interface->update(*measurement))
+          << "Failed to send position measurement update via GlobalPositionMeasurementInterface.";
 
       rclcpp::sleep_for(kSleepInterval);
       _executor.spin_some();
@@ -113,7 +109,8 @@ protected:
   static constexpr std::chrono::milliseconds kSleepInterval = 50ms;
 };
 
-TEST_F(GlobalPositionInterfaceTest, fuseAll) {
+TEST_F(GlobalPositionInterfaceTest, fuseAll)
+{
   auto measurement = std::make_unique<GlobalPositionMeasurement>();
 
   // Wait for the vehicle position
@@ -130,12 +127,11 @@ TEST_F(GlobalPositionInterfaceTest, fuseAll) {
   }
   const auto position = _position_interface->position();
 
-  measurement->lat_lon = Eigen::Vector2d {position.x(), position.y()};
+  measurement->lat_lon = Eigen::Vector2d{position.x(), position.y()};
   measurement->horizontal_variance = 0.01F;
   measurement->altitude_msl = position.z();
   measurement->vertical_variance = 0.01F;
   waitForMeasurementUpdate(
-    std::move(measurement), [](const EstimatorStatusFlags::UniquePtr & flags) {
-      return flags->cs_aux_gpos;
-    });
+      std::move(measurement),
+      [](const EstimatorStatusFlags::UniquePtr& flags) { return flags->cs_aux_gpos; });
 }

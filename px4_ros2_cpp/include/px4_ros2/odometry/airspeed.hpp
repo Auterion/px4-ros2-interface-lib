@@ -10,8 +10,7 @@
 #include <px4_ros2/common/context.hpp>
 #include <px4_ros2/utils/subscription.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 /** \ingroup odometry
  *  @{
  */
@@ -19,17 +18,16 @@ namespace px4_ros2
 /**
  * @brief Provides access to the vehicle's airspeed estimates
  */
-class OdometryAirspeed : public Subscription<px4_msgs::msg::AirspeedValidated>
-{
-public:
-  explicit OdometryAirspeed(Context & context);
+class OdometryAirspeed : public Subscription<px4_msgs::msg::AirspeedValidated> {
+ public:
+  explicit OdometryAirspeed(Context& context);
 
   float indicatedAirspeed() const
   {
     if (!lastValid()) {
       return NAN;
     }
-    const px4_msgs::msg::AirspeedValidated & aspd = last();
+    const px4_msgs::msg::AirspeedValidated& aspd = last();
     return aspd.indicated_airspeed_m_s;
   }
 
@@ -38,7 +36,7 @@ public:
     if (!lastValid()) {
       return NAN;
     }
-    const px4_msgs::msg::AirspeedValidated & aspd = last();
+    const px4_msgs::msg::AirspeedValidated& aspd = last();
     return aspd.calibrated_airspeed_m_s;
   }
 
@@ -47,7 +45,7 @@ public:
     if (!lastValid()) {
       return NAN;
     }
-    const px4_msgs::msg::AirspeedValidated & aspd = last();
+    const px4_msgs::msg::AirspeedValidated& aspd = last();
     return aspd.true_airspeed_m_s;
   }
 };

@@ -9,10 +9,9 @@
 #include <px4_ros2/common/exception.hpp>
 #include <px4_ros2/components/shared_subscription.hpp>
 
-using namespace std::chrono_literals; // NOLINT
+using namespace std::chrono_literals;  // NOLINT
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 /** \ingroup odometry
  *  @{
  */
@@ -21,27 +20,25 @@ namespace px4_ros2
  * @brief Provides a subscription to arbitrary ROS topics.
  *
  * Allows to register callbacks for new messages and keeps a copy of the latest message.
- * The underlying ROS subscription will be shared between multiple Subscription instances for the same topic.
+ * The underlying ROS subscription will be shared between multiple Subscription instances for the
+ * same topic.
  */
-template<typename RosMessageType>
-class Subscription
-{
-  using UpdateCallback = std::function<void (const RosMessageType &)>;
+template <typename RosMessageType>
+class Subscription {
+  using UpdateCallback = std::function<void(const RosMessageType&)>;
 
-public:
-  Subscription(Context & context, const std::string & topic)
-  : _node(context.node())
+ public:
+  Subscription(Context& context, const std::string& topic) : _node(context.node())
   {
     const std::string namespaced_topic = context.topicNamespacePrefix() + topic;
     _callback_instance = SharedSubscription<RosMessageType>::create(
-      _node, namespaced_topic,
-      [this](const typename RosMessageType::UniquePtr & msg) {
-        _last = *msg;
-        _last_message_time = _node.get_clock()->now();
-        for (const auto & callback : _callbacks) {
-          callback(_last);
-        }
-      });
+        _node, namespaced_topic, [this](const typename RosMessageType::UniquePtr& msg) {
+          _last = *msg;
+          _last_message_time = _node.get_clock()->now();
+          for (const auto& callback : _callbacks) {
+            callback(_last);
+          }
+        });
   }
 
   /**
@@ -49,10 +46,7 @@ public:
    *
    * @param callback the callback function
    */
-  void onUpdate(const UpdateCallback & callback)
-  {
-    _callbacks.push_back(callback);
-  }
+  void onUpdate(const UpdateCallback& callback) { _callbacks.push_back(callback); }
 
   /**
    * @brief Get the last-received message.
@@ -60,7 +54,7 @@ public:
    * @returns the last-received ROS message
    * @throws std::runtime_error when no messages have been received
    */
-  const RosMessageType & last() const
+  const RosMessageType& last() const
   {
     if (!hasReceivedMessages()) {
       throw Exception("No messages received.");
@@ -73,10 +67,7 @@ public:
    *
    * @returns the time at which the last ROS message was received
    */
-  const rclcpp::Time & lastTime() const
-  {
-    return _last_message_time;
-  }
+  const rclcpp::Time& lastTime() const { return _last_message_time; }
 
   /**
    * @brief Check whether the last message is still valid.
@@ -85,28 +76,25 @@ public:
    * @param max_delay the maximum delay between the current time and when the message was received
    * @return true if the last message was received within the maximum delay
    */
-  template<typename DurationT = std::milli>
+  template <typename DurationT = std::milli>
   bool lastValid(const std::chrono::duration<int64_t, DurationT> max_delay = 500ms) const
   {
     return hasReceivedMessages() && _node.get_clock()->now() - _last_message_time < max_delay;
   }
 
-protected:
-  rclcpp::Node & _node;
+ protected:
+  rclcpp::Node& _node;
 
-private:
+ private:
   SharedSubscriptionCallbackInstance _callback_instance;
 
   RosMessageType _last;
   rclcpp::Time _last_message_time;
 
-  std::vector<std::function<void(const RosMessageType &)>> _callbacks{};
+  std::vector<std::function<void(const RosMessageType&)>> _callbacks{};
 
-  bool hasReceivedMessages() const
-  {
-    return _last_message_time.seconds() != 0;
-  }
+  bool hasReceivedMessages() const { return _last_message_time.seconds() != 0; }
 };
 
 /** @}*/
-} // namespace px4_ros2
+}  // namespace px4_ros2

@@ -1,5 +1,5 @@
 /****************************************************************************
-* Copyright (c) 2025 PX4 Development Team.
+ * Copyright (c) 2025 PX4 Development Team.
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 #pragma once
@@ -10,21 +10,16 @@
 /**
  * @brief Example camera trigger action
  *
- * This is an example for a continuous action, i.e. an action that is ongoing in the background while the mission
- * continues.
- * By storing the state of the action while it is running, the state is restored when the mission is interrupted
- * and resumed later on.
+ * This is an example for a continuous action, i.e. an action that is ongoing in the background
+ * while the mission continues. By storing the state of the action while it is running, the state is
+ * restored when the mission is interrupted and resumed later on.
  */
-class CameraTriggerAction : public px4_ros2::ActionInterface
-{
-public:
-  explicit CameraTriggerAction(px4_ros2::ModeBase & mode)
-  : _node(mode.node()) {}
-  std::string name() const override {return "cameraTrigger";}
+class CameraTriggerAction : public px4_ros2::ActionInterface {
+ public:
+  explicit CameraTriggerAction(px4_ros2::ModeBase& mode) : _node(mode.node()) {}
+  std::string name() const override { return "cameraTrigger"; }
 
-  bool canRun(
-    const px4_ros2::ActionArguments & arguments,
-    std::vector<std::string> & errors) override
+  bool canRun(const px4_ros2::ActionArguments& arguments, std::vector<std::string>& errors) override
   {
     // Require an 'action' argument
     if (!arguments.contains("action")) {
@@ -34,10 +29,9 @@ public:
     return true;
   }
 
-  void run(
-    const std::shared_ptr<px4_ros2::ActionHandler> & handler,
-    const px4_ros2::ActionArguments & arguments,
-    const std::function<void()> & on_completed) override
+  void run(const std::shared_ptr<px4_ros2::ActionHandler>& handler,
+           const px4_ros2::ActionArguments& arguments,
+           const std::function<void()>& on_completed) override
   {
     const auto action = arguments.at<std::string>("action");
     if (action == "start") {
@@ -59,15 +53,9 @@ public:
     }
   }
 
-private:
-  void startCameraTrigger()
-  {
-    RCLCPP_INFO(_node.get_logger(), "Starting camera trigger");
-  }
-  void stopCameraTrigger()
-  {
-    RCLCPP_INFO(_node.get_logger(), "Stopping camera trigger");
-  }
+ private:
+  void startCameraTrigger() { RCLCPP_INFO(_node.get_logger(), "Starting camera trigger"); }
+  void stopCameraTrigger() { RCLCPP_INFO(_node.get_logger(), "Stopping camera trigger"); }
   std::unique_ptr<px4_ros2::ActionStateKeeper> _state;
-  rclcpp::Node & _node;
+  rclcpp::Node& _node;
 };

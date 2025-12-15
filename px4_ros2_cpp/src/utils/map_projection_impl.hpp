@@ -5,30 +5,28 @@
 
 #pragma once
 
+#include <Eigen/Eigen>
 #include <cmath>
 #include <px4_ros2/utils/geometry.hpp>
-#include <Eigen/Eigen>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 
-static constexpr double kRadiusOfEarth = 6371000;                                    // meters (m)
+static constexpr double kRadiusOfEarth = 6371000;  // meters (m)
 
 /**
  * @brief C++ class for mapping lat/lon coordinates to local coordinates using a reference position
  */
-class MapProjectionImpl final
-{
-private:
-  uint64_t _ref_timestamp{0};       /**< Reference time (microseconds), since system start */
-  double _ref_lat{0.0};             /**< Reference point latitude (radians) */
-  double _ref_lon{0.0};             /**< Reference point longitude (radians) */
-  double _ref_alt_amsl{0.0};        /**< Reference point altitude AMSL (meters) */
+class MapProjectionImpl final {
+ private:
+  uint64_t _ref_timestamp{0}; /**< Reference time (microseconds), since system start */
+  double _ref_lat{0.0};       /**< Reference point latitude (radians) */
+  double _ref_lon{0.0};       /**< Reference point longitude (radians) */
+  double _ref_alt_amsl{0.0};  /**< Reference point altitude AMSL (meters) */
   double _ref_sin_lat{0.0};
   double _ref_cos_lat{0.0};
   bool _ref_init_done{false};
 
-public:
+ public:
   /**
    * @brief Construct a new Map Projection object
    * The generated object will be uninitialized.
@@ -57,27 +55,27 @@ public:
   /**
    * @return true, if the map reference has been initialized before
    */
-  inline bool isInitialized() const {return _ref_init_done;}
+  inline bool isInitialized() const { return _ref_init_done; }
 
   /**
    * @return the timestamp of the reference which the map projection was initialized with
    */
-  inline uint64_t getProjectionReferenceTimestamp() const {return _ref_timestamp;}
+  inline uint64_t getProjectionReferenceTimestamp() const { return _ref_timestamp; }
 
   /**
    * @return the projection reference latitude in degrees
    */
-  inline double getProjectionReferenceLat() const {return radToDeg(_ref_lat);}
+  inline double getProjectionReferenceLat() const { return radToDeg(_ref_lat); }
 
   /**
    * @return the projection reference longitude in degrees
    */
-  inline double getProjectionReferenceLon() const {return radToDeg(_ref_lon);}
+  inline double getProjectionReferenceLon() const { return radToDeg(_ref_lon); }
 
   /**
    * @return the projection reference altitude AMSL in meters
    */
-  inline double getProjectionReferenceAlt() const {return _ref_alt_amsl;}
+  inline double getProjectionReferenceAlt() const { return _ref_alt_amsl; }
 
   /**
    * @return the projection reference position: lat [deg], lon [deg], alt AMSL [m]
@@ -94,7 +92,7 @@ public:
    * @param global_position lat [deg], lon [deg]
    * @return the point in local coordinates as north, east [m]
    */
-  Eigen::Vector2f globalToLocal(const Eigen::Vector2d & global_position) const;
+  Eigen::Vector2f globalToLocal(const Eigen::Vector2d& global_position) const;
 
   /**
    * Transform a point in the geographic coordinate system to the local
@@ -103,12 +101,12 @@ public:
    * @param global_position lat [deg], lon [deg], alt AMSL [m]
    * @return the point in local coordinates as north, east, down [m]
    */
-  inline Eigen::Vector3f globalToLocal(const Eigen::Vector3d & global_position) const
+  inline Eigen::Vector3f globalToLocal(const Eigen::Vector3d& global_position) const
   {
     Eigen::Vector3f local_position;
 
     local_position.template head<2>() =
-      globalToLocal(static_cast<Eigen::Vector2d>(global_position.head(2)));
+        globalToLocal(static_cast<Eigen::Vector2d>(global_position.head(2)));
     local_position.z() = static_cast<float>(_ref_alt_amsl - global_position.z());
     return local_position;
   }
@@ -120,7 +118,7 @@ public:
    * @param local_position north, east [m]
    * @return the point in geographic coordinates as lat [deg], lon [deg]
    */
-  Eigen::Vector2d localToGlobal(const Eigen::Vector2f & local_position) const;
+  Eigen::Vector2d localToGlobal(const Eigen::Vector2f& local_position) const;
 
   /**
    * Transform a point in the local azimuthal equidistant plane to the
@@ -129,12 +127,12 @@ public:
    * @param local_position north, east, down [m]
    * @return the point in geographic coordinates as lat [deg], lon [deg], alt AMSL [m]
    */
-  inline Eigen::Vector3d localToGlobal(const Eigen::Vector3f & local_position) const
+  inline Eigen::Vector3d localToGlobal(const Eigen::Vector3f& local_position) const
   {
     Eigen::Vector3d global_position;
 
     global_position.template head<2>() =
-      localToGlobal(static_cast<Eigen::Vector2f>(local_position.head(2)));
+        localToGlobal(static_cast<Eigen::Vector2f>(local_position.head(2)));
     global_position.z() = static_cast<double>(_ref_alt_amsl - local_position.z());
     return global_position;
   }
