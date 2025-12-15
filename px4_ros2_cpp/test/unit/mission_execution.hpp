@@ -13,6 +13,8 @@
 #include <px4_ros2/utils/visit.hpp>
 
 #include "fake_autopilot.hpp"
+#include "fake_registration.hpp"
+#include "utils/ros_log_capture.hpp"
 
 class TrajectoryExecutorTest : public px4_ros2::TrajectoryExecutorInterface {
  public:
