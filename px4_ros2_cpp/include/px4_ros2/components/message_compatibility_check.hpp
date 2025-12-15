@@ -61,8 +61,8 @@ namespace px4_ros2 {
 
 struct MessageCompatibilityTopic {
   std::string topic_name;  ///< e.g. "fmu/out/vehicle_status"
-  std::string topic_type{
-      ""};  ///< e.g. VehicleStatus. If empty, it's inferred from the topic_name // NOLINT
+  std::string
+      topic_type{};  ///< e.g. VehicleStatus. If empty, it's inferred from the topic_name // NOLINT
 };
 
 /**
