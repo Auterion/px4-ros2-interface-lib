@@ -6,8 +6,9 @@
 #pragma once
 
 #include <rclcpp/rclcpp.hpp>
-using namespace std::chrono_literals; // NOLINT
+using namespace std::chrono_literals;  // NOLINT
 
+// clang-format off
 // Set of all messages used by the library (<topic_name>[, <topic_type>])
 #define ALL_PX4_ROS2_MESSAGES \
   {"fmu/in/actuator_motors"}, \
@@ -51,18 +52,17 @@ using namespace std::chrono_literals; // NOLINT
   {"fmu/out/vehicle_local_position"}, \
   {"fmu/out/vehicle_status"}, \
   {"fmu/out/vtol_vehicle_status"}
+// clang-format on
 
-
-namespace px4_ros2
-{
+namespace px4_ros2 {
 /** \ingroup components
  *  @{
  */
 
-struct MessageCompatibilityTopic
-{
-  std::string topic_name;       ///< e.g. "fmu/out/vehicle_status"
-  std::string topic_type{""};       ///< e.g. VehicleStatus. If empty, it's inferred from the topic_name // NOLINT
+struct MessageCompatibilityTopic {
+  std::string topic_name;  ///< e.g. "fmu/out/vehicle_status"
+  std::string topic_type{
+      ""};  ///< e.g. VehicleStatus. If empty, it's inferred from the topic_name // NOLINT
 };
 
 /**
@@ -83,9 +83,9 @@ struct MessageCompatibilityTopic
  * @return true on success
  * @ingroup components
  */
-bool messageCompatibilityCheck(
-  rclcpp::Node & node, const std::vector<MessageCompatibilityTopic> & messages_to_check,
-  const std::string & topic_namespace_prefix = "");
+bool messageCompatibilityCheck(rclcpp::Node& node,
+                               const std::vector<MessageCompatibilityTopic>& messages_to_check,
+                               const std::string& topic_namespace_prefix = "");
 
 /** @}*/
-} // namespace px4_ros2
+}  // namespace px4_ros2

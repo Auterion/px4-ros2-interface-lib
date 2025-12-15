@@ -8,8 +8,7 @@
 #include <memory>
 #include <px4_ros2/mission/mission.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 /** \ingroup mission
  *  @{
  */
@@ -18,18 +17,16 @@ namespace px4_ros2
  * @brief Interface for a trajectory executor
  * @ingroup mission
  */
-class TrajectoryExecutorInterface
-{
-public:
+class TrajectoryExecutorInterface {
+ public:
   TrajectoryExecutorInterface() = default;
-  TrajectoryExecutorInterface(const TrajectoryExecutorInterface &) = delete;
+  TrajectoryExecutorInterface(const TrajectoryExecutorInterface&) = delete;
   virtual ~TrajectoryExecutorInterface() = default;
 
   virtual bool navigationItemTypeSupported(NavigationItemType type) = 0;
   virtual bool frameSupported(MissionFrame mission_frame) = 0;
 
-  struct TrajectoryConfig
-  {
+  struct TrajectoryConfig {
     std::shared_ptr<Mission> trajectory;
     TrajectoryOptions options;
     int start_index{0};
@@ -38,11 +35,10 @@ public:
     std::function<void(int)> on_index_reached;
     std::function<void()> on_failure;
   };
-  virtual void runTrajectory(const TrajectoryConfig & config) = 0;
+  virtual void runTrajectory(const TrajectoryConfig& config) = 0;
 
   virtual void updateSetpoint() = 0;
 };
-
 
 /** @}*/
 } /* namespace px4_ros2 */

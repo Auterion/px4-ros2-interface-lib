@@ -8,22 +8,19 @@
 #include <src/components/registration.hpp>
 #include <utility>
 
-class FakeRegistration : public Registration
-{
-public:
-  explicit FakeRegistration(rclcpp::Node & node)
-  : Registration(node)
-  {}
+class FakeRegistration : public Registration {
+ public:
+  explicit FakeRegistration(rclcpp::Node& node) : Registration(node) {}
   ~FakeRegistration() override = default;
 
-  bool doRegister(const RegistrationSettings & settings) override
+  bool doRegister(const RegistrationSettings& settings) override
   {
     setRegistrationDetails(_arming_check_id, _mode_id, _mode_executor_id, settings.name);
     return true;
   }
   void doUnregister() override {}
 
-private:
+ private:
   const int _arming_check_id{1};
   const px4_ros2::ModeBase::ModeID _mode_id{100};
   const int _mode_executor_id{1};

@@ -3,61 +3,58 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
- #include <px4_ros2/control/vtol.hpp>
- #include <px4_ros2/utils/message_version.hpp>
- #include <rclcpp/rclcpp.hpp>
-
+#include <px4_ros2/control/vtol.hpp>
+#include <px4_ros2/utils/message_version.hpp>
+#include <rclcpp/rclcpp.hpp>
 
 using namespace std::chrono_literals;
 
-static constexpr float kConstantsOneG = 9.80665f; // m/s^2
+static constexpr float kConstantsOneG = 9.80665f;  // m/s^2
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 
-VTOL::VTOL(Context & context, const VTOLConfig & config)
-: _node(context.node()), _config(config)
+VTOL::VTOL(Context& context, const VTOLConfig& config) : _node(context.node()), _config(config)
 {
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
-    context.topicNamespacePrefix() + "fmu/in/vehicle_command" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
-    1);
+      context.topicNamespacePrefix() + "fmu/in/vehicle_command" +
+          px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
+      1);
 
   _vtol_vehicle_status_sub = _node.create_subscription<px4_msgs::msg::VtolVehicleStatus>(
-    context.topicNamespacePrefix() + "fmu/out/vtol_vehicle_status" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VtolVehicleStatus>(),
-    rclcpp::QoS(10).best_effort(),
-    [this](px4_msgs::msg::VtolVehicleStatus::UniquePtr msg) {
+      context.topicNamespacePrefix() + "fmu/out/vtol_vehicle_status" +
+          px4_ros2::getMessageNameVersion<px4_msgs::msg::VtolVehicleStatus>(),
+      rclcpp::QoS(10).best_effort(), [this](px4_msgs::msg::VtolVehicleStatus::UniquePtr msg) {
+        _last_vtol_vehicle_status_received = _node.get_clock()->now();
 
-      _last_vtol_vehicle_status_received = _node.get_clock()->now();
-
-      switch (msg->vehicle_vtol_state) {
-        case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_TRANSITION_TO_FW:
-          _current_state = VTOL::State::TransitionToFixedWing;
-          break;
-        case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_TRANSITION_TO_MC:
-          _current_state = VTOL::State::TransitionToMulticopter;
-          break;
-        case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC:
-          _current_state = VTOL::State::Multicopter;
-          break;
-        case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW:
-          _current_state = VTOL::State::FixedWing;
-          break;
-        default:
-          _current_state = VTOL::State::Undefined;
-      }
-    });
+        switch (msg->vehicle_vtol_state) {
+          case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_TRANSITION_TO_FW:
+            _current_state = VTOL::State::TransitionToFixedWing;
+            break;
+          case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_TRANSITION_TO_MC:
+            _current_state = VTOL::State::TransitionToMulticopter;
+            break;
+          case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC:
+            _current_state = VTOL::State::Multicopter;
+            break;
+          case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW:
+            _current_state = VTOL::State::FixedWing;
+            break;
+          default:
+            _current_state = VTOL::State::Undefined;
+        }
+      });
 
   // Use a shared subscription instance as this is a higher-rate topic
   _vehicle_local_position_cb = SharedSubscription<px4_msgs::msg::VehicleLocalPosition>::create(
-    _node,
-    context.topicNamespacePrefix() + "fmu/out/vehicle_local_position" + px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLocalPosition>(),
-    [this](const px4_msgs::msg::VehicleLocalPosition::UniquePtr & msg) {
-      _vehicle_heading = msg->heading;
-      _vehicle_acceleration_xy = {msg->ax, msg->ay};
-    });
+      _node,
+      context.topicNamespacePrefix() + "fmu/out/vehicle_local_position" +
+          px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLocalPosition>(),
+      [this](const px4_msgs::msg::VehicleLocalPosition::UniquePtr& msg) {
+        _vehicle_heading = msg->heading;
+        _vehicle_acceleration_xy = {msg->ax, msg->ay};
+      });
 
   _last_command_sent = _node.get_clock()->now();
-
 }
 
 bool VTOL::toMulticopter()
@@ -66,9 +63,8 @@ bool VTOL::toMulticopter()
 
   if (now - _last_vtol_vehicle_status_received < 2s) {
     if ((_current_state == VTOL::State::FixedWing ||
-      _current_state == VTOL::State::TransitionToFixedWing) &&
-      (now - _last_command_sent) > 150ms)
-    {
+         _current_state == VTOL::State::TransitionToFixedWing) &&
+        (now - _last_command_sent) > 150ms) {
       _last_command_sent = now;
 
       px4_msgs::msg::VehicleCommand cmd;
@@ -96,9 +92,8 @@ bool VTOL::toFixedwing()
 
   if (now - _last_vtol_vehicle_status_received < 2s) {
     if ((_current_state == VTOL::State::Multicopter ||
-      _current_state == VTOL::State::TransitionToMulticopter) &&
-      (now - _last_command_sent) > 150ms)
-    {
+         _current_state == VTOL::State::TransitionToMulticopter) &&
+        (now - _last_command_sent) > 150ms) {
       _last_command_sent = now;
 
       px4_msgs::msg::VehicleCommand cmd;
@@ -121,35 +116,32 @@ bool VTOL::toFixedwing()
 }
 
 Eigen::Vector3f VTOL::computeAccelerationSetpointDuringTransition(
-  std::optional<float> back_transition_deceleration_m_s2)
+    std::optional<float> back_transition_deceleration_m_s2)
 {
-  const Eigen::Vector2f velocity_xy_direction = {std::cos(_vehicle_heading), std::sin(
-      _vehicle_heading)};
-  const bool is_backtransition = VTOL::getCurrentState() ==
-    VTOL::State::TransitionToMulticopter;
+  const Eigen::Vector2f velocity_xy_direction = {std::cos(_vehicle_heading),
+                                                 std::sin(_vehicle_heading)};
+  const bool is_backtransition = VTOL::getCurrentState() == VTOL::State::TransitionToMulticopter;
 
   float pitch_setpoint = 0.f;
 
   if (is_backtransition) {
-    pitch_setpoint =
-      computePitchSetpointDuringBacktransition(back_transition_deceleration_m_s2);
+    pitch_setpoint = computePitchSetpointDuringBacktransition(back_transition_deceleration_m_s2);
   }
 
-  Eigen::Vector2f acceleration_setpoint_during_transition = tanf(pitch_setpoint) * kConstantsOneG *
-    -velocity_xy_direction;
+  Eigen::Vector2f acceleration_setpoint_during_transition =
+      tanf(pitch_setpoint) * kConstantsOneG * -velocity_xy_direction;
 
   return {acceleration_setpoint_during_transition.x(), acceleration_setpoint_during_transition.y(),
-    NAN};
+          NAN};
 }
 
 float VTOL::computePitchSetpointDuringBacktransition(
-  std::optional<float> back_transition_deceleration_m_s2)
+    std::optional<float> back_transition_deceleration_m_s2)
 {
-
-  const float deceleration_setpoint = back_transition_deceleration_m_s2.value_or(
-    _config.back_transition_deceleration);
-  const Eigen::Vector2f velocity_xy_direction = {std::cos(_vehicle_heading), std::sin(
-      _vehicle_heading)};
+  const float deceleration_setpoint =
+      back_transition_deceleration_m_s2.value_or(_config.back_transition_deceleration);
+  const Eigen::Vector2f velocity_xy_direction = {std::cos(_vehicle_heading),
+                                                 std::sin(_vehicle_heading)};
 
   // Pitch up to reach a negative accel_in_flight_direction otherwise we decelerate too slow
   const float deceleration = -_vehicle_acceleration_xy.dot(velocity_xy_direction);
@@ -166,7 +158,6 @@ float VTOL::computePitchSetpointDuringBacktransition(
   }
 
   if (std::isnan(deceleration)) {
-
     // If no local position samples were ever received by the
     // vehicle local position, the deceleration here is NaN. To guard
     // against that, we return the pitch setpoint but don't update it in that
@@ -181,10 +172,10 @@ float VTOL::computePitchSetpointDuringBacktransition(
 
   // Update back-transition deceleration error integrator
   _decel_error_bt_int +=
-    (_config.back_transition_deceleration_setpoint_to_pitch_i * deceleration_error) * dt;
+      (_config.back_transition_deceleration_setpoint_to_pitch_i * deceleration_error) * dt;
   _decel_error_bt_int = std::clamp(_decel_error_bt_int, 0.f, _config.deceleration_integrator_limit);
 
   return _decel_error_bt_int;
 }
 
-}// namespace px4_ros2
+}  // namespace px4_ros2

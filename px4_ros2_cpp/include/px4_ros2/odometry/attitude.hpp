@@ -11,8 +11,7 @@
 #include <px4_ros2/utils/geometry.hpp>
 #include <px4_ros2/utils/subscription.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 /** \ingroup odometry
  *  @{
  */
@@ -20,10 +19,9 @@ namespace px4_ros2
 /**
  * @brief Provides access to the vehicle's attitude estimate
  */
-class OdometryAttitude : public Subscription<px4_msgs::msg::VehicleAttitude>
-{
-public:
-  explicit OdometryAttitude(Context & context);
+class OdometryAttitude : public Subscription<px4_msgs::msg::VehicleAttitude> {
+ public:
+  explicit OdometryAttitude(Context& context);
 
   /**
    * @brief Get the vehicle's attitude.
@@ -32,7 +30,7 @@ public:
    */
   Eigen::Quaternionf attitude() const
   {
-    const px4_msgs::msg::VehicleAttitude & att = last();
+    const px4_msgs::msg::VehicleAttitude& att = last();
     return Eigen::Quaternionf{att.q[0], att.q[1], att.q[2], att.q[3]};
   }
 
@@ -41,30 +39,21 @@ public:
    *
    * @return the attitude roll in radians within [-pi, pi]
    */
-  float roll() const
-  {
-    return quaternionToRoll(attitude());
-  }
+  float roll() const { return quaternionToRoll(attitude()); }
 
   /**
    * @brief Get the vehicle's pitch in extrinsic RPY order.
    *
    * @return the attitude pitch in radians within [-pi, pi]
    */
-  float pitch() const
-  {
-    return quaternionToPitch(attitude());
-  }
+  float pitch() const { return quaternionToPitch(attitude()); }
 
   /**
    * @brief Get the vehicle's yaw in extrinsic RPY order.
    *
    * @return the attitude yaw in radians within [-pi, pi]
    */
-  float yaw() const
-  {
-    return quaternionToYaw(attitude());
-  }
+  float yaw() const { return quaternionToYaw(attitude()); }
 };
 
 /** @}*/

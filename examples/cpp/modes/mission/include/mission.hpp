@@ -15,15 +15,11 @@
 
 static const std::string kName = "Mission Example";
 
-class Mission
-{
-public:
-  explicit Mission(const std::shared_ptr<rclcpp::Node> & node)
-  : _node(node)
+class Mission {
+ public:
+  explicit Mission(const std::shared_ptr<rclcpp::Node>& node) : _node(node)
   {
-    const auto mission =
-      px4_ros2::Mission(
-      nlohmann::json::parse(
+    const auto mission = px4_ros2::Mission(nlohmann::json::parse(
         R"(
   {
     "version": 1,
@@ -90,33 +86,29 @@ public:
     }
   }
 )"));
-    _mission_executor = std::make_unique<px4_ros2::MissionExecutor>(
-      kName,
-      px4_ros2::MissionExecutor::Configuration().addCustomAction<BasicCustomAction>()
-      .addCustomAction<CameraTriggerAction>()
-      .addCustomAction<ModeAction>()
-      .addCustomAction<PickupAction>()
-      .addCustomAction<CustomTrajectoryAction>(),
-      *node);
+    _mission_executor =
+        std::make_unique<px4_ros2::MissionExecutor>(kName,
+                                                    px4_ros2::MissionExecutor::Configuration()
+                                                        .addCustomAction<BasicCustomAction>()
+                                                        .addCustomAction<CameraTriggerAction>()
+                                                        .addCustomAction<ModeAction>()
+                                                        .addCustomAction<PickupAction>()
+                                                        .addCustomAction<CustomTrajectoryAction>(),
+                                                    *node);
 
     if (!_mission_executor->doRegister()) {
       throw std::runtime_error("Failed to register mission executor");
     }
     _mission_executor->setMission(mission);
 
-    _mission_executor->onProgressUpdate(
-      [&](int current_index) {
-        RCLCPP_INFO(_node->get_logger(), "Current mission index: %i", current_index);
-      });
+    _mission_executor->onProgressUpdate([&](int current_index) {
+      RCLCPP_INFO(_node->get_logger(), "Current mission index: %i", current_index);
+    });
     _mission_executor->onCompleted(
-      [&]
-      {
-        RCLCPP_INFO(_node->get_logger(), "Mission completed callback");
-      });
-
+        [&] { RCLCPP_INFO(_node->get_logger(), "Mission completed callback"); });
   }
 
-private:
+ private:
   std::shared_ptr<rclcpp::Node> _node;
   std::unique_ptr<px4_ros2::MissionExecutor> _mission_executor;
 };

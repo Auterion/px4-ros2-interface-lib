@@ -7,15 +7,13 @@
 
 #include <px4_msgs/msg/arming_check_reply.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 
 /**
  * @brief Requirement flags used by modes
  */
-struct RequirementFlags
-{
-  void fillArmingCheckReply(px4_msgs::msg::ArmingCheckReply & arming_check_reply)
+struct RequirementFlags {
+  void fillArmingCheckReply(px4_msgs::msg::ArmingCheckReply& arming_check_reply)
   {
     arming_check_reply.mode_req_angular_velocity = angular_velocity;
     arming_check_reply.mode_req_attitude = attitude;
@@ -29,12 +27,9 @@ struct RequirementFlags
     arming_check_reply.mode_req_manual_control = manual_control;
   }
 
-  void clearAll()
-  {
-    *this = RequirementFlags{};
-  }
+  void clearAll() { *this = RequirementFlags{}; }
 
-  RequirementFlags & operator|=(const RequirementFlags & other)
+  RequirementFlags& operator|=(const RequirementFlags& other)
   {
     angular_velocity |= other.angular_velocity;
     attitude |= other.attitude;
@@ -57,8 +52,8 @@ struct RequirementFlags
   bool global_position{false};
   bool mission{false};
   bool home_position{false};
-  bool prevent_arming{false}; ///< If set, arming is prevented when the mode is selected
+  bool prevent_arming{false};  ///< If set, arming is prevented when the mode is selected
   bool manual_control{false};
 };
 
-} // namespace px4_ros2
+}  // namespace px4_ros2

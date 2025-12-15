@@ -7,25 +7,22 @@
 #include <px4_ros2/utils/geometry.hpp>
 #include <px4_ros2/utils/message_version.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 
-RoverPositionSetpointType::RoverPositionSetpointType(Context & context)
-: SetpointBase(context), _node(context.node())
+RoverPositionSetpointType::RoverPositionSetpointType(Context& context)
+    : SetpointBase(context), _node(context.node())
 {
   _rover_position_setpoint_pub =
-    context.node().create_publisher<px4_msgs::msg::RoverPositionSetpoint>(
-    context.topicNamespacePrefix() + "fmu/in/rover_position_setpoint" +
-    px4_ros2::getMessageNameVersion<px4_msgs::msg::RoverPositionSetpoint>(),
-    1);
+      context.node().create_publisher<px4_msgs::msg::RoverPositionSetpoint>(
+          context.topicNamespacePrefix() + "fmu/in/rover_position_setpoint" +
+              px4_ros2::getMessageNameVersion<px4_msgs::msg::RoverPositionSetpoint>(),
+          1);
 }
 
-void RoverPositionSetpointType::update(
-  const Eigen::Vector2f & position_ned,
-  const std::optional<Eigen::Vector2f> & start_ned,
-  std::optional<float> cruising_speed,
-  std::optional<float> arrival_speed,
-  std::optional<float> yaw)
+void RoverPositionSetpointType::update(const Eigen::Vector2f& position_ned,
+                                       const std::optional<Eigen::Vector2f>& start_ned,
+                                       std::optional<float> cruising_speed,
+                                       std::optional<float> arrival_speed, std::optional<float> yaw)
 {
   onUpdate();
 
@@ -38,7 +35,7 @@ void RoverPositionSetpointType::update(
   sp.cruising_speed = cruising_speed.value_or(NAN);
   sp.arrival_speed = arrival_speed.value_or(NAN);
   sp.yaw = yaw.value_or(NAN);
-  sp.timestamp = 0; // Let PX4 set the timestamp
+  sp.timestamp = 0;  // Let PX4 set the timestamp
   _rover_position_setpoint_pub->publish(sp);
 }
 
@@ -52,4 +49,4 @@ SetpointBase::Configuration RoverPositionSetpointType::getConfiguration()
   config.position_enabled = true;
   return config;
 }
-} // namespace px4_ros2
+}  // namespace px4_ros2

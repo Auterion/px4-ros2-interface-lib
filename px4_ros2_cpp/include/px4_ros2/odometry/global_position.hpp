@@ -10,8 +10,7 @@
 #include <px4_ros2/common/context.hpp>
 #include <px4_ros2/utils/subscription.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 /** \ingroup odometry
  *  @{
  */
@@ -19,18 +18,14 @@ namespace px4_ros2
 /**
  * @brief Provides access to the vehicle's global position estimate
  */
-class OdometryGlobalPosition : public Subscription<px4_msgs::msg::VehicleGlobalPosition>
-{
-public:
-  explicit OdometryGlobalPosition(Context & context);
+class OdometryGlobalPosition : public Subscription<px4_msgs::msg::VehicleGlobalPosition> {
+ public:
+  explicit OdometryGlobalPosition(Context& context);
 
   /**
    * Check if the last vehicle's global position is valid.
    */
-  bool positionValid() const
-  {
-    return lastValid() && last().lat_lon_valid && last().alt_valid;
-  }
+  bool positionValid() const { return lastValid() && last().lat_lon_valid && last().alt_valid; }
 
   /**
    * @brief Get the vehicle's global position.
@@ -39,7 +34,7 @@ public:
    */
   Eigen::Vector3d position() const
   {
-    const px4_msgs::msg::VehicleGlobalPosition & pos = last();
+    const px4_msgs::msg::VehicleGlobalPosition& pos = last();
     return {pos.lat, pos.lon, pos.alt};
   }
 };

@@ -4,52 +4,54 @@
  ****************************************************************************/
 
 #include "px4_ros2/components/mode.hpp"
-#include "px4_ros2/components/message_compatibility_check.hpp"
-#include "px4_ros2/components/wait_for_fmu.hpp"
-#include "px4_ros2/utils/message_version.hpp"
-#include <px4_msgs/msg/vehicle_status.hpp>
-
-#include "registration.hpp"
 
 #include <cassert>
 #include <cfloat>
+#include <px4_msgs/msg/vehicle_status.hpp>
 #include <utility>
 
-namespace px4_ros2
-{
+#include "px4_ros2/components/message_compatibility_check.hpp"
+#include "px4_ros2/components/wait_for_fmu.hpp"
+#include "px4_ros2/utils/message_version.hpp"
+#include "registration.hpp"
 
-ModeBase::ModeBase(
-  rclcpp::Node & node, ModeBase::Settings settings, const std::string & topic_namespace_prefix)
-: Context(node, topic_namespace_prefix),
-  _registration(std::make_shared<Registration>(node, topic_namespace_prefix)),
-  _settings(std::move(settings)),
-  _health_and_arming_checks(node,
-    [this](auto && reporter) {
-      checkArmingAndRunConditions(std::forward<decltype(reporter)>(reporter));
-    },
-    topic_namespace_prefix), _config_overrides(node, topic_namespace_prefix)
+namespace px4_ros2 {
+
+ModeBase::ModeBase(rclcpp::Node& node, ModeBase::Settings settings,
+                   const std::string& topic_namespace_prefix)
+    : Context(node, topic_namespace_prefix),
+      _registration(std::make_shared<Registration>(node, topic_namespace_prefix)),
+      _settings(std::move(settings)),
+      _health_and_arming_checks(
+          node,
+          [this](auto&& reporter) {
+            checkArmingAndRunConditions(std::forward<decltype(reporter)>(reporter));
+          },
+          topic_namespace_prefix),
+      _config_overrides(node, topic_namespace_prefix)
 {
   if (_settings.prevent_arming) {
     modeRequirements().prevent_arming = true;
   }
-  // Use a globally shared vehicle status instance for consistent callback ordering when using multiple modes/executors
+  // Use a globally shared vehicle status instance for consistent callback ordering when using
+  // multiple modes/executors
   _vehicle_status_sub_cb = SharedSubscription<px4_msgs::msg::VehicleStatus>::create(
-    node, topic_namespace_prefix + "fmu/out/vehicle_status" +
-    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(),
-    [this](
-      const px4_msgs::msg::VehicleStatus::UniquePtr & msg) {
-      if (_registration->registered()) {
-        vehicleStatusUpdated(msg);
-      }
-    });
+      node,
+      topic_namespace_prefix + "fmu/out/vehicle_status" +
+          px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(),
+      [this](const px4_msgs::msg::VehicleStatus::UniquePtr& msg) {
+        if (_registration->registered()) {
+          vehicleStatusUpdated(msg);
+        }
+      });
   _mode_completed_pub = node.create_publisher<px4_msgs::msg::ModeCompleted>(
-    topic_namespace_prefix + "fmu/in/mode_completed" +
-    px4_ros2::getMessageNameVersion<px4_msgs::msg::ModeCompleted>(),
-    1);
+      topic_namespace_prefix + "fmu/in/mode_completed" +
+          px4_ros2::getMessageNameVersion<px4_msgs::msg::ModeCompleted>(),
+      1);
   _config_control_setpoints_pub = node.create_publisher<px4_msgs::msg::VehicleControlMode>(
-    topic_namespace_prefix + "fmu/in/config_control_setpoints" +
-    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleControlMode>(),
-    1);
+      topic_namespace_prefix + "fmu/in/config_control_setpoints" +
+          px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleControlMode>(),
+      1);
 }
 
 ModeBase::ModeID ModeBase::id() const
@@ -57,7 +59,7 @@ ModeBase::ModeID ModeBase::id() const
   return _registration->modeId();
 }
 
-void ModeBase::overrideRegistration(const std::shared_ptr<Registration> & registration)
+void ModeBase::overrideRegistration(const std::shared_ptr<Registration>& registration)
 {
   assert(!_registration->registered());
   _health_and_arming_checks.overrideRegistration(registration);
@@ -73,9 +75,8 @@ bool ModeBase::doRegister()
 {
   assert(!_registration->registered());
 
-  if (!_skip_message_compatibility_check && (!waitForFMU(node(), 15s, topicNamespacePrefix()) ||
-    !defaultMessageCompatibilityCheck()))
-  {
+  if (!_skip_message_compatibility_check &&
+      (!waitForFMU(node(), 15s, topicNamespacePrefix()) || !defaultMessageCompatibilityCheck())) {
     return false;
   }
 
@@ -120,7 +121,7 @@ void ModeBase::callOnActivate()
   onActivate();
 
   if (_setpoint_update_rate_hz > FLT_EPSILON) {
-    updateSetpoint(1.f / _setpoint_update_rate_hz);             // Immediately update
+    updateSetpoint(1.f / _setpoint_update_rate_hz);  // Immediately update
   }
 
   updateSetpointUpdateTimer();
@@ -141,14 +142,13 @@ void ModeBase::updateSetpointUpdateTimer()
   if (activate) {
     if (!_setpoint_update_timer) {
       _setpoint_update_timer = node().create_wall_timer(
-        std::chrono::milliseconds(
-          static_cast<int64_t>(1000.f /
-          _setpoint_update_rate_hz)), [this]() {
-          const auto now = node().get_clock()->now();
-          const float dt_s = (now - _last_setpoint_update).seconds();
-          _last_setpoint_update = now;
-          updateSetpoint(dt_s);
-        });
+          std::chrono::milliseconds(static_cast<int64_t>(1000.f / _setpoint_update_rate_hz)),
+          [this]() {
+            const auto now = node().get_clock()->now();
+            const float dt_s = (now - _last_setpoint_update).seconds();
+            _last_setpoint_update = now;
+            updateSetpoint(dt_s);
+          });
     }
 
   } else {
@@ -170,14 +170,13 @@ void ModeBase::unsubscribeVehicleStatus()
   _vehicle_status_sub_cb.reset();
 }
 
-void ModeBase::vehicleStatusUpdated(
-  const px4_msgs::msg::VehicleStatus::UniquePtr & msg,
-  bool do_not_activate)
+void ModeBase::vehicleStatusUpdated(const px4_msgs::msg::VehicleStatus::UniquePtr& msg,
+                                    bool do_not_activate)
 {
   // Update state
   _is_armed = msg->arming_state == px4_msgs::msg::VehicleStatus::ARMING_STATE_ARMED;
-  const bool is_active = id() == msg->nav_state &&
-    (_is_armed || _settings.activate_even_while_disarmed);
+  const bool is_active =
+      id() == msg->nav_state && (_is_armed || _settings.activate_even_while_disarmed);
 
   if (_is_active != is_active) {
     if (is_active) {
@@ -194,16 +193,15 @@ void ModeBase::vehicleStatusUpdated(
 void ModeBase::completed(Result result)
 {
   if (_completed) {
-    RCLCPP_DEBUG_ONCE(
-      node().get_logger(), "Mode '%s': completed was already called",
-      _registration->name().c_str());
+    RCLCPP_DEBUG_ONCE(node().get_logger(), "Mode '%s': completed was already called",
+                      _registration->name().c_str());
     return;
   }
 
   px4_msgs::msg::ModeCompleted mode_completed{};
   mode_completed.nav_state = static_cast<uint8_t>(id());
   mode_completed.result = static_cast<uint8_t>(result);
-  mode_completed.timestamp = 0; // Let PX4 set the timestamp
+  mode_completed.timestamp = 0;  // Let PX4 set the timestamp
   _mode_completed_pub->publish(mode_completed);
   _completed = true;
 }
@@ -212,22 +210,20 @@ void ModeBase::onAboutToRegister()
 {
   // Move _new_setpoint_types to _setpoint_types and register activation callback
   assert(_setpoint_types.empty());
-  for (auto * setpoint : _new_setpoint_types) {
+  for (auto* setpoint : _new_setpoint_types) {
     _setpoint_types.push_back(setpoint->getSharedPtr());
 
-    setpoint->setShouldActivateCallback(
-      [this, setpoint]() {
-        for (auto & setpoint_type : _setpoint_types) {
-          if (setpoint_type.get() == setpoint) {
-            activateSetpointType(*setpoint);
-            RCLCPP_DEBUG(
-              node().get_logger(), "Mode '%s': changing setpoint type",
-              _registration->name().c_str());
-          } else {
-            setpoint_type->setActive(false);
-          }
+    setpoint->setShouldActivateCallback([this, setpoint]() {
+      for (auto& setpoint_type : _setpoint_types) {
+        if (setpoint_type.get() == setpoint) {
+          activateSetpointType(*setpoint);
+          RCLCPP_DEBUG(node().get_logger(), "Mode '%s': changing setpoint type",
+                       _registration->name().c_str());
+        } else {
+          setpoint_type->setActive(false);
         }
-      });
+      }
+    });
   }
   _new_setpoint_types.clear();
 
@@ -236,9 +232,8 @@ void ModeBase::onAboutToRegister()
 
 bool ModeBase::onRegistered()
 {
-  _config_overrides.setup(
-    px4_msgs::msg::ConfigOverrides::SOURCE_TYPE_MODE,
-    _registration->modeId());
+  _config_overrides.setup(px4_msgs::msg::ConfigOverrides::SOURCE_TYPE_MODE,
+                          _registration->modeId());
 
   if (_setpoint_types.empty()) {
     RCLCPP_FATAL(node().get_logger(), "At least one setpoint type must be created");
@@ -259,8 +254,8 @@ bool ModeBase::onRegistered()
 void ModeBase::updateModeRequirementsFromSetpoints()
 {
   // Set a mode requirement if at least one setypoint type requires it
-  RequirementFlags & requirements = modeRequirements();
-  for (const auto & setpoint_type : _setpoint_types) {
+  RequirementFlags& requirements = modeRequirements();
+  for (const auto& setpoint_type : _setpoint_types) {
     const auto config = setpoint_type->getConfiguration();
 
     requirements.angular_velocity |= config.rates_enabled;
@@ -287,7 +282,7 @@ void ModeBase::setSetpointUpdateRateFromSetpointTypes()
 {
   // Set update rate based on setpoint types
   float max_update_rate = -1.f;
-  for (const auto & setpoint_type : _setpoint_types) {
+  for (const auto& setpoint_type : _setpoint_types) {
     max_update_rate = std::max(max_update_rate, setpoint_type->desiredUpdateRateHz());
   }
   if (max_update_rate > 0.f) {
@@ -295,36 +290,38 @@ void ModeBase::setSetpointUpdateRateFromSetpointTypes()
   }
 }
 
-void ModeBase::activateSetpointType(SetpointBase & setpoint)
+void ModeBase::activateSetpointType(SetpointBase& setpoint)
 {
   setpoint.setActive(true);
   px4_msgs::msg::VehicleControlMode control_mode{};
   control_mode.source_id = static_cast<uint8_t>(id());
   setpoint.getConfiguration().fillControlMode(control_mode);
-  control_mode.timestamp = 0; // Let PX4 set the timestamp
+  control_mode.timestamp = 0;  // Let PX4 set the timestamp
   _config_control_setpoints_pub->publish(control_mode);
 }
 
 bool ModeBase::defaultMessageCompatibilityCheck()
 {
   // Call the compatibility check only once and store the result (in case there are multiple modes)
-  static const bool kResult = messageCompatibilityCheck(
-    node(), {ALL_PX4_ROS2_MESSAGES}, topicNamespacePrefix());
+  static const bool kResult =
+      messageCompatibilityCheck(node(), {ALL_PX4_ROS2_MESSAGES}, topicNamespacePrefix());
   return kResult;
 }
 
-void ModeBase::addSetpointType(SetpointBase * setpoint)
+void ModeBase::addSetpointType(SetpointBase* setpoint)
 {
-  assert(!_registration->registered()); // enforce initialization before registration (i.e. in mode constructor)
-  // setpoint is currently being constructed, so we cannot get a shared pointer to it, and we cannot call virtual
-  // methods. So we just store the pointer for later use
+  assert(!_registration->registered());  // enforce initialization before registration (i.e. in mode
+                                         // constructor)
+  // setpoint is currently being constructed, so we cannot get a shared pointer to it, and we cannot
+  // call virtual methods. So we just store the pointer for later use
   _new_setpoint_types.push_back(setpoint);
 }
 
-void ModeBase::setRequirement(const RequirementFlags & requirement_flags)
+void ModeBase::setRequirement(const RequirementFlags& requirement_flags)
 {
-  assert(!_registration->registered()); // enforce initialization before registration (i.e. in mode constructor)
+  assert(!_registration->registered());  // enforce initialization before registration (i.e. in mode
+                                         // constructor)
   modeRequirements() |= requirement_flags;
 }
 
-} // namespace px4_ros2
+}  // namespace px4_ros2

@@ -14,8 +14,7 @@
 #include <string>
 #include <type_traits>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 
 /**
  * @brief Trait to check if a message type `T` has a `MESSAGE_VERSION` constant.
@@ -25,13 +24,12 @@ namespace px4_ros2
  *
  * @tparam T The message type to check.
  */
-template<typename T, typename = void>
+template <typename T, typename = void>
 struct HasMessageVersion : std::false_type {};
 
 /// Specialization for types that have a `MESSAGE_VERSION` constant.
-template<typename T>
-struct HasMessageVersion<T, std::void_t<decltype(T::MESSAGE_VERSION)>>: std::true_type {};
-
+template <typename T>
+struct HasMessageVersion<T, std::void_t<decltype(T::MESSAGE_VERSION)>> : std::true_type {};
 
 /**
  * @brief Checks if the current RMW (ROS Middleware) implementation is `rmw_zenoh_cpp`.
@@ -40,7 +38,7 @@ struct HasMessageVersion<T, std::void_t<decltype(T::MESSAGE_VERSION)>>: std::tru
  */
 static inline bool isRmwZenoh()
 {
-  const char * rmw_id = rmw_get_implementation_identifier();
+  const char* rmw_id = rmw_get_implementation_identifier();
   return std::string(rmw_id) == "rmw_zenoh_cpp";
 }
 
@@ -48,21 +46,23 @@ static inline bool isRmwZenoh()
  * @brief Retrieves the version suffix for a given message type.
  *
  * @tparam T The message type, which may or may not define a `MESSAGE_VERSION` constant.
- * @return std::string The version suffix (e.g., "_v1") or an empty string if `MESSAGE_VERSION` is `0` or undefined.
+ * @return std::string The version suffix (e.g., "_v1") or an empty string if `MESSAGE_VERSION` is
+ * `0` or undefined.
  */
-template<typename T>
+template <typename T>
 std::string getMessageNameVersion()
 {
   if (isRmwZenoh()) {
     return "";
   }
   if constexpr (HasMessageVersion<T>::value) {
-    if (T::MESSAGE_VERSION == 0) {return "";}
+    if (T::MESSAGE_VERSION == 0) {
+      return "";
+    }
     return "_v" + std::to_string(T::MESSAGE_VERSION);
   } else {
     return "";
   }
 }
 
-
-} // namespace px4_ros2
+}  // namespace px4_ros2

@@ -6,10 +6,9 @@
 #pragma once
 
 #include <rclcpp/rclcpp.hpp>
-using namespace std::chrono_literals; // NOLINT
+using namespace std::chrono_literals;  // NOLINT
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 
 /** \ingroup components
  *  @{
@@ -18,9 +17,8 @@ namespace px4_ros2
  * Wait for a heartbeat/status message from the FMU
  * @return true on success
  */
-bool waitForFMU(
-  rclcpp::Node & node, const rclcpp::Duration & timeout = 30s,
-  const std::string & topic_namespace_prefix = "");
+bool waitForFMU(rclcpp::Node& node, const rclcpp::Duration& timeout = 30s,
+                const std::string& topic_namespace_prefix = "");
 
 /** @}*/
-} // namespace px4_ros2
+}  // namespace px4_ros2
