@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <rclcpp/rclcpp.hpp>
 #include <string>
 #include <type_traits>
 
