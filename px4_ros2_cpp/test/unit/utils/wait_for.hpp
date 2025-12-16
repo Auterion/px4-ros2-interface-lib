@@ -7,15 +7,14 @@
 #include <memory>
 #include <rclcpp/rclcpp.hpp>
 
-using namespace std::chrono_literals; // NOLINT
+using namespace std::chrono_literals;  // NOLINT
 
 /**
  * Wait until a predicate returns true, while spinning a ROS node, with a fixed timeout of 3s
  * @return false on timeout
  */
-static inline bool waitFor(
-  const std::shared_ptr<rclcpp::Node> & node,
-  const std::function<bool()> & predicate)
+static inline bool waitFor(const std::shared_ptr<rclcpp::Node>& node,
+                           const std::function<bool()>& predicate)
 {
   rclcpp::executors::SingleThreadedExecutor executor;
   executor.add_node(node);

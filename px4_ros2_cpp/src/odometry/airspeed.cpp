@@ -6,13 +6,13 @@
 #include <px4_ros2/odometry/airspeed.hpp>
 #include <px4_ros2/utils/message_version.hpp>
 
-namespace px4_ros2
+namespace px4_ros2 {
+
+OdometryAirspeed::OdometryAirspeed(Context& context)
+    : Subscription<px4_msgs::msg::AirspeedValidated>(
+          context, "fmu/out/airspeed_validated" +
+                       px4_ros2::getMessageNameVersion<px4_msgs::msg::AirspeedValidated>())
 {
+}
 
-OdometryAirspeed::OdometryAirspeed(Context & context)
-: Subscription<px4_msgs::msg::AirspeedValidated>(context,
-    "fmu/out/airspeed_validated" +
-    px4_ros2::getMessageNameVersion<px4_msgs::msg::AirspeedValidated>())
-{}
-
-} // namespace px4_ros2
+}  // namespace px4_ros2

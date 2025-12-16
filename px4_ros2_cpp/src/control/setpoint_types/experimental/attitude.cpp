@@ -7,23 +7,21 @@
 #include <px4_ros2/utils/geometry.hpp>
 #include <px4_ros2/utils/message_version.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 
-AttitudeSetpointType::AttitudeSetpointType(Context & context)
-: SetpointBase(context), _node(context.node())
+AttitudeSetpointType::AttitudeSetpointType(Context& context)
+    : SetpointBase(context), _node(context.node())
 {
   _vehicle_attitude_setpoint_pub =
-    context.node().create_publisher<px4_msgs::msg::VehicleAttitudeSetpoint>(
-    context.topicNamespacePrefix() + "fmu/in/vehicle_attitude_setpoint" +
-    px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleAttitudeSetpoint>(),
-    1);
+      context.node().create_publisher<px4_msgs::msg::VehicleAttitudeSetpoint>(
+          context.topicNamespacePrefix() + "fmu/in/vehicle_attitude_setpoint" +
+              px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleAttitudeSetpoint>(),
+          1);
 }
 
-void AttitudeSetpointType::update(
-  const Eigen::Quaternionf & attitude_setpoint,
-  const Eigen::Vector3f & thrust_setpoint_frd,
-  float yaw_sp_move_rate_rad_s)
+void AttitudeSetpointType::update(const Eigen::Quaternionf& attitude_setpoint,
+                                  const Eigen::Vector3f& thrust_setpoint_frd,
+                                  float yaw_sp_move_rate_rad_s)
 {
   onUpdate();
 
@@ -36,27 +34,23 @@ void AttitudeSetpointType::update(
   sp.thrust_body[1] = thrust_setpoint_frd(1);
   sp.thrust_body[2] = thrust_setpoint_frd(2);
   sp.yaw_sp_move_rate = yaw_sp_move_rate_rad_s;
-  sp.timestamp = 0; // Let PX4 set the timestamp
+  sp.timestamp = 0;  // Let PX4 set the timestamp
   _vehicle_attitude_setpoint_pub->publish(sp);
 }
 
-void AttitudeSetpointType::update(
-  const float roll,
-  const float pitch,
-  const float yaw,
-  const Eigen::Vector3f & thrust_setpoint_body,
-  const float yaw_sp_move_rate_rad_s)
+void AttitudeSetpointType::update(const float roll, const float pitch, const float yaw,
+                                  const Eigen::Vector3f& thrust_setpoint_body,
+                                  const float yaw_sp_move_rate_rad_s)
 {
   onUpdate();
 
   px4_msgs::msg::VehicleAttitudeSetpoint sp{};
-  sp.timestamp = 0; // Let PX4 set the timestamp
+  sp.timestamp = 0;  // Let PX4 set the timestamp
 
   sp.yaw_sp_move_rate = yaw_sp_move_rate_rad_s;
 
-  Eigen::Quaternionf att_setpoint_q{px4_ros2::eulerRpyToQuaternion(
-      Eigen::Vector3f{roll, pitch,
-        yaw})};
+  Eigen::Quaternionf att_setpoint_q{
+      px4_ros2::eulerRpyToQuaternion(Eigen::Vector3f{roll, pitch, yaw})};
 
   sp.q_d[0] = att_setpoint_q.w();
   sp.q_d[1] = att_setpoint_q.x();
@@ -80,4 +74,4 @@ SetpointBase::Configuration AttitudeSetpointType::getConfiguration()
   config.position_enabled = false;
   return config;
 }
-} // namespace px4_ros2
+}  // namespace px4_ros2

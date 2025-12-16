@@ -4,24 +4,24 @@
  ****************************************************************************/
 
 #include <gtest/gtest.h>
-#include <rclcpp/rclcpp.hpp>
+
+#include <px4_msgs/msg/vehicle_attitude.hpp>
+#include <px4_msgs/msg/vehicle_status.hpp>
 #include <px4_ros2/components/shared_subscription.hpp>
 #include <px4_ros2/utils/message_version.hpp>
-#include <px4_msgs/msg/vehicle_status.hpp>
-#include <px4_msgs/msg/vehicle_attitude.hpp>
+#include <rclcpp/rclcpp.hpp>
 
 using namespace std::chrono_literals;
 
-class SharedSubscriptionTest : public testing::Test
-{
-protected:
+class SharedSubscriptionTest : public testing::Test {
+ protected:
   void SetUp() override
   {
     _node = std::make_shared<rclcpp::Node>("test_node");
     _executor.add_node(_node);
   }
 
-  bool waitForUpdate(bool & got_message)
+  bool waitForUpdate(bool& got_message)
   {
     got_message = false;
     auto start_time = _node->get_clock()->now();
@@ -43,16 +43,14 @@ protected:
   static constexpr std::chrono::milliseconds kSleepInterval{10ms};
 };
 
-
-TEST_F(SharedSubscriptionTest, State) {
+TEST_F(SharedSubscriptionTest, State)
+{
   // Test that registered callbacks are called in order, and removed when the instance is deleted
   const std::string topic_name = "/unit_test/fmu/out/vehicle_status";
-  auto & vehicle_status = SharedSubscription<px4_msgs::msg::VehicleStatus>::instance(
-    *_node,
-    topic_name);
+  auto& vehicle_status =
+      SharedSubscription<px4_msgs::msg::VehicleStatus>::instance(*_node, topic_name);
   auto vehicle_status_pub = _node->create_publisher<px4_msgs::msg::VehicleStatus>(
-    topic_name, rclcpp::QoS(
-      1).best_effort());
+      topic_name, rclcpp::QoS(1).best_effort());
 
   px4_msgs::msg::VehicleStatus pub_msg;
   std::array<std::optional<SharedSubscriptionCallbackInstance>, 3> callbacks;
@@ -62,12 +60,11 @@ TEST_F(SharedSubscriptionTest, State) {
   unsigned counter = 1;
   bool got_message = false;
   callbacks[0] = vehicle_status.registerOnUpdateCallback(
-    [&](const px4_msgs::msg::VehicleStatus::UniquePtr & msg)
-    {
-      EXPECT_EQ(msg->timestamp, pub_msg.timestamp);
-      message_counters[0] = counter++;
-      got_message = true;
-    });
+      [&](const px4_msgs::msg::VehicleStatus::UniquePtr& msg) {
+        EXPECT_EQ(msg->timestamp, pub_msg.timestamp);
+        message_counters[0] = counter++;
+        got_message = true;
+      });
 
   pub_msg.timestamp = 1;
   vehicle_status_pub->publish(pub_msg);
@@ -78,11 +75,10 @@ TEST_F(SharedSubscriptionTest, State) {
 
   // Add another one
   callbacks[1] = vehicle_status.registerOnUpdateCallback(
-    [&](const px4_msgs::msg::VehicleStatus::UniquePtr & msg)
-    {
-      EXPECT_EQ(msg->timestamp, pub_msg.timestamp);
-      message_counters[1] = counter++;
-    });
+      [&](const px4_msgs::msg::VehicleStatus::UniquePtr& msg) {
+        EXPECT_EQ(msg->timestamp, pub_msg.timestamp);
+        message_counters[1] = counter++;
+      });
 
   pub_msg.timestamp++;
   vehicle_status_pub->publish(pub_msg);
@@ -93,11 +89,10 @@ TEST_F(SharedSubscriptionTest, State) {
 
   // Add another one
   callbacks[2] = vehicle_status.registerOnUpdateCallback(
-    [&](const px4_msgs::msg::VehicleStatus::UniquePtr & msg)
-    {
-      EXPECT_EQ(msg->timestamp, pub_msg.timestamp);
-      message_counters[2] = counter++;
-    });
+      [&](const px4_msgs::msg::VehicleStatus::UniquePtr& msg) {
+        EXPECT_EQ(msg->timestamp, pub_msg.timestamp);
+        message_counters[2] = counter++;
+      });
 
   pub_msg.timestamp++;
   vehicle_status_pub->publish(pub_msg);
@@ -117,11 +112,10 @@ TEST_F(SharedSubscriptionTest, State) {
 
   // Add second again
   callbacks[1] = vehicle_status.registerOnUpdateCallback(
-    [&](const px4_msgs::msg::VehicleStatus::UniquePtr & msg)
-    {
-      EXPECT_EQ(msg->timestamp, pub_msg.timestamp);
-      message_counters[1] = counter++;
-    });
+      [&](const px4_msgs::msg::VehicleStatus::UniquePtr& msg) {
+        EXPECT_EQ(msg->timestamp, pub_msg.timestamp);
+        message_counters[1] = counter++;
+      });
 
   pub_msg.timestamp++;
   vehicle_status_pub->publish(pub_msg);
@@ -131,23 +125,19 @@ TEST_F(SharedSubscriptionTest, State) {
   EXPECT_EQ(message_counters[2], 10U);
 }
 
-TEST_F(SharedSubscriptionTest, MultiInstance) {
+TEST_F(SharedSubscriptionTest, MultiInstance)
+{
   const std::string topic_name = "/unit_test/fmu/out/vehicle_status";
-  auto & vehicle_status1 = SharedSubscription<px4_msgs::msg::VehicleStatus>::instance(
-    *_node,
-    topic_name);
+  auto& vehicle_status1 =
+      SharedSubscription<px4_msgs::msg::VehicleStatus>::instance(*_node, topic_name);
   auto vehicle_status_pub1 = _node->create_publisher<px4_msgs::msg::VehicleStatus>(
-    topic_name, rclcpp::QoS(
-      1).best_effort());
+      topic_name, rclcpp::QoS(1).best_effort());
 
   const std::string topic_prefix = "test";
-  auto & vehicle_status2 = SharedSubscription<px4_msgs::msg::VehicleStatus>::instance(
-    *_node,
-    topic_prefix +
-    topic_name);
+  auto& vehicle_status2 =
+      SharedSubscription<px4_msgs::msg::VehicleStatus>::instance(*_node, topic_prefix + topic_name);
   auto vehicle_status_pub2 = _node->create_publisher<px4_msgs::msg::VehicleStatus>(
-    topic_prefix + topic_name, rclcpp::QoS(
-      1).best_effort());
+      topic_prefix + topic_name, rclcpp::QoS(1).best_effort());
 
   ASSERT_NE(&vehicle_status1, &vehicle_status2);
 
@@ -158,19 +148,17 @@ TEST_F(SharedSubscriptionTest, MultiInstance) {
   unsigned counter = 1;
   bool got_message = false;
   callbacks[0] = vehicle_status1.registerOnUpdateCallback(
-    [&](const px4_msgs::msg::VehicleStatus::UniquePtr & msg)
-    {
-      EXPECT_EQ(msg->timestamp, pub_msg.timestamp);
-      message_counters[0] = counter++;
-      got_message = true;
-    });
+      [&](const px4_msgs::msg::VehicleStatus::UniquePtr& msg) {
+        EXPECT_EQ(msg->timestamp, pub_msg.timestamp);
+        message_counters[0] = counter++;
+        got_message = true;
+      });
   callbacks[1] = vehicle_status2.registerOnUpdateCallback(
-    [&](const px4_msgs::msg::VehicleStatus::UniquePtr & msg)
-    {
-      EXPECT_EQ(msg->timestamp, pub_msg.timestamp);
-      message_counters[1] = counter++;
-      got_message = true;
-    });
+      [&](const px4_msgs::msg::VehicleStatus::UniquePtr& msg) {
+        EXPECT_EQ(msg->timestamp, pub_msg.timestamp);
+        message_counters[1] = counter++;
+        got_message = true;
+      });
 
   pub_msg.timestamp = 1;
   vehicle_status_pub1->publish(pub_msg);
@@ -185,22 +173,19 @@ TEST_F(SharedSubscriptionTest, MultiInstance) {
   EXPECT_EQ(message_counters[1], 2U);
 }
 
-TEST_F(SharedSubscriptionTest, MultiTypes) {
+TEST_F(SharedSubscriptionTest, MultiTypes)
+{
   const std::string topic_name_status = "/unit_test/fmu/out/vehicle_status";
-  auto & vehicle_status = SharedSubscription<px4_msgs::msg::VehicleStatus>::instance(
-    *_node,
-    topic_name_status);
+  auto& vehicle_status =
+      SharedSubscription<px4_msgs::msg::VehicleStatus>::instance(*_node, topic_name_status);
   auto vehicle_status_pub = _node->create_publisher<px4_msgs::msg::VehicleStatus>(
-    topic_name_status, rclcpp::QoS(
-      1).best_effort());
+      topic_name_status, rclcpp::QoS(1).best_effort());
 
   const std::string topic_name_attitude = "/unit_test/fmu/out/vehicle_attitude";
-  auto & vehicle_attitude = SharedSubscription<px4_msgs::msg::VehicleAttitude>::instance(
-    *_node,
-    topic_name_attitude);
+  auto& vehicle_attitude =
+      SharedSubscription<px4_msgs::msg::VehicleAttitude>::instance(*_node, topic_name_attitude);
   auto vehicle_attitude_pub = _node->create_publisher<px4_msgs::msg::VehicleAttitude>(
-    topic_name_attitude, rclcpp::QoS(
-      1).best_effort());
+      topic_name_attitude, rclcpp::QoS(1).best_effort());
 
   px4_msgs::msg::VehicleStatus pub_msg_status;
   px4_msgs::msg::VehicleAttitude pub_msg_attitude;
@@ -210,19 +195,17 @@ TEST_F(SharedSubscriptionTest, MultiTypes) {
   unsigned counter = 1;
   bool got_message = false;
   callbacks[0] = vehicle_status.registerOnUpdateCallback(
-    [&](const px4_msgs::msg::VehicleStatus::UniquePtr & msg)
-    {
-      EXPECT_EQ(msg->timestamp, pub_msg_status.timestamp);
-      message_counters[0] = counter++;
-      got_message = true;
-    });
+      [&](const px4_msgs::msg::VehicleStatus::UniquePtr& msg) {
+        EXPECT_EQ(msg->timestamp, pub_msg_status.timestamp);
+        message_counters[0] = counter++;
+        got_message = true;
+      });
   callbacks[1] = vehicle_attitude.registerOnUpdateCallback(
-    [&](const px4_msgs::msg::VehicleAttitude::UniquePtr & msg)
-    {
-      EXPECT_EQ(msg->timestamp, pub_msg_attitude.timestamp);
-      message_counters[1] = counter++;
-      got_message = true;
-    });
+      [&](const px4_msgs::msg::VehicleAttitude::UniquePtr& msg) {
+        EXPECT_EQ(msg->timestamp, pub_msg_attitude.timestamp);
+        message_counters[1] = counter++;
+        got_message = true;
+      });
 
   pub_msg_status.timestamp = 1;
   vehicle_status_pub->publish(pub_msg_status);

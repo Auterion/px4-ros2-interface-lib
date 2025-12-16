@@ -8,42 +8,39 @@
 #include <px4_ros2/common/context.hpp>
 #include <px4_ros2/common/exception.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 
 /**
  * @brief Thrown to report invalid arguments to measurement interface
-*/
-class NavigationInterfaceInvalidArgument : public Exception
-{
-public:
-  explicit NavigationInterfaceInvalidArgument(const std::string & message)
-  : Exception("PX4 ROS2 navigation interface: invalid argument: " + message) {}
+ */
+class NavigationInterfaceInvalidArgument : public Exception {
+ public:
+  explicit NavigationInterfaceInvalidArgument(const std::string& message)
+      : Exception("PX4 ROS2 navigation interface: invalid argument: " + message)
+  {
+  }
 };
 
 /**
  * @brief Base class for position measurement interface
-*/
-class PositionMeasurementInterfaceBase : public Context
-{
-public:
-  explicit PositionMeasurementInterfaceBase(
-    rclcpp::Node & node,
-    std::string topic_namespace_prefix = "")
-  : Context(node, std::move(topic_namespace_prefix)), _node(node) {}
+ */
+class PositionMeasurementInterfaceBase : public Context {
+ public:
+  explicit PositionMeasurementInterfaceBase(rclcpp::Node& node,
+                                            std::string topic_namespace_prefix = "")
+      : Context(node, std::move(topic_namespace_prefix)), _node(node)
+  {
+  }
   virtual ~PositionMeasurementInterfaceBase() = default;
 
   /**
    * Register the interface.
    * @return true on success
    */
-  bool doRegister()
-  {
-    return true;
-  }
+  bool doRegister() { return true; }
 
-protected:
-  rclcpp::Node & _node;
+ protected:
+  rclcpp::Node& _node;
 };
 
-} // namespace px4_ros2
+}  // namespace px4_ros2

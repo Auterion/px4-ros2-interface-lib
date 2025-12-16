@@ -6,35 +6,36 @@
 #include <px4_ros2/control/setpoint_types/fixedwing/lateral_longitudinal.hpp>
 #include <px4_ros2/utils/message_version.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 
-FwLateralLongitudinalSetpointType::FwLateralLongitudinalSetpointType(Context & context)
-: SetpointBase(context), _node(context.node())
+FwLateralLongitudinalSetpointType::FwLateralLongitudinalSetpointType(Context& context)
+    : SetpointBase(context), _node(context.node())
 {
-  _fw_lateral_sp_pub =
-    context.node().create_publisher<px4_msgs::msg::FixedWingLateralSetpoint>(
-    context.topicNamespacePrefix() + "fmu/in/fixed_wing_lateral_setpoint" + px4_ros2::getMessageNameVersion<px4_msgs::msg::FixedWingLateralSetpoint>(),
-    1);
+  _fw_lateral_sp_pub = context.node().create_publisher<px4_msgs::msg::FixedWingLateralSetpoint>(
+      context.topicNamespacePrefix() + "fmu/in/fixed_wing_lateral_setpoint" +
+          px4_ros2::getMessageNameVersion<px4_msgs::msg::FixedWingLateralSetpoint>(),
+      1);
   _fw_longitudinal_sp_pub =
-    context.node().create_publisher<px4_msgs::msg::FixedWingLongitudinalSetpoint>(
-    context.topicNamespacePrefix() + "fmu/in/fixed_wing_longitudinal_setpoint" + px4_ros2::getMessageNameVersion<px4_msgs::msg::FixedWingLongitudinalSetpoint>(),
-    1);
+      context.node().create_publisher<px4_msgs::msg::FixedWingLongitudinalSetpoint>(
+          context.topicNamespacePrefix() + "fmu/in/fixed_wing_longitudinal_setpoint" +
+              px4_ros2::getMessageNameVersion<px4_msgs::msg::FixedWingLongitudinalSetpoint>(),
+          1);
 
   _lateral_control_configuration_pub =
-    context.node().create_publisher<px4_msgs::msg::LateralControlConfiguration>(
-    context.topicNamespacePrefix() + "fmu/in/lateral_control_configuration" + px4_ros2::getMessageNameVersion<px4_msgs::msg::LateralControlConfiguration>(),
-    1);
+      context.node().create_publisher<px4_msgs::msg::LateralControlConfiguration>(
+          context.topicNamespacePrefix() + "fmu/in/lateral_control_configuration" +
+              px4_ros2::getMessageNameVersion<px4_msgs::msg::LateralControlConfiguration>(),
+          1);
   _longitudinal_control_configuration_pub =
-    context.node().create_publisher<px4_msgs::msg::LongitudinalControlConfiguration>(
-    context.topicNamespacePrefix() + "fmu/in/longitudinal_control_configuration" + px4_ros2::getMessageNameVersion<px4_msgs::msg::LongitudinalControlConfiguration>(),
-    1);
+      context.node().create_publisher<px4_msgs::msg::LongitudinalControlConfiguration>(
+          context.topicNamespacePrefix() + "fmu/in/longitudinal_control_configuration" +
+              px4_ros2::getMessageNameVersion<px4_msgs::msg::LongitudinalControlConfiguration>(),
+          1);
 }
 
 void FwLateralLongitudinalSetpointType::updateWithAltitude(
-  const float altitude_amsl_sp, const float course_sp,
-  std::optional<float> equivalent_airspeed_sp,
-  std::optional<float> lateral_acceleration_sp)
+    const float altitude_amsl_sp, const float course_sp,
+    std::optional<float> equivalent_airspeed_sp, std::optional<float> lateral_acceleration_sp)
 {
   onUpdate();
 
@@ -53,13 +54,11 @@ void FwLateralLongitudinalSetpointType::updateWithAltitude(
   longitudinal_sp.throttle_direct = NAN;
 
   _fw_longitudinal_sp_pub->publish(longitudinal_sp);
-
 }
 
 void FwLateralLongitudinalSetpointType::updateWithHeightRate(
-  const float height_rate_sp, const float course_sp,
-  std::optional<float> equivalent_airspeed_sp,
-  std::optional<float> lateral_acceleration_sp)
+    const float height_rate_sp, const float course_sp, std::optional<float> equivalent_airspeed_sp,
+    std::optional<float> lateral_acceleration_sp)
 {
   onUpdate();
 
@@ -80,9 +79,8 @@ void FwLateralLongitudinalSetpointType::updateWithHeightRate(
   _fw_longitudinal_sp_pub->publish(longitudinal_sp);
 }
 
-void FwLateralLongitudinalSetpointType::update(
-  const FwLateralLongitudinalSetpoint & setpoint,
-  const FwControlConfiguration & config)
+void FwLateralLongitudinalSetpointType::update(const FwLateralLongitudinalSetpoint& setpoint,
+                                               const FwControlConfiguration& config)
 {
   onUpdate();
 
@@ -103,10 +101,9 @@ void FwLateralLongitudinalSetpointType::update(
   longitudinal_configuration.speed_weight = config.speed_weight.value_or(NAN);
 
   _longitudinal_control_configuration_pub->publish(longitudinal_configuration);
-
 }
 
-void FwLateralLongitudinalSetpointType::update(const FwLateralLongitudinalSetpoint & setpoint)
+void FwLateralLongitudinalSetpointType::update(const FwLateralLongitudinalSetpoint& setpoint)
 {
   onUpdate();
 
@@ -140,4 +137,4 @@ SetpointBase::Configuration FwLateralLongitudinalSetpointType::getConfiguration(
   config.climb_rate_enabled = true;
   return config;
 }
-} // namespace px4_ros2
+}  // namespace px4_ros2

@@ -10,8 +10,7 @@
 #include <px4_ros2/common/context.hpp>
 #include <px4_ros2/utils/subscription.hpp>
 
-namespace px4_ros2
-{
+namespace px4_ros2 {
 /** \ingroup odometry
  *  @{
  */
@@ -19,10 +18,9 @@ namespace px4_ros2
 /**
  * @brief Provides access to the vehicle's angular velocity estimate
  */
-class OdometryAngularVelocity : public Subscription<px4_msgs::msg::VehicleAngularVelocity>
-{
-public:
-  explicit OdometryAngularVelocity(Context & context);
+class OdometryAngularVelocity : public Subscription<px4_msgs::msg::VehicleAngularVelocity> {
+ public:
+  explicit OdometryAngularVelocity(Context& context);
 
   /**
    * @brief Get the vehicle's angular velocity in FRD frame.
@@ -31,7 +29,7 @@ public:
    */
   Eigen::Vector3f angularVelocityFrd() const
   {
-    const px4_msgs::msg::VehicleAngularVelocity & av = last();
+    const px4_msgs::msg::VehicleAngularVelocity& av = last();
     return Eigen::Vector3f{av.xyz[0], av.xyz[1], av.xyz[2]};
   }
 };

@@ -4,20 +4,20 @@
  ****************************************************************************/
 
 #include "px4_ros2/components/overrides.hpp"
-#include "px4_ros2/utils/message_version.hpp"
 
 #include <cassert>
 
-namespace px4_ros2
-{
+#include "px4_ros2/utils/message_version.hpp"
 
-ConfigOverrides::ConfigOverrides(rclcpp::Node & node, const std::string & topic_namespace_prefix)
-: _node(node)
+namespace px4_ros2 {
+
+ConfigOverrides::ConfigOverrides(rclcpp::Node& node, const std::string& topic_namespace_prefix)
+    : _node(node)
 {
   _config_overrides_pub = _node.create_publisher<px4_msgs::msg::ConfigOverrides>(
-    topic_namespace_prefix + "fmu/in/config_overrides_request" +
-    px4_ros2::getMessageNameVersion<px4_msgs::msg::ConfigOverrides>(),
-    1);
+      topic_namespace_prefix + "fmu/in/config_overrides_request" +
+          px4_ros2::getMessageNameVersion<px4_msgs::msg::ConfigOverrides>(),
+      1);
 }
 
 void ConfigOverrides::controlAutoDisarm(bool enabled)
@@ -42,7 +42,7 @@ void ConfigOverrides::controlAutoSetHome(bool enabled)
 void ConfigOverrides::update()
 {
   if (_is_setup) {
-    _current_overrides.timestamp = 0; // Let PX4 set the timestamp
+    _current_overrides.timestamp = 0;  // Let PX4 set the timestamp
     _config_overrides_pub->publish(_current_overrides);
 
   } else {
@@ -62,4 +62,4 @@ void ConfigOverrides::setup(uint8_t type, uint8_t id)
     _require_update_after_setup = false;
   }
 }
-} // namespace px4_ros2
+}  // namespace px4_ros2
