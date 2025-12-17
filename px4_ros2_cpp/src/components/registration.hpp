@@ -10,6 +10,7 @@
 
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp/context.hpp>
+#include <rclcpp/version.h>
 #include <px4_msgs/msg/register_ext_component_request.hpp>
 #include <px4_msgs/msg/register_ext_component_reply.hpp>
 #include <px4_msgs/msg/unregister_ext_component.hpp>
@@ -64,6 +65,8 @@ private:
   bool _registered{false};
   px4_msgs::msg::UnregisterExtComponent _unregister_ext_component{};
   rclcpp::Node & _node;
-  rclcpp::PreShutdownCallbackHandle _pre_shutdown_callback_handle{};
-  bool _pre_shutdown_callback_registered{false};
+#if RCLCPP_VERSION_GTE(16, 0, 0)
+  rclcpp::PreShutdownCallbackHandle _shutdown_callback_handle{};
+  bool _shutdown_callback_registered{false};
+#endif
 };
