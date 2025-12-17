@@ -41,7 +41,7 @@ Registration::Registration(rclcpp::Node & node, const std::string & topic_namesp
   auto context = rclcpp::contexts::get_global_default_context();
 
   if (context) {
-#if RCLCPP_VERSION_GTE(16, 0, 0)
+#if HAS_RCLCPP_PRE_SHUTDOWN
     _shutdown_callback_handle = context->add_pre_shutdown_callback(
       [this]() {
         this->doUnregister();
@@ -55,7 +55,7 @@ Registration::~Registration()
 {
   auto context = rclcpp::contexts::get_global_default_context();
 
-#if RCLCPP_VERSION_GTE(16, 0, 0)
+#if HAS_RCLCPP_PRE_SHUTDOWN
   if (context && _shutdown_callback_registered) {
     context->remove_pre_shutdown_callback(_shutdown_callback_handle);
   }
