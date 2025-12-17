@@ -203,9 +203,6 @@ void Registration::doUnregister()
 
     if (context_valid) {
       RCLCPP_DEBUG(_node.get_logger(), "Unregistering");
-    }
-
-    if (context_valid) {
       _unregister_ext_component.timestamp = 0; // Let PX4 set the timestamp
       _unregister_ext_component_pub->publish(_unregister_ext_component);
     }
