@@ -37,6 +37,31 @@ Registration::Registration(rclcpp::Node & node, const std::string & topic_namesp
     1);
 
   _unregister_ext_component.mode_id = px4_ros2::ModeBase::kModeIDInvalid;
+
+  auto context = rclcpp::contexts::get_global_default_context();
+
+  if (context) {
+    _pre_shutdown_callback_handle = context->add_pre_shutdown_callback(
+      [this]() {
+        this->doUnregister();
+      });
+    _pre_shutdown_callback_registered = true;
+  }
+}
+
+Registration::~Registration()
+{
+  auto context = rclcpp::contexts::get_global_default_context();
+
+  if (_pre_shutdown_callback_registered && context) {
+    context->remove_pre_shutdown_callback(_pre_shutdown_callback_handle);
+  }
+
+  // If the context is still valid, publish the unregister message here as well
+  // so it works even when the destructor runs before rclcpp::shutdown().
+  if (context && context->is_valid()) {
+    doUnregister();
+  }
 }
 
 bool Registration::doRegister(const RegistrationSettings & settings)
