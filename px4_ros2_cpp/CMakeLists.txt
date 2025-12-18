@@ -27,6 +27,12 @@ if($ENV{ROS_DISTRO} STREQUAL "humble" OR $ENV{ROS_DISTRO} STREQUAL "galactic")
     add_compile_definitions(ROS2_HUMBLE_OR_GALACTIC)
 endif()
 
+# Galactic lacks add_pre_shutdown_callback; assume present otherwise.
+set(HAS_RCLCPP_PRE_SHUTDOWN ON)
+if($ENV{ROS_DISTRO} STREQUAL "galactic")
+    set(HAS_RCLCPP_PRE_SHUTDOWN OFF)
+endif()
+
 ament_index_get_resource(MESSAGE_FILES "rosidl_interfaces" px4_msgs)
 
 # Split the message files into a list
@@ -154,6 +160,7 @@ add_library(px4_ros2_cpp
 add_dependencies(px4_ros2_cpp generate_px4_header)
 target_include_directories(px4_ros2_cpp PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
 target_link_libraries(px4_ros2_cpp PUBLIC ament_index_cpp::ament_index_cpp Eigen3::Eigen rclcpp::rclcpp ${px4_msgs_TARGETS})
+target_compile_definitions(px4_ros2_cpp PUBLIC HAS_RCLCPP_PRE_SHUTDOWN=$<BOOL:${HAS_RCLCPP_PRE_SHUTDOWN}>)
 
 ament_export_targets(px4_ros2_cpp HAS_LIBRARY_TARGET)
 ament_export_dependencies(

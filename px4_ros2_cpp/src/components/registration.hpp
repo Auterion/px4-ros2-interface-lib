@@ -9,6 +9,7 @@
 #include <string>
 
 #include <rclcpp/rclcpp.hpp>
+#include <rclcpp/context.hpp>
 #include <px4_msgs/msg/register_ext_component_request.hpp>
 #include <px4_msgs/msg/register_ext_component_reply.hpp>
 #include <px4_msgs/msg/unregister_ext_component.hpp>
@@ -32,10 +33,7 @@ class Registration
 {
 public:
   explicit Registration(rclcpp::Node & node, const std::string & topic_namespace_prefix = "");
-  virtual ~Registration()
-  {
-    doUnregister();
-  }
+  virtual ~Registration();
 
   virtual bool doRegister(const RegistrationSettings & settings);
   virtual void doUnregister();
@@ -66,4 +64,8 @@ private:
   bool _registered{false};
   px4_msgs::msg::UnregisterExtComponent _unregister_ext_component{};
   rclcpp::Node & _node;
+#if HAS_RCLCPP_PRE_SHUTDOWN
+  rclcpp::PreShutdownCallbackHandle _shutdown_callback_handle{};
+  bool _shutdown_callback_registered{false};
+#endif
 };

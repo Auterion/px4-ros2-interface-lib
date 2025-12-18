@@ -37,6 +37,35 @@ Registration::Registration(rclcpp::Node & node, const std::string & topic_namesp
     1);
 
   _unregister_ext_component.mode_id = px4_ros2::ModeBase::kModeIDInvalid;
+
+  auto context = rclcpp::contexts::get_global_default_context();
+
+  if (context) {
+#if HAS_RCLCPP_PRE_SHUTDOWN
+    _shutdown_callback_handle = context->add_pre_shutdown_callback(
+      [this]() {
+        this->doUnregister();
+      });
+    _shutdown_callback_registered = true;
+#endif
+  }
+}
+
+Registration::~Registration()
+{
+  auto context = rclcpp::contexts::get_global_default_context();
+
+#if HAS_RCLCPP_PRE_SHUTDOWN
+  if (context && _shutdown_callback_registered) {
+    context->remove_pre_shutdown_callback(_shutdown_callback_handle);
+  }
+#endif
+
+  // If the context is still valid, publish the unregister message here as well
+  // so it works even when the destructor runs before rclcpp::shutdown().
+  if (context && context->is_valid()) {
+    doUnregister();
+  }
 }
 
 bool Registration::doRegister(const RegistrationSettings & settings)
@@ -169,9 +198,15 @@ bool Registration::doRegister(const RegistrationSettings & settings)
 void Registration::doUnregister()
 {
   if (_registered) {
-    RCLCPP_DEBUG(_node.get_logger(), "Unregistering");
-    _unregister_ext_component.timestamp = 0; // Let PX4 set the timestamp
-    _unregister_ext_component_pub->publish(_unregister_ext_component);
+    auto context = _node.get_node_base_interface()->get_context();
+    const bool context_valid = context && context->is_valid();
+
+    if (context_valid) {
+      RCLCPP_DEBUG(_node.get_logger(), "Unregistering");
+      _unregister_ext_component.timestamp = 0; // Let PX4 set the timestamp
+      _unregister_ext_component_pub->publish(_unregister_ext_component);
+    }
+
     _registered = false;
   }
 }
