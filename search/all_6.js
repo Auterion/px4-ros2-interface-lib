@@ -1,13 +1,9 @@
 var searchData=
 [
-  ['geodesic_57',['Geodesic',['../group__geodesic.html',1,'']]],
-  ['geometry_58',['Geometry',['../group__geometry.html',1,'']]],
-  ['gettrajectoryoptions_59',['getTrajectoryOptions',['../classpx4__ros2_1_1ActionHandler.html#a268a2af41be5e2208d0cac01eff722d0',1,'px4_ros2::ActionHandler']]],
-  ['globahorizontalpositionvalid_60',['globaHorizontalPositionValid',['../classpx4__ros2_1_1HomePosition.html#a3b18285ba6d93cecc6a83f06e867c4fc',1,'px4_ros2::HomePosition']]],
-  ['globalposition_61',['globalPosition',['../classpx4__ros2_1_1HomePosition.html#a6e17b84ba9e072271d79e761f06dd49e',1,'px4_ros2::HomePosition']]],
-  ['globalpositionfromheadinganddist_62',['globalPositionFromHeadingAndDist',['../group__geodesic.html#gaa92c584dace2cc628ae7be52033056ce',1,'px4_ros2::globalPositionFromHeadingAndDist(const Eigen::Vector2d &amp;global_position_now, float heading, float dist)'],['../group__geodesic.html#ga26ba5aaaafcd9eb20b5ae8718d847bbb',1,'px4_ros2::globalPositionFromHeadingAndDist(const Eigen::Vector3d &amp;global_position_now, float heading, float dist)']]],
-  ['globalpositionfromlineanddist_63',['globalPositionFromLineAndDist',['../group__geodesic.html#gae85bc381781adf133ebeaa360ea8ab11',1,'px4_ros2']]],
-  ['globalpositionmeasurement_64',['GlobalPositionMeasurement',['../structpx4__ros2_1_1GlobalPositionMeasurement.html',1,'px4_ros2']]],
-  ['globalpositionmeasurementinterface_65',['GlobalPositionMeasurementInterface',['../classpx4__ros2_1_1GlobalPositionMeasurementInterface.html',1,'px4_ros2']]],
-  ['globaltolocal_66',['globalToLocal',['../classpx4__ros2_1_1MapProjection.html#a3e0543785512cb358f1cdf13e5d31a94',1,'px4_ros2::MapProjection::globalToLocal(const Eigen::Vector2d &amp;global_position) const'],['../classpx4__ros2_1_1MapProjection.html#af288641107d8f2c7fe3e518a212a9e9a',1,'px4_ros2::MapProjection::globalToLocal(const Eigen::Vector3d &amp;global_position) const']]]
+  ['etc_0',['Linters (code formatting etc)',['../index.html#autotoc_md10',1,'']]],
+  ['eulerrpytoquaternion_1',['eulerrpytoquaternion',['../group__geometry.html#ga094c2be54a64c8a5903ee16246631181',1,'px4_ros2::eulerRpyToQuaternion(const Eigen::Matrix&lt; Type, 3, 1 &gt; &amp;euler)'],['../group__geometry.html#ga6922c7f3c1fc5355c717a29ad243c86c',1,'px4_ros2::eulerRpyToQuaternion(const Type roll, const Type pitch, const Type yaw)']]],
+  ['example_3a_20altitude_20hold_20with_20horizontal_20velocity_2',['Example: Altitude hold with horizontal velocity',['../structpx4__ros2_1_1TrajectorySetpoint.html#autotoc_md0',1,'']]],
+  ['examples_3',['Examples',['../index.html#autotoc_md5',1,'']]],
+  ['exception_4',['Exception',['../classpx4__ros2_1_1Exception.html',1,'px4_ros2']]],
+  ['experimental_5',['experimental',['../group__setpoint__types__experimental.html',1,'Experimental'],['../group__navigation__experimental.html',1,'Experimental']]]
 ];

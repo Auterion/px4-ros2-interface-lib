@@ -1,9 +1,20 @@
 var searchData=
 [
-  ['yaw_261',['yaw',['../classpx4__ros2_1_1ManualControlInput.html#a25981f81f34574e6ddf243f14510361e',1,'px4_ros2::ManualControlInput::yaw()'],['../classpx4__ros2_1_1OdometryAttitude.html#af6b73e4b56eb9b7582c0ecaa31596236',1,'px4_ros2::OdometryAttitude::yaw()'],['../classpx4__ros2_1_1HomePosition.html#a8ba195f6716d66591681974d4a4e2a50',1,'px4_ros2::HomePosition::yaw()']]],
-  ['yawbodytoworld_262',['yawBodyToWorld',['../group__frame__conversion.html#gac63a40b0854a49432b10095cadb38273',1,'px4_ros2']]],
-  ['yawenutoned_263',['yawEnuToNed',['../group__frame__conversion.html#gacb37d6840da0ff534b998fb430ada38f',1,'px4_ros2']]],
-  ['yawnedtoenu_264',['yawNedToEnu',['../group__frame__conversion.html#ga1dda812b5ff8e3341c12f3b5bfc35ae1',1,'px4_ros2']]],
-  ['yawrateenutoned_265',['yawRateEnuToNed',['../group__frame__conversion.html#gaf669c438058bdc679795e325fa56a74b',1,'px4_ros2']]],
-  ['yawratenedtoenu_266',['yawRateNedToEnu',['../group__frame__conversion.html#ga973366602ef2338f8f883c7696654698',1,'px4_ros2']]]
+  ['varianceenutoned_0',['varianceEnuToNed',['../group__frame__conversion.html#gac7210c21b916d88ed2bc5f3cb2380aca',1,'px4_ros2']]],
+  ['variancenedtoenu_1',['varianceNedToEnu',['../group__frame__conversion.html#ga43e2de874e315ce2b18cfa9649fd4040',1,'px4_ros2']]],
+  ['vectortoglobalposition_2',['vectortoglobalposition',['../group__geodesic.html#ga948afa0a4a06e4b0544623f699888ce7',1,'px4_ros2::vectorToGlobalPosition(const Eigen::Vector3d &amp;global_position_now, const Eigen::Vector3d &amp;global_position_next)'],['../group__geodesic.html#ga0056e9ae98a037f822944f0cbf6949b2',1,'px4_ros2::vectorToGlobalPosition(const Eigen::Vector2d &amp;global_position_now, const Eigen::Vector2d &amp;global_position_next)']]],
+  ['vehicle_20state_3',['Vehicle State',['../group__vehicle__state.html',1,'']]],
+  ['vehiclestatus_4',['VehicleStatus',['../classpx4__ros2_1_1VehicleStatus.html',1,'px4_ros2']]],
+  ['velocity_5',['Example: Altitude hold with horizontal velocity',['../structpx4__ros2_1_1TrajectorySetpoint.html#autotoc_md0',1,'']]],
+  ['velocity_5fxy_6',['velocity_xy',['../structpx4__ros2_1_1LocalPositionMeasurement.html#aed24c0e0a675fb2d2b152e34f4cbb380',1,'px4_ros2::LocalPositionMeasurement']]],
+  ['velocity_5fxy_5fvariance_7',['velocity_xy_variance',['../structpx4__ros2_1_1LocalPositionMeasurement.html#a99ff8a89d9ddcf8614541182459690dd',1,'px4_ros2::LocalPositionMeasurement']]],
+  ['velocity_5fz_8',['velocity_z',['../structpx4__ros2_1_1LocalPositionMeasurement.html#aa4fcd4167d7592932a00afdc67859cd9',1,'px4_ros2::LocalPositionMeasurement']]],
+  ['velocity_5fz_5fvariance_9',['velocity_z_variance',['../structpx4__ros2_1_1LocalPositionMeasurement.html#a9319a5f75957b3389a0fd1f67bd19fa0',1,'px4_ros2::LocalPositionMeasurement']]],
+  ['version_10',['Message Version',['../group__message__version.html',1,'']]],
+  ['vertical_5fvariance_11',['vertical_variance',['../structpx4__ros2_1_1GlobalPositionMeasurement.html#a54e7ed0c0d9cd58333d820ec2905d95a',1,'px4_ros2::GlobalPositionMeasurement']]],
+  ['vertical_5fvelocity_12',['vertical_velocity',['../structpx4__ros2_1_1TrajectoryOptions.html#aa77eaf6d2b770296c57177766fb0b6e6',1,'px4_ros2::TrajectoryOptions']]],
+  ['voltagev_13',['voltageV',['../classpx4__ros2_1_1Battery.html#ab7b9da128e76b0e98827998d665f89fc',1,'px4_ros2::Battery']]],
+  ['vtol_14',['VTOL',['../classpx4__ros2_1_1VTOL.html',1,'px4_ros2']]],
+  ['vtolconfig_15',['VTOLConfig',['../structpx4__ros2_1_1VTOLConfig.html',1,'px4_ros2']]],
+  ['vtolstatus_16',['VtolStatus',['../classpx4__ros2_1_1VtolStatus.html',1,'px4_ros2']]]
 ];
