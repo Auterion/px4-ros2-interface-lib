@@ -9,7 +9,7 @@
 #===-----------------------------------------------------------------------===#
 # FIXME: Integrate with clang-tidy-diff.py
 
-# flake8: noqa
+# ruff: noqa
 
 
 """
