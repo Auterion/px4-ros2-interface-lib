@@ -154,8 +154,6 @@ class MissionExecutor {
     {
       _mission_executor.checkArmingAndRunConditions(reporter);
     }
-    void onActivate() override {}
-    void onDeactivate() override {}
     void updateSetpoint(float dt_s) override { _mission_executor.updateSetpoint(); }
 
     void disableWatchdogTimer()  // NOLINT we just want to change the methods visibility

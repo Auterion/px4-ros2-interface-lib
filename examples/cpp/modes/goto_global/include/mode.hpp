@@ -35,8 +35,6 @@ class FlightModeTest : public px4_ros2::ModeBase {
     _start_heading_set = false;
   }
 
-  void onDeactivate() override {}
-
   void updateSetpoint(float dt_s) override
   {
     if (!_start_position_set) {

@@ -21,10 +21,6 @@ class RoverVelocityMode : public px4_ros2::ModeBase {
     _rover_speed_rate_setpoint = std::make_shared<px4_ros2::RoverSpeedRateSetpointType>(*this);
   }
 
-  void onActivate() override {}
-
-  void onDeactivate() override {}
-
   void updateSetpoint(float dt_s) override
   {
     const float speed_body_x = _manual_control_input->throttle() * kMaxSpeed;

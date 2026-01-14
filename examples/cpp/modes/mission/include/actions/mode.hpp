@@ -18,8 +18,6 @@ class FlightModeTest : public px4_ros2::ModeBase {
 
   void onActivate() override { _duration = 0.0f; }
 
-  void onDeactivate() override {}
-
   void updateSetpoint(float dt_s) override
   {
     _duration += dt_s;

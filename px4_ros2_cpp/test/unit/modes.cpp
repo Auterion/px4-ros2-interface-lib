@@ -31,8 +31,6 @@ class TestMode : public px4_ros2::ModeBase {
     setSkipMessageCompatibilityCheck();
     overrideRegistration(std::make_shared<FakeRegistration>(node));
   }
-  void onActivate() override {}
-  void onDeactivate() override {}
 
  private:
   std::shared_ptr<px4_ros2::ManualControlInput> _manual_control_input;
