@@ -46,8 +46,6 @@ class FlightModeTest : public px4_ros2::ModeBase {
     }
   }
 
-  void onDeactivate() override {}
-
   void updateSetpoint(float dt_s) override
   {
     switch (_control_state) {

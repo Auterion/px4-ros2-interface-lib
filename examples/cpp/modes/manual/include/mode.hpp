@@ -26,10 +26,6 @@ class FlightModeTest : public px4_ros2::ModeBase {
     _peripheral_actuator_controls = std::make_shared<px4_ros2::PeripheralActuatorControls>(*this);
   }
 
-  void onActivate() override {}
-
-  void onDeactivate() override {}
-
   void updateSetpoint(float dt_s) override
   {
     const float threshold = 0.9f;

@@ -18,10 +18,6 @@ class FwAttModeTest : public px4_ros2::ModeBase {
     _att_setpoint = std::make_shared<px4_ros2::AttitudeSetpointType>(*this);
   }
 
-  void onActivate() override {}
-
-  void onDeactivate() override {}
-
   void updateSetpoint(float dt_s) override
   {
     // Setting constant angles and thrust.

@@ -33,8 +33,6 @@ class FlightModeTest : public px4_ros2::ModeBase {
 
   void onActivate() override { _activation_time = node().get_clock()->now(); }
 
-  void onDeactivate() override {}
-
   void updateSetpoint(float dt_s) override
   {
     if (_land_detected->landed()) {

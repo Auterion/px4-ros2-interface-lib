@@ -138,12 +138,12 @@ class ModeBase : public Context {
   /**
    * Called whenever the mode is activated, also if the vehicle is disarmed
    */
-  virtual void onActivate() = 0;
+  virtual void onActivate() {}
 
   /**
    * Called whenever the mode is deactivated, also if the vehicle is disarmed
    */
-  virtual void onDeactivate() = 0;
+  virtual void onDeactivate() {}
 
   /**
    * Set the update rate when the mode is active. This is set automatically from the configured
