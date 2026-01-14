@@ -8,6 +8,7 @@ Checks: >
   performance-*,
   portability-*,
   readability-*,
+  -clang-diagnostic-ignored-optimization-argument, # optimization flag '-fno-fat-lto-objects' is not supported
   -bugprone-infinite-loop,
   -google-readability-braces-around-statements,
   -google-readability-todo,
