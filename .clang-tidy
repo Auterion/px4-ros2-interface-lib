@@ -27,6 +27,7 @@ Checks: >
   -performance-enum-size,
   -performance-move-const-arg,
   -portability-avoid-pragma-once,
+  -portability-template-virtual-member-function, # from rclcpp
   -readability-braces-around-statements,
   -readability-convert-member-functions-to-static,
   -readability-enum-initial-value,

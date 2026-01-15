@@ -99,7 +99,7 @@ TEST_F(GlobalPositionInterfaceTest, Valid)
   EXPECT_EQ(_update_msg->lat_lon_reset_counter, 0);
 
   // Signal measurement reset and send new measurement
-  _global_navigation_interface->reset();
+  (*_global_navigation_interface).reset();
   ASSERT_NO_THROW(_global_navigation_interface->update(measurement));
 
   ASSERT_TRUE(waitForUpdate());

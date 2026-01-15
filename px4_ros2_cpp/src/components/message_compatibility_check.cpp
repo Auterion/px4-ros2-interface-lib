@@ -21,10 +21,12 @@
 #include "rosidl_runtime_c/type_hash.h"
 #include "rosidl_typesupport_cpp/message_type_support.hpp"
 
-bool type_hash_is_equal(const rosidl_type_hash_t* a, const rosidl_type_hash_t* b)
+namespace {
+bool typeHashIsEqual(const rosidl_type_hash_t* a, const rosidl_type_hash_t* b)
 {
   return a->version == b->version && std::memcmp(a->value, b->value, ROSIDL_TYPE_HASH_SIZE) == 0;
 }
+}  // namespace
 #endif
 
 namespace {
@@ -235,12 +237,12 @@ bool messageCompatibilityCheck(rclcpp::Node& node,
             pub_hash = &info.topic_type_hash();  // Take last
           }
 
-          auto topic_type = find_type_support(type);
+          const auto topic_type = find_type_support(type);
 
           if (topic_type && topic_type->ts_handle->get_type_hash_func) {
             const rosidl_type_hash_t* hash =
                 topic_type->ts_handle->get_type_hash_func(topic_type->ts_handle);
-            if (!hash || !type_hash_is_equal(hash, pub_hash)) {
+            if (!hash || !typeHashIsEqual(hash, pub_hash)) {
               mismatched_topics += "\n  - " + std::string(topic.first);
               ret = false;
             }
@@ -252,12 +254,12 @@ bool messageCompatibilityCheck(rclcpp::Node& node,
             pub_hash = &info.topic_type_hash();  // Take last
           }
 
-          auto topic_type = find_type_support(type);
+          const auto topic_type = find_type_support(type);
 
           if (topic_type && topic_type->ts_handle->get_type_hash_func) {
             const rosidl_type_hash_t* hash =
                 topic_type->ts_handle->get_type_hash_func(topic_type->ts_handle);
-            if (!hash || !type_hash_is_equal(hash, pub_hash)) {
+            if (!hash || !typeHashIsEqual(hash, pub_hash)) {
               mismatched_topics += "\n  - " + std::string(topic.first);
               ret = false;
             }

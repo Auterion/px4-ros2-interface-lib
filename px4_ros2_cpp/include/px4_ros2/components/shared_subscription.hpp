@@ -46,7 +46,7 @@ class SharedSubscription : public std::enable_shared_from_this<SharedSubscriptio
                                                                  const std::string& topic_name,
                                                                  OnUpdateCallback callback)
   {
-    return instance(node, topic_name).registerOnUpdateCallback(callback);
+    return instance(node, topic_name).registerOnUpdateCallback(std::move(callback));
   }
 
   [[nodiscard]] SharedSubscriptionCallbackInstance registerOnUpdateCallback(
@@ -97,7 +97,7 @@ SharedSubscription<RosMessageType>& ::SharedSubscription<RosMessageType>::instan
   // Maintain a single instance per node and topic name.
   // Even though the ROS MultiThreadedExecutor is not supported by the library, a user might still
   // use multiple Nodes running in different threads. Therefore, we use a mutex here.
-  const std::lock_guard lg{mutex};
+  const std::scoped_lock lg{mutex};
   const Key key{&node, topic_name};
   auto it = instances.find(key);
   if (it != instances.end()) {
@@ -117,7 +117,7 @@ SharedSubscriptionCallbackInstance SharedSubscription<RosMessageType>::registerO
   const auto insert_ret = _callbacks.emplace(token, std::move(callback));
   assert(insert_ret.second);
   (void)insert_ret;
-  std::weak_ptr instance = this->shared_from_this();
+  const std::weak_ptr instance = this->shared_from_this();
   return SharedSubscriptionCallbackInstance(new unsigned(token), [instance](const unsigned* token) {
     const auto instance_shared = instance.lock();
     if (token && instance_shared) {
@@ -153,7 +153,7 @@ void SharedSubscription<RosMessageType>::cleanupInstanceIfUnused(
   // This would not strictly be required, as the static object gets destroyed at program exit.
   // However, this causes segfaults, see https://github.com/ros2/rmw_fastrtps/pull/770 (fixed in ROS
   // Jazzy)
-  const std::lock_guard lg{mutex};
+  const std::scoped_lock lg{mutex};
   if (instance->_callbacks.empty()) {
     auto result = std::find_if(instances.begin(), instances.end(),
                                [&instance](const auto& obj) { return obj.second == instance; });
