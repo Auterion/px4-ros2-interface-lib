@@ -58,6 +58,7 @@ var annotated_dup =
       [ "NavigationItem", "structpx4__ros2_1_1NavigationItem.html", null ],
       [ "NodeWithMode", "classpx4__ros2_1_1NodeWithMode.html", null ],
       [ "NodeWithModeExecutor", "classpx4__ros2_1_1NodeWithModeExecutor.html", null ],
+      [ "Odometry", "classpx4__ros2_1_1Odometry.html", "classpx4__ros2_1_1Odometry" ],
       [ "OdometryAirspeed", "classpx4__ros2_1_1OdometryAirspeed.html", null ],
       [ "OdometryAngularVelocity", "classpx4__ros2_1_1OdometryAngularVelocity.html", "classpx4__ros2_1_1OdometryAngularVelocity" ],
       [ "OdometryAttitude", "classpx4__ros2_1_1OdometryAttitude.html", "classpx4__ros2_1_1OdometryAttitude" ],

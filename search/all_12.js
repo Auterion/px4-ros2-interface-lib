@@ -24,7 +24,8 @@ var searchData=
   ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avehicleglobalposition_20_3e_21',['Subscription&lt; px4_msgs::msg::VehicleGlobalPosition &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
   ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avehiclelanddetected_20_3e_22',['Subscription&lt; px4_msgs::msg::VehicleLandDetected &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
   ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avehiclelocalposition_20_3e_23',['Subscription&lt; px4_msgs::msg::VehicleLocalPosition &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
-  ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avehiclestatus_20_3e_24',['Subscription&lt; px4_msgs::msg::VehicleStatus &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
-  ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avtolvehiclestatus_20_3e_25',['Subscription&lt; px4_msgs::msg::VtolVehicleStatus &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
-  ['supportsresumefromlanded_26',['supportsResumeFromLanded',['../classpx4__ros2_1_1ActionInterface.html#ae6a1a31a96023ab34946ef3afa8b6019',1,'px4_ros2::ActionInterface']]]
+  ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avehicleodometry_20_3e_24',['Subscription&lt; px4_msgs::msg::VehicleOdometry &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
+  ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avehiclestatus_20_3e_25',['Subscription&lt; px4_msgs::msg::VehicleStatus &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
+  ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avtolvehiclestatus_20_3e_26',['Subscription&lt; px4_msgs::msg::VtolVehicleStatus &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
+  ['supportsresumefromlanded_27',['supportsResumeFromLanded',['../classpx4__ros2_1_1ActionInterface.html#ae6a1a31a96023ab34946ef3afa8b6019',1,'px4_ros2::ActionInterface']]]
 ];

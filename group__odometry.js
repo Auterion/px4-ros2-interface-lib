@@ -18,6 +18,15 @@ var group__odometry =
       [ "OdometryLocalPosition", "classpx4__ros2_1_1OdometryLocalPosition.html#af05e8fd5845d7e7b34e209210e221ccc", null ],
       [ "heading", "classpx4__ros2_1_1OdometryLocalPosition.html#a50193dab84758c3f08e5a5b947fad5f8", null ]
     ] ],
+    [ "px4_ros2::Odometry", "classpx4__ros2_1_1Odometry.html", [
+      [ "angularVelocityFrd", "classpx4__ros2_1_1Odometry.html#a630faf7e5dba7b9481a06d38f0520324", null ],
+      [ "attitude", "classpx4__ros2_1_1Odometry.html#a44c1666c40f3b3a52ebaa29ee080bf01", null ],
+      [ "pitch", "classpx4__ros2_1_1Odometry.html#ae1429f45af515c37d13afed29451676f", null ],
+      [ "positionNed", "classpx4__ros2_1_1Odometry.html#adad3753a2d8b51c191b941cd54cb6471", null ],
+      [ "roll", "classpx4__ros2_1_1Odometry.html#a8220856fb2c2d48c400642dffae51593", null ],
+      [ "velocityNed", "classpx4__ros2_1_1Odometry.html#a9554d711132a4cee4ed511dfc8581282", null ],
+      [ "yaw", "classpx4__ros2_1_1Odometry.html#a2f71995cd2a424cd32c4be6a16cda8bf", null ]
+    ] ],
     [ "px4_ros2::Subscription< RosMessageType >", "classpx4__ros2_1_1Subscription.html", [
       [ "last", "classpx4__ros2_1_1Subscription.html#ac0369b75dbd7c349451771d1885e3a97", null ],
       [ "lastTime", "classpx4__ros2_1_1Subscription.html#a154da70b9a4248b8cec8eb5550fa2c99", null ],

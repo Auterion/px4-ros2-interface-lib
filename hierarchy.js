@@ -103,6 +103,9 @@ var hierarchy =
     [ "px4_ros2::Subscription< px4_msgs::msg::VehicleLocalPosition >", "classpx4__ros2_1_1Subscription.html", [
       [ "px4_ros2::OdometryLocalPosition", "classpx4__ros2_1_1OdometryLocalPosition.html", null ]
     ] ],
+    [ "px4_ros2::Subscription< px4_msgs::msg::VehicleOdometry >", "classpx4__ros2_1_1Subscription.html", [
+      [ "px4_ros2::Odometry", "classpx4__ros2_1_1Odometry.html", null ]
+    ] ],
     [ "px4_ros2::Subscription< px4_msgs::msg::VehicleStatus >", "classpx4__ros2_1_1Subscription.html", [
       [ "px4_ros2::VehicleStatus", "classpx4__ros2_1_1VehicleStatus.html", null ]
     ] ],
