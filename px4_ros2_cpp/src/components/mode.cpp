@@ -153,14 +153,14 @@ void ModeBase::updateSetpointUpdateTimer()
 
   } else {
     if (_setpoint_update_timer) {
-      _setpoint_update_timer.reset();
+      _setpoint_update_timer = nullptr;
     }
   }
 }
 
 void ModeBase::setSetpointUpdateRate(float rate_hz)
 {
-  _setpoint_update_timer.reset();
+  _setpoint_update_timer = nullptr;
   _setpoint_update_rate_hz = rate_hz;
   updateSetpointUpdateTimer();
 }

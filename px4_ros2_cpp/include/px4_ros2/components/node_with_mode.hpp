@@ -31,11 +31,12 @@ namespace px4_ros2 {
  */
 template <typename ModeT>
 class NodeWithMode : public rclcpp::Node {
-  static_assert(std::is_base_of<ModeBase, ModeT>::value,
+  static_assert(std::is_base_of_v<ModeBase, ModeT>,
                 "Template type ModeT must be derived from px4_ros2::ModeBase");
 
  public:
-  explicit NodeWithMode(std::string node_name, bool enable_debug_output = false) : Node(node_name)
+  explicit NodeWithMode(const std::string& node_name, bool enable_debug_output = false)
+      : Node(node_name)
   {
     if (enable_debug_output) {
       auto ret =

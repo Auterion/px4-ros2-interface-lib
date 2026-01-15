@@ -101,7 +101,7 @@ class HealthAndArmingChecks {
 
   RequirementFlags& modeRequirements() { return _mode_requirements; }
 
-  void disableWatchdogTimer() { _watchdog_timer.reset(); }
+  void disableWatchdogTimer() { _watchdog_timer = nullptr; }
 
  private:
   friend class ModeBase;

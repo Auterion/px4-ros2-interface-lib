@@ -50,11 +50,11 @@ Type degToRad(Type deg)
 }
 
 namespace literals {
-static inline constexpr float operator"" _deg(long double degrees)
+static inline constexpr float operator""_deg(long double degrees)
 {
   return static_cast<float>(degrees * M_PI / 180.0);
 }
-static inline constexpr float operator"" _rad(long double radians)
+static inline constexpr float operator""_rad(long double radians)
 {
   return static_cast<float>(radians);
 }
