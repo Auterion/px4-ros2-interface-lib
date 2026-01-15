@@ -104,6 +104,7 @@ set(HEADER_FILES
         include/px4_ros2/odometry/local_position.hpp
         include/px4_ros2/odometry/angular_velocity.hpp
         include/px4_ros2/odometry/airspeed.hpp
+        include/px4_ros2/odometry/odometry.hpp
         include/px4_ros2/utils/frame_conversion.hpp
         include/px4_ros2/utils/geodesic.hpp
         include/px4_ros2/utils/geometry.hpp
@@ -150,6 +151,7 @@ add_library(px4_ros2_cpp
         src/navigation/experimental/global_position_measurement_interface.cpp
         src/navigation/experimental/local_position_measurement_interface.cpp
         src/odometry/airspeed.cpp
+        src/odometry/odometry.cpp
         src/odometry/angular_velocity.cpp
         src/odometry/attitude.cpp
         src/odometry/global_position.cpp
