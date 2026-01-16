@@ -58,6 +58,9 @@ jobs:
           WS_DIR="$GITHUB_WORKSPACE"
           . /opt/ros/galactic/setup.bash
           cd "$WS_DIR/src"
+          # Ignore python packages due to compilation issue (can be enabled when updating ROS)
+          touch px4-ros2-interface-lib/px4_ros2_py/COLCON_IGNORE
+          touch px4-ros2-interface-lib/examples/python/COLCON_IGNORE
           git clone --recursive https://github.com/PX4/px4_msgs.git
           cd ..
           colcon build --symlink-install
