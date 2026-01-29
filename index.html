@@ -95,6 +95,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a> Library to interface with PX4 from a companion computer using ROS 2. It provides some tooling used to write external modes that are dynamically registered with PX4 and behave the same way as internal ones. A mode can send different types of setpoints, ranging from high-level navigation tasks all the way down to direct actuator controls.</p>
+<p>The library is written in C++, with Python bindings provided as well (not yet complete).</p>
 <p>Documentation:</p><ul>
 <li>High-level: <a href="https://docs.px4.io/main/en/ros2/px4_ros2_interface_lib.html">https://docs.px4.io/main/en/ros2/px4_ros2_interface_lib.html</a></li>
 <li>API: <a href="https://auterion.github.io/px4-ros2-interface-lib/topics.html">https://auterion.github.io/px4-ros2-interface-lib/topics.html</a></li>
@@ -137,7 +138,7 @@ Option 2: Translate Messages</h2>
 <div class="ttc" id="aclasspx4__ros2_1_1ModeBase_html"><div class="ttname"><a href="classpx4__ros2_1_1ModeBase.html">px4_ros2::ModeBase</a></div><div class="ttdoc">Base class for a mode.</div><div class="ttdef"><b>Definition</b> mode.hpp:73</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
 Examples</h1>
-<p>There are code examples under <a href="examples/cpp/modes">examples/cpp/modes</a>.</p>
+<p>There are code examples under <a href="examples/cpp">examples/cpp</a> for C++ and <a href="examples/python">examples/python</a> for Python.</p>
 <h1><a class="anchor" id="autotoc_md6"></a>
 Development</h1>
 <p>For development, install the pre-commit scripts: </p><div class="fragment"><div class="line">pre-commit install</div>

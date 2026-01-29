@@ -199,7 +199,7 @@ $(document).ready(function(){initNavTree('health__and__arming__checks_8hpp_sourc
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  <a class="code hl_struct" href="structpx4__ros2_1_1RequirementFlags.html">RequirementFlags</a>&amp; modeRequirements() { <span class="keywordflow">return</span> _mode_requirements; }</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  <span class="keywordtype">void</span> disableWatchdogTimer() { _watchdog_timer.reset(); }</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  <span class="keywordtype">void</span> disableWatchdogTimer() { _watchdog_timer = <span class="keyword">nullptr</span>; }</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  <span class="keyword">friend</span> <span class="keyword">class </span>ModeBase;</div>
