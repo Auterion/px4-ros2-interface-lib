@@ -1,5 +1,6 @@
 var classpx4__ros2_1_1Odometry =
 [
+    [ "Odometry", "classpx4__ros2_1_1Odometry.html#a85d22242d54e6eaf079f63f5e5c00dbf", null ],
     [ "angularVelocityFrd", "classpx4__ros2_1_1Odometry.html#a630faf7e5dba7b9481a06d38f0520324", null ],
     [ "attitude", "classpx4__ros2_1_1Odometry.html#a44c1666c40f3b3a52ebaa29ee080bf01", null ],
     [ "pitch", "classpx4__ros2_1_1Odometry.html#ae1429f45af515c37d13afed29451676f", null ],

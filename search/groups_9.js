@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rover_0',['Rover',['../group__setpoint__types__rover.html',1,'']]]
+  ['setpoint_20types_540',['Setpoint Types',['../group__setpoint__types.html',1,'']]]
 ];
