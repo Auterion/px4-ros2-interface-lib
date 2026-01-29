@@ -3,6 +3,7 @@ on:
   push:
     branches:
     - 'main'
+    - 'docs_test'
   pull_request:
     branches:
     - '*'
@@ -47,6 +48,28 @@ jobs:
               }
             }
 
+      # Documentation (sphinx requires the code to be compiled)
+      - name: Install doxygen & sphinx
+        run: sudo apt-get update && sudo apt-get install -y doxygen python3-sphinx
+
+      - name: Run doxygen
+        run: ./scripts/run-doxygen.sh
+
+      - name: Run sphinx
+        run: |
+          ROS_WS_DIR="$(readlink -f ${{ steps.ros-build.outputs.ros-workspace-directory-name }})"
+          source "$ROS_WS_DIR/install/setup.bash"
+          make -C python_docs html
+          cp -r python_docs/_build/html docs/html/python
+
+      - name: Deploy
+        if: github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/html
+
+      # clang-tidy
       - name: install clang tidy
         run: |
           sudo apt-get install --yes -qq clang-tidy
