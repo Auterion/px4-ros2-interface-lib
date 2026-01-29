@@ -35,20 +35,317 @@
   <section id="the-px4-ros2-module">
 <h1>The px4_ros2 module<a class="headerlink" href="#the-px4-ros2-module" title="Permalink to this headline">¶</a></h1>
 <p>Python bindings for px4_ros2_cpp.</p>
-<section id="main-classes">
+<span class="target" id="module-px4_ros2"></span><section id="main-classes">
 <h2>Main Classes<a class="headerlink" href="#main-classes" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="px4_ros2.Node">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">px4_ros2.</span></span><span class="sig-name descname"><span class="pre">Node</span></span><a class="headerlink" href="#px4_ros2.Node" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.Node.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.Node" title="px4_ros2.px4_ros2_py.Node"><span class="pre">px4_ros2.px4_ros2_py.Node</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.Node.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.Node.spin">
+<span class="sig-name descname"><span class="pre">spin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.Node" title="px4_ros2.px4_ros2_py.Node"><span class="pre">px4_ros2.px4_ros2_py.Node</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.Node.spin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the node (blocking)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.Node.spin_non_blocking">
+<span class="sig-name descname"><span class="pre">spin_non_blocking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.Node" title="px4_ros2.px4_ros2_py.Node"><span class="pre">px4_ros2.px4_ros2_py.Node</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.Node.spin_non_blocking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the node (non-blocking in a background thread)</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="components">
-<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
+<section id="module-px4_ros2.px4_ros2_py.components">
+<span id="components"></span><h2>Components<a class="headerlink" href="#module-px4_ros2.px4_ros2_py.components" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.Context">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">px4_ros2.px4_ros2_py.components.</span></span><span class="sig-name descname"><span class="pre">Context</span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.Context" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.Context.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.Context.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">px4_ros2.px4_ros2_py.components.</span></span><span class="sig-name descname"><span class="pre">ModeBase</span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeBase" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeBase.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeBase" title="px4_ros2.px4_ros2_py.components.ModeBase"><span class="pre">px4_ros2.px4_ros2_py.components.ModeBase</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.Node" title="px4_ros2.px4_ros2_py.Node"><span class="pre">px4_ros2.px4_ros2_py.Node</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">activate_even_while_disarmed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace_internal_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">255</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prevent_arming</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_selectable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeBase.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeBase.completed">
+<span class="sig-name descname"><span class="pre">completed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">px4_ros2.px4_ros2_py.components.ModeBase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result:</span> <span class="pre">px4_ros2.px4_ros2_py.components.Result</span> <span class="pre">=</span> <span class="pre">&lt;Result.success:</span> <span class="pre">0&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeBase.completed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeBase.id">
+<span class="sig-name descname"><span class="pre">id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeBase" title="px4_ros2.px4_ros2_py.components.ModeBase"><span class="pre">px4_ros2.px4_ros2_py.components.ModeBase</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeBase.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeBase.on_activate">
+<span class="sig-name descname"><span class="pre">on_activate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeBase" title="px4_ros2.px4_ros2_py.components.ModeBase"><span class="pre">px4_ros2.px4_ros2_py.components.ModeBase</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeBase.on_activate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeBase.on_deactivate">
+<span class="sig-name descname"><span class="pre">on_deactivate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeBase" title="px4_ros2.px4_ros2_py.components.ModeBase"><span class="pre">px4_ros2.px4_ros2_py.components.ModeBase</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeBase.on_deactivate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeBase.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeBase" title="px4_ros2.px4_ros2_py.components.ModeBase"><span class="pre">px4_ros2.px4_ros2_py.components.ModeBase</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeBase.register" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeBase.update_setpoint">
+<span class="sig-name descname"><span class="pre">update_setpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeBase" title="px4_ros2.px4_ros2_py.components.ModeBase"><span class="pre">px4_ros2.px4_ros2_py.components.ModeBase</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeBase.update_setpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeExecutorBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">px4_ros2.px4_ros2_py.components.</span></span><span class="sig-name descname"><span class="pre">ModeExecutorBase</span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeExecutorBase.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase" title="px4_ros2.px4_ros2_py.components.ModeExecutorBase"><span class="pre">px4_ros2.px4_ros2_py.components.ModeExecutorBase</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeBase" title="px4_ros2.px4_ros2_py.components.ModeBase"><span class="pre">px4_ros2.px4_ros2_py.components.ModeBase</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeExecutorBase.land">
+<span class="sig-name descname"><span class="pre">land</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase" title="px4_ros2.px4_ros2_py.components.ModeExecutorBase"><span class="pre">px4_ros2.px4_ros2_py.components.ModeExecutorBase</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.Result" title="px4_ros2.px4_ros2_py.components.Result"><span class="pre">px4_ros2.px4_ros2_py.components.Result</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase.land" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeExecutorBase.on_activate">
+<span class="sig-name descname"><span class="pre">on_activate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase" title="px4_ros2.px4_ros2_py.components.ModeExecutorBase"><span class="pre">px4_ros2.px4_ros2_py.components.ModeExecutorBase</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase.on_activate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeExecutorBase.on_deactivate">
+<span class="sig-name descname"><span class="pre">on_deactivate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase" title="px4_ros2.px4_ros2_py.components.ModeExecutorBase"><span class="pre">px4_ros2.px4_ros2_py.components.ModeExecutorBase</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason" title="px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason"><span class="pre">px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase.on_deactivate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeExecutorBase.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase" title="px4_ros2.px4_ros2_py.components.ModeExecutorBase"><span class="pre">px4_ros2.px4_ros2_py.components.ModeExecutorBase</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase.register" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeExecutorBase.rtl">
+<span class="sig-name descname"><span class="pre">rtl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase" title="px4_ros2.px4_ros2_py.components.ModeExecutorBase"><span class="pre">px4_ros2.px4_ros2_py.components.ModeExecutorBase</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.Result" title="px4_ros2.px4_ros2_py.components.Result"><span class="pre">px4_ros2.px4_ros2_py.components.Result</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase.rtl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeExecutorBase.schedule_mode">
+<span class="sig-name descname"><span class="pre">schedule_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase" title="px4_ros2.px4_ros2_py.components.ModeExecutorBase"><span class="pre">px4_ros2.px4_ros2_py.components.ModeExecutorBase</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_completed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.Result" title="px4_ros2.px4_ros2_py.components.Result"><span class="pre">px4_ros2.px4_ros2_py.components.Result</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forced</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase.schedule_mode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeExecutorBase.takeoff">
+<span class="sig-name descname"><span class="pre">takeoff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase" title="px4_ros2.px4_ros2_py.components.ModeExecutorBase"><span class="pre">px4_ros2.px4_ros2_py.components.ModeExecutorBase</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_completed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.Result" title="px4_ros2.px4_ros2_py.components.Result"><span class="pre">px4_ros2.px4_ros2_py.components.Result</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">altitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heading</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">nan</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeExecutorBase.takeoff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">px4_ros2.px4_ros2_py.components.</span></span><span class="sig-name descname"><span class="pre">ModeExecutorDeactivateReason</span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason" title="Permalink to this definition">¶</a></dt>
+<dd><p>Members:</p>
+<p>failsafe_activated</p>
+<p>other</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason" title="px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason"><span class="pre">px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason.failsafe_activated">
+<span class="sig-name descname"><span class="pre">failsafe_activated</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ModeExecutorDeactivateReason.failsafe_activated:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason.failsafe_activated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason.other">
+<span class="sig-name descname"><span class="pre">other</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ModeExecutorDeactivateReason.other:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason.other" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.ModeExecutorDeactivateReason.value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.Result">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">px4_ros2.px4_ros2_py.components.</span></span><span class="sig-name descname"><span class="pre">Result</span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.Result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Members:</p>
+<p>deactivated</p>
+<p>interrupted</p>
+<p>mode_failure_other</p>
+<p>rejected</p>
+<p>success</p>
+<p>timeout</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.Result.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.Result" title="px4_ros2.px4_ros2_py.components.Result"><span class="pre">px4_ros2.px4_ros2_py.components.Result</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.Result.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.Result.deactivated">
+<span class="sig-name descname"><span class="pre">deactivated</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Result.deactivated:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.Result.deactivated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.Result.interrupted">
+<span class="sig-name descname"><span class="pre">interrupted</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Result.interrupted:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.Result.interrupted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.Result.mode_failure_other">
+<span class="sig-name descname"><span class="pre">mode_failure_other</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Result.mode_failure_other:</span> <span class="pre">100&gt;</span></em><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.Result.mode_failure_other" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.Result.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.Result.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.Result.rejected">
+<span class="sig-name descname"><span class="pre">rejected</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Result.rejected:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.Result.rejected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.Result.success">
+<span class="sig-name descname"><span class="pre">success</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Result.success:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.Result.success" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.Result.timeout">
+<span class="sig-name descname"><span class="pre">timeout</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Result.timeout:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.Result.timeout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.components.Result.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.components.Result.value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="control">
-<h2>Control<a class="headerlink" href="#control" title="Permalink to this headline">¶</a></h2>
+<section id="module-px4_ros2.px4_ros2_py.control">
+<span id="control"></span><h2>Control<a class="headerlink" href="#module-px4_ros2.px4_ros2_py.control" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.control.MulticopterGotoSetpointType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">px4_ros2.px4_ros2_py.control.</span></span><span class="sig-name descname"><span class="pre">MulticopterGotoSetpointType</span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.control.MulticopterGotoSetpointType" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.control.MulticopterGotoSetpointType.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.control.MulticopterGotoSetpointType" title="px4_ros2.px4_ros2_py.control.MulticopterGotoSetpointType"><span class="pre">px4_ros2.px4_ros2_py.control.MulticopterGotoSetpointType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.Context" title="px4_ros2.px4_ros2_py.components.Context"><span class="pre">px4_ros2.px4_ros2_py.components.Context</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.control.MulticopterGotoSetpointType.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.control.MulticopterGotoSetpointType.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.control.MulticopterGotoSetpointType" title="px4_ros2.px4_ros2_py.control.MulticopterGotoSetpointType"><span class="pre">px4_ros2.px4_ros2_py.control.MulticopterGotoSetpointType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float32</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heading</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_horizontal_speed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_vertical_speed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_heading_speed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.control.MulticopterGotoSetpointType.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="geometry">
-<h2>Geometry<a class="headerlink" href="#geometry" title="Permalink to this headline">¶</a></h2>
+<section id="module-px4_ros2.px4_ros2_py.geometry">
+<span id="geometry"></span><h2>Geometry<a class="headerlink" href="#module-px4_ros2.px4_ros2_py.geometry" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.geometry.deg_to_rad">
+<span class="sig-prename descclassname"><span class="pre">px4_ros2.px4_ros2_py.geometry.</span></span><span class="sig-name descname"><span class="pre">deg_to_rad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.geometry.deg_to_rad" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.geometry.euler_rpy_to_quaternion">
+<span class="sig-prename descclassname"><span class="pre">px4_ros2.px4_ros2_py.geometry.</span></span><span class="sig-name descname"><span class="pre">euler_rpy_to_quaternion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roll</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pitch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.geometry.euler_rpy_to_quaternion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert Euler angles (roll, pitch, yaw) to quaternion (w, x, y, z)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.geometry.quaternion_to_euler_rpy">
+<span class="sig-prename descclassname"><span class="pre">px4_ros2.px4_ros2_py.geometry.</span></span><span class="sig-name descname"><span class="pre">quaternion_to_euler_rpy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quaternion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.geometry.quaternion_to_euler_rpy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert quaternion (w, x, y, z) to Euler angles (roll, pitch, yaw) as a tuple</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.geometry.quaternion_to_pitch">
+<span class="sig-prename descclassname"><span class="pre">px4_ros2.px4_ros2_py.geometry.</span></span><span class="sig-name descname"><span class="pre">quaternion_to_pitch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quaternion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.geometry.quaternion_to_pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract pitch angle from quaternion (w, x, y, z)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.geometry.quaternion_to_roll">
+<span class="sig-prename descclassname"><span class="pre">px4_ros2.px4_ros2_py.geometry.</span></span><span class="sig-name descname"><span class="pre">quaternion_to_roll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quaternion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.geometry.quaternion_to_roll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract roll angle from quaternion (w, x, y, z)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.geometry.quaternion_to_yaw">
+<span class="sig-prename descclassname"><span class="pre">px4_ros2.px4_ros2_py.geometry.</span></span><span class="sig-name descname"><span class="pre">quaternion_to_yaw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quaternion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.geometry.quaternion_to_yaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract yaw angle from quaternion (w, x, y, z)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.geometry.rad_to_deg">
+<span class="sig-prename descclassname"><span class="pre">px4_ros2.px4_ros2_py.geometry.</span></span><span class="sig-name descname"><span class="pre">rad_to_deg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.geometry.rad_to_deg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.geometry.wrap_pi">
+<span class="sig-prename descclassname"><span class="pre">px4_ros2.px4_ros2_py.geometry.</span></span><span class="sig-name descname"><span class="pre">wrap_pi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.geometry.wrap_pi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
-<section id="odometry">
-<h2>Odometry<a class="headerlink" href="#odometry" title="Permalink to this headline">¶</a></h2>
+<section id="module-px4_ros2.px4_ros2_py.odometry">
+<span id="odometry"></span><h2>Odometry<a class="headerlink" href="#module-px4_ros2.px4_ros2_py.odometry" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.odometry.LocalPosition">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">px4_ros2.px4_ros2_py.odometry.</span></span><span class="sig-name descname"><span class="pre">LocalPosition</span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.odometry.LocalPosition" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.odometry.LocalPosition.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.odometry.LocalPosition" title="px4_ros2.px4_ros2_py.odometry.LocalPosition"><span class="pre">px4_ros2.px4_ros2_py.odometry.LocalPosition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.components.Context" title="px4_ros2.px4_ros2_py.components.Context"><span class="pre">px4_ros2.px4_ros2_py.components.Context</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_position_is_optional</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.odometry.LocalPosition.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.odometry.LocalPosition.on_update">
+<span class="sig-name descname"><span class="pre">on_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.odometry.LocalPosition" title="px4_ros2.px4_ros2_py.odometry.LocalPosition"><span class="pre">px4_ros2.px4_ros2_py.odometry.LocalPosition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.odometry.LocalPosition.on_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.odometry.LocalPosition.position_ned">
+<span class="sig-name descname"><span class="pre">position_ned</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.odometry.LocalPosition" title="px4_ros2.px4_ros2_py.odometry.LocalPosition"><span class="pre">px4_ros2.px4_ros2_py.odometry.LocalPosition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float32</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.odometry.LocalPosition.position_ned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.odometry.LocalPosition.position_xy_valid">
+<span class="sig-name descname"><span class="pre">position_xy_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.odometry.LocalPosition" title="px4_ros2.px4_ros2_py.odometry.LocalPosition"><span class="pre">px4_ros2.px4_ros2_py.odometry.LocalPosition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.odometry.LocalPosition.position_xy_valid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="px4_ros2.px4_ros2_py.odometry.LocalPosition.position_z_valid">
+<span class="sig-name descname"><span class="pre">position_z_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#px4_ros2.px4_ros2_py.odometry.LocalPosition" title="px4_ros2.px4_ros2_py.odometry.LocalPosition"><span class="pre">px4_ros2.px4_ros2_py.odometry.LocalPosition</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#px4_ros2.px4_ros2_py.odometry.LocalPosition.position_z_valid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -72,10 +369,10 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">The px4_ros2 module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#main-classes">Main Classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#components">Components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#control">Control</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#geometry">Geometry</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#odometry">Odometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-px4_ros2.px4_ros2_py.components">Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-px4_ros2.px4_ros2_py.control">Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-px4_ros2.px4_ros2_py.geometry">Geometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-px4_ros2.px4_ros2_py.odometry">Odometry</a></li>
 </ul>
 </li>
 </ul>
