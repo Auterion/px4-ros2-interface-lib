@@ -41,12 +41,11 @@ class GlobalPositionInterfaceTest : public testing::Test {
 
     _global_navigation_interface =
         std::make_shared<px4_ros2::GlobalPositionMeasurementInterface>(*_node);
-    _subscriber = _node->create_subscription<px4_msgs::msg::VehicleGlobalPosition>(
+    _subscriber = _node->create_subscription<px4_msgs::msg::AuxGlobalPosition>(
         "/fmu/in/aux_global_position" +
-            px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleGlobalPosition>(),
-        rclcpp::QoS(10).best_effort(), [this](px4_msgs::msg::VehicleGlobalPosition::UniquePtr msg) {
-          _update_msg = std::move(msg);
-        });
+            px4_ros2::getMessageNameVersion<px4_msgs::msg::AuxGlobalPosition>(),
+        rclcpp::QoS(10).best_effort(),
+        [this](px4_msgs::msg::AuxGlobalPosition::UniquePtr msg) { _update_msg = std::move(msg); });
   }
 
   bool waitForUpdate()
@@ -67,8 +66,8 @@ class GlobalPositionInterfaceTest : public testing::Test {
   std::shared_ptr<rclcpp::Node> _node;
   rclcpp::executors::SingleThreadedExecutor _executor;
   std::shared_ptr<px4_ros2::GlobalPositionMeasurementInterface> _global_navigation_interface;
-  rclcpp::Subscription<px4_msgs::msg::VehicleGlobalPosition>::SharedPtr _subscriber;
-  px4_msgs::msg::VehicleGlobalPosition::UniquePtr _update_msg;
+  rclcpp::Subscription<px4_msgs::msg::AuxGlobalPosition>::SharedPtr _subscriber;
+  px4_msgs::msg::AuxGlobalPosition::UniquePtr _update_msg;
 
   static constexpr std::chrono::seconds kTimeoutDuration{3s};
   static constexpr std::chrono::milliseconds kSleepInterval{10ms};

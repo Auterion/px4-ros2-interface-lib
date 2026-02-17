@@ -14,7 +14,7 @@ using namespace std::chrono_literals;  // NOLINT
   {"fmu/in/actuator_motors"}, \
   {"fmu/in/actuator_servos"}, \
   {"fmu/in/arming_check_reply"}, \
-  {"fmu/in/aux_global_position", "VehicleGlobalPosition"}, \
+  {"fmu/in/aux_global_position"}, \
   {"fmu/in/config_control_setpoints", "VehicleControlMode"}, \
   {"fmu/in/config_overrides_request", "ConfigOverrides"}, \
   {"fmu/in/fixed_wing_lateral_setpoint"}, \

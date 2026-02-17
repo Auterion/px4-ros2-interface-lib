@@ -7,7 +7,7 @@
 
 #include <Eigen/Eigen>
 #include <optional>
-#include <px4_msgs/msg/vehicle_global_position.hpp>
+#include <px4_msgs/msg/aux_global_position.hpp>
 #include <px4_ros2/navigation/experimental/navigation_interface_base.hpp>
 #include <rclcpp/rclcpp.hpp>
 
@@ -46,7 +46,8 @@ struct GlobalPositionMeasurement {
  */
 class GlobalPositionMeasurementInterface : public PositionMeasurementInterfaceBase {
  public:
-  explicit GlobalPositionMeasurementInterface(rclcpp::Node& node,
+  explicit GlobalPositionMeasurementInterface(rclcpp::Node& node, uint8_t id = 1,
+                                              uint8_t source = 2,
                                               std::string topic_namespace_prefix = "");
   ~GlobalPositionMeasurementInterface() override = default;
 
@@ -94,11 +95,12 @@ class GlobalPositionMeasurementInterface : public PositionMeasurementInterfaceBa
    */
   bool isValueNotNAN(const GlobalPositionMeasurement& measurement) const;
 
-  rclcpp::Publisher<px4_msgs::msg::VehicleGlobalPosition>::SharedPtr _aux_global_position_pub;
+  rclcpp::Publisher<px4_msgs::msg::AuxGlobalPosition>::SharedPtr _aux_global_position_pub;
 
+  uint8_t _id;
+  uint8_t _source;
   uint8_t _lat_lon_reset_counter{
       0}; /** Counter for reset events on horizontal position coordinates */
-  // uint8_t _altitude_frame;
 };
 
 /** @}*/
