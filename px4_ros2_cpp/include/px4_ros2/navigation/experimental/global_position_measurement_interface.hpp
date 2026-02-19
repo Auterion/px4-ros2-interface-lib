@@ -46,6 +46,12 @@ struct GlobalPositionMeasurement {
  */
 class GlobalPositionMeasurementInterface : public PositionMeasurementInterfaceBase {
  public:
+  /**
+   * @param id Unique identifier non-zero for this position source. PX4 uses this to demultiplex
+   *   measurements from multiple external positioning sources on the same topic.
+   * @param source Source type of the position data, using AuxGlobalPosition::SOURCE_*
+   *   constants. Defaults to SOURCE_VISION (2).
+   */
   explicit GlobalPositionMeasurementInterface(rclcpp::Node& node, uint8_t id = 1,
                                               uint8_t source = 2,
                                               std::string topic_namespace_prefix = "");
@@ -97,8 +103,8 @@ class GlobalPositionMeasurementInterface : public PositionMeasurementInterfaceBa
 
   rclcpp::Publisher<px4_msgs::msg::AuxGlobalPosition>::SharedPtr _aux_global_position_pub;
 
-  uint8_t _id;
-  uint8_t _source;
+  const uint8_t _id;
+  const uint8_t _source;
   uint8_t _lat_lon_reset_counter{
       0}; /** Counter for reset events on horizontal position coordinates */
 };
