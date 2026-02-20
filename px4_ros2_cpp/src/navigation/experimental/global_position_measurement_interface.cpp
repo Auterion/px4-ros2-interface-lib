@@ -12,8 +12,7 @@ using px4_msgs::msg::AuxGlobalPosition;
 namespace px4_ros2 {
 
 GlobalPositionMeasurementInterface::GlobalPositionMeasurementInterface(
-    rclcpp::Node& node, uint8_t id, GlobalPositionSource source,
-    std::string topic_namespace_prefix)
+    rclcpp::Node& node, uint8_t id, GlobalPositionSource source, std::string topic_namespace_prefix)
     : PositionMeasurementInterfaceBase(node, std::move(topic_namespace_prefix)),
       _id(id),
       _source(source)
