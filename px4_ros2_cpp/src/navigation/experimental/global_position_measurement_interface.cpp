@@ -7,17 +7,19 @@
 #include <px4_ros2/utils/message_version.hpp>
 
 using Eigen::Vector2d;
-using px4_msgs::msg::VehicleGlobalPosition;
+using px4_msgs::msg::AuxGlobalPosition;
 
 namespace px4_ros2 {
 
 GlobalPositionMeasurementInterface::GlobalPositionMeasurementInterface(
-    rclcpp::Node& node, std::string topic_namespace_prefix)
-    : PositionMeasurementInterfaceBase(node, std::move(topic_namespace_prefix))
+    rclcpp::Node& node, uint8_t id, GlobalPositionSource source, std::string topic_namespace_prefix)
+    : PositionMeasurementInterfaceBase(node, std::move(topic_namespace_prefix)),
+      _id(id),
+      _source(source)
 {
-  _aux_global_position_pub = node.create_publisher<VehicleGlobalPosition>(
+  _aux_global_position_pub = node.create_publisher<AuxGlobalPosition>(
       topicNamespacePrefix() + "fmu/in/aux_global_position" +
-          px4_ros2::getMessageNameVersion<VehicleGlobalPosition>(),
+          px4_ros2::getMessageNameVersion<AuxGlobalPosition>(),
       10);
 }
 
@@ -42,7 +44,9 @@ void GlobalPositionMeasurementInterface::update(
   }
 
   // Populate aux global position
-  VehicleGlobalPosition aux_global_position;
+  AuxGlobalPosition aux_global_position;
+  aux_global_position.id = _id;
+  aux_global_position.source = static_cast<uint8_t>(_source);
   aux_global_position.lat_lon_reset_counter = _lat_lon_reset_counter;
 
   aux_global_position.timestamp_sample =

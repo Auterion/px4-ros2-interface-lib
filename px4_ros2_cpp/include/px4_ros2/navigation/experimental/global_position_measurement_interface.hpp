@@ -7,7 +7,7 @@
 
 #include <Eigen/Eigen>
 #include <optional>
-#include <px4_msgs/msg/vehicle_global_position.hpp>
+#include <px4_msgs/msg/aux_global_position.hpp>
 #include <px4_ros2/navigation/experimental/navigation_interface_base.hpp>
 #include <rclcpp/rclcpp.hpp>
 
@@ -15,6 +15,19 @@ namespace px4_ros2 {
 /** \ingroup navigation_experimental
  *  @{
  */
+
+/**
+ * @brief Source type of the global position data.
+ */
+enum class GlobalPositionSource : uint8_t {
+  Unknown = px4_msgs::msg::AuxGlobalPosition::SOURCE_UNKNOWN,
+  GNSS = px4_msgs::msg::AuxGlobalPosition::SOURCE_GNSS,
+  Vision = px4_msgs::msg::AuxGlobalPosition::SOURCE_VISION,
+  Pseudolites = px4_msgs::msg::AuxGlobalPosition::SOURCE_PSEUDOLITES,
+  Terrain = px4_msgs::msg::AuxGlobalPosition::SOURCE_TERRAIN,
+  Magnetic = px4_msgs::msg::AuxGlobalPosition::SOURCE_MAGNETIC,
+  Estimator = px4_msgs::msg::AuxGlobalPosition::SOURCE_ESTIMATOR,
+};
 
 /**
  * @struct GlobalPositionMeasurement
@@ -46,8 +59,15 @@ struct GlobalPositionMeasurement {
  */
 class GlobalPositionMeasurementInterface : public PositionMeasurementInterfaceBase {
  public:
-  explicit GlobalPositionMeasurementInterface(rclcpp::Node& node,
-                                              std::string topic_namespace_prefix = "");
+  /**
+   * @param id Unique identifier non-zero for this position source. PX4 uses this to demultiplex
+   *   measurements from multiple external positioning sources on the same topic.
+   * @param source Source type of the position data. Defaults to GlobalPositionSource::Vision.
+   */
+  explicit GlobalPositionMeasurementInterface(
+      rclcpp::Node& node, uint8_t id = 1,
+      GlobalPositionSource source = GlobalPositionSource::Vision,
+      std::string topic_namespace_prefix = "");
   ~GlobalPositionMeasurementInterface() override = default;
 
   /**
@@ -94,11 +114,12 @@ class GlobalPositionMeasurementInterface : public PositionMeasurementInterfaceBa
    */
   bool isValueNotNAN(const GlobalPositionMeasurement& measurement) const;
 
-  rclcpp::Publisher<px4_msgs::msg::VehicleGlobalPosition>::SharedPtr _aux_global_position_pub;
+  rclcpp::Publisher<px4_msgs::msg::AuxGlobalPosition>::SharedPtr _aux_global_position_pub;
 
+  const uint8_t _id;
+  const GlobalPositionSource _source;
   uint8_t _lat_lon_reset_counter{
       0}; /** Counter for reset events on horizontal position coordinates */
-  // uint8_t _altitude_frame;
 };
 
 /** @}*/
