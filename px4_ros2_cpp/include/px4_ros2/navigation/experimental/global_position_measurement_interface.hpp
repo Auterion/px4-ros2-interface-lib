@@ -17,6 +17,19 @@ namespace px4_ros2 {
  */
 
 /**
+ * @brief Source type of the global position data.
+ */
+enum class GlobalPositionSource : uint8_t {
+  Unknown = px4_msgs::msg::AuxGlobalPosition::SOURCE_UNKNOWN,
+  GNSS = px4_msgs::msg::AuxGlobalPosition::SOURCE_GNSS,
+  Vision = px4_msgs::msg::AuxGlobalPosition::SOURCE_VISION,
+  Pseudolites = px4_msgs::msg::AuxGlobalPosition::SOURCE_PSEUDOLITES,
+  Terrain = px4_msgs::msg::AuxGlobalPosition::SOURCE_TERRAIN,
+  Magnetic = px4_msgs::msg::AuxGlobalPosition::SOURCE_MAGNETIC,
+  Estimator = px4_msgs::msg::AuxGlobalPosition::SOURCE_ESTIMATOR,
+};
+
+/**
  * @struct GlobalPositionMeasurement
  * @brief Represents a global position measurement to be passed to
  * `GlobalPositionMeasurementInterface::update`.
@@ -49,12 +62,12 @@ class GlobalPositionMeasurementInterface : public PositionMeasurementInterfaceBa
   /**
    * @param id Unique identifier non-zero for this position source. PX4 uses this to demultiplex
    *   measurements from multiple external positioning sources on the same topic.
-   * @param source Source type of the position data, using AuxGlobalPosition::SOURCE_*
-   *   constants. Defaults to SOURCE_VISION (2).
+   * @param source Source type of the position data. Defaults to GlobalPositionSource::Vision.
    */
-  explicit GlobalPositionMeasurementInterface(rclcpp::Node& node, uint8_t id = 1,
-                                              uint8_t source = 2,
-                                              std::string topic_namespace_prefix = "");
+  explicit GlobalPositionMeasurementInterface(
+      rclcpp::Node& node, uint8_t id = 1,
+      GlobalPositionSource source = GlobalPositionSource::Vision,
+      std::string topic_namespace_prefix = "");
   ~GlobalPositionMeasurementInterface() override = default;
 
   /**
@@ -104,7 +117,7 @@ class GlobalPositionMeasurementInterface : public PositionMeasurementInterfaceBa
   rclcpp::Publisher<px4_msgs::msg::AuxGlobalPosition>::SharedPtr _aux_global_position_pub;
 
   const uint8_t _id;
-  const uint8_t _source;
+  const GlobalPositionSource _source;
   uint8_t _lat_lon_reset_counter{
       0}; /** Counter for reset events on horizontal position coordinates */
 };
