@@ -90,8 +90,9 @@ class Hold : public ActionInterface {
       duration_s = arguments.at<float>("duration");
     }
     handler->runMode(ModeBase::kModeIDLoiter, [] {});
+    // Use create_timer (node clock) so "hold N seconds" means N sim seconds in simulation.
     _timer =
-        _node.create_wall_timer(std::chrono::duration<float>(duration_s), [this, on_completed] {
+        _node.create_timer(std::chrono::duration<float>(duration_s), [this, on_completed] {
           _timer.reset();
           on_completed();
         });

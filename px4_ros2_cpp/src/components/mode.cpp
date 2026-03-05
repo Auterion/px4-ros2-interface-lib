@@ -141,7 +141,10 @@ void ModeBase::updateSetpointUpdateTimer()
 
   if (activate) {
     if (!_setpoint_update_timer) {
-      _setpoint_update_timer = node().create_wall_timer(
+      // Use create_timer (node clock) so the loop fires at the intended rate in sim time.
+      // create_wall_timer would fire at wall-clock rate, causing integrator wind-up when
+      // sim runs slower than real time (e.g. 0.5x → 2× updates per sim second).
+      _setpoint_update_timer = node().create_timer(
           std::chrono::milliseconds(static_cast<int64_t>(1000.f / _setpoint_update_rate_hz)),
           [this]() {
             const auto now = node().get_clock()->now();
