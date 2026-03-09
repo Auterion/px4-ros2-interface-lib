@@ -60,9 +60,11 @@ struct GlobalPositionMeasurement {
 class GlobalPositionMeasurementInterface : public PositionMeasurementInterfaceBase {
  public:
   /**
+   * @param node ROS node
    * @param id Unique identifier non-zero for this position source. PX4 uses this to demultiplex
    *   measurements from multiple external positioning sources on the same topic.
    * @param source Source type of the position data. Defaults to GlobalPositionSource::Vision.
+   * @param topic_namespace_prefix optional topic prefix
    */
   explicit GlobalPositionMeasurementInterface(
       rclcpp::Node& node, uint8_t id = 1,
