@@ -141,9 +141,10 @@ void ModeBase::updateSetpointUpdateTimer()
 
   if (activate) {
     if (!_setpoint_update_timer) {
-      _setpoint_update_timer = node().create_wall_timer(
-          std::chrono::milliseconds(static_cast<int64_t>(1000.f / _setpoint_update_rate_hz)),
-          [this]() {
+      // Use node clock for sim time support
+      _setpoint_update_timer = rclcpp::create_timer(
+          &node(), node().get_clock(),
+          rclcpp::Duration::from_seconds(1.0 / _setpoint_update_rate_hz), [this]() {
             const auto now = node().get_clock()->now();
             const float dt_s = (now - _last_setpoint_update).seconds();
             _last_setpoint_update = now;
