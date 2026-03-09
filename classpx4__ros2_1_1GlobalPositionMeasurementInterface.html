@@ -108,9 +108,8 @@ Inheritance diagram for px4_ros2::GlobalPositionMeasurementInterface:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad439de18e7873c55ac65cbca7b142277"><td class="memItemLeft" align="right" valign="top"><a id="ad439de18e7873c55ac65cbca7b142277"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>GlobalPositionMeasurementInterface</b> (rclcpp::Node &amp;node, std::string topic_namespace_prefix=&quot;&quot;)</td></tr>
-<tr class="separator:ad439de18e7873c55ac65cbca7b142277"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a239963a3075bc9acc671a197b4b29eae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#a239963a3075bc9acc671a197b4b29eae">GlobalPositionMeasurementInterface</a> (rclcpp::Node &amp;node, uint8_t id=1, <a class="el" href="group__navigation__experimental.html#ga738ea2c5e1103a14aa4520e346f75398">GlobalPositionSource</a> source=GlobalPositionSource::Vision, std::string topic_namespace_prefix=&quot;&quot;)</td></tr>
+<tr class="separator:a239963a3075bc9acc671a197b4b29eae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a183b595ef7f6a22f3a83ba543fe86d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#a1a183b595ef7f6a22f3a83ba543fe86d">update</a> (const <a class="el" href="structpx4__ros2_1_1GlobalPositionMeasurement.html">GlobalPositionMeasurement</a> &amp;global_position_measurement) const</td></tr>
 <tr class="memdesc:a1a183b595ef7f6a22f3a83ba543fe86d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publishes a global position measurement to the FMU. Throws an exception if the following conditions are not met:  <a href="classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#a1a183b595ef7f6a22f3a83ba543fe86d">More...</a><br /></td></tr>
 <tr class="separator:a1a183b595ef7f6a22f3a83ba543fe86d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,7 +148,65 @@ rclcpp::Node &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_node</
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for a global position measurement provider. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a239963a3075bc9acc671a197b4b29eae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a239963a3075bc9acc671a197b4b29eae">&#9670;&nbsp;</a></span>GlobalPositionMeasurementInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">px4_ros2::GlobalPositionMeasurementInterface::GlobalPositionMeasurementInterface </td>
+          <td>(</td>
+          <td class="paramtype">rclcpp::Node &amp;&#160;</td>
+          <td class="paramname"><em>node</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>id</em> = <code>1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__navigation__experimental.html#ga738ea2c5e1103a14aa4520e346f75398">GlobalPositionSource</a>&#160;</td>
+          <td class="paramname"><em>source</em> = <code>GlobalPositionSource::Vision</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>topic_namespace_prefix</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>ROS node </td></tr>
+    <tr><td class="paramname">id</td><td>Unique identifier non-zero for this position source. PX4 uses this to demultiplex measurements from multiple external positioning sources on the same topic. </td></tr>
+    <tr><td class="paramname">source</td><td>Source type of the position data. Defaults to GlobalPositionSource::Vision. </td></tr>
+    <tr><td class="paramname">topic_namespace_prefix</td><td>optional topic prefix </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="af36b2d47a6a32c0534df1b67abac1d63"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af36b2d47a6a32c0534df1b67abac1d63">&#9670;&nbsp;</a></span>reset()</h2>
 

@@ -98,12 +98,22 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1LocalPositionMeasurementInterface.html">px4_ros2::LocalPositionMeasurementInterface</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for a local position measurement provider.  <a href="classpx4__ros2_1_1LocalPositionMeasurementInterface.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpx4__ros2_1_1GlobalPositionMeasurement.html">px4_ros2::GlobalPositionMeasurement</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a global position measurement to be passed to <code><a class="el" href="classpx4__ros2_1_1GlobalPositionMeasurementInterface.html#a1a183b595ef7f6a22f3a83ba543fe86d" title="Publishes a global position measurement to the FMU. Throws an exception if the following conditions a...">GlobalPositionMeasurementInterface::update</a></code>.  <a href="structpx4__ros2_1_1GlobalPositionMeasurement.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpx4__ros2_1_1LocalPositionMeasurement.html">px4_ros2::LocalPositionMeasurement</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a local position measurement to be passed to <code><a class="el" href="classpx4__ros2_1_1LocalPositionMeasurementInterface.html#a6fd180b944710716d418b2cfe1c0c8e3" title="Publishes a local position measurement to the FMU. Throws an exception if the following conditions ar...">LocalPositionMeasurementInterface::update</a></code>.  <a href="structpx4__ros2_1_1LocalPositionMeasurement.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga738ea2c5e1103a14aa4520e346f75398"><td class="memItemLeft" align="right" valign="top"><a id="ga738ea2c5e1103a14aa4520e346f75398"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__navigation__experimental.html#ga738ea2c5e1103a14aa4520e346f75398">px4_ros2::GlobalPositionSource</a> : uint8_t { <br />
+&#160;&#160;<b>Unknown</b> = px4_msgs::msg::AuxGlobalPosition::SOURCE_UNKNOWN
+, <b>GNSS</b> = px4_msgs::msg::AuxGlobalPosition::SOURCE_GNSS
+, <b>Vision</b> = px4_msgs::msg::AuxGlobalPosition::SOURCE_VISION
+, <b>Pseudolites</b> = px4_msgs::msg::AuxGlobalPosition::SOURCE_PSEUDOLITES
+, <br />
+&#160;&#160;<b>Terrain</b> = px4_msgs::msg::AuxGlobalPosition::SOURCE_TERRAIN
+, <b>Magnetic</b> = px4_msgs::msg::AuxGlobalPosition::SOURCE_MAGNETIC
+, <b>Estimator</b> = px4_msgs::msg::AuxGlobalPosition::SOURCE_ESTIMATOR
+<br />
+ }</td></tr>
+<tr class="memdesc:ga738ea2c5e1103a14aa4520e346f75398"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source type of the global position data. <br /></td></tr>
+<tr class="separator:ga738ea2c5e1103a14aa4520e346f75398"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 </div><!-- contents -->
