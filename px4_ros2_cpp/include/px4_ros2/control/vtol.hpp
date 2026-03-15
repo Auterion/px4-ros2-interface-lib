@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <chrono>
+
 #include <Eigen/Core>
 #include <px4_msgs/msg/vehicle_command.hpp>
 #include <px4_msgs/msg/vehicle_local_position.hpp>
@@ -19,6 +21,8 @@ struct VTOLConfig {
   float back_transition_deceleration_setpoint_to_pitch_i{
       0.1f}; /**< Backtransition deceleration setpoint to pitch I gain  [rad s/m]. */
   float deceleration_integrator_limit{0.3f};
+  std::chrono::seconds status_timeout{
+      5}; /**< Maximum age of VtolVehicleStatus before state is considered unknown [s]. */
 
   VTOLConfig& withBackTransitionDeceleration(const float back_transition_deceleration)
   {
@@ -37,6 +41,12 @@ struct VTOLConfig {
   {
     this->back_transition_deceleration_setpoint_to_pitch_i =
         back_transition_deceleration_setpoint_to_pitch_i;
+    return *this;
+  }
+
+  VTOLConfig& withStatusTimeout(const std::chrono::seconds timeout)
+  {
+    this->status_timeout = timeout;
     return *this;
   }
 };
@@ -78,7 +88,7 @@ class VTOL {
   rclcpp::Subscription<px4_msgs::msg::VtolVehicleStatus>::SharedPtr _vtol_vehicle_status_sub;
   SharedSubscriptionCallbackInstance _vehicle_local_position_cb;
   rclcpp::Time _last_command_sent;
-  rclcpp::Time _last_vtol_vehicle_status_received;
+  rclcpp::Time _last_vtol_vehicle_status_received{0, 0, _node.get_clock()->get_clock_type()};
   rclcpp::Time _last_pitch_integrator_update{0, 0, _node.get_clock()->get_clock_type()};
 
   float _vehicle_heading{NAN};
