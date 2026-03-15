@@ -225,6 +225,7 @@ if(BUILD_TESTING)
             test/unit/mission_execution.cpp
             test/unit/modes.cpp
             test/unit/shared_subscription.cpp
+            test/unit/vtol.cpp
             test/unit/utils/frame_conversion.cpp
             test/unit/utils/geodesic.cpp
             test/unit/utils/geometry.cpp
