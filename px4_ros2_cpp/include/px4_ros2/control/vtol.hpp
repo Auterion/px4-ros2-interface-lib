@@ -5,9 +5,8 @@
 
 #pragma once
 
-#include <chrono>
-
 #include <Eigen/Core>
+#include <chrono>
 #include <px4_msgs/msg/vehicle_command.hpp>
 #include <px4_msgs/msg/vehicle_local_position.hpp>
 #include <px4_msgs/msg/vtol_vehicle_status.hpp>

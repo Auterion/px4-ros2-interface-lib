@@ -7,6 +7,7 @@
 
 #include <px4_ros2/control/vtol.hpp>
 #include <rclcpp/rclcpp.hpp>
+#include <thread>
 
 using namespace std::chrono_literals;
 
@@ -18,18 +19,41 @@ class VTOLTest : public testing::Test {
     _executor.add_node(_node);
   }
 
-  void publishVtolStatus(uint8_t state)
+  bool publishVtolStatus(px4_ros2::VTOL& vtol, uint8_t state)
   {
     auto pub = _node->create_publisher<px4_msgs::msg::VtolVehicleStatus>(
         "fmu/out/vtol_vehicle_status", rclcpp::QoS(10).best_effort());
     px4_msgs::msg::VtolVehicleStatus msg;
     msg.vehicle_vtol_state = state;
     pub->publish(msg);
-    // Spin to deliver the message
-    rclcpp::sleep_for(50ms);
-    _executor.spin_some();
-    rclcpp::sleep_for(50ms);
-    _executor.spin_some();
+
+    // Poll until subscription delivers the message (or timeout)
+    const auto expected = toExpectedState(state);
+    const auto start = _node->get_clock()->now();
+    while (_node->get_clock()->now() - start < 3s) {
+      _executor.spin_some();
+      if (vtol.getCurrentState() == expected) {
+        return true;
+      }
+      std::this_thread::yield();
+    }
+    return false;
+  }
+
+  static px4_ros2::VTOL::State toExpectedState(uint8_t state)
+  {
+    switch (state) {
+      case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC:
+        return px4_ros2::VTOL::State::Multicopter;
+      case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW:
+        return px4_ros2::VTOL::State::FixedWing;
+      case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_TRANSITION_TO_FW:
+        return px4_ros2::VTOL::State::TransitionToFixedWing;
+      case px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_TRANSITION_TO_MC:
+        return px4_ros2::VTOL::State::TransitionToMulticopter;
+      default:
+        return px4_ros2::VTOL::State::Undefined;
+    }
   }
 
   std::shared_ptr<rclcpp::Node> _node;
@@ -89,7 +113,7 @@ TEST_F(VTOLTest, TransitionSucceedsWithFreshStatus)
   px4_ros2::VTOL vtol(context);
 
   // Publish a FixedWing status so toMulticopter() has valid state
-  publishVtolStatus(px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW);
+  ASSERT_TRUE(publishVtolStatus(vtol, px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW));
 
   EXPECT_EQ(vtol.getCurrentState(), px4_ros2::VTOL::State::FixedWing);
   EXPECT_TRUE(vtol.toMulticopter());
@@ -100,7 +124,7 @@ TEST_F(VTOLTest, ToFixedwingSucceedsFromMulticopter)
   px4_ros2::Context context(*_node);
   px4_ros2::VTOL vtol(context);
 
-  publishVtolStatus(px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC);
+  ASSERT_TRUE(publishVtolStatus(vtol, px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC));
 
   EXPECT_EQ(vtol.getCurrentState(), px4_ros2::VTOL::State::Multicopter);
   EXPECT_TRUE(vtol.toFixedwing());
@@ -111,16 +135,20 @@ TEST_F(VTOLTest, StateTransitions)
   px4_ros2::Context context(*_node);
   px4_ros2::VTOL vtol(context);
 
-  publishVtolStatus(px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC);
+  ASSERT_TRUE(
+      publishVtolStatus(vtol, px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC));
   EXPECT_EQ(vtol.getCurrentState(), px4_ros2::VTOL::State::Multicopter);
 
-  publishVtolStatus(px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_TRANSITION_TO_FW);
+  ASSERT_TRUE(publishVtolStatus(
+      vtol, px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_TRANSITION_TO_FW));
   EXPECT_EQ(vtol.getCurrentState(), px4_ros2::VTOL::State::TransitionToFixedWing);
 
-  publishVtolStatus(px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW);
+  ASSERT_TRUE(
+      publishVtolStatus(vtol, px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW));
   EXPECT_EQ(vtol.getCurrentState(), px4_ros2::VTOL::State::FixedWing);
 
-  publishVtolStatus(px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_TRANSITION_TO_MC);
+  ASSERT_TRUE(publishVtolStatus(
+      vtol, px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_TRANSITION_TO_MC));
   EXPECT_EQ(vtol.getCurrentState(), px4_ros2::VTOL::State::TransitionToMulticopter);
 }
 
@@ -131,7 +159,7 @@ TEST_F(VTOLTest, CustomTimeoutIsUsed)
   auto config = px4_ros2::VTOLConfig{}.withStatusTimeout(std::chrono::seconds(1));
   px4_ros2::VTOL vtol(context, config);
 
-  publishVtolStatus(px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW);
+  ASSERT_TRUE(publishVtolStatus(vtol, px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW));
   EXPECT_TRUE(vtol.toMulticopter());
 
   // Wait for the short timeout to expire
