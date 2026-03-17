@@ -112,6 +112,7 @@ set(HEADER_FILES
         include/px4_ros2/utils/visit.hpp
         include/px4_ros2/vehicle_state/battery.hpp
         include/px4_ros2/vehicle_state/home_position.hpp
+        include/px4_ros2/vehicle_state/home_position_setter.hpp
         include/px4_ros2/vehicle_state/land_detected.hpp
         include/px4_ros2/vehicle_state/vehicle_status.hpp
         include/px4_ros2/vehicle_state/vtol_status.hpp
@@ -156,6 +157,7 @@ add_library(px4_ros2_cpp
         src/odometry/attitude.cpp
         src/odometry/global_position.cpp
         src/odometry/local_position.cpp
+        src/vehicle_state/home_position_setter.cpp
         src/utils/geodesic.cpp
         src/utils/map_projection_impl.cpp
 )
