@@ -1,0 +1,78 @@
+name: Create Release Branch
+
+on:
+  repository_dispatch:
+    types: [px4_release_branch]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Release branch name (e.g. release/1.18)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  create-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine branch name
+        id: params
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            BRANCH="${{ github.event.client_payload.branch }}"
+          else
+            BRANCH="${{ inputs.branch }}"
+          fi
+
+          if [ -z "$BRANCH" ]; then
+            echo "::error::Branch name is required"
+            exit 1
+          fi
+
+          # Validate branch name format
+          if ! echo "$BRANCH" | grep -qE '^release/[0-9]+\.[0-9]+$'; then
+            echo "::error::Branch name must match 'release/X.Y' format, got: $BRANCH"
+            exit 1
+          fi
+
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Check if branch already exists
+        id: check
+        run: |
+          BRANCH="${{ steps.params.outputs.branch }}"
+          if git ls-remote --heads origin "$BRANCH" | grep -q "$BRANCH"; then
+            echo "Branch '$BRANCH' already exists, skipping creation"
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create release branch from main
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          BRANCH="${{ steps.params.outputs.branch }}"
+          SHA=$(git rev-parse HEAD)
+          echo "Creating branch '$BRANCH' from main ($SHA)"
+          git checkout -b "$BRANCH"
+          git push origin "$BRANCH"
+          echo "Branch '$BRANCH' created successfully"
+
+      - name: Summary
+        run: |
+          BRANCH="${{ steps.params.outputs.branch }}"
+          if [ "${{ steps.check.outputs.exists }}" = "true" ]; then
+            echo "### Branch already exists" >> "$GITHUB_STEP_SUMMARY"
+            echo "Branch \`$BRANCH\` already exists. No action taken." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### Release branch created" >> "$GITHUB_STEP_SUMMARY"
+            echo "- **Branch:** \`$BRANCH\`" >> "$GITHUB_STEP_SUMMARY"
+            echo "- **Source:** \`main\` ($(git rev-parse HEAD))" >> "$GITHUB_STEP_SUMMARY"
+          fi
