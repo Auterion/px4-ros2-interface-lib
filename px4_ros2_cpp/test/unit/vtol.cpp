@@ -135,16 +135,14 @@ TEST_F(VTOLTest, StateTransitions)
   px4_ros2::Context context(*_node);
   px4_ros2::VTOL vtol(context);
 
-  ASSERT_TRUE(
-      publishVtolStatus(vtol, px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC));
+  ASSERT_TRUE(publishVtolStatus(vtol, px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_MC));
   EXPECT_EQ(vtol.getCurrentState(), px4_ros2::VTOL::State::Multicopter);
 
   ASSERT_TRUE(publishVtolStatus(
       vtol, px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_TRANSITION_TO_FW));
   EXPECT_EQ(vtol.getCurrentState(), px4_ros2::VTOL::State::TransitionToFixedWing);
 
-  ASSERT_TRUE(
-      publishVtolStatus(vtol, px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW));
+  ASSERT_TRUE(publishVtolStatus(vtol, px4_msgs::msg::VtolVehicleStatus::VEHICLE_VTOL_STATE_FW));
   EXPECT_EQ(vtol.getCurrentState(), px4_ros2::VTOL::State::FixedWing);
 
   ASSERT_TRUE(publishVtolStatus(
