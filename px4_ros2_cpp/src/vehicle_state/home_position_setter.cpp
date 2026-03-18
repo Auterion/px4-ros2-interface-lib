@@ -22,14 +22,14 @@ void HomePositionSetter::setHomeToCurrentPosition()
 
 void HomePositionSetter::setHome(double latitude, double longitude, float altitude)
 {
-  sendCommand(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_DO_SET_HOME, 0.f, 0.f, 0.f, 0.f,
-              latitude, longitude, altitude);
+  sendCommand(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_DO_SET_HOME, 0.f, 0.f, 0.f, 0.f, latitude,
+              longitude, altitude);
 }
 
 void HomePositionSetter::setGpsGlobalOrigin(double latitude, double longitude, float altitude)
 {
-  sendCommand(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_SET_GPS_GLOBAL_ORIGIN, 0.f, 0.f, 0.f,
-              0.f, latitude, longitude, altitude);
+  sendCommand(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_SET_GPS_GLOBAL_ORIGIN, 0.f, 0.f, 0.f, 0.f,
+              latitude, longitude, altitude);
 }
 
 void HomePositionSetter::sendCommand(uint32_t command, float param1, float param2, float param3,
