@@ -5,8 +5,6 @@
 
 #include <gtest/gtest.h>
 
-#include <thread>
-
 #include <px4_msgs/msg/vehicle_command.hpp>
 #include <px4_msgs/msg/vehicle_command_ack.hpp>
 #include <px4_ros2/common/context.hpp>
@@ -15,6 +13,7 @@
 #include <px4_ros2/utils/vehicle_command_sender.hpp>
 #include <px4_ros2/vehicle_state/home_position_setter.hpp>
 #include <rclcpp/rclcpp.hpp>
+#include <thread>
 
 using namespace std::chrono_literals;
 
@@ -38,8 +37,7 @@ class FakeCommandResponder {
     _cmd_sub = node.create_subscription<px4_msgs::msg::VehicleCommand>(
         topic_prefix + "fmu/in/vehicle_command" +
             px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
-        rclcpp::QoS(1),
-        [this, ack_result](px4_msgs::msg::VehicleCommand::UniquePtr msg) {
+        rclcpp::QoS(1), [this, ack_result](px4_msgs::msg::VehicleCommand::UniquePtr msg) {
           px4_msgs::msg::VehicleCommandAck ack{};
           ack.command = msg->command;
           ack.target_component = msg->source_component;
@@ -81,8 +79,7 @@ class VehicleCommandSenderTest : public testing::Test {
   void startResponder(
       uint8_t ack_result = px4_msgs::msg::VehicleCommandAck::VEHICLE_CMD_RESULT_ACCEPTED)
   {
-    _responder =
-        std::make_unique<FakeCommandResponder>(*_responder_node, kTopicPrefix, ack_result);
+    _responder = std::make_unique<FakeCommandResponder>(*_responder_node, kTopicPrefix, ack_result);
     _spin_thread = std::thread([this]() { _executor->spin(); });
     std::this_thread::sleep_for(50ms);  // allow DDS discovery
   }

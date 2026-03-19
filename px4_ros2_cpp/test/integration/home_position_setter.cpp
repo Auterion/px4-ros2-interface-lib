@@ -24,16 +24,16 @@ TEST_F(ModesTest, HomePositionSetter)
 
   // Set GPS global origin (EKF reference point)
   auto result = setter.setGpsGlobalOrigin(47.397742, 8.545594, 488.f);
-  EXPECT_EQ(result, px4_ros2::Result::Success) << "setGpsGlobalOrigin failed: "
-                                                << px4_ros2::resultToString(result);
+  EXPECT_EQ(result, px4_ros2::Result::Success)
+      << "setGpsGlobalOrigin failed: " << px4_ros2::resultToString(result);
 
   // Set home to current vehicle position
   result = setter.setHomeToCurrentPosition();
-  EXPECT_EQ(result, px4_ros2::Result::Success) << "setHomeToCurrentPosition failed: "
-                                                << px4_ros2::resultToString(result);
+  EXPECT_EQ(result, px4_ros2::Result::Success)
+      << "setHomeToCurrentPosition failed: " << px4_ros2::resultToString(result);
 
   // Set home to specific global coordinates
   result = setter.setHome(47.398, 8.546, 490.f);
-  EXPECT_EQ(result, px4_ros2::Result::Success) << "setHome failed: "
-                                                << px4_ros2::resultToString(result);
+  EXPECT_EQ(result, px4_ros2::Result::Success)
+      << "setHome failed: " << px4_ros2::resultToString(result);
 }
