@@ -103,6 +103,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a30a3f9ad1192a503230e0131cdde36a1"><td class="memItemLeft" align="right" valign="top"><a id="a30a3f9ad1192a503230e0131cdde36a1"></a>
 <a class="el" href="structpx4__ros2_1_1VTOLConfig.html">VTOLConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>withBackTransitionDecelerationIGain</b> (const float <a class="el" href="structpx4__ros2_1_1VTOLConfig.html#add79bca2faccf489879f81a107e7486f">back_transition_deceleration_setpoint_to_pitch_i</a>)</td></tr>
 <tr class="separator:a30a3f9ad1192a503230e0131cdde36a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b5eeedbc6479f2709114db9987dc6d9"><td class="memItemLeft" align="right" valign="top"><a id="a1b5eeedbc6479f2709114db9987dc6d9"></a>
+<a class="el" href="structpx4__ros2_1_1VTOLConfig.html">VTOLConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>withStatusTimeout</b> (const std::chrono::seconds timeout)</td></tr>
+<tr class="separator:a1b5eeedbc6479f2709114db9987dc6d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -113,6 +116,8 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:acb40ecf26fc5f030c2f46de948eb0715"><td class="memItemLeft" align="right" valign="top"><a id="acb40ecf26fc5f030c2f46de948eb0715"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>deceleration_integrator_limit</b> {0.3f}</td></tr>
 <tr class="separator:acb40ecf26fc5f030c2f46de948eb0715"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab42efe0b95c340f3e60c467b47b4fa92"><td class="memItemLeft" align="right" valign="top">std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpx4__ros2_1_1VTOLConfig.html#ab42efe0b95c340f3e60c467b47b4fa92">status_timeout</a></td></tr>
+<tr class="separator:ab42efe0b95c340f3e60c467b47b4fa92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="a498a0d50044c43272a5b58dcbf5f5a3e"></a>
@@ -146,6 +151,23 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>deceleration_integra
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
 <div class="line">      0.1f}</div>
 </div><!-- fragment --><p>Backtransition deceleration setpoint to pitch I gain [rad s/m]. </p>
+
+</div>
+</div>
+<a id="ab42efe0b95c340f3e60c467b47b4fa92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab42efe0b95c340f3e60c467b47b4fa92">&#9670;&nbsp;</a></span>status_timeout</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::seconds px4_ros2::VTOLConfig::status_timeout</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">      5}</div>
+</div><!-- fragment --><p>Maximum age of VtolVehicleStatus before state is considered unknown [s]. </p>
 
 </div>
 </div>
