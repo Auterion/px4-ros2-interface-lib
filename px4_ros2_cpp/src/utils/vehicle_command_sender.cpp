@@ -9,8 +9,7 @@ using namespace std::chrono_literals;
 
 namespace px4_ros2 {
 
-VehicleCommandSender::VehicleCommandSender(rclcpp::Node& node,
-                                           std::string topic_namespace_prefix,
+VehicleCommandSender::VehicleCommandSender(rclcpp::Node& node, std::string topic_namespace_prefix,
                                            const std::string& command_topic)
     : _node(node), _topic_namespace_prefix(std::move(topic_namespace_prefix))
 {
