@@ -237,7 +237,7 @@ bool messageCompatibilityCheck(rclcpp::Node& node,
             pub_hash = &info.topic_type_hash();  // Take last
           }
 
-          const auto topic_type = find_type_support(type);
+          const auto* const topic_type = find_type_support(type);
 
           if (topic_type && topic_type->ts_handle->get_type_hash_func) {
             const rosidl_type_hash_t* hash =
@@ -254,7 +254,7 @@ bool messageCompatibilityCheck(rclcpp::Node& node,
             pub_hash = &info.topic_type_hash();  // Take last
           }
 
-          const auto topic_type = find_type_support(type);
+          const auto* const topic_type = find_type_support(type);
 
           if (topic_type && topic_type->ts_handle->get_type_hash_func) {
             const rosidl_type_hash_t* hash =

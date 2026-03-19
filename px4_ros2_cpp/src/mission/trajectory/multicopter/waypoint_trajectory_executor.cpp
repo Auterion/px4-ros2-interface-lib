@@ -78,8 +78,8 @@ void WaypointTrajectoryExecutor::updateSetpoint()
 
 void WaypointTrajectoryExecutor::continueNextItem()
 {
-  const int index_reached = *_current_index;
-  _current_index = *_current_index + 1;
+  const int index_reached = *_current_index;  // NOLINT(bugprone-unchecked-optional-access)
+  _current_index = *_current_index + 1;       // NOLINT(bugprone-unchecked-optional-access)
   if (*_current_index > _current_trajectory.end_index) {
     _current_index.reset();
   }

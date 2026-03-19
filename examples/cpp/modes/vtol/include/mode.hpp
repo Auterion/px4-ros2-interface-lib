@@ -53,17 +53,18 @@ class FlightModeTest : public px4_ros2::ModeBase {
         _vtol->toFixedwing();
 
         if (_vtol->getCurrentState() == px4_ros2::VTOL::State::TransitionToFixedWing) {
-          Eigen::Vector3f acceleration_sp = _vtol->computeAccelerationSetpointDuringTransition();
-          Eigen::Vector3f velocity_sp{NAN, NAN, 0.f};
-          float course_sp = 0.f;  // align vehicle north
-          float height_rate_sp = 0.f;
+          const Eigen::Vector3f acceleration_sp =
+              _vtol->computeAccelerationSetpointDuringTransition();
+          const Eigen::Vector3f velocity_sp{NAN, NAN, 0.f};
+          const float course_sp = 0.f;  // align vehicle north
+          const float height_rate_sp = 0.f;
 
           _trajectory_setpoint->update(velocity_sp, acceleration_sp);
           _fixed_wing_setpoint->updateWithHeightRate(height_rate_sp, course_sp);
 
         } else if (_vtol->getCurrentState() == px4_ros2::VTOL::State::FixedWing) {
-          float altitude_sp = 600.f;
-          float course_sp = 0.f;  // due north
+          const float altitude_sp = 600.f;
+          const float course_sp = 0.f;  // due north
 
           _fixed_wing_setpoint->updateWithAltitude(altitude_sp, course_sp);
 
@@ -74,8 +75,8 @@ class FlightModeTest : public px4_ros2::ModeBase {
       } break;
 
       case State::GoingNorth: {
-        float altitude_sp = 600.f;
-        float course_sp = 0.f;  // due north
+        const float altitude_sp = 600.f;
+        const float course_sp = 0.f;  // due north
 
         _fixed_wing_setpoint->updateWithAltitude(altitude_sp, course_sp);
 
@@ -90,18 +91,19 @@ class FlightModeTest : public px4_ros2::ModeBase {
         _vtol->toMulticopter();
 
         if (_vtol->getCurrentState() == px4_ros2::VTOL::State::TransitionToMulticopter) {
-          Eigen::Vector3f acceleration_sp = _vtol->computeAccelerationSetpointDuringTransition();
-          Eigen::Vector3f velocity_sp{NAN, NAN, 0.f};
-          float course_sp = 180.0_deg;  // start aligning vehicle south during transition
-          float height_rate_sp = 0.f;
+          const Eigen::Vector3f acceleration_sp =
+              _vtol->computeAccelerationSetpointDuringTransition();
+          const Eigen::Vector3f velocity_sp{NAN, NAN, 0.f};
+          const float course_sp = 180.0_deg;  // start aligning vehicle south during transition
+          const float height_rate_sp = 0.f;
 
           _trajectory_setpoint->update(velocity_sp, acceleration_sp);
           _fixed_wing_setpoint->updateWithHeightRate(height_rate_sp, course_sp);
 
         } else if (_vtol->getCurrentState() == px4_ros2::VTOL::State::Multicopter) {
-          Eigen::Vector3f velocity_sp{0.f, 0.f, 0.f};
-          Eigen::Vector3f acceleration_sp{NAN, NAN, NAN};
-          float heading_sp = 180.0_deg;
+          const Eigen::Vector3f velocity_sp{0.f, 0.f, 0.f};
+          const Eigen::Vector3f acceleration_sp{NAN, NAN, NAN};
+          const float heading_sp = 180.0_deg;
 
           _trajectory_setpoint->update(velocity_sp, acceleration_sp, heading_sp);
         }

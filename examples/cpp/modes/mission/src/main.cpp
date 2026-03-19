@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     }
   }
 
-  Mission mission(node);
+  const Mission mission(node);
 
   rclcpp::spin(node);
   rclcpp::shutdown();
