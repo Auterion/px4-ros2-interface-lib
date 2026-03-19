@@ -15,12 +15,12 @@ jobs:
     name: Build and test
     runs-on: [runs-on,"runner=${{ vars.RUNSON_CI_BUILDER_DEFAULT_X64 }}","run-id=${{ github.run_id }}"]
     container:
-      image: rostooling/setup-ros-docker:ubuntu-jammy-latest
+      image: rostooling/setup-ros-docker:ubuntu-noble-latest
     steps:
       - name: Setup ROS 2
         uses: ros-tooling/setup-ros@v0.7
         with:
-          required-ros-distributions: humble
+          required-ros-distributions: jazzy
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Build and test
@@ -31,7 +31,7 @@ jobs:
           import-token: ${{ secrets.GITHUB_TOKEN }}
           vcs-repo-file-url: |
             $GITHUB_WORKSPACE/dependencies.repos
-          target-ros2-distro: humble
+          target-ros2-distro: jazzy
           colcon-defaults: |
             {
               "build": {
