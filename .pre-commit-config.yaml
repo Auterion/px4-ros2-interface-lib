@@ -46,14 +46,3 @@ repos:
     rev: 'v21.1.5'
     hooks:
       - id: clang-format
-
-  # cmake hooks
-  - repo: local
-    hooks:
-      - id: ament_lint_cmake
-        name: ament_lint_cmake
-        description: Check format of CMakeLists.txt files.
-        stages: [commit]
-        entry: ament_lint_cmake
-        language: system
-        files: CMakeLists\.txt$
