@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['components_543',['Components',['../group__components.html',1,'']]],
-  ['control_544',['Control',['../group__control.html',1,'']]]
+  ['actions_0',['Default Actions',['../group__mission__default__actions.html',1,'']]]
 ];
