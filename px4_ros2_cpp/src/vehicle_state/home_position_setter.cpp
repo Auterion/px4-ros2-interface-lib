@@ -7,33 +7,30 @@
 
 namespace px4_ros2 {
 
-HomePositionSetter::HomePositionSetter(Context& context) : _node(context.node())
+HomePositionSetter::HomePositionSetter(Context& context)
+    : _command_sender(context.node(), context.topicNamespacePrefix())
 {
-  _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
-      context.topicNamespacePrefix() + "fmu/in/vehicle_command" +
-          px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
-      1);
 }
 
-void HomePositionSetter::setHomeToCurrentPosition()
+Result HomePositionSetter::setHomeToCurrentPosition()
 {
-  sendCommand(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_DO_SET_HOME, 1.f);
+  return sendCommand(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_DO_SET_HOME, 1.f);
 }
 
-void HomePositionSetter::setHome(double latitude, double longitude, float altitude)
+Result HomePositionSetter::setHome(double latitude, double longitude, float altitude)
 {
-  sendCommand(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_DO_SET_HOME, 0.f, 0.f, 0.f, 0.f, latitude,
-              longitude, altitude);
+  return sendCommand(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_DO_SET_HOME, 0.f, 0.f, 0.f, 0.f,
+                     latitude, longitude, altitude);
 }
 
-void HomePositionSetter::setGpsGlobalOrigin(double latitude, double longitude, float altitude)
+Result HomePositionSetter::setGpsGlobalOrigin(double latitude, double longitude, float altitude)
 {
-  sendCommand(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_SET_GPS_GLOBAL_ORIGIN, 0.f, 0.f, 0.f, 0.f,
-              latitude, longitude, altitude);
+  return sendCommand(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_SET_GPS_GLOBAL_ORIGIN, 0.f, 0.f,
+                     0.f, 0.f, latitude, longitude, altitude);
 }
 
-void HomePositionSetter::sendCommand(uint32_t command, float param1, float param2, float param3,
-                                     float param4, double param5, double param6, float param7)
+Result HomePositionSetter::sendCommand(uint32_t command, float param1, float param2, float param3,
+                                       float param4, double param5, double param6, float param7)
 {
   px4_msgs::msg::VehicleCommand cmd{};
   cmd.command = command;
@@ -46,8 +43,7 @@ void HomePositionSetter::sendCommand(uint32_t command, float param1, float param
   cmd.param7 = param7;
   cmd.target_system = 0;
   cmd.target_component = 1;
-  cmd.timestamp = 0;  // Let PX4 set the timestamp
-  _vehicle_command_pub->publish(cmd);
+  return _command_sender.sendCommandSync(cmd);
 }
 
 }  // namespace px4_ros2

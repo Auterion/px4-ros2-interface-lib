@@ -109,6 +109,7 @@ set(HEADER_FILES
         include/px4_ros2/utils/geodesic.hpp
         include/px4_ros2/utils/geometry.hpp
         include/px4_ros2/utils/message_version.hpp
+        include/px4_ros2/utils/vehicle_command_sender.hpp
         include/px4_ros2/utils/visit.hpp
         include/px4_ros2/vehicle_state/battery.hpp
         include/px4_ros2/vehicle_state/home_position.hpp
@@ -158,6 +159,7 @@ add_library(px4_ros2_cpp
         src/odometry/global_position.cpp
         src/odometry/local_position.cpp
         src/vehicle_state/home_position_setter.cpp
+        src/utils/vehicle_command_sender.cpp
         src/utils/geodesic.cpp
         src/utils/map_projection_impl.cpp
 )
