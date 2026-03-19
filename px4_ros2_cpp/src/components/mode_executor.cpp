@@ -6,7 +6,6 @@
 #include "px4_ros2/components/mode_executor.hpp"
 
 #include <cassert>
-#include <future>
 
 #include "px4_ros2/components/message_compatibility_check.hpp"
 #include "px4_ros2/components/wait_for_fmu.hpp"
@@ -23,6 +22,8 @@ ModeExecutorBase::ModeExecutorBase(const ModeExecutorBase::Settings& settings, M
       _owned_mode(owned_mode),
       _registration(
           std::make_shared<Registration>(owned_mode.node(), owned_mode.topicNamespacePrefix())),
+      _vehicle_command_sender(owned_mode.node(), owned_mode.topicNamespacePrefix(),
+                              "fmu/in/vehicle_command_mode_executor"),
       _current_scheduled_mode(owned_mode.node(), owned_mode.topicNamespacePrefix()),
       _config_overrides(owned_mode.node(), owned_mode.topicNamespacePrefix())
 {
@@ -42,11 +43,6 @@ ModeExecutorBase::ModeExecutorBase(const ModeExecutorBase::Settings& settings, M
           vehicleStatusUpdated(msg);
         }
       });
-
-  _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
-      _topic_namespace_prefix + "fmu/in/vehicle_command_mode_executor" +
-          px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>(),
-      1);
 }
 
 // NOLINTNEXTLINE Cannot use default constructor due to incomplete type VehicleStatusSingletonToken
@@ -121,8 +117,6 @@ int ModeExecutorBase::id() const
 Result ModeExecutorBase::sendCommandSync(uint32_t command, float param1, float param2, float param3,
                                          float param4, float param5, float param6, float param7)
 {
-  // Send command and wait for ack
-  Result result{Result::Rejected};
   px4_msgs::msg::VehicleCommand cmd{};
   cmd.command = command;
   cmd.param1 = param1;
@@ -133,78 +127,7 @@ Result ModeExecutorBase::sendCommandSync(uint32_t command, float param1, float p
   cmd.param6 = param6;
   cmd.param7 = param7;
   cmd.source_component = px4_msgs::msg::VehicleCommand::COMPONENT_MODE_EXECUTOR_START + id();
-  cmd.timestamp = 0;  // Let PX4 set the timestamp
-
-  // Create a new subscription here instead of in the ModeExecutorBase constructor, because
-  // ROS Jazzy would throw an exception 'subscription already associated with a wait set'
-  // (We could also use exchange_in_use_by_wait_set_state(), but that might cause an
-  // inconsistent state)
-  const auto vehicle_command_ack_sub = _node.create_subscription<px4_msgs::msg::VehicleCommandAck>(
-      _topic_namespace_prefix + "fmu/out/vehicle_command_ack" +
-          px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommandAck>(),
-      rclcpp::QoS(1).best_effort(), [](px4_msgs::msg::VehicleCommandAck::UniquePtr msg) {});
-
-  // Wait until we have a publisher
-  auto start_time = std::chrono::steady_clock::now();
-  while (vehicle_command_ack_sub->get_publisher_count() == 0) {
-    const auto timeout = 3000ms;
-    const auto now = std::chrono::steady_clock::now();
-    if (now >= start_time + timeout) {
-      RCLCPP_WARN(_node.get_logger(), "Timeout waiting for vehicle_command_ack publisher");
-      break;
-    }
-  }
-
-  rclcpp::WaitSet wait_set;
-  wait_set.add_subscription(vehicle_command_ack_sub);
-
-  bool got_reply = false;
-
-  for (int i = 0; i < 3 && !got_reply; ++i) {
-    _vehicle_command_pub->publish(cmd);
-    start_time = std::chrono::steady_clock::now();
-    const auto timeout = 300ms;
-    while (!got_reply) {
-      auto now = std::chrono::steady_clock::now();
-
-      if (now >= start_time + timeout) {
-        break;
-      }
-
-      auto wait_ret = wait_set.wait(timeout - (now - start_time));
-
-      if (wait_ret.kind() == rclcpp::WaitResultKind::Ready) {
-        px4_msgs::msg::VehicleCommandAck ack;
-        rclcpp::MessageInfo info;
-
-        if (vehicle_command_ack_sub->take(ack, info)) {
-          if (ack.command == cmd.command && ack.target_component == cmd.source_component) {
-            if (ack.result == px4_msgs::msg::VehicleCommandAck::VEHICLE_CMD_RESULT_ACCEPTED) {
-              result = Result::Success;
-            }
-
-            got_reply = true;
-          }
-
-        } else {
-          RCLCPP_DEBUG(_node.get_logger(), "No VehicleCommandAck message received");
-        }
-
-      } else {
-        RCLCPP_DEBUG(_node.get_logger(), "timeout");
-      }
-    }
-  }
-
-  wait_set.remove_subscription(vehicle_command_ack_sub);
-
-  if (!got_reply) {
-    // We don't expect to run into an ack timeout
-    result = Result::Timeout;
-    RCLCPP_WARN(_node.get_logger(), "Cmd %i: timeout, no ack received", cmd.command);
-  }
-
-  return result;
+  return _vehicle_command_sender.sendCommandSync(cmd);
 }
 
 void ModeExecutorBase::scheduleMode(ModeBase::ModeID mode_id, const CompletedCallback& on_completed,
