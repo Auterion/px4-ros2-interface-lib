@@ -109,9 +109,11 @@ set(HEADER_FILES
         include/px4_ros2/utils/geodesic.hpp
         include/px4_ros2/utils/geometry.hpp
         include/px4_ros2/utils/message_version.hpp
+        include/px4_ros2/utils/vehicle_command_sender.hpp
         include/px4_ros2/utils/visit.hpp
         include/px4_ros2/vehicle_state/battery.hpp
         include/px4_ros2/vehicle_state/home_position.hpp
+        include/px4_ros2/vehicle_state/home_position_setter.hpp
         include/px4_ros2/vehicle_state/land_detected.hpp
         include/px4_ros2/vehicle_state/vehicle_status.hpp
         include/px4_ros2/vehicle_state/vtol_status.hpp
@@ -156,6 +158,8 @@ add_library(px4_ros2_cpp
         src/odometry/attitude.cpp
         src/odometry/global_position.cpp
         src/odometry/local_position.cpp
+        src/vehicle_state/home_position_setter.cpp
+        src/utils/vehicle_command_sender.cpp
         src/utils/geodesic.cpp
         src/utils/map_projection_impl.cpp
 )
@@ -203,6 +207,7 @@ if(BUILD_TESTING)
             test/integration/mode.cpp
             test/integration/mission.cpp
             test/integration/mode_executor.cpp
+            test/integration/home_position_setter.cpp
             test/integration/overrides.cpp
     )
     if(TARGET integration_tests)
@@ -225,6 +230,7 @@ if(BUILD_TESTING)
             test/unit/mission_execution.cpp
             test/unit/modes.cpp
             test/unit/shared_subscription.cpp
+            test/unit/vehicle_command_sender.cpp
             test/unit/vtol.cpp
             test/unit/utils/frame_conversion.cpp
             test/unit/utils/geodesic.cpp
