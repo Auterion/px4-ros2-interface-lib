@@ -19,6 +19,12 @@ var group__vehicle__state =
       [ "manualHome", "classpx4__ros2_1_1HomePosition.html#aa08ccaa4d05a7711a5fa25c70e9003a1", null ],
       [ "yaw", "classpx4__ros2_1_1HomePosition.html#a8ba195f6716d66591681974d4a4e2a50", null ]
     ] ],
+    [ "HomePositionSetter", "classpx4__ros2_1_1HomePositionSetter.html", [
+      [ "HomePositionSetter", "classpx4__ros2_1_1HomePositionSetter.html#a63a5113a6ca3caf106bb0a68a616e96e", null ],
+      [ "setGpsGlobalOrigin", "classpx4__ros2_1_1HomePositionSetter.html#a463f98454e5418853ef28d2ed857133e", null ],
+      [ "setHome", "classpx4__ros2_1_1HomePositionSetter.html#a9a11205da62f45ab12dd8e3807262905", null ],
+      [ "setHomeToCurrentPosition", "classpx4__ros2_1_1HomePositionSetter.html#a5490f1dceac2a39d8be1305b9b49b1d9", null ]
+    ] ],
     [ "LandDetected", "classpx4__ros2_1_1LandDetected.html", [
       [ "LandDetected", "classpx4__ros2_1_1LandDetected.html#a8a83cf63c87ca92ebae98c24c72f9e23", null ],
       [ "landed", "classpx4__ros2_1_1LandDetected.html#a0bec66635de00b2ed57378f0362ce446", null ]

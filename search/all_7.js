@@ -8,7 +8,8 @@ var searchData=
   ['healthandarmingchecks_73',['HealthAndArmingChecks',['../classpx4__ros2_1_1HealthAndArmingChecks.html',1,'px4_ros2']]],
   ['hold_74',['Hold',['../classpx4__ros2_1_1default__actions_1_1Hold.html',1,'px4_ros2::default_actions']]],
   ['homeposition_75',['HomePosition',['../classpx4__ros2_1_1HomePosition.html',1,'px4_ros2']]],
-  ['horizontal_5fvariance_76',['horizontal_variance',['../structpx4__ros2_1_1GlobalPositionMeasurement.html#a098e08a4664b7708bb1a234ea0c96e4c',1,'px4_ros2::GlobalPositionMeasurement']]],
-  ['horizontal_5fvelocity_77',['horizontal_velocity',['../structpx4__ros2_1_1TrajectoryOptions.html#af8594333176bef1afe9f3066823f54ba',1,'px4_ros2::TrajectoryOptions']]],
-  ['horizontaldistancetoglobalposition_78',['horizontalDistanceToGlobalPosition',['../group__geodesic.html#gac743119cb3987dfa6478aabc52c3a50e',1,'px4_ros2::horizontalDistanceToGlobalPosition(const Eigen::Vector2d &amp;global_position_now, const Eigen::Vector2d &amp;global_position_next)'],['../group__geodesic.html#ga0c23b4afb57270be82eef5962a9b01fb',1,'px4_ros2::horizontalDistanceToGlobalPosition(const Eigen::Vector3d &amp;global_position_now, const Eigen::Vector3d &amp;global_position_next)']]]
+  ['homepositionsetter_76',['HomePositionSetter',['../classpx4__ros2_1_1HomePositionSetter.html',1,'px4_ros2']]],
+  ['horizontal_5fvariance_77',['horizontal_variance',['../structpx4__ros2_1_1GlobalPositionMeasurement.html#a098e08a4664b7708bb1a234ea0c96e4c',1,'px4_ros2::GlobalPositionMeasurement']]],
+  ['horizontal_5fvelocity_78',['horizontal_velocity',['../structpx4__ros2_1_1TrajectoryOptions.html#af8594333176bef1afe9f3066823f54ba',1,'px4_ros2::TrajectoryOptions']]],
+  ['horizontaldistancetoglobalposition_79',['horizontalDistanceToGlobalPosition',['../group__geodesic.html#gac743119cb3987dfa6478aabc52c3a50e',1,'px4_ros2::horizontalDistanceToGlobalPosition(const Eigen::Vector2d &amp;global_position_now, const Eigen::Vector2d &amp;global_position_next)'],['../group__geodesic.html#ga0c23b4afb57270be82eef5962a9b01fb',1,'px4_ros2::horizontalDistanceToGlobalPosition(const Eigen::Vector3d &amp;global_position_now, const Eigen::Vector3d &amp;global_position_next)']]]
 ];

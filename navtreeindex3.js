@@ -1,5 +1,14 @@
 var NAVTREEINDEX3 =
 {
+"structpx4__ros2_1_1TrajectoryExecutorInterface_1_1TrajectoryConfig.html#a2397f7b0418d551eb8723a4a19b891d9":[3,2,8,0,2],
+"structpx4__ros2_1_1TrajectoryExecutorInterface_1_1TrajectoryConfig.html#a475c535e283c1dba280ded3fe7ab1e7e":[3,2,8,0,6],
+"structpx4__ros2_1_1TrajectoryExecutorInterface_1_1TrajectoryConfig.html#a4d76b0ff6424dea15dfd9249951c5a27":[3,2,8,0,3],
+"structpx4__ros2_1_1TrajectoryExecutorInterface_1_1TrajectoryConfig.html#aa36c7ad9a67a60e612cde181f8b280b1":[3,2,8,0,5],
+"structpx4__ros2_1_1TrajectoryExecutorInterface_1_1TrajectoryConfig.html#af1c97aafcc735dd1a9de40d61c976a8d":[3,2,8,0,4],
+"structpx4__ros2_1_1TrajectoryExecutorInterface_1_1TrajectoryConfig.html#af308242e7e95692b88c870b90263be63":[3,2,8,0,0],
+"structpx4__ros2_1_1TrajectoryExecutorInterface_1_1TrajectoryConfig.html#afa59ece18d85aa9c3e6ea23344dfe76b":[3,2,8,0,1],
+"structpx4__ros2_1_1TrajectoryOptions.html":[4,0,0,42],
+"structpx4__ros2_1_1TrajectoryOptions.html#a3db65a135ecfd0f391b26f9e15bbd46e":[4,0,0,42,4],
 "structpx4__ros2_1_1TrajectoryOptions.html#a48c3760339f9a131f4d8fde9f95925b0":[4,0,0,42,0],
 "structpx4__ros2_1_1TrajectoryOptions.html#aa77eaf6d2b770296c57177766fb0b6e6":[4,0,0,42,5],
 "structpx4__ros2_1_1TrajectoryOptions.html#acb83de1aeaffec3db94ee30670939ba5":[4,0,0,42,2],
@@ -63,10 +72,11 @@ var NAVTREEINDEX3 =
 "throttle__steering_8hpp_source.html":[5,0,0,0,0,2,0,0,0,6],
 "trajectory_8hpp_source.html":[5,0,0,0,0,2,0,0,3],
 "trajectory__executor_8hpp_source.html":[5,0,0,0,0,3,1,1],
-"vehicle__status_8hpp_source.html":[5,0,0,0,0,7,3],
-"visit_8hpp_source.html":[5,0,0,0,0,6,5],
+"vehicle__command__sender_8hpp_source.html":[5,0,0,0,0,6,5],
+"vehicle__status_8hpp_source.html":[5,0,0,0,0,7,4],
+"visit_8hpp_source.html":[5,0,0,0,0,6,6],
 "vtol_8hpp_source.html":[5,0,0,0,0,2,2],
-"vtol__status_8hpp_source.html":[5,0,0,0,0,7,4],
+"vtol__status_8hpp_source.html":[5,0,0,0,0,7,5],
 "wait__for__fmu_8hpp_source.html":[5,0,0,0,0,1,9],
 "waypoint__trajectory__executor_8hpp_source.html":[5,0,0,0,0,3,1,0,0]
 };

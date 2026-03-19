@@ -81,8 +81,10 @@ var annotated_dup =
       [ "HasMessageVersion", "structpx4__ros2_1_1HasMessageVersion.html", null ],
       [ "HasMessageVersion< T, std::void_t< decltype(T::MESSAGE_VERSION)> >", "structpx4__ros2_1_1HasMessageVersion_3_01T_00_01std_1_1void__t_3_01decltype_07T_1_1MESSAGE__VERSION_08_4_01_4.html", null ],
       [ "Subscription", "classpx4__ros2_1_1Subscription.html", "classpx4__ros2_1_1Subscription" ],
+      [ "VehicleCommandSender", "classpx4__ros2_1_1VehicleCommandSender.html", "classpx4__ros2_1_1VehicleCommandSender" ],
       [ "Battery", "classpx4__ros2_1_1Battery.html", "classpx4__ros2_1_1Battery" ],
       [ "HomePosition", "classpx4__ros2_1_1HomePosition.html", "classpx4__ros2_1_1HomePosition" ],
+      [ "HomePositionSetter", "classpx4__ros2_1_1HomePositionSetter.html", "classpx4__ros2_1_1HomePositionSetter" ],
       [ "LandDetected", "classpx4__ros2_1_1LandDetected.html", "classpx4__ros2_1_1LandDetected" ],
       [ "VehicleStatus", "classpx4__ros2_1_1VehicleStatus.html", "classpx4__ros2_1_1VehicleStatus" ],
       [ "VtolStatus", "classpx4__ros2_1_1VtolStatus.html", "classpx4__ros2_1_1VtolStatus" ]

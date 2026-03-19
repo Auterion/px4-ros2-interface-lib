@@ -51,6 +51,7 @@ var hierarchy =
     [ "px4_ros2::GlobalPositionMeasurement", "structpx4__ros2_1_1GlobalPositionMeasurement.html", null ],
     [ "px4_ros2::HealthAndArmingCheckReporter", "classpx4__ros2_1_1HealthAndArmingCheckReporter.html", null ],
     [ "px4_ros2::HealthAndArmingChecks", "classpx4__ros2_1_1HealthAndArmingChecks.html", null ],
+    [ "px4_ros2::HomePositionSetter", "classpx4__ros2_1_1HomePositionSetter.html", null ],
     [ "px4_ros2::LocalPositionMeasurement", "structpx4__ros2_1_1LocalPositionMeasurement.html", null ],
     [ "px4_ros2::events::LogLevels", "structpx4__ros2_1_1events_1_1LogLevels.html", null ],
     [ "px4_ros2::ManualControlInput", "classpx4__ros2_1_1ManualControlInput.html", null ],
@@ -121,6 +122,7 @@ var hierarchy =
     [ "std::true_type", null, [
       [ "px4_ros2::HasMessageVersion< T, std::void_t< decltype(T::MESSAGE_VERSION)> >", "structpx4__ros2_1_1HasMessageVersion_3_01T_00_01std_1_1void__t_3_01decltype_07T_1_1MESSAGE__VERSION_08_4_01_4.html", null ]
     ] ],
+    [ "px4_ros2::VehicleCommandSender", "classpx4__ros2_1_1VehicleCommandSender.html", null ],
     [ "px4_ros2::VTOL", "classpx4__ros2_1_1VTOL.html", null ],
     [ "px4_ros2::VTOLConfig", "structpx4__ros2_1_1VTOLConfig.html", null ],
     [ "px4_ros2::Waypoint", "structpx4__ros2_1_1Waypoint.html", null ],
