@@ -17,7 +17,7 @@ MapProjection::MapProjection(Context& context) : _node(context.node())
   // Use a shared subscription instance as this is a higher-rate topic
   _vehicle_local_position_cb = SharedSubscription<px4_msgs::msg::VehicleLocalPosition>::create(
       _node,
-      "fmu/out/vehicle_local_position" +
+      context.topicNamespacePrefix() + "fmu/out/vehicle_local_position" +
           px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleLocalPosition>(),
       [this](const px4_msgs::msg::VehicleLocalPosition::UniquePtr& msg) {
         vehicleLocalPositionCallback(msg);
