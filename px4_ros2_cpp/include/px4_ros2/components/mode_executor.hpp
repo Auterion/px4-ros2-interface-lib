@@ -8,9 +8,9 @@
 #include <functional>
 #include <px4_msgs/msg/mode_completed.hpp>
 #include <px4_msgs/msg/vehicle_command.hpp>
-#include <px4_msgs/msg/vehicle_command_ack.hpp>
 #include <px4_msgs/msg/vehicle_status.hpp>
 #include <px4_ros2/components/shared_subscription.hpp>
+#include <px4_ros2/utils/vehicle_command_sender.hpp>
 #include <rclcpp/rclcpp.hpp>
 
 #include "mode.hpp"
@@ -195,7 +195,7 @@ class ModeExecutorBase {
 
   std::shared_ptr<Registration> _registration;
 
-  rclcpp::Publisher<px4_msgs::msg::VehicleCommand>::SharedPtr _vehicle_command_pub;
+  VehicleCommandSender _vehicle_command_sender;
 
   SharedSubscriptionCallbackInstance _vehicle_status_sub_cb;
 
