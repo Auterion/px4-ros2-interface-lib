@@ -64,7 +64,7 @@ class VTOLTest : public testing::Test {
 
 TEST(VTOLConfig, DefaultValues)
 {
-  px4_ros2::VTOLConfig config;
+  const px4_ros2::VTOLConfig config;
   EXPECT_FLOAT_EQ(config.back_transition_deceleration, 2.f);
   EXPECT_FLOAT_EQ(config.back_transition_deceleration_setpoint_to_pitch_i, 0.1f);
   EXPECT_FLOAT_EQ(config.deceleration_integrator_limit, 0.3f);
@@ -73,16 +73,16 @@ TEST(VTOLConfig, DefaultValues)
 
 TEST(VTOLConfig, WithStatusTimeout)
 {
-  auto config = px4_ros2::VTOLConfig{}.withStatusTimeout(std::chrono::seconds(10));
+  const auto config = px4_ros2::VTOLConfig{}.withStatusTimeout(std::chrono::seconds(10));
   EXPECT_EQ(config.status_timeout, std::chrono::seconds(10));
 }
 
 TEST(VTOLConfig, BuilderChaining)
 {
-  auto config = px4_ros2::VTOLConfig{}
-                    .withBackTransitionDeceleration(3.f)
-                    .withStatusTimeout(std::chrono::seconds(8))
-                    .withDecelerationIntegratorLimit(0.5f);
+  const auto config = px4_ros2::VTOLConfig{}
+                          .withBackTransitionDeceleration(3.f)
+                          .withStatusTimeout(std::chrono::seconds(8))
+                          .withDecelerationIntegratorLimit(0.5f);
   EXPECT_FLOAT_EQ(config.back_transition_deceleration, 3.f);
   EXPECT_FLOAT_EQ(config.deceleration_integrator_limit, 0.5f);
   EXPECT_EQ(config.status_timeout, std::chrono::seconds(8));
@@ -93,7 +93,7 @@ TEST(VTOLConfig, BuilderChaining)
 TEST_F(VTOLTest, InitialStateUndefined)
 {
   px4_ros2::Context context(*_node);
-  px4_ros2::VTOL vtol(context);
+  const px4_ros2::VTOL vtol(context);
   EXPECT_EQ(vtol.getCurrentState(), px4_ros2::VTOL::State::Undefined);
 }
 

@@ -72,6 +72,7 @@ TEST(MissionExecutor, json)
 })";
   const auto mission = nlohmann::json::parse(json_str).get<px4_ros2::Mission>();
   EXPECT_FALSE(mission.checksum().empty());
+  // NOLINTNEXTLINE(bugprone-unchecked-optional-access)
   EXPECT_TRUE(fabsf(mission.defaults().trajectory_options.horizontal_velocity.value() - 12.5f) <
               0.00001f);
   ASSERT_EQ(mission.items().size(), 5U);

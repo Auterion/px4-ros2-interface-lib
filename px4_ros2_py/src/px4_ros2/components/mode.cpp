@@ -47,7 +47,7 @@ void bindMode(py::module& m)
       .value("timeout", px4_ros2::Result::Timeout);
 
   // Register the Context class (required for the setpoints)
-  py::class_<px4_ros2::Context, std::shared_ptr<px4_ros2::Context>> context(m, "Context");
+  const py::class_<px4_ros2::Context, std::shared_ptr<px4_ros2::Context>> context(m, "Context");
 
   // Bind the ModeBase class
   py::class_<px4_ros2::ModeBase, PyModeBase, px4_ros2::Context, std::shared_ptr<px4_ros2::ModeBase>>
