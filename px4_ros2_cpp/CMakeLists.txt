@@ -207,6 +207,7 @@ if(BUILD_TESTING)
             test/integration/mode.cpp
             test/integration/mission.cpp
             test/integration/mode_executor.cpp
+            test/integration/home_position_setter.cpp
             test/integration/overrides.cpp
     )
     if(TARGET integration_tests)
@@ -229,6 +230,7 @@ if(BUILD_TESTING)
             test/unit/mission_execution.cpp
             test/unit/modes.cpp
             test/unit/shared_subscription.cpp
+            test/unit/vehicle_command_sender.cpp
             test/unit/utils/frame_conversion.cpp
             test/unit/utils/geodesic.cpp
             test/unit/utils/geometry.cpp
