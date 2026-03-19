@@ -10,9 +10,9 @@ using namespace std::chrono_literals;
 namespace px4_ros2 {
 
 VehicleCommandSender::VehicleCommandSender(rclcpp::Node& node,
-                                           const std::string& topic_namespace_prefix,
+                                           std::string topic_namespace_prefix,
                                            const std::string& command_topic)
-    : _node(node), _topic_namespace_prefix(topic_namespace_prefix)
+    : _node(node), _topic_namespace_prefix(std::move(topic_namespace_prefix))
 {
   _vehicle_command_pub = _node.create_publisher<px4_msgs::msg::VehicleCommand>(
       _topic_namespace_prefix + command_topic +

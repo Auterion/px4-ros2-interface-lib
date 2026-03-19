@@ -32,7 +32,7 @@ class VehicleCommandSender {
    * @param command_topic command topic name without prefix/version suffix
    *                      (default: "fmu/in/vehicle_command")
    */
-  explicit VehicleCommandSender(rclcpp::Node& node, const std::string& topic_namespace_prefix,
+  explicit VehicleCommandSender(rclcpp::Node& node, std::string topic_namespace_prefix,
                                 const std::string& command_topic = "fmu/in/vehicle_command");
 
   /**
