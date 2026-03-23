@@ -8,6 +8,9 @@
 #include <unistd.h>
 
 #include <ament_index_cpp/get_package_share_directory.hpp>
+#ifdef ROS2_ROLLING
+#include <filesystem>
+#endif
 #include <fstream>
 #include <px4_all_messages.hpp>
 #include <px4_msgs/msg/message_format_request.hpp>
@@ -283,7 +286,13 @@ bool messageCompatibilityCheck(rclcpp::Node& node,
                 px4_ros2::getMessageNameVersion<px4_msgs::msg::MessageFormatRequest>(),
             1);
 
+#ifdef ROS2_ROLLING
+    std::filesystem::path msgs_dir_path;
+    ament_index_cpp::get_package_share_directory("px4_msgs", msgs_dir_path);
+    const std::string msgs_dir = msgs_dir_path.string();
+#else
     const std::string msgs_dir = ament_index_cpp::get_package_share_directory("px4_msgs");
+#endif
     if (msgs_dir.empty()) {
       RCLCPP_FATAL(node.get_logger(),
                    "Failed to get installation directory for 'px4_msgs' package");

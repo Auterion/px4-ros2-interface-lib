@@ -27,6 +27,10 @@ if($ENV{ROS_DISTRO} STREQUAL "humble" OR $ENV{ROS_DISTRO} STREQUAL "galactic")
     add_compile_definitions(ROS2_HUMBLE_OR_GALACTIC)
 endif()
 
+if($ENV{ROS_DISTRO} STREQUAL "rolling")
+        add_compile_definitions(ROS2_ROLLING)
+endif()
+
 # Galactic lacks add_pre_shutdown_callback; assume present otherwise.
 set(HAS_RCLCPP_PRE_SHUTDOWN ON)
 if($ENV{ROS_DISTRO} STREQUAL "galactic")
