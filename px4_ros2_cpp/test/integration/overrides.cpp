@@ -254,7 +254,7 @@ void TestExecutionOverrides::run()
 TEST_F(ModesTest, runExecutorOverrides)
 {
   auto test_node = initNode();
-  ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s));
+  ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s, 5s));
   TestExecutionOverrides test_execution{*test_node};
   test_execution.run();
   rclcpp::spin(test_node);

@@ -17,7 +17,7 @@ using namespace std::chrono_literals;
 TEST_F(ModesTest, HomePositionSetter)
 {
   auto test_node = initNode();
-  ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s));
+  ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s, 5s));
 
   px4_ros2::Context context(*test_node);
   px4_ros2::HomePositionSetter setter(context);
