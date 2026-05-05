@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
+#include <chrono>
 #include <px4_msgs/msg/vehicle_status.hpp>
 #include <px4_ros2/components/wait_for_fmu.hpp>
 #include <px4_ros2/utils/message_version.hpp>
-
-#include <chrono>
 #include <thread>
 
 namespace px4_ros2 {
@@ -18,11 +17,10 @@ bool waitForFMU(rclcpp::Node& node, const rclcpp::Duration& discovery_timeout,
 {
   RCLCPP_DEBUG(node.get_logger(), "Waiting for FMU...");
   const std::string topic = topic_namespace_prefix + "fmu/out/vehicle_status" +
-      px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>();
+                            px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>();
   const rclcpp::Subscription<px4_msgs::msg::VehicleStatus>::SharedPtr vehicle_status_sub =
       node.create_subscription<px4_msgs::msg::VehicleStatus>(
-          topic, rclcpp::QoS(1).best_effort(),
-          [](px4_msgs::msg::VehicleStatus::UniquePtr msg) {});
+          topic, rclcpp::QoS(1).best_effort(), [](px4_msgs::msg::VehicleStatus::UniquePtr msg) {});
 
   // Phase 1: wait for the FMU's vehicle_status publisher to appear on the graph.
   using namespace std::chrono_literals;  // NOLINT
