@@ -130,7 +130,7 @@ void TestMission::run()
 TEST_F(ModesTest, runMission)
 {
   auto test_node = initNode();
-  ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s));
+  ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s, 5s));
   TestMission test{*test_node};
   test.run();
 }

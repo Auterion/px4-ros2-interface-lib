@@ -76,7 +76,8 @@ bool ModeBase::doRegister()
   assert(!_registration->registered());
 
   if (!_skip_message_compatibility_check &&
-      (!waitForFMU(node(), 15s, topicNamespacePrefix()) || !defaultMessageCompatibilityCheck())) {
+      (!waitForFMU(node(), 15s, 5s, topicNamespacePrefix()) ||
+       !defaultMessageCompatibilityCheck())) {
     return false;
   }
 

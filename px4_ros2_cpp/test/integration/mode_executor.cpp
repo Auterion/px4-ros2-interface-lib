@@ -198,7 +198,7 @@ void TestExecutionAutonomous::run()
 TEST_F(ModesTest, runExecutorAutonomous)
 {
   auto test_node = initNode();
-  ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s));
+  ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s, 5s));
   TestExecutionAutonomous test_execution{*test_node};
   test_execution.run();
   rclcpp::spin(test_node);
@@ -358,7 +358,7 @@ void TestExecutionInCharge::run()
 TEST_F(ModesTest, runExecutorInCharge)
 {
   auto test_node = initNode();
-  ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s));
+  ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s, 5s));
   TestExecutionInCharge test_execution{*test_node};
   test_execution.run();
   rclcpp::spin(test_node);
@@ -457,7 +457,7 @@ void TestExecutionFailsafe::run()
 TEST_F(ModesTest, runExecutorFailsafe)
 {
   auto test_node = initNode();
-  ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s));
+  ASSERT_TRUE(px4_ros2::waitForFMU(*test_node, 10s, 5s));
   TestExecutionFailsafe test_execution{*test_node};
   test_execution.run();
   rclcpp::spin(test_node);
