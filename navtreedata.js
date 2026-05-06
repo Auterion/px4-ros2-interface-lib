@@ -37,6 +37,7 @@ var NAVTREE =
         [ "Linters (code formatting etc)", "index.html#autotoc_md10", null ]
       ] ]
     ] ],
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Topics", "topics.html", "topics" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -59,7 +60,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "action_8hpp_source.html",
-"group__frame__conversion.html#ga1e8ce819e541081d53c3abdab8acc90d"
+"group__frame__conversion.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

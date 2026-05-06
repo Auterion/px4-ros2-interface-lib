@@ -52,5 +52,6 @@ var group__components =
       [ "px4_ros2::Result::Deactivated", "group__components.html#gga0d5805242f91956fd51e243091367f77a43c7582c40594c3fe32a6634ef9dcb07", null ]
     ] ],
     [ "px4_ros2::messageCompatibilityCheck", "group__components.html#gacb3cd80960c70f09a1acf1e10d9f1d21", null ],
+    [ "px4_ros2::waitForFMU", "group__components.html#gaef837d70275df4cbe8dfe669581f4f9a", null ],
     [ "px4_ros2::waitForFMU", "group__components.html#ga4f1e20c551dab853d7efee42dae1a020", null ]
 ];
