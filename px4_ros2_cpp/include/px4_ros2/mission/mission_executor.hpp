@@ -138,6 +138,15 @@ class MissionExecutor {
    */
   void abort();
 
+  /**
+   * Skip the FMU message-compatibility check on registration.
+   * Must be called before doRegister().
+   */
+  void setSkipMessageCompatibilityCheck()
+  {
+    _mode_executor->setSkipMessageCompatibilityCheck();
+  }
+
  protected:
   class MissionMode : public ModeBase {
    public:
@@ -201,6 +210,12 @@ class MissionExecutor {
       setSkipMessageCompatibilityCheck();
       overrideRegistration(registration);
     }
+
+    void setSkipMessageCompatibilityCheck()
+    {
+      ModeExecutorBase::setSkipMessageCompatibilityCheck();
+    }
+
     std::function<bool(uint32_t, float)> command_handler{nullptr};
     std::function<void()> on_failsafe_deferred{nullptr};
 
