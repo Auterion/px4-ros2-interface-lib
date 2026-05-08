@@ -142,10 +142,7 @@ class MissionExecutor {
    * Skip the FMU message-compatibility check on registration.
    * Must be called before doRegister().
    */
-  void setSkipMessageCompatibilityCheck()
-  {
-    _mode_executor->setSkipMessageCompatibilityCheck();
-  }
+  void setSkipMessageCompatibilityCheck() { _mode_executor->setSkipMessageCompatibilityCheck(); }
 
  protected:
   class MissionMode : public ModeBase {
