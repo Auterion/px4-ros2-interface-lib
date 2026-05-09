@@ -8,7 +8,7 @@
 #include <unistd.h>
 
 #include <ament_index_cpp/get_package_share_directory.hpp>
-#ifdef ROS2_ROLLING
+#if defined(ROS2_ROLLING) || defined(ROS2_LYRICAL)
 #include <ament_index_cpp/get_package_share_path.hpp>
 #include <filesystem>
 #endif
@@ -287,7 +287,7 @@ bool messageCompatibilityCheck(rclcpp::Node& node,
                 px4_ros2::getMessageNameVersion<px4_msgs::msg::MessageFormatRequest>(),
             1);
 
-#ifdef ROS2_ROLLING
+#if defined(ROS2_ROLLING) || defined(ROS2_LYRICAL)
     std::filesystem::path msgs_dir_path = ament_index_cpp::get_package_share_path("px4_msgs");
     const std::string msgs_dir = msgs_dir_path.string();
 #else
