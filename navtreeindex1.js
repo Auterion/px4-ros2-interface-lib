@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"group__control.html":[4,1],
 "group__frame__conversion.html":[4,5,0],
 "group__frame__conversion.html#ga1dda812b5ff8e3341c12f3b5bfc35ae1":[4,5,0,10],
 "group__frame__conversion.html#ga1e8ce819e541081d53c3abdab8acc90d":[4,5,0,2],
