@@ -27,8 +27,7 @@ var group__mission =
       [ "deferFailsafes", "classpx4__ros2_1_1MissionExecutor.html#a5fc79e799b09642fcd7c6cb87e782d3f", null ],
       [ "onActivityInfoChange", "classpx4__ros2_1_1MissionExecutor.html#a580f2076b449af00b769a9025bcb8b9d", null ],
       [ "onProgressUpdate", "classpx4__ros2_1_1MissionExecutor.html#ab593e7317e3d29e8be5a0fec5a85f0ec", null ],
-      [ "setActivityInfo", "classpx4__ros2_1_1MissionExecutor.html#ac4762806daf87fa93231f7651470ae53", null ],
-      [ "setSkipMessageCompatibilityCheck", "classpx4__ros2_1_1MissionExecutor.html#ac5fc5b9bd2e40ad16b63b321e26104ed", null ]
+      [ "setActivityInfo", "classpx4__ros2_1_1MissionExecutor.html#ac4762806daf87fa93231f7651470ae53", null ]
     ] ],
     [ "px4_ros2::ActionHandler", "classpx4__ros2_1_1ActionHandler.html", [
       [ "clearActivityInfo", "classpx4__ros2_1_1ActionHandler.html#a4423ea07c036edffe911d13acd017569", null ],
