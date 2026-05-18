@@ -10,7 +10,9 @@ namespace px4_ros2 {
 
 FwLateralLongitudinalSetpointType::FwLateralLongitudinalSetpointType(Context& context,
                                                                      bool is_position_optional)
-    : SetpointBase(context), _node(context.node()), _local_position_is_optional(is_position_optional)
+    : SetpointBase(context),
+      _node(context.node()),
+      _local_position_is_optional(is_position_optional)
 {
   _fw_lateral_sp_pub = context.node().create_publisher<px4_msgs::msg::FixedWingLateralSetpoint>(
       context.topicNamespacePrefix() + "fmu/in/fixed_wing_lateral_setpoint" +
