@@ -27,7 +27,13 @@ struct FwControlConfiguration;
  */
 class FwLateralLongitudinalSetpointType : public SetpointBase {
  public:
-  explicit FwLateralLongitudinalSetpointType(Context& context);
+  /**
+   * @param context  The mode context.
+   * @param is_position_optional  If true, the mode will not require a valid position estimate.
+   *                              Set to true when only using inner-loop setpoints (lateral
+   *                              acceleration, height rate, airspeed) without course or altitude.
+   */
+  explicit FwLateralLongitudinalSetpointType(Context& context, bool is_position_optional = false);
 
   ~FwLateralLongitudinalSetpointType() override = default;
 
@@ -98,6 +104,7 @@ class FwLateralLongitudinalSetpointType : public SetpointBase {
 
  private:
   rclcpp::Node& _node;
+  bool _local_position_is_optional;
   rclcpp::Publisher<px4_msgs::msg::FixedWingLateralSetpoint>::SharedPtr _fw_lateral_sp_pub;
   rclcpp::Publisher<px4_msgs::msg::FixedWingLongitudinalSetpoint>::SharedPtr
       _fw_longitudinal_sp_pub;
