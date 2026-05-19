@@ -114,9 +114,8 @@ Inheritance diagram for px4_ros2::FwLateralLongitudinalSetpointType:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af01e0b24a0c7d3a518cfa4f2e42f4445" id="r_af01e0b24a0c7d3a518cfa4f2e42f4445"><td class="memItemLeft" align="right" valign="top"><a id="af01e0b24a0c7d3a518cfa4f2e42f4445" name="af01e0b24a0c7d3a518cfa4f2e42f4445"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>FwLateralLongitudinalSetpointType</b> (<a class="el" href="classpx4__ros2_1_1Context.html">Context</a> &amp;context)</td></tr>
-<tr class="separator:af01e0b24a0c7d3a518cfa4f2e42f4445"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61c217a8ca66895a66d35a607a2fa02d" id="r_a61c217a8ca66895a66d35a607a2fa02d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#a61c217a8ca66895a66d35a607a2fa02d">FwLateralLongitudinalSetpointType</a> (<a class="el" href="classpx4__ros2_1_1Context.html">Context</a> &amp;context, bool is_position_optional=false)</td></tr>
+<tr class="separator:a61c217a8ca66895a66d35a607a2fa02d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad2e20893c45f62e7ad41774188fd70b" id="r_aad2e20893c45f62e7ad41774188fd70b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#aad2e20893c45f62e7ad41774188fd70b">getConfiguration</a> () override</td></tr>
 <tr class="separator:aad2e20893c45f62e7ad41774188fd70b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab54335406b10896a920a42d0cfa79fcd" id="r_ab54335406b10896a920a42d0cfa79fcd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#ab54335406b10896a920a42d0cfa79fcd">update</a> (const <a class="el" href="structpx4__ros2_1_1FwLateralLongitudinalSetpoint.html">FwLateralLongitudinalSetpoint</a> &amp;setpoint, const <a class="el" href="structpx4__ros2_1_1FwControlConfiguration.html">FwControlConfiguration</a> &amp;config)</td></tr>
@@ -160,7 +159,51 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onUpdate</b> ()</td><
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Setpoint type for fixedwing control. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a61c217a8ca66895a66d35a607a2fa02d" name="a61c217a8ca66895a66d35a607a2fa02d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61c217a8ca66895a66d35a607a2fa02d">&#9670;&#160;</a></span>FwLateralLongitudinalSetpointType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">px4_ros2::FwLateralLongitudinalSetpointType::FwLateralLongitudinalSetpointType </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classpx4__ros2_1_1Context.html">Context</a> &amp;&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>is_position_optional</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>The mode context. </td></tr>
+    <tr><td class="paramname">is_position_optional</td><td>If true, the mode will not require a valid position estimate. Set to true when only using inner-loop setpoints (lateral acceleration, height rate, airspeed) without course or altitude. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a521de5d516ee6abe01964cf23a7ca550" name="a521de5d516ee6abe01964cf23a7ca550"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a521de5d516ee6abe01964cf23a7ca550">&#9670;&#160;</a></span>desiredUpdateRateHz()</h2>
 
