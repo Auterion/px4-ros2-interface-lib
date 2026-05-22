@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
+#include <chrono>
 #include <px4_ros2/utils/vehicle_command_sender.hpp>
+#include <thread>
 
 using namespace std::chrono_literals;
 
@@ -30,15 +32,24 @@ Result VehicleCommandSender::sendCommandSync(px4_msgs::msg::VehicleCommand cmd)
           px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommandAck>(),
       rclcpp::QoS(1).best_effort(), [](px4_msgs::msg::VehicleCommandAck::UniquePtr) {});
 
-  // Wait until we have a publisher on the ACK topic
-  auto start_time = std::chrono::steady_clock::now();
-  while (vehicle_command_ack_sub->get_publisher_count() == 0) {
-    const auto timeout = 3000ms;
-    const auto now = std::chrono::steady_clock::now();
-    if (now >= start_time + timeout) {
-      RCLCPP_WARN(_node.get_logger(), "Timeout waiting for vehicle_command_ack publisher");
+  // Wait until DDS discovery has matched both directions so that the very
+  // first publish is not silently dropped (BEST_EFFORT QoS provides no
+  // queuing for unmatched endpoints):
+  //   * vehicle_command_ack:   FMU --> us (need an FMU publisher)
+  //   * vehicle_command:       us --> FMU (need an FMU subscriber)
+  const auto discovery_start = std::chrono::steady_clock::now();
+  const auto discovery_timeout = 3000ms;
+  while (vehicle_command_ack_sub->get_publisher_count() == 0 ||
+         _vehicle_command_pub->get_subscription_count() == 0) {
+    if (std::chrono::steady_clock::now() >= discovery_start + discovery_timeout) {
+      RCLCPP_WARN(_node.get_logger(),
+                  "Timeout waiting for vehicle_command discovery "
+                  "(ack publishers=%zu, command subscribers=%zu)",
+                  vehicle_command_ack_sub->get_publisher_count(),
+                  _vehicle_command_pub->get_subscription_count());
       break;
     }
+    std::this_thread::sleep_for(50ms);
   }
 
   rclcpp::WaitSet wait_set;
@@ -48,7 +59,7 @@ Result VehicleCommandSender::sendCommandSync(px4_msgs::msg::VehicleCommand cmd)
 
   for (int retries = 0; retries < 3 && !got_reply; ++retries) {
     _vehicle_command_pub->publish(cmd);
-    start_time = std::chrono::steady_clock::now();
+    auto start_time = std::chrono::steady_clock::now();
     const auto timeout = 300ms;
     while (!got_reply) {
       auto now = std::chrono::steady_clock::now();

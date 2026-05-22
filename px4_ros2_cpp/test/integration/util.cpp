@@ -7,7 +7,11 @@
 
 #include <gtest/gtest.h>
 
+#include <chrono>
 #include <px4_ros2/utils/message_version.hpp>
+#include <thread>
+
+using namespace std::chrono_literals;
 
 std::shared_ptr<rclcpp::Node> initNode()
 {
@@ -53,6 +57,22 @@ VehicleState::VehicleState(rclcpp::Node& node, const std::string& topic_namespac
       px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommand>();
   _vehicle_command_pub =
       _node.create_publisher<px4_msgs::msg::VehicleCommand>(vehicle_command_topic, 1);
+
+  // Block until the FMU subscriber for vehicle_command has matched our
+  // publisher. Otherwise the first sendCommand() may be silently dropped
+  // under BEST_EFFORT QoS while DDS discovery is still in progress, which
+  // manifests as a 120 s gtest timeout in ModesTest.runModeTests.
+  const auto discovery_start = std::chrono::steady_clock::now();
+  const auto discovery_timeout = 5000ms;
+  while (_vehicle_command_pub->get_subscription_count() == 0) {
+    if (std::chrono::steady_clock::now() >= discovery_start + discovery_timeout) {
+      RCLCPP_WARN(_node.get_logger(),
+                  "Timeout waiting for FMU subscriber on %s; first command may be dropped",
+                  vehicle_command_topic.c_str());
+      break;
+    }
+    std::this_thread::sleep_for(50ms);
+  }
 }
 
 void VehicleState::callbackOnModeSet(const VehicleState::ModeSetCallback& callback,
