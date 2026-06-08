@@ -70,7 +70,11 @@ add_custom_command(
 
 add_custom_target(generate_px4_header DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/px4_all_messages.hpp)
 
-include_directories(include SYSTEM ${Eigen3_INCLUDE_DIRS})
+include_directories(include)
+# Eigen headers must be SYSTEM includes so their warnings do not trip the
+# -Werror above. The SYSTEM keyword only takes effect when it precedes the
+# directories, so it needs its own include_directories() call.
+include_directories(SYSTEM ${Eigen3_INCLUDE_DIRS})
 set(HEADER_FILES
         include/px4_ros2/common/setpoint_base.hpp
         include/px4_ros2/components/events.hpp
