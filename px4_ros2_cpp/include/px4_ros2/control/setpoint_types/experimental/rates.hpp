@@ -23,7 +23,8 @@ class RatesSetpointType : public SetpointBase {
 
   ~RatesSetpointType() override = default;
 
-  Configuration getConfiguration() override;
+  SetpointType getSetpointType() override { return px4_msgs::msg::SetpointConfig::TYPE_RATES; }
+
   float desiredUpdateRateHz() override { return 200.f; }
 
   void update(const Eigen::Vector3f& rate_setpoints_frd_rad,

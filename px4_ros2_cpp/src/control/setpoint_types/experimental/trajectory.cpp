@@ -19,6 +19,14 @@ TrajectorySetpointType::TrajectorySetpointType(Context& context, bool local_posi
       1);
 }
 
+void TrajectorySetpointType::clearOptionalRequirements(
+    px4_msgs::msg::SetpointConfigReply& setpoint_config_reply)
+{
+  if (_local_position_is_optional) {
+    setpoint_config_reply.mode_req_local_position = false;
+  }
+}
+
 void TrajectorySetpointType::update(const Eigen::Vector3f& velocity_ned_m_s,
                                     const std::optional<Eigen::Vector3f>& acceleration_ned_m_s2,
                                     std::optional<float> yaw_ned_rad,
@@ -83,17 +91,4 @@ void TrajectorySetpointType::updatePosition(const Eigen::Vector3f& position_ned_
   _trajectory_setpoint_pub->publish(sp);
 }
 
-SetpointBase::Configuration TrajectorySetpointType::getConfiguration()
-{
-  Configuration config{};
-  config.rates_enabled = true;
-  config.attitude_enabled = true;
-  config.acceleration_enabled = true;
-  config.position_enabled = true;
-  config.velocity_enabled = true;
-  config.altitude_enabled = true;
-  config.climb_rate_enabled = true;
-  config.local_position_is_optional = _local_position_is_optional;
-  return config;
-}
 }  // namespace px4_ros2

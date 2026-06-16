@@ -25,7 +25,10 @@ class MulticopterGotoSetpointType : public SetpointBase {
 
   ~MulticopterGotoSetpointType() override = default;
 
-  Configuration getConfiguration() override;
+  SetpointType getSetpointType() override
+  {
+    return px4_msgs::msg::SetpointConfig::TYPE_MULTICOPTER_GOTO;
+  }
 
   /**
    * @brief Go-to setpoint update

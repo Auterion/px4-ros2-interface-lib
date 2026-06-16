@@ -7,7 +7,8 @@
 
 #include <cstdint>
 #include <px4_msgs/msg/mode_completed.hpp>
-#include <px4_msgs/msg/vehicle_control_mode.hpp>
+#include <px4_msgs/msg/setpoint_config.hpp>
+#include <px4_msgs/msg/setpoint_config_reply.hpp>
 #include <px4_msgs/msg/vehicle_status.hpp>
 #include <px4_ros2/common/context.hpp>
 #include <px4_ros2/common/setpoint_base.hpp>
@@ -203,10 +204,9 @@ class ModeBase : public Context {
 
   void updateSetpointUpdateTimer();
 
-  void updateModeRequirementsFromSetpoints();
+  void checkSetpointCompatibilityAndRequirements();
   void setSetpointUpdateRateFromSetpointTypes();
-  void publishSetpointConfig(SetpointBase& setpoint);
-  void activateSetpointType(SetpointBase& setpoint);
+  void activateSetpointType(const std::shared_ptr<SetpointBase>& setpoint);
   void deactivateAllSetpointTypes();
 
   std::shared_ptr<Registration> _registration;
@@ -217,7 +217,8 @@ class ModeBase : public Context {
   HealthAndArmingChecks _health_and_arming_checks;
 
   rclcpp::Publisher<px4_msgs::msg::ModeCompleted>::SharedPtr _mode_completed_pub;
-  rclcpp::Publisher<px4_msgs::msg::VehicleControlMode>::SharedPtr _config_control_setpoints_pub;
+  rclcpp::Publisher<px4_msgs::msg::SetpointConfig>::SharedPtr _setpoint_config_pub;
+  SharedSubscriptionCallbackInstance _setpoint_config_reply_sub_cb;
 
   SharedSubscriptionCallbackInstance _vehicle_status_sub_cb;
 
@@ -234,6 +235,7 @@ class ModeBase : public Context {
   std::vector<std::shared_ptr<SetpointBase>> _setpoint_types;
   std::vector<SetpointBase*>
       _new_setpoint_types;  ///< This stores new setpoints during initialization, until registration
+  std::shared_ptr<SetpointBase> _current_activating_setpoint;  ///< Setpoint waiting for a reply
 };
 
 /** @}*/

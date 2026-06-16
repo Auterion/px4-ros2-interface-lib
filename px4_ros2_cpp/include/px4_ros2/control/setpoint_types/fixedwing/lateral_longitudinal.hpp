@@ -37,7 +37,13 @@ class FwLateralLongitudinalSetpointType : public SetpointBase {
 
   ~FwLateralLongitudinalSetpointType() override = default;
 
-  Configuration getConfiguration() override;
+  SetpointType getSetpointType() override
+  {
+    return px4_msgs::msg::SetpointConfig::TYPE_FIXEDWING_LATERAL_LONGITUDINAL;
+  }
+
+  void clearOptionalRequirements(
+      px4_msgs::msg::SetpointConfigReply& setpoint_config_reply) override;
 
   /**
    * @brief Update the setpoint with full flexibility by passing a FwLateralLongitudinalSetpoint

@@ -32,7 +32,10 @@ class TrajectorySetpointType : public SetpointBase {
 
   ~TrajectorySetpointType() override = default;
 
-  Configuration getConfiguration() override;
+  SetpointType getSetpointType() override { return px4_msgs::msg::SetpointConfig::TYPE_TRAJECTORY; }
+
+  void clearOptionalRequirements(
+      px4_msgs::msg::SetpointConfigReply& setpoint_config_reply) override;
 
   void update(const Eigen::Vector3f& velocity_ned_m_s,
               const std::optional<Eigen::Vector3f>& acceleration_ned_m_s2 = {},

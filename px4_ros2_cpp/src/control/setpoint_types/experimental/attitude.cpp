@@ -64,14 +64,4 @@ void AttitudeSetpointType::update(const float roll, const float pitch, const flo
   _vehicle_attitude_setpoint_pub->publish(sp);
 }
 
-SetpointBase::Configuration AttitudeSetpointType::getConfiguration()
-{
-  Configuration config{};
-  config.altitude_enabled = false;
-  config.climb_rate_enabled = false;
-  config.acceleration_enabled = false;
-  config.velocity_enabled = false;
-  config.position_enabled = false;
-  return config;
-}
 }  // namespace px4_ros2

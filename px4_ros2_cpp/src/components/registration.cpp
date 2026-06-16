@@ -11,7 +11,7 @@
 #include <px4_ros2/utils/message_version.hpp>
 #include <random>
 
-static constexpr uint16_t kLatestPX4ROS2ApiVersion = 1;
+static constexpr uint16_t kLatestPX4ROS2ApiVersion = 2;
 
 using namespace std::chrono_literals;
 
@@ -162,7 +162,8 @@ bool Registration::doRegister(const RegistrationSettings& settings)
                 _registered = true;
               } else {
                 RCLCPP_FATAL(_node.get_logger(),
-                             "Incompatible ROS2 library API version: got %i, expected %i",
+                             "Incompatible ROS2 library API version: got %i, expected %i (update "
+                             "PX4 or the PX4 ROS library)",
                              reply.px4_ros2_api_version, kLatestPX4ROS2ApiVersion);
               }
 

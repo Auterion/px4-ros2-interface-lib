@@ -41,14 +41,4 @@ void RoverSpeedSteeringSetpointType::update(const float speed_body_x,
   _rover_steering_setpoint_pub->publish(sp_steering);
 }
 
-SetpointBase::Configuration RoverSpeedSteeringSetpointType::getConfiguration()
-{
-  Configuration config{};
-  config.control_allocation_enabled = true;
-  config.rates_enabled = false;
-  config.attitude_enabled = false;
-  config.velocity_enabled = true;
-  config.position_enabled = false;
-  return config;
-}
 }  // namespace px4_ros2

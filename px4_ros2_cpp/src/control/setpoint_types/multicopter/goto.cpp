@@ -50,20 +50,6 @@ void MulticopterGotoSetpointType::update(const Eigen::Vector3f& position,
   _goto_setpoint_pub->publish(sp);
 }
 
-SetpointBase::Configuration MulticopterGotoSetpointType::getConfiguration()
-{
-  Configuration config{};
-  config.control_allocation_enabled = true;
-  config.rates_enabled = true;
-  config.attitude_enabled = true;
-  config.altitude_enabled = true;
-  config.acceleration_enabled = true;
-  config.velocity_enabled = true;
-  config.position_enabled = true;
-  config.climb_rate_enabled = true;
-  return config;
-}
-
 MulticopterGotoGlobalSetpointType::MulticopterGotoGlobalSetpointType(Context& context)
     : _node(context.node()),
       _map_projection(std::make_unique<MapProjection>(context)),
