@@ -198,7 +198,7 @@ void ModeBase::completed(Result result)
   if (_completed) {
     RCLCPP_DEBUG_ONCE(node().get_logger(), "Mode '%s': completed was already called",
                       _registration->name().c_str());
-    return;
+    // Continue to publish the topic, in case the previous one got lost
   }
 
   px4_msgs::msg::ModeCompleted mode_completed{};
