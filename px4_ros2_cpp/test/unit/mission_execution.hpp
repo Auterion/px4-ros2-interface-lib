@@ -143,6 +143,7 @@ class MissionExecutorTest : public px4_ros2::MissionExecutor {
   bool doRegisterImpl(MissionMode& mode, MissionModeExecutor& executor) override
   {
     mode.disableWatchdogTimer();
+    mode.setSkipSetpointCheck();
     executor.setRegistration(std::make_shared<FakeRegistration>(_node));
     const bool ret = MissionExecutor::doRegisterImpl(mode, executor);
     _mode_id = executor.ownedMode().id();

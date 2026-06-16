@@ -180,6 +180,7 @@ class ModeBase : public Context {
 
  protected:
   void setSkipMessageCompatibilityCheck() { _skip_message_compatibility_check = true; }
+  void setSkipSetpointCheck() { _skip_setpoint_check = true; }
   void overrideRegistration(const std::shared_ptr<Registration>& registration);
 
   void disableWatchdogTimer() { _health_and_arming_checks.disableWatchdogTimer(); }
@@ -213,6 +214,7 @@ class ModeBase : public Context {
 
   const Settings _settings;
   bool _skip_message_compatibility_check{false};
+  bool _skip_setpoint_check{false};  ///< Skip setpoint checks on startup. Only for unit tests.
 
   HealthAndArmingChecks _health_and_arming_checks;
 
