@@ -330,11 +330,10 @@ bool ModeExecutorBase::deferFailsafesSync(bool enabled, int timeout_s)
   if (enabled && _is_in_charge && _registration->registered() &&
       _prev_failsafe_defer_state == px4_msgs::msg::VehicleStatus::FAILSAFE_DEFER_STATE_DISABLED) {
     rclcpp::WaitSet wait_set;
-    const auto vehicle_status_sub =
-        SharedSubscription<px4_msgs::msg::VehicleStatus>::instance(
-            _node, _topic_namespace_prefix + "fmu/out/vehicle_status" +
-                       px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>())
-            .getSubscription();
+    const auto vehicle_status_sub = _node.create_subscription<px4_msgs::msg::VehicleStatus>(
+        _topic_namespace_prefix + "fmu/out/vehicle_status" +
+            px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(),
+        rclcpp::QoS(1).best_effort(), [](px4_msgs::msg::VehicleStatus::UniquePtr) {});
     wait_set.add_subscription(vehicle_status_sub);
 
     bool got_message = false;
@@ -348,8 +347,7 @@ bool ModeExecutorBase::deferFailsafesSync(bool enabled, int timeout_s)
         break;
       }
 
-      auto wait_ret =
-          wait_set.wait((timeout - (now - start_time)).to_chrono<std::chrono::microseconds>());
+      const auto wait_ret = wait_set.wait(100ms);
 
       if (wait_ret.kind() == rclcpp::WaitResultKind::Ready) {
         px4_msgs::msg::VehicleStatus msg;
@@ -366,8 +364,11 @@ bool ModeExecutorBase::deferFailsafesSync(bool enabled, int timeout_s)
         }
 
       } else {
-        RCLCPP_DEBUG(_node.get_logger(), "timeout");
+        RCLCPP_DEBUG(_node.get_logger(), "deferFailsafesSync timeout");
       }
+
+      // Resend request
+      _config_overrides.deferFailsafes(enabled, timeout_s);
     }
 
     wait_set.remove_subscription(vehicle_status_sub);

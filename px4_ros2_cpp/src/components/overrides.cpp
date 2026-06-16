@@ -18,6 +18,22 @@ ConfigOverrides::ConfigOverrides(rclcpp::Node& node, const std::string& topic_na
       topic_namespace_prefix + "fmu/in/config_overrides_request" +
           px4_ros2::getMessageNameVersion<px4_msgs::msg::ConfigOverrides>(),
       1);
+
+  // Handle confirmations from PX4
+  _config_overrides_confirm_sub = SharedSubscription<px4_msgs::msg::ConfigOverrides>::create(
+      _node,
+      topic_namespace_prefix + "fmu/out/config_overrides_confirm" +
+          px4_ros2::getMessageNameVersion<px4_msgs::msg::ConfigOverrides>(),
+      [this](const px4_msgs::msg::ConfigOverrides::UniquePtr& msg) {
+        // Compare the whole struct without the timestamp field (which comes first)
+        const auto offset_after_timestamp = offsetof(px4_msgs::msg::ConfigOverrides, timestamp) +
+                                            sizeof(px4_msgs::msg::ConfigOverrides::timestamp);
+        if (memcmp(reinterpret_cast<uint8_t*>(&_current_overrides) + offset_after_timestamp,
+                   reinterpret_cast<uint8_t*>(msg.get()) + offset_after_timestamp,
+                   sizeof(px4_msgs::msg::ConfigOverrides) - offset_after_timestamp) == 0) {
+          _confirm_timer = nullptr;
+        }
+      });
 }
 
 void ConfigOverrides::controlAutoDisarm(bool enabled)
@@ -44,6 +60,16 @@ void ConfigOverrides::update()
   if (_is_setup) {
     _current_overrides.timestamp = 0;  // Let PX4 set the timestamp
     _config_overrides_pub->publish(_current_overrides);
+
+    // Start/reset confirmation timer: in case we do not get a confirmation until the timeout, it
+    // will resend the topic
+    _confirm_timer = rclcpp::create_timer(
+        &_node, _node.get_clock(), rclcpp::Duration::from_seconds(0.1), [this]() {
+          RCLCPP_WARN_ONCE(
+              _node.get_logger(),
+              "Config overrides confirmation timed out. Resending request (only printed once)");
+          update();
+        });
 
   } else {
     _require_update_after_setup = true;

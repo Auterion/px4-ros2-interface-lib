@@ -8,6 +8,8 @@
 #include <px4_msgs/msg/config_overrides.hpp>
 #include <rclcpp/rclcpp.hpp>
 
+#include "shared_subscription.hpp"
+
 namespace px4_ros2 {
 
 class ModeBase;
@@ -34,6 +36,9 @@ class ConfigOverrides {
   rclcpp::Publisher<px4_msgs::msg::ConfigOverrides>::SharedPtr _config_overrides_pub;
   bool _is_setup{false};
   bool _require_update_after_setup{false};
+
+  rclcpp::TimerBase::SharedPtr _confirm_timer;
+  SharedSubscriptionCallbackInstance _config_overrides_confirm_sub;
 };
 
 }  // namespace px4_ros2

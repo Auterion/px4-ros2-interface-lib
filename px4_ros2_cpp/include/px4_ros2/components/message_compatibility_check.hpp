@@ -40,6 +40,7 @@ using namespace std::chrono_literals;  // NOLINT
   {"fmu/out/airspeed_validated"}, \
   {"fmu/out/arming_check_request"}, \
   {"fmu/out/battery_status"}, \
+  {"fmu/out/config_overrides_confirm", "ConfigOverrides"}, \
   {"fmu/out/home_position"}, \
   {"fmu/out/manual_control_setpoint"}, \
   {"fmu/out/mode_completed"}, \
