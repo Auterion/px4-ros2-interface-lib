@@ -23,7 +23,11 @@ class RoverSpeedSteeringSetpointType : public SetpointBase {
 
   ~RoverSpeedSteeringSetpointType() override = default;
 
-  Configuration getConfiguration() override;
+  SetpointType getSetpointType() override
+  {
+    return px4_msgs::msg::SetpointConfig::TYPE_ROVER_SPEED_STEERING;
+  }
+
   float desiredUpdateRateHz() override { return 30.f; }
 
   /**

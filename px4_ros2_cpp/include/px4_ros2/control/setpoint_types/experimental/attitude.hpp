@@ -23,7 +23,8 @@ class AttitudeSetpointType : public SetpointBase {
 
   ~AttitudeSetpointType() override = default;
 
-  Configuration getConfiguration() override;
+  SetpointType getSetpointType() override { return px4_msgs::msg::SetpointConfig::TYPE_ATTITUDE; }
+
   float desiredUpdateRateHz() override { return 100.f; }
 
   void update(const Eigen::Quaternionf& attitude_setpoint,

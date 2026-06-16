@@ -40,14 +40,4 @@ void RoverSpeedAttitudeSetpointType::update(const float speed_body_x, const floa
   _rover_attitude_setpoint_pub->publish(sp_att);
 }
 
-SetpointBase::Configuration RoverSpeedAttitudeSetpointType::getConfiguration()
-{
-  Configuration config{};
-  config.control_allocation_enabled = true;
-  config.rates_enabled = true;
-  config.attitude_enabled = true;
-  config.velocity_enabled = true;
-  config.position_enabled = false;
-  return config;
-}
 }  // namespace px4_ros2

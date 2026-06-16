@@ -34,15 +34,4 @@ void RatesSetpointType::update(const Eigen::Vector3f& rate_setpoints_frd_rad,
   _vehicle_rates_setpoint_pub->publish(sp);
 }
 
-SetpointBase::Configuration RatesSetpointType::getConfiguration()
-{
-  Configuration config{};
-  config.attitude_enabled = false;
-  config.altitude_enabled = false;
-  config.climb_rate_enabled = false;
-  config.acceleration_enabled = false;
-  config.velocity_enabled = false;
-  config.position_enabled = false;
-  return config;
-}
 }  // namespace px4_ros2

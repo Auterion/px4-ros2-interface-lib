@@ -82,6 +82,14 @@ void FwLateralLongitudinalSetpointType::updateWithHeightRate(
   _fw_longitudinal_sp_pub->publish(longitudinal_sp);
 }
 
+void FwLateralLongitudinalSetpointType::clearOptionalRequirements(
+    px4_msgs::msg::SetpointConfigReply& setpoint_config_reply)
+{
+  if (_local_position_is_optional) {
+    setpoint_config_reply.mode_req_local_position = false;
+  }
+}
+
 void FwLateralLongitudinalSetpointType::update(const FwLateralLongitudinalSetpoint& setpoint,
                                                const FwControlConfiguration& config)
 {
@@ -127,18 +135,4 @@ void FwLateralLongitudinalSetpointType::update(const FwLateralLongitudinalSetpoi
   _fw_longitudinal_sp_pub->publish(longitudinal_sp);
 }
 
-SetpointBase::Configuration FwLateralLongitudinalSetpointType::getConfiguration()
-{
-  Configuration config{};
-  config.control_allocation_enabled = true;
-  config.rates_enabled = true;
-  config.attitude_enabled = true;
-  config.altitude_enabled = true;
-  config.acceleration_enabled = true;
-  config.velocity_enabled = true;
-  config.position_enabled = true;
-  config.climb_rate_enabled = true;
-  config.local_position_is_optional = _local_position_is_optional;
-  return config;
-}
 }  // namespace px4_ros2

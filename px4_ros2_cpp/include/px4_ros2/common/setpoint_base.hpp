@@ -8,7 +8,8 @@
 #include <cstdint>
 #include <functional>
 #include <memory>
-#include <px4_msgs/msg/vehicle_control_mode.hpp>
+#include <px4_msgs/msg/setpoint_config.hpp>
+#include <px4_msgs/msg/setpoint_config_reply.hpp>
 #include <rclcpp/rclcpp.hpp>
 
 #include "context.hpp"
@@ -19,30 +20,7 @@ namespace px4_ros2 {
 class SetpointBase : public std::enable_shared_from_this<SetpointBase> {
  public:
   using ShouldActivateCB = std::function<void()>;
-
-  struct Configuration {
-    void fillControlMode(px4_msgs::msg::VehicleControlMode& control_mode)
-    {
-      control_mode.flag_control_rates_enabled = rates_enabled;
-      control_mode.flag_control_attitude_enabled = attitude_enabled;
-      control_mode.flag_control_acceleration_enabled = acceleration_enabled;
-      control_mode.flag_control_velocity_enabled = velocity_enabled;
-      control_mode.flag_control_position_enabled = position_enabled;
-      control_mode.flag_control_altitude_enabled = altitude_enabled;
-      control_mode.flag_control_allocation_enabled = control_allocation_enabled;
-      control_mode.flag_control_climb_rate_enabled = climb_rate_enabled;
-    }
-
-    bool control_allocation_enabled{true};
-    bool rates_enabled{true};
-    bool attitude_enabled{true};
-    bool altitude_enabled{true};
-    bool acceleration_enabled{true};
-    bool velocity_enabled{true};
-    bool position_enabled{true};
-    bool local_position_is_optional{false};
-    bool climb_rate_enabled{false};
-  };
+  using SetpointType = decltype(px4_msgs::msg::SetpointConfig::type);
 
   explicit SetpointBase(Context& context) { context.addSetpointType(this); }
 
@@ -58,7 +36,21 @@ class SetpointBase : public std::enable_shared_from_this<SetpointBase> {
     return {};
   }
 
-  virtual Configuration getConfiguration() = 0;
+  /**
+   * Returns one of px4_msgs::msg::SetpointType::TYPE_*
+   */
+  virtual SetpointType getSetpointType() = 0;
+
+  /**
+   * Allows a setpoint class to clear an optional requirement. This is for setpoint types that
+   * support multiple variations, for example some that require local position and others that do
+   * not.
+   *
+   * @param setpoint_config_reply input and output config
+   */
+  virtual void clearOptionalRequirements(px4_msgs::msg::SetpointConfigReply& setpoint_config_reply)
+  {
+  }
 
   virtual float desiredUpdateRateHz() { return 50.f; }
 

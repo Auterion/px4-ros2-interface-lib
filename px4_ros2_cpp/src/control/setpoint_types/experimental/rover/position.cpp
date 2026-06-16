@@ -39,14 +39,4 @@ void RoverPositionSetpointType::update(const Eigen::Vector2f& position_ned,
   _rover_position_setpoint_pub->publish(sp);
 }
 
-SetpointBase::Configuration RoverPositionSetpointType::getConfiguration()
-{
-  Configuration config{};
-  config.control_allocation_enabled = true;
-  config.rates_enabled = true;
-  config.attitude_enabled = true;
-  config.velocity_enabled = true;
-  config.position_enabled = true;
-  return config;
-}
 }  // namespace px4_ros2

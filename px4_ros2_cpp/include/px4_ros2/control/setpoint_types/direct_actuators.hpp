@@ -27,7 +27,11 @@ class DirectActuatorsSetpointType : public SetpointBase {
 
   ~DirectActuatorsSetpointType() override = default;
 
-  Configuration getConfiguration() override;
+  SetpointType getSetpointType() override
+  {
+    return px4_msgs::msg::SetpointConfig::TYPE_DIRECT_ACTUATORS;
+  }
+
   float desiredUpdateRateHz() override { return 200.f; }
 
   /**

@@ -48,10 +48,24 @@ ModeBase::ModeBase(rclcpp::Node& node, ModeBase::Settings settings,
       topic_namespace_prefix + "fmu/in/mode_completed" +
           px4_ros2::getMessageNameVersion<px4_msgs::msg::ModeCompleted>(),
       1);
-  _config_control_setpoints_pub = node.create_publisher<px4_msgs::msg::VehicleControlMode>(
-      topic_namespace_prefix + "fmu/in/config_control_setpoints" +
-          px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleControlMode>(),
+  _setpoint_config_pub = node.create_publisher<px4_msgs::msg::SetpointConfig>(
+      topic_namespace_prefix + "fmu/in/setpoint_config" +
+          px4_ros2::getMessageNameVersion<px4_msgs::msg::SetpointConfig>(),
       1);
+
+  _setpoint_config_reply_sub_cb = SharedSubscription<px4_msgs::msg::SetpointConfigReply>::create(
+      node,
+      topic_namespace_prefix + "fmu/out/setpoint_config_reply" +
+          px4_ros2::getMessageNameVersion<px4_msgs::msg::SetpointConfigReply>(),
+      [this](const px4_msgs::msg::SetpointConfigReply::UniquePtr& msg) {
+        if (msg->source_id == id()) {
+          if (_current_activating_setpoint &&
+              _current_activating_setpoint->getSetpointType() == msg->type) {
+            _current_activating_setpoint->setActive(true);
+            _current_activating_setpoint.reset();
+          }
+        }
+      });
 }
 
 ModeBase::ModeID ModeBase::id() const
@@ -118,7 +132,6 @@ void ModeBase::callOnActivate()
   _is_active = true;
   _completed = false;
   _last_setpoint_update = node().get_clock()->now();
-  activateSetpointType(*_setpoint_types[0]);
   onActivate();
 
   if (_setpoint_update_rate_hz > FLT_EPSILON) {
@@ -159,6 +172,123 @@ void ModeBase::updateSetpointUpdateTimer()
       _setpoint_update_timer = nullptr;
     }
   }
+}
+
+void ModeBase::checkSetpointCompatibilityAndRequirements()
+{
+  // Check setpoint types compatibility with current vehicle type
+
+  // Create a fresh subscription to avoid ROS Jazzy WaitSet conflicts
+  const auto setpoint_config_reply_sub =
+      node().create_subscription<px4_msgs::msg::SetpointConfigReply>(
+          topicNamespacePrefix() + "fmu/out/setpoint_config_reply" +
+              px4_ros2::getMessageNameVersion<px4_msgs::msg::SetpointConfigReply>(),
+          rclcpp::QoS(1).best_effort(), [](px4_msgs::msg::SetpointConfigReply::UniquePtr) {});
+
+  // Wait until DDS discovery has matched both directions so that the very
+  // first publish is not silently dropped
+  const auto discovery_start = std::chrono::steady_clock::now();
+  const auto discovery_timeout = 3000ms;
+  while (setpoint_config_reply_sub->get_publisher_count() == 0 ||
+         _setpoint_config_pub->get_subscription_count() == 0) {
+    if (std::chrono::steady_clock::now() >= discovery_start + discovery_timeout) {
+      RCLCPP_WARN(node().get_logger(),
+                  "Timeout waiting for setpoint config discovery "
+                  "(reply publishers=%zu, config subscribers=%zu)",
+                  setpoint_config_reply_sub->get_publisher_count(),
+                  _setpoint_config_pub->get_subscription_count());
+      break;
+    }
+    std::this_thread::sleep_for(50ms);
+  }
+  rclcpp::WaitSet wait_set;
+  wait_set.add_subscription(setpoint_config_reply_sub);
+
+  unsigned setpoint_index = 0;
+  for (const auto& setpoint : _setpoint_types) {
+    px4_msgs::msg::SetpointConfig setpoint_config{};
+    setpoint_config.source_id = static_cast<uint8_t>(id());
+    setpoint_config.should_apply = false;
+    setpoint_config.type = setpoint->getSetpointType();
+    setpoint_config.timestamp = 0;  // Let PX4 set the timestamp
+
+    bool got_reply = false;
+
+    for (int retries = 0; retries < 5 && !got_reply; ++retries) {
+      _setpoint_config_pub->publish(setpoint_config);
+      auto start_time = std::chrono::steady_clock::now();
+      const auto timeout = 300ms;
+      while (!got_reply) {
+        auto now = std::chrono::steady_clock::now();
+
+        if (now >= start_time + timeout) {
+          break;
+        }
+
+        auto wait_ret = wait_set.wait(timeout - (now - start_time));
+
+        if (wait_ret.kind() == rclcpp::WaitResultKind::Ready) {
+          px4_msgs::msg::SetpointConfigReply reply;
+          rclcpp::MessageInfo info;
+
+          if (setpoint_config_reply_sub->take(reply, info)) {
+            if (reply.source_id == id() && reply.type == setpoint_config.type) {
+              if (reply.result != px4_msgs::msg::SetpointConfigReply::RESULT_SUCCESS) {
+                // This is fatal, the setpoint cannot be used.
+                // We could extend the API and allow for optional setpoint types, so that a mode
+                // could fall back to another type (to e.g. support multiple vehicle types).
+                switch (reply.result) {
+                  case px4_msgs::msg::SetpointConfigReply::RESULT_UNSUPPORTED:
+                    throw Exception("Setpoint type " + std::to_string(setpoint_config.type) +
+                                    " with index " + std::to_string(setpoint_index) +
+                                    " is not supported by the current vehicle type");
+                  case px4_msgs::msg::SetpointConfigReply::RESULT_UNKNOWN_SETPOINT_TYPE:
+                    throw Exception("Setpoint type " + std::to_string(setpoint_config.type) +
+                                    " with index " + std::to_string(setpoint_index) +
+                                    " is not known by the FMU");
+                  case px4_msgs::msg::SetpointConfigReply::RESULT_FAILURE_OTHER:
+                  default:
+                    throw Exception("Setpoint type " + std::to_string(setpoint_config.type) +
+                                    " with index " + std::to_string(setpoint_index) +
+                                    " was rejected by the FMU");
+                }
+              }
+
+              // Apply mode requirement flags
+              setpoint->clearOptionalRequirements(reply);
+              RequirementFlags& requirements = modeRequirements();
+              requirements.angular_velocity |= reply.mode_req_angular_velocity;
+              requirements.attitude |= reply.mode_req_attitude;
+              requirements.local_alt |= reply.mode_req_local_alt;
+              requirements.local_position |= reply.mode_req_local_position;
+
+              if (requirements.manual_control) {
+                // Use relaxed local position accuracy if a manual mode
+                if (requirements.local_position) {
+                  requirements.local_position = false;
+                  requirements.local_position_relaxed = true;
+                }
+              }
+
+              got_reply = true;
+            }
+          } else {
+            RCLCPP_DEBUG(node().get_logger(), "No SetpointConfigReply message received");
+          }
+
+        } else {
+          RCLCPP_DEBUG(node().get_logger(), "timeout");
+        }
+      }
+    }
+
+    if (!got_reply) {
+      // If we did not get a reply, something is very wrong
+      throw Exception("Did not get a reply from FMU for setpoint configuration");
+    }
+    ++setpoint_index;
+  }
+  wait_set.remove_subscription(setpoint_config_reply_sub);
 }
 
 void ModeBase::setSetpointUpdateRate(float rate_hz)
@@ -219,7 +349,7 @@ void ModeBase::onAboutToRegister()
     setpoint->setShouldActivateCallback([this, setpoint]() {
       for (auto& setpoint_type : _setpoint_types) {
         if (setpoint_type.get() == setpoint) {
-          activateSetpointType(*setpoint);
+          activateSetpointType(setpoint_type);
           RCLCPP_DEBUG(node().get_logger(), "Mode '%s': changing setpoint type",
                        _registration->name().c_str());
         } else {
@@ -229,8 +359,6 @@ void ModeBase::onAboutToRegister()
     });
   }
   _new_setpoint_types.clear();
-
-  updateModeRequirementsFromSetpoints();
 }
 
 bool ModeBase::onRegistered()
@@ -243,42 +371,14 @@ bool ModeBase::onRegistered()
     return false;
   }
 
-  // TODO: check setpoint types compatibility with current vehicle type
+  checkSetpointCompatibilityAndRequirements();
 
-  publishSetpointConfig(*_setpoint_types[0]);
   if (_setpoint_update_rate_hz < FLT_EPSILON) {
     // Do not use default setpoint rate if rate was already set by user
     setSetpointUpdateRateFromSetpointTypes();
   }
 
   return true;
-}
-
-void ModeBase::updateModeRequirementsFromSetpoints()
-{
-  // Set a mode requirement if at least one setypoint type requires it
-  RequirementFlags& requirements = modeRequirements();
-  for (const auto& setpoint_type : _setpoint_types) {
-    const auto config = setpoint_type->getConfiguration();
-
-    requirements.angular_velocity |= config.rates_enabled;
-    requirements.attitude |= config.attitude_enabled;
-    requirements.local_alt |= config.altitude_enabled;
-    requirements.local_alt |= config.climb_rate_enabled;
-
-    if (!config.local_position_is_optional) {
-      requirements.local_position |= config.velocity_enabled;
-      requirements.local_position |= config.position_enabled;
-    }
-  }
-
-  if (requirements.manual_control) {
-    // Use relaxed local position accuracy if a manual mode
-    if (requirements.local_position) {
-      requirements.local_position = false;
-      requirements.local_position_relaxed = true;
-    }
-  }
 }
 
 void ModeBase::setSetpointUpdateRateFromSetpointTypes()
@@ -293,19 +393,17 @@ void ModeBase::setSetpointUpdateRateFromSetpointTypes()
   }
 }
 
-void ModeBase::publishSetpointConfig(SetpointBase& setpoint)
+void ModeBase::activateSetpointType(const std::shared_ptr<SetpointBase>& setpoint)
 {
-  px4_msgs::msg::VehicleControlMode control_mode{};
-  control_mode.source_id = static_cast<uint8_t>(id());
-  setpoint.getConfiguration().fillControlMode(control_mode);
-  control_mode.timestamp = 0;  // Let PX4 set the timestamp
-  _config_control_setpoints_pub->publish(control_mode);
-}
-
-void ModeBase::activateSetpointType(SetpointBase& setpoint)
-{
-  setpoint.setActive(true);
-  publishSetpointConfig(setpoint);
+  _current_activating_setpoint = setpoint;
+  px4_msgs::msg::SetpointConfig setpoint_config{};
+  setpoint_config.source_id = static_cast<uint8_t>(id());
+  setpoint_config.should_apply = true;
+  setpoint_config.type = setpoint->getSetpointType();
+  setpoint_config.timestamp = 0;  // Let PX4 set the timestamp
+  _setpoint_config_pub->publish(setpoint_config);
+  // setActive() will be called when we get a matching reply from PX4. If not (e.g. on message
+  // drop), the next setpoint update triggers another setpoint activation request.
 }
 
 void ModeBase::deactivateAllSetpointTypes()

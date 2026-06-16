@@ -23,7 +23,11 @@ class RoverPositionSetpointType : public SetpointBase {
 
   ~RoverPositionSetpointType() override = default;
 
-  Configuration getConfiguration() override;
+  SetpointType getSetpointType() override
+  {
+    return px4_msgs::msg::SetpointConfig::TYPE_ROVER_POSITION;
+  }
+
   float desiredUpdateRateHz() override { return 30.f; }
 
   /**

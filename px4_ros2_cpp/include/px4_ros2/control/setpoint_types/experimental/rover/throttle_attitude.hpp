@@ -23,7 +23,11 @@ class RoverThrottleAttitudeSetpointType : public SetpointBase {
 
   ~RoverThrottleAttitudeSetpointType() override = default;
 
-  Configuration getConfiguration() override;
+  SetpointType getSetpointType() override
+  {
+    return px4_msgs::msg::SetpointConfig::TYPE_ROVER_THROTTLE_ATTITUDE;
+  }
+
   float desiredUpdateRateHz() override { return 30.f; }
 
   /**

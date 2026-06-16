@@ -41,14 +41,4 @@ void RoverThrottleRateSetpointType::update(const float throttle_body_x,
   _rover_rate_setpoint_pub->publish(sp_rate);
 }
 
-SetpointBase::Configuration RoverThrottleRateSetpointType::getConfiguration()
-{
-  Configuration config{};
-  config.control_allocation_enabled = true;
-  config.rates_enabled = true;
-  config.attitude_enabled = false;
-  config.velocity_enabled = true;
-  config.position_enabled = false;
-  return config;
-}
 }  // namespace px4_ros2

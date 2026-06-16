@@ -15,7 +15,6 @@ using namespace std::chrono_literals;  // NOLINT
   {"fmu/in/actuator_servos"}, \
   {"fmu/in/arming_check_reply"}, \
   {"fmu/in/aux_global_position"}, \
-  {"fmu/in/config_control_setpoints", "VehicleControlMode"}, \
   {"fmu/in/config_overrides_request", "ConfigOverrides"}, \
   {"fmu/in/fixed_wing_lateral_setpoint"}, \
   {"fmu/in/fixed_wing_longitudinal_setpoint"}, \
@@ -30,6 +29,7 @@ using namespace std::chrono_literals;  // NOLINT
   {"fmu/in/rover_speed_setpoint"}, \
   {"fmu/in/rover_steering_setpoint"}, \
   {"fmu/in/rover_throttle_setpoint"}, \
+  {"fmu/in/setpoint_config"}, \
   {"fmu/in/trajectory_setpoint"}, \
   {"fmu/in/unregister_ext_component"}, \
   {"fmu/in/vehicle_attitude_setpoint"}, \
@@ -45,6 +45,7 @@ using namespace std::chrono_literals;  // NOLINT
   {"fmu/out/manual_control_setpoint"}, \
   {"fmu/out/mode_completed"}, \
   {"fmu/out/register_ext_component_reply"}, \
+  {"fmu/out/setpoint_config_reply"}, \
   {"fmu/out/vehicle_attitude"}, \
   {"fmu/out/vehicle_angular_velocity"}, \
   {"fmu/out/vehicle_command_ack"}, \
