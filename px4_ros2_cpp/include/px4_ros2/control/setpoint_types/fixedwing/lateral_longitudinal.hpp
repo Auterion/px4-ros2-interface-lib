@@ -109,6 +109,8 @@ class FwLateralLongitudinalSetpointType : public SetpointBase {
   float desiredUpdateRateHz() override { return 30.f; }
 
  private:
+  void publishConfigurationIfNeeded();
+
   rclcpp::Node& _node;
   bool _local_position_is_optional;
   rclcpp::Publisher<px4_msgs::msg::FixedWingLateralSetpoint>::SharedPtr _fw_lateral_sp_pub;
@@ -119,6 +121,11 @@ class FwLateralLongitudinalSetpointType : public SetpointBase {
       _lateral_control_configuration_pub;
   rclcpp::Publisher<px4_msgs::msg::LongitudinalControlConfiguration>::SharedPtr
       _longitudinal_control_configuration_pub;
+
+  rclcpp::Time _last_config_published_time{};
+  std::optional<px4_msgs::msg::LateralControlConfiguration> _current_lateral_configuration;
+  std::optional<px4_msgs::msg::LongitudinalControlConfiguration>
+      _current_longitudinal_configuration;
 };
 
 struct FwLateralLongitudinalSetpoint {

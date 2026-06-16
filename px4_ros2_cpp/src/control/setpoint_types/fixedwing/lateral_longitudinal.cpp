@@ -6,6 +6,8 @@
 #include <px4_ros2/control/setpoint_types/fixedwing/lateral_longitudinal.hpp>
 #include <px4_ros2/utils/message_version.hpp>
 
+using namespace std::chrono_literals;  // NOLINT
+
 namespace px4_ros2 {
 
 FwLateralLongitudinalSetpointType::FwLateralLongitudinalSetpointType(Context& context,
@@ -34,6 +36,7 @@ FwLateralLongitudinalSetpointType::FwLateralLongitudinalSetpointType(Context& co
           context.topicNamespacePrefix() + "fmu/in/longitudinal_control_configuration" +
               px4_ros2::getMessageNameVersion<px4_msgs::msg::LongitudinalControlConfiguration>(),
           1);
+  _last_config_published_time = _node.now();
 }
 
 void FwLateralLongitudinalSetpointType::updateWithAltitude(
@@ -57,6 +60,8 @@ void FwLateralLongitudinalSetpointType::updateWithAltitude(
   longitudinal_sp.throttle_direct = NAN;
 
   _fw_longitudinal_sp_pub->publish(longitudinal_sp);
+
+  publishConfigurationIfNeeded();
 }
 
 void FwLateralLongitudinalSetpointType::updateWithHeightRate(
@@ -80,6 +85,25 @@ void FwLateralLongitudinalSetpointType::updateWithHeightRate(
   longitudinal_sp.throttle_direct = NAN;
 
   _fw_longitudinal_sp_pub->publish(longitudinal_sp);
+
+  publishConfigurationIfNeeded();
+}
+
+void FwLateralLongitudinalSetpointType::publishConfigurationIfNeeded()
+{
+  // In case a configuration was sent once, we regularly send it again at a lower rate, in case of a
+  // mode switch, or if a message got lost.
+  const auto now = _node.now();
+  if (now > _last_config_published_time + 100ms) {
+    if (_current_lateral_configuration) {
+      _lateral_control_configuration_pub->publish(*_current_lateral_configuration);
+    }
+    if (_current_longitudinal_configuration) {
+      _longitudinal_control_configuration_pub->publish(*_current_longitudinal_configuration);
+    }
+
+    _last_config_published_time = now;
+  }
 }
 
 void FwLateralLongitudinalSetpointType::clearOptionalRequirements(
@@ -95,10 +119,9 @@ void FwLateralLongitudinalSetpointType::update(const FwLateralLongitudinalSetpoi
 {
   onUpdate();
 
-  update(setpoint);
-
   px4_msgs::msg::LateralControlConfiguration lateral_configuration{};
   lateral_configuration.lateral_accel_max = config.max_lateral_acceleration.value_or(NAN);
+  _current_lateral_configuration = lateral_configuration;
 
   _lateral_control_configuration_pub->publish(lateral_configuration);
 
@@ -110,8 +133,12 @@ void FwLateralLongitudinalSetpointType::update(const FwLateralLongitudinalSetpoi
   longitudinal_configuration.climb_rate_target = config.target_climb_rate.value_or(NAN);
   longitudinal_configuration.sink_rate_target = config.target_sink_rate.value_or(NAN);
   longitudinal_configuration.speed_weight = config.speed_weight.value_or(NAN);
+  _current_longitudinal_configuration = longitudinal_configuration;
 
   _longitudinal_control_configuration_pub->publish(longitudinal_configuration);
+  _last_config_published_time = _node.now();
+
+  update(setpoint);
 }
 
 void FwLateralLongitudinalSetpointType::update(const FwLateralLongitudinalSetpoint& setpoint)
@@ -133,6 +160,8 @@ void FwLateralLongitudinalSetpointType::update(const FwLateralLongitudinalSetpoi
   longitudinal_sp.throttle_direct = setpoint.throttle_direct.value_or(NAN);
 
   _fw_longitudinal_sp_pub->publish(longitudinal_sp);
+
+  publishConfigurationIfNeeded();
 }
 
 }  // namespace px4_ros2
