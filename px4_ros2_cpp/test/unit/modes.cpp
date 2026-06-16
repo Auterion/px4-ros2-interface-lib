@@ -30,6 +30,7 @@ class TestMode : public px4_ros2::ModeBase {
 
     setSkipMessageCompatibilityCheck();
     overrideRegistration(std::make_shared<FakeRegistration>(node));
+    setSkipSetpointCheck();
   }
 
  private:
@@ -43,17 +44,21 @@ TEST(modes, modeRequirements)
   rclcpp::Node node("test_node");
   auto mode = std::make_shared<TestMode>(node);
   EXPECT_TRUE(mode->doRegister());
-  EXPECT_TRUE(mode->modeRequirements().angular_velocity);
+  EXPECT_TRUE(mode->modeRequirements().manual_control);
+  EXPECT_TRUE(mode->modeRequirements().global_position);
+  // Requirements from the setpoint are not set as we do not simulate the setpoint reply
+  // (setSkipSetpointCheck())
 
   mode->modeRequirements().clearAll();
-  EXPECT_FALSE(mode->modeRequirements().angular_velocity);
+  EXPECT_FALSE(mode->modeRequirements().manual_control);
+  EXPECT_FALSE(mode->modeRequirements().global_position);
 }
 
 TEST(modes, nodeWithMode)
 {
   auto node_with_mode = std::make_shared<px4_ros2::NodeWithMode<TestMode>>("test_node");
-  EXPECT_TRUE(node_with_mode->getMode().modeRequirements().angular_velocity);
+  EXPECT_TRUE(node_with_mode->getMode().modeRequirements().manual_control);
 
   node_with_mode->getMode().modeRequirements().clearAll();
-  EXPECT_FALSE(node_with_mode->getMode().modeRequirements().angular_velocity);
+  EXPECT_FALSE(node_with_mode->getMode().modeRequirements().manual_control);
 }

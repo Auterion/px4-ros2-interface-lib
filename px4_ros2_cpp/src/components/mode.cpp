@@ -371,7 +371,9 @@ bool ModeBase::onRegistered()
     return false;
   }
 
-  checkSetpointCompatibilityAndRequirements();
+  if (!_skip_setpoint_check) {
+    checkSetpointCompatibilityAndRequirements();
+  }
 
   if (_setpoint_update_rate_hz < FLT_EPSILON) {
     // Do not use default setpoint rate if rate was already set by user

@@ -167,6 +167,11 @@ class MissionExecutor {
       ModeBase::disableWatchdogTimer();
     }
 
+    void setSkipSetpointCheck()  // NOLINT we just want to change the methods visibility
+    {
+      ModeBase::setSkipSetpointCheck();
+    }
+
    private:
     MissionExecutor& _mission_executor;
   };
