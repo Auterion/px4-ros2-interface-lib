@@ -74,6 +74,18 @@ class ModeExecutorTest : public px4_ros2::ModeExecutorBase {
   ModeExecutorTest(rclcpp::Node& node, FlightModeTest& owned_mode, Activation activation)
       : ModeExecutorBase(ModeExecutorBase::Settings{}.activate(activation), owned_mode), _node(node)
   {
+    _mode_completed_sub = node.create_subscription<px4_msgs::msg::ModeCompleted>(
+        owned_mode.topicNamespacePrefix() + "fmu/out/mode_completed" +
+            px4_ros2::getMessageNameVersion<px4_msgs::msg::ModeCompleted>(),
+        rclcpp::QoS(1).best_effort(), [this, &node](px4_msgs::msg::ModeCompleted::UniquePtr msg) {
+          if (_mode_completion_next_state.has_value()) {
+            EXPECT_EQ(msg->nav_state, _mode_completion_expected_nav_state);
+            RCLCPP_DEBUG(_node.get_logger(), "Received extra mode completion, continuing");
+            const auto next_state = _mode_completion_next_state.value();
+            _mode_completion_next_state.reset();
+            runState(next_state, px4_ros2::Result::Success);
+          }
+        });
   }
 
   enum class State {
@@ -120,12 +132,29 @@ class ModeExecutorTest : public px4_ros2::ModeExecutorBase {
         break;
 
       case State::TakingOff:
-        takeoff([this](px4_ros2::Result result) { runState(State::MyMode, result); });
+        takeoff([this](px4_ros2::Result result) {
+          if (simulate_mode_completion_message_drop) {
+            RCLCPP_DEBUG(_node.get_logger(),
+                         "Waiting for extra mode completion topic update from Takeoff mode");
+            _mode_completion_next_state = State::MyMode;
+            _mode_completion_expected_nav_state = px4_ros2::ModeBase::kModeIDTakeoff;
+          } else {
+            runState(State::MyMode, result);
+          }
+        });
         break;
 
       case State::MyMode:
-        scheduleMode(ownedMode().id(),
-                     [this](px4_ros2::Result result) { runState(State::RTL, result); });
+        scheduleMode(ownedMode().id(), [this](px4_ros2::Result result) {
+          if (simulate_mode_completion_message_drop) {
+            RCLCPP_DEBUG(_node.get_logger(),
+                         "Waiting for extra mode completion topic update from the custom mode");
+            _mode_completion_next_state = State::RTL;
+            _mode_completion_expected_nav_state = ownedMode().id();
+          } else {
+            runState(State::RTL, result);
+          }
+        });
         break;
 
       case State::RTL:
@@ -148,8 +177,13 @@ class ModeExecutorTest : public px4_ros2::ModeExecutorBase {
 
   std::function<void()> on_completed;
   std::function<void(State, px4_ros2::Result)> on_state_completed;
+  bool simulate_mode_completion_message_drop{false};
 
  private:
+  rclcpp::Subscription<px4_msgs::msg::ModeCompleted>::SharedPtr _mode_completed_sub;
+  std::optional<State> _mode_completion_next_state;
+  uint8_t _mode_completion_expected_nav_state{};
+
   rclcpp::Node& _node;
 };
 
@@ -179,6 +213,9 @@ void TestExecutionAutonomous::run()
       std::make_unique<ModeExecutorTest>(_node, *_mode, Activation::ActivateImmediately);
 
   // The executor is expected to be activated and then run through its states (successfully)
+
+  // Ensure mode completion is resent when dropped
+  _mode_executor->simulate_mode_completion_message_drop = true;
 
   _mode_executor->on_completed = [this]() {
     EXPECT_EQ(_mode_executor->num_activations, 1);
