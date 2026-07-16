@@ -40,6 +40,23 @@ class HealthAndArmingCheckReporter {
     }
   }
 
+  /**
+   * Report an event to the ground station without affecting the arming/run state
+   * (can_arm_and_run is left unchanged). Use this for informational or warning
+   * messages that must not prevent the mode from being selected or keep running.
+   */
+  template <typename... Args>
+  void reportEventExt(uint32_t event_id, events::Log log_level, const char* message, Args... args)
+  {
+    const uint16_t navigation_mode_groups{};
+    const uint8_t health_component_index{};
+
+    if (!addEvent(event_id, log_level, message, navigation_mode_groups, health_component_index,
+                  args...)) {
+      printf("Error: too many events\n");
+    }
+  }
+
   void setHealth(uint8_t health_component_index, bool is_present, bool warning, bool error);
 
  private:
