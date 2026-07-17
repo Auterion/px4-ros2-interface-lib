@@ -1,0 +1,84 @@
+name: Package (.deb)
+
+# Builds Debian packages of px4_ros2_cpp and px4_ros2_py for amd64 and arm64
+# using the bundled builder container (see container/Dockerfile and
+# scripts/build_deb_host.sh). The container builds the px4_msgs dependency from
+# source first (it is not on the ROS build farm yet), then the two packages in
+# dependency order. Packages are uploaded as build artifacts and, on a GitHub
+# release, attached to the release.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      px4_msgs_ref:
+        description: "px4_msgs git ref to build the dependency from"
+        required: false
+        default: "main"
+
+defaults:
+  run:
+    shell: bash
+
+permissions:
+  contents: write
+
+jobs:
+  deb:
+    name: "Build .deb (${{ matrix.ros2_distro }} / ${{ matrix.arch }})"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ros2_distro: [humble, jazzy, kilted, rolling, lyrical]
+        arch: [amd64, arm64]
+    env:
+      # Pin the px4_msgs source to the matching release line. Defaults to main;
+      # override per release via the workflow_dispatch input above.
+      PX4_MSGS_REF: ${{ github.event.inputs.px4_msgs_ref || 'main' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build the builder image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: container/Dockerfile
+          platforms: linux/${{ matrix.arch }}
+          build-args: |
+            ROS_DISTRO=${{ matrix.ros2_distro }}
+          tags: px4-ros2-interface-lib-builder:${{ matrix.ros2_distro }}
+          load: true
+          # Cache the builder image layers (apt/rosdep/bloom install) across runs.
+          cache-from: type=gha,scope=${{ matrix.ros2_distro }}-${{ matrix.arch }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.ros2_distro }}-${{ matrix.arch }}
+
+      - name: Build the Debian packages
+        run: |
+          mkdir -p out
+          docker run --rm --platform "linux/${{ matrix.arch }}" \
+            -e "PX4_MSGS_REF=${PX4_MSGS_REF}" \
+            -v "${{ github.workspace }}":/src \
+            -v "${{ github.workspace }}/out":/artifacts \
+            "px4-ros2-interface-lib-builder:${{ matrix.ros2_distro }}" \
+            /usr/local/bin/build.sh
+          ls -lh out/
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: px4-ros2-deb-${{ matrix.ros2_distro }}-${{ matrix.arch }}
+          path: out/*.deb
+          if-no-files-found: error
+
+      - name: Attach packages to release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.event.release.tag_name }}" out/*.deb --clobber

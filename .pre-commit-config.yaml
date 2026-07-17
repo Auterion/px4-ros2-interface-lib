@@ -46,3 +46,42 @@ repos:
     rev: 'v21.1.5'
     hooks:
       - id: clang-format
+
+  # GitHub Actions workflow and Dependabot config validation
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.35.0
+    hooks:
+      - id: check-github-workflows
+      - id: check-dependabot
+
+  # Shell script linting
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1
+    hooks:
+      - id: shellcheck
+
+  # Spell checking. "ned" is kept for the NED (North-East-Down) frame.
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.1
+    hooks:
+      - id: codespell
+
+  # Markdown linting. MD013 (line length) is disabled so prose stays on one
+  # unbroken line per paragraph; MD033 allows inline HTML; MD041 allows a
+  # leading badge/HTML block before the first heading.
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.45.0
+    hooks:
+      - id: markdownlint
+        args: [--disable, MD013, MD033, MD041]
+
+  # Validate every package.xml against the catkin_pkg schema (both release
+  # packages plus the example packages).
+  - repo: local
+    hooks:
+      - id: validate-package-xml
+        name: validate package.xml
+        entry: python3 -c "import sys; from catkin_pkg.package import parse_package; [parse_package(f).validate() for f in sys.argv[1:]]"
+        language: python
+        files: '(^|/)package\.xml$'
+        additional_dependencies: [catkin_pkg]
