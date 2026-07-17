@@ -1,0 +1,18 @@
+# Code owners for px4-ros2-interface-lib
+# These owners are requested for review on pull requests that touch matching paths.
+# See https://docs.github.com/articles/about-code-owners
+
+# Default owner for everything in the repo
+*       @bkueng
+
+# C++ library
+/px4_ros2_cpp/  @bkueng
+
+# Python bindings
+/px4_ros2_py/   @bkueng
+
+# Repository infrastructure
+/.github/       @bkueng
+
+# Vendored third-party code (changes should come from upstream)
+/px4_ros2_cpp/include/px4_ros2/third_party/  @bkueng

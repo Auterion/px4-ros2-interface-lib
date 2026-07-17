@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Message / service definition changes
+    url: https://github.com/PX4/PX4-Autopilot/issues
+    about: The px4_msgs *.msg and *.srv definitions are generated from PX4-Autopilot. Report field or message changes there.
+  - name: PX4 Discord (questions & troubleshooting)
+    url: https://discord.gg/dronecode
+    about: Ask usage questions and reach the PX4 development team.
+  - name: PX4 ROS 2 Interface Library docs
+    url: https://docs.px4.io/main/en/ros2/px4_ros2_interface_lib.html
+    about: Documentation on using the library to control PX4 from a companion computer.
