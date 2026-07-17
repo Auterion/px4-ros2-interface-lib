@@ -1,3 +1,10 @@
+# Local rosdep rules for dependencies not yet on the ROS build farm.
+# Consumed by the .deb builder container (container/build_deb_container.sh) so
+# bloom-generate can resolve these keys to their Debian package names. Remove a
+# key once its package is released into ros/rosdistro for this distro.
 px4_msgs:
   ubuntu:
-    - ros-rolling-px4-msgs=3.4.0-0noble
+    - ros-rolling-px4-msgs
+px4_ros2_cpp:
+  ubuntu:
+    - ros-rolling-px4-ros2-cpp

@@ -2,10 +2,17 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
     <name>px4_ros2_py</name>
-    <version>0.0.1</version>
+    <version>1.17.0</version>
     <description>Python bindings for px4_ros2_cpp</description>
     <maintainer email="beat-kueng@gmx.net">Beat Kueng</maintainer>
     <license>BSD-3-Clause</license>
+
+    <url type="repository">https://github.com/Auterion/px4-ros2-interface-lib</url>
+    <url type="bugtracker">https://github.com/Auterion/px4-ros2-interface-lib/issues</url>
+    <url type="website">https://auterion.github.io/px4-ros2-interface-lib/python/px4_ros2_py.html</url>
+
+    <author email="beat-kueng@gmx.net">Beat Kueng</author>
+    <author email="nmarques@riis.com">Nuno Marques (RIIS, LLC)</author>
 
     <buildtool_depend>ament_cmake</buildtool_depend>
 

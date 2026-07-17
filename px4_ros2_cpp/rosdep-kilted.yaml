@@ -4,7 +4,7 @@
 # key once its package is released into ros/rosdistro for this distro.
 px4_msgs:
   ubuntu:
-    - ros-humble-px4-msgs
+    - ros-kilted-px4-msgs
 px4_ros2_cpp:
   ubuntu:
-    - ros-humble-px4-ros2-cpp
+    - ros-kilted-px4-ros2-cpp
