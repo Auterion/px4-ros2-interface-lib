@@ -120,215 +120,219 @@ $(document).ready(function(){initNavTree('trajectory_8hpp_source.html',''); init
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  <a class="code hl_class" href="classpx4__ros2_1_1TrajectorySetpointType.html">~TrajectorySetpointType</a>() <span class="keyword">override</span> = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  <a class="code hl_struct" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a> getConfiguration() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1TrajectorySetpointType.html#a5df20e11506fd18717734883170fd154">   35</a></span>  SetpointType <a class="code hl_function" href="classpx4__ros2_1_1TrajectorySetpointType.html#a5df20e11506fd18717734883170fd154">getSetpointType</a>()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> px4_msgs::msg::SetpointConfig::TYPE_TRAJECTORY; }</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  <span class="keywordtype">void</span> update(<span class="keyword">const</span> Eigen::Vector3f&amp; velocity_ned_m_s,</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>              <span class="keyword">const</span> std::optional&lt;Eigen::Vector3f&gt;&amp; acceleration_ned_m_s2 = {},</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>              std::optional&lt;float&gt; yaw_ned_rad = {}, std::optional&lt;float&gt; yaw_rate_ned_rad_s = {});</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1TrajectorySetpointType.html#ab7d6885c013971edaf2a497c72d9e157">   51</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpx4__ros2_1_1TrajectorySetpointType.html#ab7d6885c013971edaf2a497c72d9e157">update</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; setpoint);</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1TrajectorySetpointType.html#a40b129f786de5afecc9b6a359ca741d6">   60</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpx4__ros2_1_1TrajectorySetpointType.html#a40b129f786de5afecc9b6a359ca741d6">updatePosition</a>(<span class="keyword">const</span> Eigen::Vector3f&amp; position_ned_m);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  rclcpp::Node&amp; _node;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  rclcpp::Publisher&lt;px4_msgs::msg::TrajectorySetpoint&gt;::SharedPtr _trajectory_setpoint_pub;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  <span class="keyword">const</span> <span class="keywordtype">bool</span> _local_position_is_optional;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>};</div>
-</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1TrajectorySetpointType.html#a18ee144e47a8a25556958e1e8f10cd2f">   37</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpx4__ros2_1_1TrajectorySetpointType.html#a18ee144e47a8a25556958e1e8f10cd2f">clearOptionalRequirements</a>(</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>      px4_msgs::msg::SetpointConfigReply&amp; setpoint_config_reply) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  <span class="keywordtype">void</span> update(<span class="keyword">const</span> Eigen::Vector3f&amp; velocity_ned_m_s,</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>              <span class="keyword">const</span> std::optional&lt;Eigen::Vector3f&gt;&amp; acceleration_ned_m_s2 = {},</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>              std::optional&lt;float&gt; yaw_ned_rad = {}, std::optional&lt;float&gt; yaw_rate_ned_rad_s = {});</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1TrajectorySetpointType.html#ab7d6885c013971edaf2a497c72d9e157">   54</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpx4__ros2_1_1TrajectorySetpointType.html#ab7d6885c013971edaf2a497c72d9e157">update</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; setpoint);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1TrajectorySetpointType.html#a40b129f786de5afecc9b6a359ca741d6">   63</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpx4__ros2_1_1TrajectorySetpointType.html#a40b129f786de5afecc9b6a359ca741d6">updatePosition</a>(<span class="keyword">const</span> Eigen::Vector3f&amp; position_ned_m);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  rclcpp::Node&amp; _node;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  rclcpp::Publisher&lt;px4_msgs::msg::TrajectorySetpoint&gt;::SharedPtr _trajectory_setpoint_pub;</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="foldopen" id="foldopen00093" data-start="{" data-end="};">
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html">   93</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a> {</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>  std::optional&lt;float&gt; position_ned_m_x;</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  std::optional&lt;float&gt; position_ned_m_y;</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  std::optional&lt;float&gt; position_ned_m_z;</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  std::optional&lt;float&gt; velocity_ned_m_s_x;</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  std::optional&lt;float&gt; velocity_ned_m_s_y;</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>  std::optional&lt;float&gt; velocity_ned_m_s_z;</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  std::optional&lt;float&gt; acceleration_ned_m_s2_x;</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  std::optional&lt;float&gt; acceleration_ned_m_s2_y;</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  std::optional&lt;float&gt; acceleration_ned_m_s2_z;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  std::optional&lt;float&gt; yaw_ned_rad;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  std::optional&lt;float&gt; yaw_rate_ned_rad_s;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  <span class="keyword">const</span> <span class="keywordtype">bool</span> _local_position_is_optional;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>};</div>
+</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="foldopen" id="foldopen00096" data-start="{" data-end="};">
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html">   96</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a> {</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  std::optional&lt;float&gt; position_ned_m_x;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  std::optional&lt;float&gt; position_ned_m_y;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  std::optional&lt;float&gt; position_ned_m_z;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  std::optional&lt;float&gt; velocity_ned_m_s_x;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  std::optional&lt;float&gt; velocity_ned_m_s_y;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  std::optional&lt;float&gt; velocity_ned_m_s_z;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  std::optional&lt;float&gt; acceleration_ned_m_s2_x;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  std::optional&lt;float&gt; acceleration_ned_m_s2_y;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  std::optional&lt;float&gt; acceleration_ned_m_s2_z;</div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
-<div class="foldopen" id="foldopen00114" data-start="{" data-end="}">
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a3aa7c6477c785312f302241792361d84">  114</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a3aa7c6477c785312f302241792361d84">withPositionX</a>(<span class="keywordtype">float</span> x_ned_m)</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  {</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    position_ned_m_x = x_ned_m;</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>  }</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>  std::optional&lt;float&gt; yaw_ned_rad;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  std::optional&lt;float&gt; yaw_rate_ned_rad_s;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="foldopen" id="foldopen00117" data-start="{" data-end="}">
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a3aa7c6477c785312f302241792361d84">  117</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a3aa7c6477c785312f302241792361d84">withPositionX</a>(<span class="keywordtype">float</span> x_ned_m)</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>  {</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    position_ned_m_x = x_ned_m;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  }</div>
 </div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
-<div class="foldopen" id="foldopen00125" data-start="{" data-end="}">
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a813fbc3d54fcb472926bacb7507eb4c3">  125</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a813fbc3d54fcb472926bacb7507eb4c3">withPositionY</a>(<span class="keywordtype">float</span> y_ned_m)</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>  {</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    position_ned_m_y = y_ned_m;</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>  }</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="foldopen" id="foldopen00128" data-start="{" data-end="}">
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a813fbc3d54fcb472926bacb7507eb4c3">  128</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a813fbc3d54fcb472926bacb7507eb4c3">withPositionY</a>(<span class="keywordtype">float</span> y_ned_m)</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>  {</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    position_ned_m_y = y_ned_m;</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>  }</div>
 </div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
-<div class="foldopen" id="foldopen00136" data-start="{" data-end="}">
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a907dd0955a3bef70aff79b348d27f725">  136</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a907dd0955a3bef70aff79b348d27f725">withPositionZ</a>(<span class="keywordtype">float</span> z_ned_m)</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>  {</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    position_ned_m_z = z_ned_m;</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>  }</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="foldopen" id="foldopen00139" data-start="{" data-end="}">
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a907dd0955a3bef70aff79b348d27f725">  139</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a907dd0955a3bef70aff79b348d27f725">withPositionZ</a>(<span class="keywordtype">float</span> z_ned_m)</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>  {</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    position_ned_m_z = z_ned_m;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  }</div>
 </div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
-<div class="foldopen" id="foldopen00147" data-start="{" data-end="}">
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a57db5dad3c6eea83a4dc366e6af12bcf">  147</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a57db5dad3c6eea83a4dc366e6af12bcf">withVelocityX</a>(<span class="keywordtype">float</span> x_ned_m_s)</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>  {</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    velocity_ned_m_s_x = x_ned_m_s;</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>  }</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="foldopen" id="foldopen00150" data-start="{" data-end="}">
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a57db5dad3c6eea83a4dc366e6af12bcf">  150</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a57db5dad3c6eea83a4dc366e6af12bcf">withVelocityX</a>(<span class="keywordtype">float</span> x_ned_m_s)</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>  {</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    velocity_ned_m_s_x = x_ned_m_s;</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>  }</div>
 </div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
-<div class="foldopen" id="foldopen00158" data-start="{" data-end="}">
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#af6dc8ccfadab6302943661f064c00565">  158</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#af6dc8ccfadab6302943661f064c00565">withVelocityY</a>(<span class="keywordtype">float</span> y_ned_m_s)</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>  {</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    velocity_ned_m_s_y = y_ned_m_s;</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>  }</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
+<div class="foldopen" id="foldopen00161" data-start="{" data-end="}">
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#af6dc8ccfadab6302943661f064c00565">  161</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#af6dc8ccfadab6302943661f064c00565">withVelocityY</a>(<span class="keywordtype">float</span> y_ned_m_s)</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>  {</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    velocity_ned_m_s_y = y_ned_m_s;</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>  }</div>
 </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
-<div class="foldopen" id="foldopen00169" data-start="{" data-end="}">
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a8b43070ffd581f7919155d52f20d8f0f">  169</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a8b43070ffd581f7919155d52f20d8f0f">withVelocityZ</a>(<span class="keywordtype">float</span> z_ned_m_s)</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>  {</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    velocity_ned_m_s_z = z_ned_m_s;</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>  }</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
+<div class="foldopen" id="foldopen00172" data-start="{" data-end="}">
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a8b43070ffd581f7919155d52f20d8f0f">  172</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a8b43070ffd581f7919155d52f20d8f0f">withVelocityZ</a>(<span class="keywordtype">float</span> z_ned_m_s)</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>  {</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    velocity_ned_m_s_z = z_ned_m_s;</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>  }</div>
 </div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
-<div class="foldopen" id="foldopen00180" data-start="{" data-end="}">
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a8d876110ae2980881f6bad80d46a5810">  180</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a8d876110ae2980881f6bad80d46a5810">withAccelerationX</a>(<span class="keywordtype">float</span> x_ned_m_s2)</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>  {</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    acceleration_ned_m_s2_x = x_ned_m_s2;</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>  }</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
+<div class="foldopen" id="foldopen00183" data-start="{" data-end="}">
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a8d876110ae2980881f6bad80d46a5810">  183</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a8d876110ae2980881f6bad80d46a5810">withAccelerationX</a>(<span class="keywordtype">float</span> x_ned_m_s2)</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>  {</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    acceleration_ned_m_s2_x = x_ned_m_s2;</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>  }</div>
 </div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
-<div class="foldopen" id="foldopen00191" data-start="{" data-end="}">
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a458ad289daca8f9399bb7dcee6095f3f">  191</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a458ad289daca8f9399bb7dcee6095f3f">withAccelerationY</a>(<span class="keywordtype">float</span> y_ned_m_s2)</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>  {</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    acceleration_ned_m_s2_y = y_ned_m_s2;</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>  }</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
+<div class="foldopen" id="foldopen00194" data-start="{" data-end="}">
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a458ad289daca8f9399bb7dcee6095f3f">  194</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a458ad289daca8f9399bb7dcee6095f3f">withAccelerationY</a>(<span class="keywordtype">float</span> y_ned_m_s2)</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>  {</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    acceleration_ned_m_s2_y = y_ned_m_s2;</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>  }</div>
 </div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> </div>
-<div class="foldopen" id="foldopen00202" data-start="{" data-end="}">
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#aee60c1b75f54102419822702129330ce">  202</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#aee60c1b75f54102419822702129330ce">withAccelerationZ</a>(<span class="keywordtype">float</span> z_ned_m_s2)</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>  {</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    acceleration_ned_m_s2_z = z_ned_m_s2;</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>  }</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
+<div class="foldopen" id="foldopen00205" data-start="{" data-end="}">
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#aee60c1b75f54102419822702129330ce">  205</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#aee60c1b75f54102419822702129330ce">withAccelerationZ</a>(<span class="keywordtype">float</span> z_ned_m_s2)</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>  {</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    acceleration_ned_m_s2_z = z_ned_m_s2;</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>  }</div>
 </div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span> </div>
-<div class="foldopen" id="foldopen00213" data-start="{" data-end="}">
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a15b694b37b5f0767ca19bea12175f14b">  213</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a15b694b37b5f0767ca19bea12175f14b">withYaw</a>(<span class="keywordtype">float</span> yaw_rad)</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>  {</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    this-&gt;yaw_ned_rad = yaw_rad;</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>  }</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
+<div class="foldopen" id="foldopen00216" data-start="{" data-end="}">
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a15b694b37b5f0767ca19bea12175f14b">  216</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a15b694b37b5f0767ca19bea12175f14b">withYaw</a>(<span class="keywordtype">float</span> yaw_rad)</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>  {</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    this-&gt;yaw_ned_rad = yaw_rad;</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>  }</div>
 </div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
-<div class="foldopen" id="foldopen00224" data-start="{" data-end="}">
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a46b6dcf607a0bf02df93c908c03b06f6">  224</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a46b6dcf607a0bf02df93c908c03b06f6">withYawRate</a>(<span class="keywordtype">float</span> rate_rad_s)</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>  {</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    this-&gt;yaw_rate_ned_rad_s = rate_rad_s;</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>  }</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
+<div class="foldopen" id="foldopen00227" data-start="{" data-end="}">
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a46b6dcf607a0bf02df93c908c03b06f6">  227</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a46b6dcf607a0bf02df93c908c03b06f6">withYawRate</a>(<span class="keywordtype">float</span> rate_rad_s)</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>  {</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    this-&gt;yaw_rate_ned_rad_s = rate_rad_s;</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>  }</div>
 </div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>  <span class="comment">// Helper methods for setting multiple components at once</span></div>
-<div class="foldopen" id="foldopen00236" data-start="{" data-end="}">
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#ac76d49775ab5bee9c67e82df4d80d203">  236</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#ac76d49775ab5bee9c67e82df4d80d203">withPosition</a>(<span class="keyword">const</span> Eigen::Vector3f&amp; position_ned_m)</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>  {</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    position_ned_m_x = position_ned_m.x();</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    position_ned_m_y = position_ned_m.y();</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>    position_ned_m_z = position_ned_m.z();</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>  }</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>  <span class="comment">// Helper methods for setting multiple components at once</span></div>
+<div class="foldopen" id="foldopen00239" data-start="{" data-end="}">
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#ac76d49775ab5bee9c67e82df4d80d203">  239</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#ac76d49775ab5bee9c67e82df4d80d203">withPosition</a>(<span class="keyword">const</span> Eigen::Vector3f&amp; position_ned_m)</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>  {</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    position_ned_m_x = position_ned_m.x();</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    position_ned_m_y = position_ned_m.y();</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    position_ned_m_z = position_ned_m.z();</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>  }</div>
 </div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
-<div class="foldopen" id="foldopen00249" data-start="{" data-end="}">
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a382bff6f4672d5066a53bd8d9c2e086e">  249</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a382bff6f4672d5066a53bd8d9c2e086e">withHorizontalPosition</a>(<span class="keyword">const</span> Eigen::Vector2f&amp; position_ned_m)</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>  {</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    position_ned_m_x = position_ned_m.x();</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    position_ned_m_y = position_ned_m.y();</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>  }</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> </div>
+<div class="foldopen" id="foldopen00252" data-start="{" data-end="}">
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a382bff6f4672d5066a53bd8d9c2e086e">  252</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a382bff6f4672d5066a53bd8d9c2e086e">withHorizontalPosition</a>(<span class="keyword">const</span> Eigen::Vector2f&amp; position_ned_m)</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>  {</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>    position_ned_m_x = position_ned_m.x();</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    position_ned_m_y = position_ned_m.y();</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>  }</div>
 </div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> </div>
-<div class="foldopen" id="foldopen00261" data-start="{" data-end="}">
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a9bfaaa64c27badf444637dcd73d402f2">  261</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a9bfaaa64c27badf444637dcd73d402f2">withVelocity</a>(<span class="keyword">const</span> Eigen::Vector3f&amp; velocity_ned_m_s)</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>  {</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    velocity_ned_m_s_x = velocity_ned_m_s.x();</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    velocity_ned_m_s_y = velocity_ned_m_s.y();</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    velocity_ned_m_s_z = velocity_ned_m_s.z();</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>  }</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> </div>
+<div class="foldopen" id="foldopen00264" data-start="{" data-end="}">
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a9bfaaa64c27badf444637dcd73d402f2">  264</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a9bfaaa64c27badf444637dcd73d402f2">withVelocity</a>(<span class="keyword">const</span> Eigen::Vector3f&amp; velocity_ned_m_s)</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>  {</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    velocity_ned_m_s_x = velocity_ned_m_s.x();</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    velocity_ned_m_s_y = velocity_ned_m_s.y();</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    velocity_ned_m_s_z = velocity_ned_m_s.z();</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>  }</div>
 </div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> </div>
-<div class="foldopen" id="foldopen00274" data-start="{" data-end="}">
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a2fad791b61159f3d351dc6f4f257d788">  274</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a2fad791b61159f3d351dc6f4f257d788">withHorizontalVelocity</a>(<span class="keyword">const</span> Eigen::Vector2f&amp; velocity_ned_m_s)</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>  {</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    velocity_ned_m_s_x = velocity_ned_m_s.x();</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    velocity_ned_m_s_y = velocity_ned_m_s.y();</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>  }</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
+<div class="foldopen" id="foldopen00277" data-start="{" data-end="}">
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a2fad791b61159f3d351dc6f4f257d788">  277</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a2fad791b61159f3d351dc6f4f257d788">withHorizontalVelocity</a>(<span class="keyword">const</span> Eigen::Vector2f&amp; velocity_ned_m_s)</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>  {</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    velocity_ned_m_s_x = velocity_ned_m_s.x();</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    velocity_ned_m_s_y = velocity_ned_m_s.y();</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>  }</div>
 </div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> </div>
-<div class="foldopen" id="foldopen00286" data-start="{" data-end="}">
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a5089c5b2efeb548b66b4fa959d61d0a1">  286</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a5089c5b2efeb548b66b4fa959d61d0a1">withAcceleration</a>(<span class="keyword">const</span> Eigen::Vector3f&amp; acceleration_ned_m_s2)</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>  {</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    acceleration_ned_m_s2_x = acceleration_ned_m_s2.x();</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>    acceleration_ned_m_s2_y = acceleration_ned_m_s2.y();</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    acceleration_ned_m_s2_z = acceleration_ned_m_s2.z();</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>  }</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> </div>
+<div class="foldopen" id="foldopen00289" data-start="{" data-end="}">
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a5089c5b2efeb548b66b4fa959d61d0a1">  289</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a5089c5b2efeb548b66b4fa959d61d0a1">withAcceleration</a>(<span class="keyword">const</span> Eigen::Vector3f&amp; acceleration_ned_m_s2)</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>  {</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    acceleration_ned_m_s2_x = acceleration_ned_m_s2.x();</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    acceleration_ned_m_s2_y = acceleration_ned_m_s2.y();</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    acceleration_ned_m_s2_z = acceleration_ned_m_s2.z();</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>  }</div>
 </div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
-<div class="foldopen" id="foldopen00299" data-start="{" data-end="}">
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a2f7eeb1b48a1ce9914996e9ee1586f02">  299</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a2f7eeb1b48a1ce9914996e9ee1586f02">withHorizontalAcceleration</a>(<span class="keyword">const</span> Eigen::Vector2f&amp; acceleration_ned_m_s2)</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>  {</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>    acceleration_ned_m_s2_x = acceleration_ned_m_s2.x();</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    acceleration_ned_m_s2_y = acceleration_ned_m_s2.y();</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>  }</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span> </div>
+<div class="foldopen" id="foldopen00302" data-start="{" data-end="}">
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno"><a class="line" href="structpx4__ros2_1_1TrajectorySetpoint.html#a2f7eeb1b48a1ce9914996e9ee1586f02">  302</a></span>  <a class="code hl_struct" href="structpx4__ros2_1_1TrajectorySetpoint.html">TrajectorySetpoint</a>&amp; <a class="code hl_function" href="structpx4__ros2_1_1TrajectorySetpoint.html#a2f7eeb1b48a1ce9914996e9ee1586f02">withHorizontalAcceleration</a>(<span class="keyword">const</span> Eigen::Vector2f&amp; acceleration_ned_m_s2)</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>  {</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    acceleration_ned_m_s2_x = acceleration_ned_m_s2.x();</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    acceleration_ned_m_s2_y = acceleration_ned_m_s2.y();</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>  }</div>
 </div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>};</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>};</div>
 </div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span> </div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span> </div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition</b> context.hpp:18</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1SetpointBase_html"><div class="ttname"><a href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a></div><div class="ttdef"><b>Definition</b> setpoint_base.hpp:19</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1SetpointBase_html"><div class="ttname"><a href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a></div><div class="ttdef"><b>Definition</b> setpoint_base.hpp:20</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1TrajectorySetpointType_html"><div class="ttname"><a href="classpx4__ros2_1_1TrajectorySetpointType.html">px4_ros2::TrajectorySetpointType</a></div><div class="ttdoc">Setpoint type for trajectory control.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:24</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1TrajectorySetpointType_html_a18ee144e47a8a25556958e1e8f10cd2f"><div class="ttname"><a href="classpx4__ros2_1_1TrajectorySetpointType.html#a18ee144e47a8a25556958e1e8f10cd2f">px4_ros2::TrajectorySetpointType::clearOptionalRequirements</a></div><div class="ttdeci">void clearOptionalRequirements(px4_msgs::msg::SetpointConfigReply &amp;setpoint_config_reply) override</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1TrajectorySetpointType_html_a40b129f786de5afecc9b6a359ca741d6"><div class="ttname"><a href="classpx4__ros2_1_1TrajectorySetpointType.html#a40b129f786de5afecc9b6a359ca741d6">px4_ros2::TrajectorySetpointType::updatePosition</a></div><div class="ttdeci">void updatePosition(const Eigen::Vector3f &amp;position_ned_m)</div><div class="ttdoc">Position setpoint update.</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1TrajectorySetpointType_html_a5df20e11506fd18717734883170fd154"><div class="ttname"><a href="classpx4__ros2_1_1TrajectorySetpointType.html#a5df20e11506fd18717734883170fd154">px4_ros2::TrajectorySetpointType::getSetpointType</a></div><div class="ttdeci">SetpointType getSetpointType() override</div><div class="ttdef"><b>Definition</b> trajectory.hpp:35</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1TrajectorySetpointType_html_a98113db5fcb74712bfe3b909cab554f8"><div class="ttname"><a href="classpx4__ros2_1_1TrajectorySetpointType.html#a98113db5fcb74712bfe3b909cab554f8">px4_ros2::TrajectorySetpointType::TrajectorySetpointType</a></div><div class="ttdeci">TrajectorySetpointType(Context &amp;context, bool local_position_is_optional=false)</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1TrajectorySetpointType_html_ab7d6885c013971edaf2a497c72d9e157"><div class="ttname"><a href="classpx4__ros2_1_1TrajectorySetpointType.html#ab7d6885c013971edaf2a497c72d9e157">px4_ros2::TrajectorySetpointType::update</a></div><div class="ttdeci">void update(const TrajectorySetpoint &amp;setpoint)</div><div class="ttdoc">Update the setpoint with full flexibility by passing a TrajectorySetpoint.</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1SetpointBase_1_1Configuration_html"><div class="ttname"><a href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">px4_ros2::SetpointBase::Configuration</a></div><div class="ttdef"><b>Definition</b> setpoint_base.hpp:23</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html">px4_ros2::TrajectorySetpoint</a></div><div class="ttdoc">Setpoint structure for trajectory control with fine-grained control over individual components.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:93</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a15b694b37b5f0767ca19bea12175f14b"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a15b694b37b5f0767ca19bea12175f14b">px4_ros2::TrajectorySetpoint::withYaw</a></div><div class="ttdeci">TrajectorySetpoint &amp; withYaw(float yaw_rad)</div><div class="ttdoc">Set yaw setpoint in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:213</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a2f7eeb1b48a1ce9914996e9ee1586f02"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a2f7eeb1b48a1ce9914996e9ee1586f02">px4_ros2::TrajectorySetpoint::withHorizontalAcceleration</a></div><div class="ttdeci">TrajectorySetpoint &amp; withHorizontalAcceleration(const Eigen::Vector2f &amp;acceleration_ned_m_s2)</div><div class="ttdoc">Set acceleration setpoint for horizontal axes (x, y) in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:299</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a2fad791b61159f3d351dc6f4f257d788"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a2fad791b61159f3d351dc6f4f257d788">px4_ros2::TrajectorySetpoint::withHorizontalVelocity</a></div><div class="ttdeci">TrajectorySetpoint &amp; withHorizontalVelocity(const Eigen::Vector2f &amp;velocity_ned_m_s)</div><div class="ttdoc">Set velocity setpoint for horizontal axes (x, y) in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:274</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a382bff6f4672d5066a53bd8d9c2e086e"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a382bff6f4672d5066a53bd8d9c2e086e">px4_ros2::TrajectorySetpoint::withHorizontalPosition</a></div><div class="ttdeci">TrajectorySetpoint &amp; withHorizontalPosition(const Eigen::Vector2f &amp;position_ned_m)</div><div class="ttdoc">Set position setpoint for horizontal axes (x, y) in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:249</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a3aa7c6477c785312f302241792361d84"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a3aa7c6477c785312f302241792361d84">px4_ros2::TrajectorySetpoint::withPositionX</a></div><div class="ttdeci">TrajectorySetpoint &amp; withPositionX(float x_ned_m)</div><div class="ttdoc">Set position setpoint for x-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:114</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a458ad289daca8f9399bb7dcee6095f3f"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a458ad289daca8f9399bb7dcee6095f3f">px4_ros2::TrajectorySetpoint::withAccelerationY</a></div><div class="ttdeci">TrajectorySetpoint &amp; withAccelerationY(float y_ned_m_s2)</div><div class="ttdoc">Set acceleration setpoint for y-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:191</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a46b6dcf607a0bf02df93c908c03b06f6"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a46b6dcf607a0bf02df93c908c03b06f6">px4_ros2::TrajectorySetpoint::withYawRate</a></div><div class="ttdeci">TrajectorySetpoint &amp; withYawRate(float rate_rad_s)</div><div class="ttdoc">Set yaw rate setpoint in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:224</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a5089c5b2efeb548b66b4fa959d61d0a1"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a5089c5b2efeb548b66b4fa959d61d0a1">px4_ros2::TrajectorySetpoint::withAcceleration</a></div><div class="ttdeci">TrajectorySetpoint &amp; withAcceleration(const Eigen::Vector3f &amp;acceleration_ned_m_s2)</div><div class="ttdoc">Set acceleration setpoint for all axes (x, y, z) in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:286</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a57db5dad3c6eea83a4dc366e6af12bcf"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a57db5dad3c6eea83a4dc366e6af12bcf">px4_ros2::TrajectorySetpoint::withVelocityX</a></div><div class="ttdeci">TrajectorySetpoint &amp; withVelocityX(float x_ned_m_s)</div><div class="ttdoc">Set velocity setpoint for x-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:147</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a813fbc3d54fcb472926bacb7507eb4c3"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a813fbc3d54fcb472926bacb7507eb4c3">px4_ros2::TrajectorySetpoint::withPositionY</a></div><div class="ttdeci">TrajectorySetpoint &amp; withPositionY(float y_ned_m)</div><div class="ttdoc">Set position setpoint for y-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:125</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a8b43070ffd581f7919155d52f20d8f0f"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a8b43070ffd581f7919155d52f20d8f0f">px4_ros2::TrajectorySetpoint::withVelocityZ</a></div><div class="ttdeci">TrajectorySetpoint &amp; withVelocityZ(float z_ned_m_s)</div><div class="ttdoc">Set velocity setpoint for z-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:169</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a8d876110ae2980881f6bad80d46a5810"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a8d876110ae2980881f6bad80d46a5810">px4_ros2::TrajectorySetpoint::withAccelerationX</a></div><div class="ttdeci">TrajectorySetpoint &amp; withAccelerationX(float x_ned_m_s2)</div><div class="ttdoc">Set acceleration setpoint for x-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:180</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a907dd0955a3bef70aff79b348d27f725"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a907dd0955a3bef70aff79b348d27f725">px4_ros2::TrajectorySetpoint::withPositionZ</a></div><div class="ttdeci">TrajectorySetpoint &amp; withPositionZ(float z_ned_m)</div><div class="ttdoc">Set position setpoint for z-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:136</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a9bfaaa64c27badf444637dcd73d402f2"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a9bfaaa64c27badf444637dcd73d402f2">px4_ros2::TrajectorySetpoint::withVelocity</a></div><div class="ttdeci">TrajectorySetpoint &amp; withVelocity(const Eigen::Vector3f &amp;velocity_ned_m_s)</div><div class="ttdoc">Set velocity setpoint for all axes (x, y, z) in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:261</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_ac76d49775ab5bee9c67e82df4d80d203"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#ac76d49775ab5bee9c67e82df4d80d203">px4_ros2::TrajectorySetpoint::withPosition</a></div><div class="ttdeci">TrajectorySetpoint &amp; withPosition(const Eigen::Vector3f &amp;position_ned_m)</div><div class="ttdoc">Set position setpoint for all axes (x, y, z) in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:236</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_aee60c1b75f54102419822702129330ce"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#aee60c1b75f54102419822702129330ce">px4_ros2::TrajectorySetpoint::withAccelerationZ</a></div><div class="ttdeci">TrajectorySetpoint &amp; withAccelerationZ(float z_ned_m_s2)</div><div class="ttdoc">Set acceleration setpoint for z-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:202</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_af6dc8ccfadab6302943661f064c00565"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#af6dc8ccfadab6302943661f064c00565">px4_ros2::TrajectorySetpoint::withVelocityY</a></div><div class="ttdeci">TrajectorySetpoint &amp; withVelocityY(float y_ned_m_s)</div><div class="ttdoc">Set velocity setpoint for y-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:158</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html">px4_ros2::TrajectorySetpoint</a></div><div class="ttdoc">Setpoint structure for trajectory control with fine-grained control over individual components.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:96</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a15b694b37b5f0767ca19bea12175f14b"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a15b694b37b5f0767ca19bea12175f14b">px4_ros2::TrajectorySetpoint::withYaw</a></div><div class="ttdeci">TrajectorySetpoint &amp; withYaw(float yaw_rad)</div><div class="ttdoc">Set yaw setpoint in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:216</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a2f7eeb1b48a1ce9914996e9ee1586f02"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a2f7eeb1b48a1ce9914996e9ee1586f02">px4_ros2::TrajectorySetpoint::withHorizontalAcceleration</a></div><div class="ttdeci">TrajectorySetpoint &amp; withHorizontalAcceleration(const Eigen::Vector2f &amp;acceleration_ned_m_s2)</div><div class="ttdoc">Set acceleration setpoint for horizontal axes (x, y) in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:302</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a2fad791b61159f3d351dc6f4f257d788"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a2fad791b61159f3d351dc6f4f257d788">px4_ros2::TrajectorySetpoint::withHorizontalVelocity</a></div><div class="ttdeci">TrajectorySetpoint &amp; withHorizontalVelocity(const Eigen::Vector2f &amp;velocity_ned_m_s)</div><div class="ttdoc">Set velocity setpoint for horizontal axes (x, y) in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:277</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a382bff6f4672d5066a53bd8d9c2e086e"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a382bff6f4672d5066a53bd8d9c2e086e">px4_ros2::TrajectorySetpoint::withHorizontalPosition</a></div><div class="ttdeci">TrajectorySetpoint &amp; withHorizontalPosition(const Eigen::Vector2f &amp;position_ned_m)</div><div class="ttdoc">Set position setpoint for horizontal axes (x, y) in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:252</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a3aa7c6477c785312f302241792361d84"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a3aa7c6477c785312f302241792361d84">px4_ros2::TrajectorySetpoint::withPositionX</a></div><div class="ttdeci">TrajectorySetpoint &amp; withPositionX(float x_ned_m)</div><div class="ttdoc">Set position setpoint for x-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:117</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a458ad289daca8f9399bb7dcee6095f3f"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a458ad289daca8f9399bb7dcee6095f3f">px4_ros2::TrajectorySetpoint::withAccelerationY</a></div><div class="ttdeci">TrajectorySetpoint &amp; withAccelerationY(float y_ned_m_s2)</div><div class="ttdoc">Set acceleration setpoint for y-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:194</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a46b6dcf607a0bf02df93c908c03b06f6"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a46b6dcf607a0bf02df93c908c03b06f6">px4_ros2::TrajectorySetpoint::withYawRate</a></div><div class="ttdeci">TrajectorySetpoint &amp; withYawRate(float rate_rad_s)</div><div class="ttdoc">Set yaw rate setpoint in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:227</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a5089c5b2efeb548b66b4fa959d61d0a1"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a5089c5b2efeb548b66b4fa959d61d0a1">px4_ros2::TrajectorySetpoint::withAcceleration</a></div><div class="ttdeci">TrajectorySetpoint &amp; withAcceleration(const Eigen::Vector3f &amp;acceleration_ned_m_s2)</div><div class="ttdoc">Set acceleration setpoint for all axes (x, y, z) in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:289</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a57db5dad3c6eea83a4dc366e6af12bcf"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a57db5dad3c6eea83a4dc366e6af12bcf">px4_ros2::TrajectorySetpoint::withVelocityX</a></div><div class="ttdeci">TrajectorySetpoint &amp; withVelocityX(float x_ned_m_s)</div><div class="ttdoc">Set velocity setpoint for x-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:150</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a813fbc3d54fcb472926bacb7507eb4c3"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a813fbc3d54fcb472926bacb7507eb4c3">px4_ros2::TrajectorySetpoint::withPositionY</a></div><div class="ttdeci">TrajectorySetpoint &amp; withPositionY(float y_ned_m)</div><div class="ttdoc">Set position setpoint for y-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:128</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a8b43070ffd581f7919155d52f20d8f0f"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a8b43070ffd581f7919155d52f20d8f0f">px4_ros2::TrajectorySetpoint::withVelocityZ</a></div><div class="ttdeci">TrajectorySetpoint &amp; withVelocityZ(float z_ned_m_s)</div><div class="ttdoc">Set velocity setpoint for z-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:172</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a8d876110ae2980881f6bad80d46a5810"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a8d876110ae2980881f6bad80d46a5810">px4_ros2::TrajectorySetpoint::withAccelerationX</a></div><div class="ttdeci">TrajectorySetpoint &amp; withAccelerationX(float x_ned_m_s2)</div><div class="ttdoc">Set acceleration setpoint for x-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:183</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a907dd0955a3bef70aff79b348d27f725"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a907dd0955a3bef70aff79b348d27f725">px4_ros2::TrajectorySetpoint::withPositionZ</a></div><div class="ttdeci">TrajectorySetpoint &amp; withPositionZ(float z_ned_m)</div><div class="ttdoc">Set position setpoint for z-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:139</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_a9bfaaa64c27badf444637dcd73d402f2"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#a9bfaaa64c27badf444637dcd73d402f2">px4_ros2::TrajectorySetpoint::withVelocity</a></div><div class="ttdeci">TrajectorySetpoint &amp; withVelocity(const Eigen::Vector3f &amp;velocity_ned_m_s)</div><div class="ttdoc">Set velocity setpoint for all axes (x, y, z) in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:264</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_ac76d49775ab5bee9c67e82df4d80d203"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#ac76d49775ab5bee9c67e82df4d80d203">px4_ros2::TrajectorySetpoint::withPosition</a></div><div class="ttdeci">TrajectorySetpoint &amp; withPosition(const Eigen::Vector3f &amp;position_ned_m)</div><div class="ttdoc">Set position setpoint for all axes (x, y, z) in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:239</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_aee60c1b75f54102419822702129330ce"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#aee60c1b75f54102419822702129330ce">px4_ros2::TrajectorySetpoint::withAccelerationZ</a></div><div class="ttdeci">TrajectorySetpoint &amp; withAccelerationZ(float z_ned_m_s2)</div><div class="ttdoc">Set acceleration setpoint for z-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:205</div></div>
+<div class="ttc" id="astructpx4__ros2_1_1TrajectorySetpoint_html_af6dc8ccfadab6302943661f064c00565"><div class="ttname"><a href="structpx4__ros2_1_1TrajectorySetpoint.html#af6dc8ccfadab6302943661f064c00565">px4_ros2::TrajectorySetpoint::withVelocityY</a></div><div class="ttdeci">TrajectorySetpoint &amp; withVelocityY(float y_ned_m_s)</div><div class="ttdoc">Set velocity setpoint for y-axis in NED frame.</div><div class="ttdef"><b>Definition</b> trajectory.hpp:161</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

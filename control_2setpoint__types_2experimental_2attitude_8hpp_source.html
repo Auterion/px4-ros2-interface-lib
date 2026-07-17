@@ -118,28 +118,29 @@ $(document).ready(function(){initNavTree('control_2setpoint__types_2experimental
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  <a class="code hl_class" href="classpx4__ros2_1_1AttitudeSetpointType.html">~AttitudeSetpointType</a>() <span class="keyword">override</span> = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <a class="code hl_struct" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a> getConfiguration() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  <span class="keywordtype">float</span> desiredUpdateRateHz()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> 100.f; }</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  <span class="keywordtype">void</span> update(<span class="keyword">const</span> Eigen::Quaternionf&amp; attitude_setpoint,</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>              <span class="keyword">const</span> Eigen::Vector3f&amp; thrust_setpoint_frd, <span class="keywordtype">float</span> yaw_sp_move_rate_rad_s = 0.f);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1AttitudeSetpointType.html#a25fa251a0d840678570d6c9bc9e4a732">   42</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpx4__ros2_1_1AttitudeSetpointType.html#a25fa251a0d840678570d6c9bc9e4a732">update</a>(<span class="keywordtype">float</span> roll, <span class="keywordtype">float</span> pitch, <span class="keywordtype">float</span> yaw, <span class="keyword">const</span> Eigen::Vector3f&amp; thrust_setpoint_body,</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>              <span class="keywordtype">float</span> yaw_sp_move_rate_rad_s = 0.f);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  rclcpp::Node&amp; _node;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  rclcpp::Publisher&lt;px4_msgs::msg::VehicleAttitudeSetpoint&gt;::SharedPtr</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>      _vehicle_attitude_setpoint_pub;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>};</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1AttitudeSetpointType.html#a80a3fa7daa98b4a2cc092e24ff399c8c">   26</a></span>  SetpointType <a class="code hl_function" href="classpx4__ros2_1_1AttitudeSetpointType.html#a80a3fa7daa98b4a2cc092e24ff399c8c">getSetpointType</a>()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> px4_msgs::msg::SetpointConfig::TYPE_ATTITUDE; }</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keywordtype">float</span> desiredUpdateRateHz()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> 100.f; }</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  <span class="keywordtype">void</span> update(<span class="keyword">const</span> Eigen::Quaternionf&amp; attitude_setpoint,</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>              <span class="keyword">const</span> Eigen::Vector3f&amp; thrust_setpoint_frd, <span class="keywordtype">float</span> yaw_sp_move_rate_rad_s = 0.f);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1AttitudeSetpointType.html#a25fa251a0d840678570d6c9bc9e4a732">   43</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpx4__ros2_1_1AttitudeSetpointType.html#a25fa251a0d840678570d6c9bc9e4a732">update</a>(<span class="keywordtype">float</span> roll, <span class="keywordtype">float</span> pitch, <span class="keywordtype">float</span> yaw, <span class="keyword">const</span> Eigen::Vector3f&amp; thrust_setpoint_body,</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>              <span class="keywordtype">float</span> yaw_sp_move_rate_rad_s = 0.f);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  rclcpp::Node&amp; _node;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  rclcpp::Publisher&lt;px4_msgs::msg::VehicleAttitudeSetpoint&gt;::SharedPtr</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>      _vehicle_attitude_setpoint_pub;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>};</div>
 </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1AttitudeSetpointType_html"><div class="ttname"><a href="classpx4__ros2_1_1AttitudeSetpointType.html">px4_ros2::AttitudeSetpointType</a></div><div class="ttdoc">Setpoint type for direct attitude control.</div><div class="ttdef"><b>Definition</b> attitude.hpp:20</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1AttitudeSetpointType_html_a25fa251a0d840678570d6c9bc9e4a732"><div class="ttname"><a href="classpx4__ros2_1_1AttitudeSetpointType.html#a25fa251a0d840678570d6c9bc9e4a732">px4_ros2::AttitudeSetpointType::update</a></div><div class="ttdeci">void update(float roll, float pitch, float yaw, const Eigen::Vector3f &amp;thrust_setpoint_body, float yaw_sp_move_rate_rad_s=0.f)</div><div class="ttdoc">Send an attitude setpoint to the flight controller. Euler angles follow the RPY extrinsic Tait-Bryan ...</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1AttitudeSetpointType_html_a80a3fa7daa98b4a2cc092e24ff399c8c"><div class="ttname"><a href="classpx4__ros2_1_1AttitudeSetpointType.html#a80a3fa7daa98b4a2cc092e24ff399c8c">px4_ros2::AttitudeSetpointType::getSetpointType</a></div><div class="ttdeci">SetpointType getSetpointType() override</div><div class="ttdef"><b>Definition</b> attitude.hpp:26</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition</b> context.hpp:18</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1SetpointBase_html"><div class="ttname"><a href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a></div><div class="ttdef"><b>Definition</b> setpoint_base.hpp:19</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1SetpointBase_1_1Configuration_html"><div class="ttname"><a href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">px4_ros2::SetpointBase::Configuration</a></div><div class="ttdef"><b>Definition</b> setpoint_base.hpp:23</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1SetpointBase_html"><div class="ttname"><a href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a></div><div class="ttdef"><b>Definition</b> setpoint_base.hpp:20</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -67,7 +67,7 @@ var annotated_dup =
       [ "OdometryLocalPosition", "classpx4__ros2_1_1OdometryLocalPosition.html", "classpx4__ros2_1_1OdometryLocalPosition" ],
       [ "PeripheralActuatorControls", "classpx4__ros2_1_1PeripheralActuatorControls.html", "classpx4__ros2_1_1PeripheralActuatorControls" ],
       [ "PositionMeasurementInterfaceBase", "classpx4__ros2_1_1PositionMeasurementInterfaceBase.html", "classpx4__ros2_1_1PositionMeasurementInterfaceBase" ],
-      [ "RatesSetpointType", "classpx4__ros2_1_1RatesSetpointType.html", null ],
+      [ "RatesSetpointType", "classpx4__ros2_1_1RatesSetpointType.html", "classpx4__ros2_1_1RatesSetpointType" ],
       [ "RequirementFlags", "structpx4__ros2_1_1RequirementFlags.html", "structpx4__ros2_1_1RequirementFlags" ],
       [ "RoverPositionSetpointType", "classpx4__ros2_1_1RoverPositionSetpointType.html", "classpx4__ros2_1_1RoverPositionSetpointType" ],
       [ "RoverSpeedAttitudeSetpointType", "classpx4__ros2_1_1RoverSpeedAttitudeSetpointType.html", "classpx4__ros2_1_1RoverSpeedAttitudeSetpointType" ],

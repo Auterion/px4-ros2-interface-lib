@@ -15,7 +15,6 @@ var hierarchy =
     [ "px4_ros2::ActionStateKeeper", "classpx4__ros2_1_1ActionStateKeeper.html", null ],
     [ "px4_ros2::ConfigOverrides", "classpx4__ros2_1_1ConfigOverrides.html", null ],
     [ "px4_ros2::MissionExecutor::Configuration", "structpx4__ros2_1_1MissionExecutor_1_1Configuration.html", null ],
-    [ "px4_ros2::SetpointBase::Configuration", "structpx4__ros2_1_1SetpointBase_1_1Configuration.html", null ],
     [ "px4_ros2::Context", "classpx4__ros2_1_1Context.html", [
       [ "px4_ros2::ModeBase", "classpx4__ros2_1_1ModeBase.html", [
         [ "px4_ros2::MissionExecutor::MissionMode", "classpx4__ros2_1_1MissionExecutor_1_1MissionMode.html", null ]

@@ -118,25 +118,31 @@ $(document).ready(function(){initNavTree('throttle__steering_8hpp_source.html','
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  <a class="code hl_class" href="classpx4__ros2_1_1RoverThrottleSteeringSetpointType.html">~RoverThrottleSteeringSetpointType</a>() <span class="keyword">override</span> = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <a class="code hl_struct" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a> getConfiguration() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  <span class="keywordtype">float</span> desiredUpdateRateHz()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> 30.f; }</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1RoverThrottleSteeringSetpointType.html#a0f8b7e73bb7344e6b4a8436a1bd0578e">   40</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpx4__ros2_1_1RoverThrottleSteeringSetpointType.html#a0f8b7e73bb7344e6b4a8436a1bd0578e">update</a>(<span class="keywordtype">float</span> throttle_body_x, <span class="keywordtype">float</span> normalized_steering_setpoint,</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>              std::optional&lt;float&gt; throttle_body_y = {});</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  rclcpp::Node&amp; _node;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  rclcpp::Publisher&lt;px4_msgs::msg::RoverThrottleSetpoint&gt;::SharedPtr _rover_throttle_setpoint_pub;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  rclcpp::Publisher&lt;px4_msgs::msg::RoverSteeringSetpoint&gt;::SharedPtr _rover_steering_setpoint_pub;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>};</div>
+<div class="foldopen" id="foldopen00026" data-start="{" data-end="}">
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1RoverThrottleSteeringSetpointType.html#a9af465613386b3378eb77a7f79514a7a">   26</a></span>  SetpointType <a class="code hl_function" href="classpx4__ros2_1_1RoverThrottleSteeringSetpointType.html#a9af465613386b3378eb77a7f79514a7a">getSetpointType</a>()<span class="keyword"> override</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">  </span>{</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">return</span> px4_msgs::msg::SetpointConfig::TYPE_ROVER_THROTTLE_STEERING;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  }</div>
 </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  <span class="keywordtype">float</span> desiredUpdateRateHz()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> 30.f; }</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1RoverThrottleSteeringSetpointType.html#a0f8b7e73bb7344e6b4a8436a1bd0578e">   44</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpx4__ros2_1_1RoverThrottleSteeringSetpointType.html#a0f8b7e73bb7344e6b4a8436a1bd0578e">update</a>(<span class="keywordtype">float</span> throttle_body_x, <span class="keywordtype">float</span> normalized_steering_setpoint,</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>              std::optional&lt;float&gt; throttle_body_y = {});</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  rclcpp::Node&amp; _node;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  rclcpp::Publisher&lt;px4_msgs::msg::RoverThrottleSetpoint&gt;::SharedPtr _rover_throttle_setpoint_pub;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  rclcpp::Publisher&lt;px4_msgs::msg::RoverSteeringSetpoint&gt;::SharedPtr _rover_steering_setpoint_pub;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>};</div>
+</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition</b> context.hpp:18</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1RoverThrottleSteeringSetpointType_html"><div class="ttname"><a href="classpx4__ros2_1_1RoverThrottleSteeringSetpointType.html">px4_ros2::RoverThrottleSteeringSetpointType</a></div><div class="ttdoc">Setpoint type for rover throttle and steering control.</div><div class="ttdef"><b>Definition</b> throttle_steering.hpp:20</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1RoverThrottleSteeringSetpointType_html_a0f8b7e73bb7344e6b4a8436a1bd0578e"><div class="ttname"><a href="classpx4__ros2_1_1RoverThrottleSteeringSetpointType.html#a0f8b7e73bb7344e6b4a8436a1bd0578e">px4_ros2::RoverThrottleSteeringSetpointType::update</a></div><div class="ttdeci">void update(float throttle_body_x, float normalized_steering_setpoint, std::optional&lt; float &gt; throttle_body_y={})</div><div class="ttdoc">Send a rover throttle setpoint and a rover steering setpoint to the flight controller.</div></div>
-<div class="ttc" id="aclasspx4__ros2_1_1SetpointBase_html"><div class="ttname"><a href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a></div><div class="ttdef"><b>Definition</b> setpoint_base.hpp:19</div></div>
-<div class="ttc" id="astructpx4__ros2_1_1SetpointBase_1_1Configuration_html"><div class="ttname"><a href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">px4_ros2::SetpointBase::Configuration</a></div><div class="ttdef"><b>Definition</b> setpoint_base.hpp:23</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1RoverThrottleSteeringSetpointType_html_a9af465613386b3378eb77a7f79514a7a"><div class="ttname"><a href="classpx4__ros2_1_1RoverThrottleSteeringSetpointType.html#a9af465613386b3378eb77a7f79514a7a">px4_ros2::RoverThrottleSteeringSetpointType::getSetpointType</a></div><div class="ttdeci">SetpointType getSetpointType() override</div><div class="ttdef"><b>Definition</b> throttle_steering.hpp:26</div></div>
+<div class="ttc" id="aclasspx4__ros2_1_1SetpointBase_html"><div class="ttname"><a href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a></div><div class="ttdef"><b>Definition</b> setpoint_base.hpp:20</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

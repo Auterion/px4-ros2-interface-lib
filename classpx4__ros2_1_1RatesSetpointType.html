@@ -117,8 +117,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2b6c6df87a6c18d5c6e20ead9f959847" id="r_a2b6c6df87a6c18d5c6e20ead9f959847"><td class="memItemLeft" align="right" valign="top"><a id="a2b6c6df87a6c18d5c6e20ead9f959847" name="a2b6c6df87a6c18d5c6e20ead9f959847"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>RatesSetpointType</b> (<a class="el" href="classpx4__ros2_1_1Context.html">Context</a> &amp;context)</td></tr>
 <tr class="separator:a2b6c6df87a6c18d5c6e20ead9f959847"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e623dab34421cbd359cf5903f40be28" id="r_a5e623dab34421cbd359cf5903f40be28"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1RatesSetpointType.html#a5e623dab34421cbd359cf5903f40be28">getConfiguration</a> () override</td></tr>
-<tr class="separator:a5e623dab34421cbd359cf5903f40be28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f12017d755e795e51e7e7658be02b06" id="r_a0f12017d755e795e51e7e7658be02b06"><td class="memItemLeft" align="right" valign="top">SetpointType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1RatesSetpointType.html#a0f12017d755e795e51e7e7658be02b06">getSetpointType</a> () override</td></tr>
+<tr class="separator:a0f12017d755e795e51e7e7658be02b06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96eef386bbaf01f94931de37ec7e22d3" id="r_a96eef386bbaf01f94931de37ec7e22d3"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1RatesSetpointType.html#a96eef386bbaf01f94931de37ec7e22d3">desiredUpdateRateHz</a> () override</td></tr>
 <tr class="separator:a96eef386bbaf01f94931de37ec7e22d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4a05f9cd76d91c22cd4190786cadc9f" id="r_af4a05f9cd76d91c22cd4190786cadc9f"><td class="memItemLeft" align="right" valign="top"><a id="af4a05f9cd76d91c22cd4190786cadc9f" name="af4a05f9cd76d91c22cd4190786cadc9f"></a>
@@ -131,6 +131,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (const Eig
 <tr class="memitem:a47ce4843f5097cf62eb73489ebb572ad inherit pub_methods_classpx4__ros2_1_1SetpointBase" id="r_a47ce4843f5097cf62eb73489ebb572ad"><td class="memItemLeft" align="right" valign="top">
 std::shared_ptr&lt; <a class="el" href="classpx4__ros2_1_1SetpointBase.html">SetpointBase</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getSharedPtr</b> ()</td></tr>
 <tr class="separator:a47ce4843f5097cf62eb73489ebb572ad inherit pub_methods_classpx4__ros2_1_1SetpointBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65b428ecf84a17748f465e83cdaca388 inherit pub_methods_classpx4__ros2_1_1SetpointBase" id="r_a65b428ecf84a17748f465e83cdaca388"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1SetpointBase.html#a65b428ecf84a17748f465e83cdaca388">clearOptionalRequirements</a> (px4_msgs::msg::SetpointConfigReply &amp;setpoint_config_reply)</td></tr>
+<tr class="separator:a65b428ecf84a17748f465e83cdaca388 inherit pub_methods_classpx4__ros2_1_1SetpointBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a6a03ef3756553333d467cd52825768 inherit pub_methods_classpx4__ros2_1_1SetpointBase" id="r_a5a6a03ef3756553333d467cd52825768"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setShouldActivateCallback</b> (const ShouldActivateCB &amp;should_activate_cb)</td></tr>
 <tr class="separator:a5a6a03ef3756553333d467cd52825768 inherit pub_methods_classpx4__ros2_1_1SetpointBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -144,6 +146,9 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:ad71838d531dfa72e87f5c1744fa5ff26 inherit pub_types_classpx4__ros2_1_1SetpointBase" id="r_ad71838d531dfa72e87f5c1744fa5ff26"><td class="memItemLeft" align="right" valign="top">
 using&#160;</td><td class="memItemRight" valign="bottom"><b>ShouldActivateCB</b> = std::function&lt; void()&gt;</td></tr>
 <tr class="separator:ad71838d531dfa72e87f5c1744fa5ff26 inherit pub_types_classpx4__ros2_1_1SetpointBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4f9bbb1a0749948d9caee5cba979c50 inherit pub_types_classpx4__ros2_1_1SetpointBase" id="r_af4f9bbb1a0749948d9caee5cba979c50"><td class="memItemLeft" align="right" valign="top">
+using&#160;</td><td class="memItemRight" valign="bottom"><b>SetpointType</b> = decltype(px4_msgs::msg::SetpointConfig::type)</td></tr>
+<tr class="separator:af4f9bbb1a0749948d9caee5cba979c50 inherit pub_types_classpx4__ros2_1_1SetpointBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classpx4__ros2_1_1SetpointBase"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classpx4__ros2_1_1SetpointBase')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a></td></tr>
 <tr class="memitem:ac04ff7aef3905ce3861cb2c56af7fece inherit pro_methods_classpx4__ros2_1_1SetpointBase" id="r_ac04ff7aef3905ce3861cb2c56af7fece"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>onUpdate</b> ()</td></tr>
@@ -179,8 +184,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onUpdate</b> ()</td><
 
 </div>
 </div>
-<a id="a5e623dab34421cbd359cf5903f40be28" name="a5e623dab34421cbd359cf5903f40be28"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e623dab34421cbd359cf5903f40be28">&#9670;&#160;</a></span>getConfiguration()</h2>
+<a id="a0f12017d755e795e51e7e7658be02b06" name="a0f12017d755e795e51e7e7658be02b06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f12017d755e795e51e7e7658be02b06">&#9670;&#160;</a></span>getSetpointType()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -189,7 +194,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onUpdate</b> ()</td><
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a> px4_ros2::RatesSetpointType::getConfiguration </td>
+          <td class="memname">SetpointType px4_ros2::RatesSetpointType::getSetpointType </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -197,12 +202,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onUpdate</b> ()</td><
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Returns one of px4_msgs::msg::SetpointType::TYPE_* </p>
 
-<p>Implements <a class="el" href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a>.</p>
+<p>Implements <a class="el" href="classpx4__ros2_1_1SetpointBase.html#af1c423de98d0153845d7da63d266fba2">px4_ros2::SetpointBase</a>.</p>
 
 </div>
 </div>

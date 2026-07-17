@@ -92,7 +92,6 @@ $(document).ready(function(){initNavTree('classpx4__ros2_1_1SetpointBase.html','
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
@@ -122,16 +121,14 @@ Inheritance diagram for px4_ros2::SetpointBase:</div>
   </map>
 </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:ad71838d531dfa72e87f5c1744fa5ff26" id="r_ad71838d531dfa72e87f5c1744fa5ff26"><td class="memItemLeft" align="right" valign="top"><a id="ad71838d531dfa72e87f5c1744fa5ff26" name="ad71838d531dfa72e87f5c1744fa5ff26"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>ShouldActivateCB</b> = std::function&lt; void()&gt;</td></tr>
 <tr class="separator:ad71838d531dfa72e87f5c1744fa5ff26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4f9bbb1a0749948d9caee5cba979c50" id="r_af4f9bbb1a0749948d9caee5cba979c50"><td class="memItemLeft" align="right" valign="top"><a id="af4f9bbb1a0749948d9caee5cba979c50" name="af4f9bbb1a0749948d9caee5cba979c50"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>SetpointType</b> = decltype(px4_msgs::msg::SetpointConfig::type)</td></tr>
+<tr class="separator:af4f9bbb1a0749948d9caee5cba979c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -141,9 +138,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a47ce4843f5097cf62eb73489ebb572ad" id="r_a47ce4843f5097cf62eb73489ebb572ad"><td class="memItemLeft" align="right" valign="top"><a id="a47ce4843f5097cf62eb73489ebb572ad" name="a47ce4843f5097cf62eb73489ebb572ad"></a>
 std::shared_ptr&lt; <a class="el" href="classpx4__ros2_1_1SetpointBase.html">SetpointBase</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getSharedPtr</b> ()</td></tr>
 <tr class="separator:a47ce4843f5097cf62eb73489ebb572ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71a4b2f5b4a142e284b38c1c947f5111" id="r_a71a4b2f5b4a142e284b38c1c947f5111"><td class="memItemLeft" align="right" valign="top"><a id="a71a4b2f5b4a142e284b38c1c947f5111" name="a71a4b2f5b4a142e284b38c1c947f5111"></a>
-virtual <a class="el" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getConfiguration</b> ()=0</td></tr>
-<tr class="separator:a71a4b2f5b4a142e284b38c1c947f5111"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1c423de98d0153845d7da63d266fba2" id="r_af1c423de98d0153845d7da63d266fba2"><td class="memItemLeft" align="right" valign="top">virtual SetpointType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1SetpointBase.html#af1c423de98d0153845d7da63d266fba2">getSetpointType</a> ()=0</td></tr>
+<tr class="separator:af1c423de98d0153845d7da63d266fba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65b428ecf84a17748f465e83cdaca388" id="r_a65b428ecf84a17748f465e83cdaca388"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1SetpointBase.html#a65b428ecf84a17748f465e83cdaca388">clearOptionalRequirements</a> (px4_msgs::msg::SetpointConfigReply &amp;setpoint_config_reply)</td></tr>
+<tr class="separator:a65b428ecf84a17748f465e83cdaca388"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe64e6e90b4e0be36573bfbfe330f6b4" id="r_afe64e6e90b4e0be36573bfbfe330f6b4"><td class="memItemLeft" align="right" valign="top"><a id="afe64e6e90b4e0be36573bfbfe330f6b4" name="afe64e6e90b4e0be36573bfbfe330f6b4"></a>
 virtual float&#160;</td><td class="memItemRight" valign="bottom"><b>desiredUpdateRateHz</b> ()</td></tr>
 <tr class="separator:afe64e6e90b4e0be36573bfbfe330f6b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,6 +158,70 @@ Protected Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>onUpdate</b> ()</td></tr>
 <tr class="separator:ac04ff7aef3905ce3861cb2c56af7fece"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a65b428ecf84a17748f465e83cdaca388" name="a65b428ecf84a17748f465e83cdaca388"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65b428ecf84a17748f465e83cdaca388">&#9670;&#160;</a></span>clearOptionalRequirements()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void px4_ros2::SetpointBase::clearOptionalRequirements </td>
+          <td>(</td>
+          <td class="paramtype">px4_msgs::msg::SetpointConfigReply &amp;&#160;</td>
+          <td class="paramname"><em>setpoint_config_reply</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Allows a setpoint class to clear an optional requirement. This is for setpoint types that support multiple variations, for example some that require local position and others that do not.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">setpoint_config_reply</td><td>input and output config </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="classpx4__ros2_1_1TrajectorySetpointType.html#a18ee144e47a8a25556958e1e8f10cd2f">px4_ros2::TrajectorySetpointType</a>, and <a class="el" href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#ad030e901b4e3db323240e0348aad3dbc">px4_ros2::FwLateralLongitudinalSetpointType</a>.</p>
+
+</div>
+</div>
+<a id="af1c423de98d0153845d7da63d266fba2" name="af1c423de98d0153845d7da63d266fba2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1c423de98d0153845d7da63d266fba2">&#9670;&#160;</a></span>getSetpointType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual SetpointType px4_ros2::SetpointBase::getSetpointType </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns one of px4_msgs::msg::SetpointType::TYPE_* </p>
+
+<p>Implemented in <a class="el" href="classpx4__ros2_1_1DirectActuatorsSetpointType.html#aaadf1f8c0f7c003963550ddcdc1d47a6">px4_ros2::DirectActuatorsSetpointType</a>, <a class="el" href="classpx4__ros2_1_1AttitudeSetpointType.html#a80a3fa7daa98b4a2cc092e24ff399c8c">px4_ros2::AttitudeSetpointType</a>, <a class="el" href="classpx4__ros2_1_1RatesSetpointType.html#a0f12017d755e795e51e7e7658be02b06">px4_ros2::RatesSetpointType</a>, <a class="el" href="classpx4__ros2_1_1RoverPositionSetpointType.html#a6b8cd7e5a66313b86a92f4c9aef108b6">px4_ros2::RoverPositionSetpointType</a>, <a class="el" href="classpx4__ros2_1_1RoverSpeedAttitudeSetpointType.html#a79a724dff078e60cdd113d75f2ab63f8">px4_ros2::RoverSpeedAttitudeSetpointType</a>, <a class="el" href="classpx4__ros2_1_1RoverSpeedRateSetpointType.html#a5fb5018871f800df7b38e3ebafd457f8">px4_ros2::RoverSpeedRateSetpointType</a>, <a class="el" href="classpx4__ros2_1_1RoverSpeedSteeringSetpointType.html#a6d2e020e0dabf5fc767c0731282c5734">px4_ros2::RoverSpeedSteeringSetpointType</a>, <a class="el" href="classpx4__ros2_1_1RoverThrottleAttitudeSetpointType.html#a432ef38b00f6d4a162240da82b85d161">px4_ros2::RoverThrottleAttitudeSetpointType</a>, <a class="el" href="classpx4__ros2_1_1RoverThrottleRateSetpointType.html#ae091806eff76267f07e581c987419514">px4_ros2::RoverThrottleRateSetpointType</a>, <a class="el" href="classpx4__ros2_1_1RoverThrottleSteeringSetpointType.html#a9af465613386b3378eb77a7f79514a7a">px4_ros2::RoverThrottleSteeringSetpointType</a>, <a class="el" href="classpx4__ros2_1_1TrajectorySetpointType.html#a5df20e11506fd18717734883170fd154">px4_ros2::TrajectorySetpointType</a>, <a class="el" href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#a9af38115dc10e7aba0de51d0944f2482">px4_ros2::FwLateralLongitudinalSetpointType</a>, and <a class="el" href="classpx4__ros2_1_1MulticopterGotoSetpointType.html#a6a96437226f98f3d2674e6fa33a46288">px4_ros2::MulticopterGotoSetpointType</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>px4_ros2_cpp/include/px4_ros2/common/<a class="el" href="setpoint__base_8hpp_source.html">setpoint_base.hpp</a></li>
 </ul>

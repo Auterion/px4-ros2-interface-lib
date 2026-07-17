@@ -116,8 +116,10 @@ Inheritance diagram for px4_ros2::FwLateralLongitudinalSetpointType:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a61c217a8ca66895a66d35a607a2fa02d" id="r_a61c217a8ca66895a66d35a607a2fa02d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#a61c217a8ca66895a66d35a607a2fa02d">FwLateralLongitudinalSetpointType</a> (<a class="el" href="classpx4__ros2_1_1Context.html">Context</a> &amp;context, bool is_position_optional=false)</td></tr>
 <tr class="separator:a61c217a8ca66895a66d35a607a2fa02d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad2e20893c45f62e7ad41774188fd70b" id="r_aad2e20893c45f62e7ad41774188fd70b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#aad2e20893c45f62e7ad41774188fd70b">getConfiguration</a> () override</td></tr>
-<tr class="separator:aad2e20893c45f62e7ad41774188fd70b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9af38115dc10e7aba0de51d0944f2482" id="r_a9af38115dc10e7aba0de51d0944f2482"><td class="memItemLeft" align="right" valign="top">SetpointType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#a9af38115dc10e7aba0de51d0944f2482">getSetpointType</a> () override</td></tr>
+<tr class="separator:a9af38115dc10e7aba0de51d0944f2482"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad030e901b4e3db323240e0348aad3dbc" id="r_ad030e901b4e3db323240e0348aad3dbc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#ad030e901b4e3db323240e0348aad3dbc">clearOptionalRequirements</a> (px4_msgs::msg::SetpointConfigReply &amp;setpoint_config_reply) override</td></tr>
+<tr class="separator:ad030e901b4e3db323240e0348aad3dbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab54335406b10896a920a42d0cfa79fcd" id="r_ab54335406b10896a920a42d0cfa79fcd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html#ab54335406b10896a920a42d0cfa79fcd">update</a> (const <a class="el" href="structpx4__ros2_1_1FwLateralLongitudinalSetpoint.html">FwLateralLongitudinalSetpoint</a> &amp;setpoint, const <a class="el" href="structpx4__ros2_1_1FwControlConfiguration.html">FwControlConfiguration</a> &amp;config)</td></tr>
 <tr class="memdesc:ab54335406b10896a920a42d0cfa79fcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the setpoint with full flexibility by passing a <a class="el" href="structpx4__ros2_1_1FwLateralLongitudinalSetpoint.html">FwLateralLongitudinalSetpoint</a> and <a class="el" href="structpx4__ros2_1_1FwControlConfiguration.html">FwControlConfiguration</a> struct.  <br /></td></tr>
 <tr class="separator:ab54335406b10896a920a42d0cfa79fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,6 +154,9 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:ad71838d531dfa72e87f5c1744fa5ff26 inherit pub_types_classpx4__ros2_1_1SetpointBase" id="r_ad71838d531dfa72e87f5c1744fa5ff26"><td class="memItemLeft" align="right" valign="top">
 using&#160;</td><td class="memItemRight" valign="bottom"><b>ShouldActivateCB</b> = std::function&lt; void()&gt;</td></tr>
 <tr class="separator:ad71838d531dfa72e87f5c1744fa5ff26 inherit pub_types_classpx4__ros2_1_1SetpointBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4f9bbb1a0749948d9caee5cba979c50 inherit pub_types_classpx4__ros2_1_1SetpointBase" id="r_af4f9bbb1a0749948d9caee5cba979c50"><td class="memItemLeft" align="right" valign="top">
+using&#160;</td><td class="memItemRight" valign="bottom"><b>SetpointType</b> = decltype(px4_msgs::msg::SetpointConfig::type)</td></tr>
+<tr class="separator:af4f9bbb1a0749948d9caee5cba979c50 inherit pub_types_classpx4__ros2_1_1SetpointBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classpx4__ros2_1_1SetpointBase"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classpx4__ros2_1_1SetpointBase')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a></td></tr>
 <tr class="memitem:ac04ff7aef3905ce3861cb2c56af7fece inherit pro_methods_classpx4__ros2_1_1SetpointBase" id="r_ac04ff7aef3905ce3861cb2c56af7fece"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>onUpdate</b> ()</td></tr>
@@ -204,6 +209,41 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onUpdate</b> ()</td><
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="ad030e901b4e3db323240e0348aad3dbc" name="ad030e901b4e3db323240e0348aad3dbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad030e901b4e3db323240e0348aad3dbc">&#9670;&#160;</a></span>clearOptionalRequirements()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void px4_ros2::FwLateralLongitudinalSetpointType::clearOptionalRequirements </td>
+          <td>(</td>
+          <td class="paramtype">px4_msgs::msg::SetpointConfigReply &amp;&#160;</td>
+          <td class="paramname"><em>setpoint_config_reply</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Allows a setpoint class to clear an optional requirement. This is for setpoint types that support multiple variations, for example some that require local position and others that do not.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">setpoint_config_reply</td><td>input and output config </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="classpx4__ros2_1_1SetpointBase.html#a65b428ecf84a17748f465e83cdaca388">px4_ros2::SetpointBase</a>.</p>
+
+</div>
+</div>
 <a id="a521de5d516ee6abe01964cf23a7ca550" name="a521de5d516ee6abe01964cf23a7ca550"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a521de5d516ee6abe01964cf23a7ca550">&#9670;&#160;</a></span>desiredUpdateRateHz()</h2>
 
@@ -231,8 +271,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onUpdate</b> ()</td><
 
 </div>
 </div>
-<a id="aad2e20893c45f62e7ad41774188fd70b" name="aad2e20893c45f62e7ad41774188fd70b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad2e20893c45f62e7ad41774188fd70b">&#9670;&#160;</a></span>getConfiguration()</h2>
+<a id="a9af38115dc10e7aba0de51d0944f2482" name="a9af38115dc10e7aba0de51d0944f2482"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9af38115dc10e7aba0de51d0944f2482">&#9670;&#160;</a></span>getSetpointType()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -241,7 +281,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onUpdate</b> ()</td><
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structpx4__ros2_1_1SetpointBase_1_1Configuration.html">Configuration</a> px4_ros2::FwLateralLongitudinalSetpointType::getConfiguration </td>
+          <td class="memname">SetpointType px4_ros2::FwLateralLongitudinalSetpointType::getSetpointType </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -249,12 +289,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onUpdate</b> ()</td><
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Returns one of px4_msgs::msg::SetpointType::TYPE_* </p>
 
-<p>Implements <a class="el" href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a>.</p>
+<p>Implements <a class="el" href="classpx4__ros2_1_1SetpointBase.html#af1c423de98d0153845d7da63d266fba2">px4_ros2::SetpointBase</a>.</p>
 
 </div>
 </div>
