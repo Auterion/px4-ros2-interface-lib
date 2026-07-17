@@ -1,0 +1,10 @@
+# clang-tidy exclusions consumed by scripts/run-clang-tidy-on-project.sh via
+# run-clang-tidy.py's -ignore flag. Each non-comment line is an fnmatch glob
+# tested against the absolute path of every translation unit in a package's
+# compile database.
+#
+# rclcpp_components emits a node_main_<executable>.cpp entrypoint under each
+# package's build/<pkg>/rclcpp_components/ directory. That source belongs to
+# the upstream generator rather than to this repository, so it stays out of
+# the first-party clang-tidy gate.
+*/rclcpp_components/node_main_*.cpp
