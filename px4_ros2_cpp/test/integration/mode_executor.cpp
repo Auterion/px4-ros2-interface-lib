@@ -77,7 +77,7 @@ class ModeExecutorTest : public px4_ros2::ModeExecutorBase {
     _mode_completed_sub = node.create_subscription<px4_msgs::msg::ModeCompleted>(
         owned_mode.topicNamespacePrefix() + "fmu/out/mode_completed" +
             px4_ros2::getMessageNameVersion<px4_msgs::msg::ModeCompleted>(),
-        rclcpp::QoS(1).best_effort(), [this, &node](px4_msgs::msg::ModeCompleted::UniquePtr msg) {
+        rclcpp::QoS(1).best_effort(), [this](px4_msgs::msg::ModeCompleted::UniquePtr msg) {
           if (_mode_completion_next_state.has_value()) {
             EXPECT_EQ(msg->nav_state, _mode_completion_expected_nav_state);
             RCLCPP_DEBUG(_node.get_logger(), "Received extra mode completion, continuing");

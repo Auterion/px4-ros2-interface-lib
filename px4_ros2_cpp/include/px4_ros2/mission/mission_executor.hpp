@@ -545,7 +545,7 @@ class ActionHandler {
   /**
    * @brief register callback for failsafe notification
    *
-   * The callback is triggerd when a failsafe occurs while deferral is enabled.
+   * The callback is triggered when a failsafe occurs while deferral is enabled.
    */
   void onFailsafeDeferred(const std::function<void()>& callback)
   {

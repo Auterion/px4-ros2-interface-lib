@@ -13,7 +13,7 @@
  * In order to go from frame 1 to frame 2 we apply the following rotations consecutively.
  * 1) We rotate about our fixed X axis by an angle of "roll"
  * 2) We rotate about our fixed Y axis by an angle of "pitch"
- * 3) We rotate abour our fixed Z axis by an angle of "yaw"
+ * 3) We rotate about our fixed Z axis by an angle of "yaw"
  *
  * Note that this convention is equivalent to that of a
  * 3-2-1 intrinsic Tait-Bryan rotation sequence, i.e.
@@ -32,12 +32,17 @@ namespace px4_ros2 {
  */
 
 /**
+ * @brief Portable pi constant (kPi is POSIX, not standard C++, and is absent on MSVC)
+ */
+inline constexpr double kPi = 3.14159265358979323846264338327950288;
+
+/**
  * @brief Converts radians to degrees
  */
 template <typename Type>
 Type radToDeg(Type rad)
 {
-  return rad * static_cast<Type>(180.0 / M_PI);
+  return rad * static_cast<Type>(180.0 / kPi);
 }
 
 /**
@@ -46,13 +51,13 @@ Type radToDeg(Type rad)
 template <typename Type>
 Type degToRad(Type deg)
 {
-  return deg * static_cast<Type>(M_PI / 180.0);
+  return deg * static_cast<Type>(kPi / 180.0);
 }
 
 namespace literals {
 static inline constexpr float operator""_deg(long double degrees)
 {
-  return static_cast<float>(degrees * M_PI / 180.0);
+  return static_cast<float>(degrees * kPi / 180.0);
 }
 static inline constexpr float operator""_rad(long double radians)
 {
@@ -69,11 +74,11 @@ static inline constexpr float operator""_rad(long double radians)
 template <typename Type>
 Type wrapPi(Type angle)
 {
-  while (angle >= M_PI) {
-    angle -= 2.0 * M_PI;
+  while (angle >= kPi) {
+    angle -= 2.0 * kPi;
   }
-  while (angle < -M_PI) {
-    angle += 2.0 * M_PI;
+  while (angle < -kPi) {
+    angle += 2.0 * kPi;
   }
   return angle;
 }
@@ -94,10 +99,10 @@ Eigen::Matrix<Type, 3, 1> quaternionToEulerRpy(const Eigen::Quaternion<Type>& q)
 
   angles.y() = asin(-dcm.coeff(2, 0));
 
-  if ((std::fabs(angles.y() - static_cast<Type>(M_PI / 2))) < static_cast<Type>(1.0e-3)) {
+  if ((std::fabs(angles.y() - static_cast<Type>(kPi / 2))) < static_cast<Type>(1.0e-3)) {
     angles.x() = 0;
     angles.z() = atan2(dcm.coeff(1, 2), dcm.coeff(0, 2));
-  } else if ((std::fabs(angles.y() + static_cast<Type>(M_PI / 2))) < static_cast<Type>(1.0e-3)) {
+  } else if ((std::fabs(angles.y() + static_cast<Type>(kPi / 2))) < static_cast<Type>(1.0e-3)) {
     angles.x() = 0;
     angles.z() = atan2(-dcm.coeff(1, 2), -dcm.coeff(0, 2));
   } else {

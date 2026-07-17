@@ -26,7 +26,7 @@ using AuxLocalPosition = px4_msgs::msg::VehicleOdometry;
  * `LocalPositionMeasurementInterface::update`.
  *
  * This struct holds information about the local position measurement, including: the timestamp of
- * the sample, vertical and horizontal postion and velocity, attitude, and their associated
+ * the sample, vertical and horizontal position and velocity, attitude, and their associated
  * variances.
  * @see LocalPositionMeasurementInterface::update
  */

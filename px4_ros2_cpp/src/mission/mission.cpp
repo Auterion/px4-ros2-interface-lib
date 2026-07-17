@@ -3,12 +3,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
+#if defined(__linux__)
 #include <poll.h>
 #include <sys/eventfd.h>
 #include <sys/inotify.h>
 #include <sys/types.h>
 #include <unistd.h>
+#endif
 
+#include <chrono>
 #include <fstream>
 #include <px4_ros2/mission/mission.hpp>
 #include <px4_ros2/third_party/nlohmann/json.hpp>
@@ -77,10 +80,12 @@ MissionFileMonitor::MissionFileMonitor(
       _filename(std::move(filename)),
       _on_mission_update(std::move(on_mission_update))
 {
+#if defined(__linux__)
   _event_fd = eventfd(0, 0);
   if (_event_fd < 0) {
     RCLCPP_ERROR(_node->get_logger(), "eventfd() failed (%s)", strerror(errno));
   }
+#endif
   _update_timer = _node->create_wall_timer(1ms, [this] {
     _update_timer->cancel();
     fileUpdated();
@@ -92,6 +97,7 @@ MissionFileMonitor::MissionFileMonitor(
 
 MissionFileMonitor::~MissionFileMonitor()
 {
+#if defined(__linux__)
   // Wake up thread
   uint64_t value = 1;
   const int ret = write(_event_fd, &value, sizeof(value));
@@ -99,8 +105,20 @@ MissionFileMonitor::~MissionFileMonitor()
     _thread.join();
   }
   close(_event_fd);
+#else
+  // Wake up thread
+  {
+    const std::lock_guard<std::mutex> lock(_shutdown_mutex);
+    _shutdown = true;
+  }
+  _shutdown_cv.notify_all();
+  if (_thread.joinable()) {
+    _thread.join();
+  }
+#endif
 }
 
+#if defined(__linux__)
 void MissionFileMonitor::run()
 {
   constexpr int kBufLen = 16 * (sizeof(inotify_event) + 16);
@@ -168,6 +186,43 @@ void MissionFileMonitor::run()
   inotify_rm_watch(fd, wd);
   close(fd);
 }
+#else
+void MissionFileMonitor::run()
+{
+  // Portable fallback: inotify and eventfd are Linux-only, so other platforms
+  // watch the file by polling its modification time at a fixed cadence. A
+  // change may be observed mid-write; fileUpdated() logs and retries on the
+  // next tick if the file does not parse.
+  std::error_code ec;
+  bool existed = std::filesystem::exists(_filename, ec) && !ec;
+  std::filesystem::file_time_type last_write{};
+  if (existed) {
+    last_write = std::filesystem::last_write_time(_filename, ec);
+    // Immediately notify if the file already exists (async update notification)
+    _update_timer->reset();
+  }
+
+  std::unique_lock<std::mutex> lock(_shutdown_mutex);
+  while (
+      !_shutdown_cv.wait_for(lock, std::chrono::milliseconds(500), [this] { return _shutdown; })) {
+    lock.unlock();
+    std::error_code poll_ec;
+    const bool exists = std::filesystem::exists(_filename, poll_ec) && !poll_ec;
+    if (exists) {
+      const auto write_time = std::filesystem::last_write_time(_filename, poll_ec);
+      if (!poll_ec && (!existed || write_time != last_write)) {
+        last_write = write_time;
+        // Async update notification
+        _update_timer->reset();
+      }
+      existed = true;
+    } else {
+      existed = false;
+    }
+    lock.lock();
+  }
+}
+#endif
 
 void MissionFileMonitor::fileUpdated()
 {

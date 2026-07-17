@@ -21,6 +21,7 @@
 
 #include <px4_msgs/msg/estimator_status_flags.hpp>
 #include <px4_ros2/navigation/experimental/local_position_measurement_interface.hpp>
+#include <px4_ros2/utils/geometry.hpp>
 #include <px4_ros2/utils/message_version.hpp>
 #include <rclcpp/rclcpp.hpp>
 
@@ -145,7 +146,7 @@ TEST_F(LocalPositionInterfaceTest, fuseEvYaw)
 {
   auto measurement = std::make_unique<LocalPositionMeasurement>();
   measurement->attitude_quaternion =
-      Eigen::Quaternionf(Eigen::AngleAxisf(M_PI_2, Eigen::Vector3f::UnitZ()));  // East
+      Eigen::Quaternionf(Eigen::AngleAxisf((px4_ros2::kPi / 2), Eigen::Vector3f::UnitZ()));  // East
   measurement->attitude_variance = Eigen::Vector3f{0.1f, 0.1f, 0.1f};
 
   waitForMeasurementUpdate(
@@ -165,7 +166,7 @@ TEST_F(LocalPositionInterfaceTest, fuseAll)
   measurement->velocity_z = 0.0f;
   measurement->velocity_z_variance = 0.1f;
   measurement->attitude_quaternion =
-      Eigen::Quaternionf(Eigen::AngleAxisf(M_PI_2, Eigen::Vector3f::UnitZ()));  // East
+      Eigen::Quaternionf(Eigen::AngleAxisf((px4_ros2::kPi / 2), Eigen::Vector3f::UnitZ()));  // East
   measurement->attitude_variance = Eigen::Vector3f{0.1f, 0.1f, 0.1f};
 
   waitForMeasurementUpdate(

@@ -5,13 +5,15 @@
 
 #include "px4_ros2/components/message_compatibility_check.hpp"
 
-#include <unistd.h>
-
-#include <ament_index_cpp/get_package_share_directory.hpp>
 #if defined(ROS2_ROLLING) || defined(ROS2_LYRICAL)
 #include <ament_index_cpp/get_package_share_path.hpp>
 #include <filesystem>
+#else
+// Rolling's ament_index_cpp replaces get_package_share_directory with
+// get_package_share_path and no longer ships this header.
+#include <ament_index_cpp/get_package_share_directory.hpp>
 #endif
+#include <chrono>
 #include <fstream>
 #include <px4_all_messages.hpp>
 #include <px4_msgs/msg/message_format_request.hpp>
@@ -19,6 +21,7 @@
 #include <px4_ros2/utils/message_version.hpp>
 #include <regex>
 #include <string>
+#include <thread>
 #include <vector>
 
 #ifndef ROS2_HUMBLE_OR_GALACTIC
@@ -145,7 +148,7 @@ RequestMessageFormatReturn requestMessageFormat(
       break;
     }
 
-    usleep(100000);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
 
   RequestMessageFormatReturn request_message_format_return{RequestMessageFormatReturn::Timeout};
@@ -163,7 +166,7 @@ RequestMessageFormatReturn requestMessageFormat(
         break;
       }
 
-      usleep(100000);
+      std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 
     auto start_time = std::chrono::steady_clock::now();

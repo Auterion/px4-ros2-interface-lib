@@ -9,7 +9,7 @@
  *
  * This group contains helper functions to convert points between
  * the geographical coordinate system ("global") and the local azimuthal
- * equidistant plane ("local"). Additionaly it provides methods for commonly
+ * equidistant plane ("local"). Additionally it provides methods for commonly
  * used geodesic operations.
  *
  * Latitude and longitude are in degrees (degrees: 8.1234567°, not 81234567°).
@@ -92,12 +92,12 @@ class MapProjection {
 
  private:
   /**
-   * @throw runtime error if class instance is not initalized
+   * @throw runtime error if class instance is not initialized
    */
   void assertInitalized() const;
 
   /**
-   * @brief Callback for VehicleLocalPosition messages which intializes and updates the map
+   * @brief Callback for VehicleLocalPosition messages which initializes and updates the map
    * projection reference point from PX4
    *
    * @param msg the VehicleLocalPosition message

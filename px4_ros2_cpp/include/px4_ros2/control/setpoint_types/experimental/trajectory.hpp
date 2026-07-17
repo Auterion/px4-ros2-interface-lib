@@ -25,7 +25,7 @@ class TrajectorySetpointType : public SetpointBase {
  public:
   /**
    * setting local_position_is_optional to true allows to create a mode that uses trajectory
-   * setpoint but doesn't necessarly require local position. Sending XY position setpoint
+   * setpoint but doesn't necessarily require local position. Sending XY position setpoint
    * without a correct source of positional data is not recommended
    */
   explicit TrajectorySetpointType(Context& context, bool local_position_is_optional = false);
