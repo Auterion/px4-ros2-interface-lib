@@ -1,0 +1,9 @@
+# Goal: take off to a target altitude.
+float32 altitude_amsl_m     # target altitude [m AMSL]; NaN uses PX4's default
+---
+# Result.
+bool success                # true if PX4 accepted the takeoff command
+string message              # human-readable outcome (the SDK result string)
+---
+# Feedback.
+float32 current_altitude_m  # current altitude estimate [m AMSL]
