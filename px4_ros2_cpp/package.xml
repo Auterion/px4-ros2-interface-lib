@@ -2,10 +2,17 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>px4_ros2_cpp</name>
-  <version>0.0.1</version>
-  <description>Library to interface with PX4 from ROS2</description>
+  <version>1.17.0</version>
+  <description>Library to interface with PX4 from a companion computer using ROS 2</description>
   <maintainer email="beat-kueng@gmx.net">Beat Kueng</maintainer>
   <license>BSD-3-Clause</license>
+
+  <url type="repository">https://github.com/Auterion/px4-ros2-interface-lib</url>
+  <url type="bugtracker">https://github.com/Auterion/px4-ros2-interface-lib/issues</url>
+  <url type="website">https://docs.px4.io/main/en/ros2/px4_ros2_interface_lib.html</url>
+
+  <author email="beat-kueng@gmx.net">Beat Kueng</author>
+  <author email="nmarques@riis.com">Nuno Marques (RIIS, LLC)</author>
 
   <buildtool_depend>eigen3_cmake_module</buildtool_depend>
   <buildtool_depend>ament_cmake</buildtool_depend>
@@ -16,6 +23,8 @@
 
   <build_depend>eigen</build_depend>
   <build_depend>rclcpp</build_depend>
+  <!-- empy backs the px4_all_messages.hpp codegen (python3 -m em) at build time. -->
+  <build_depend>python3-empy</build_depend>
   <build_export_depend>eigen</build_export_depend>
 
   <test_depend>ament_lint_auto</test_depend>

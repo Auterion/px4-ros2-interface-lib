@@ -22,7 +22,7 @@ class OdometryLocalPosition : public Subscription<px4_msgs::msg::VehicleLocalPos
  public:
   /**
    * setting local_position_is_optional to true allows to create a mode that uses local position
-   * data but doesn't necessarly require local position to be available (for instance if the mode
+   * data but doesn't necessarily require local position to be available (for instance if the mode
    * reads altitude data from vehicle_local_position). Reading XY position without a correct source
    * of positional data is not recommended
    */

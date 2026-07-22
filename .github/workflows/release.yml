@@ -1,0 +1,109 @@
+name: Release to rosdistro (bloom)
+
+# Opens release pull requests against ros/rosdistro for px4_ros2_cpp and
+# px4_ros2_py, for each supported ROS 2 distribution, whenever a GitHub release
+# is published. This automates the recurring part of releasing onto the ROS
+# build farm.
+#
+# Prerequisites (one-time setup, see CONTRIBUTING.md):
+#   1. Two release repositories, ${RELEASE_ORG}/px4_ros2_cpp-release and
+#      ${RELEASE_ORG}/px4_ros2_py-release (RELEASE_ORG defaults to Auterion; the
+#      Auterion-vs-PX4 choice is documented in CONTRIBUTING.md). A maintainer
+#      seeds a bloom track for each current distro once with an interactive
+#      `bloom-release` (devel_branch main). That first run also adds the
+#      `release:` block for each package to ros/rosdistro. After that, this
+#      workflow automates subsequent releases.
+#   2. A repository secret `BLOOM_GITHUB_TOKEN` that can push to the release
+#      repositories and open a pull request on ros/rosdistro (a fine-grained PAT
+#      or a bot account token).
+#
+# HARD DEPENDENCY: px4_ros2_cpp build-depends on px4_msgs, which is currently
+# source-only in ros/rosdistro (not on the build farm). The rosdistro release of
+# px4_ros2_cpp cannot be built by the farm until px4_msgs is released there, so
+# this workflow is wired and ready but effectively blocked on that upstream step.
+#
+# Until the token and the tracks are configured the job exits successfully
+# without doing anything, so it never blocks a release.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      ros_distro:
+        description: "Single ROS 2 distribution to release (blank = all supported)"
+        required: false
+        default: ""
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  # Organization hosting the two bloom release repositories. Change to PX4 (or
+  # another org) here if the release repos are created elsewhere; the bloom
+  # tracks themselves must be seeded to match (see CONTRIBUTING.md).
+  RELEASE_ORG: Auterion
+
+jobs:
+  bloom-release:
+    name: "bloom-release (${{ matrix.ros2_distro }})"
+    runs-on: ubuntu-latest
+    container:
+      image: ros:rolling-ros-core
+    strategy:
+      fail-fast: false
+      matrix:
+        ros2_distro: [humble, jazzy, kilted, rolling, lyrical]
+    steps:
+      - name: Check release automation is configured
+        id: guard
+        env:
+          BLOOM_GITHUB_TOKEN: ${{ secrets.BLOOM_GITHUB_TOKEN }}
+        run: |
+          if [ -z "${BLOOM_GITHUB_TOKEN}" ]; then
+            echo "BLOOM_GITHUB_TOKEN is not set; skipping bloom release." >&2
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip distribution not requested
+        id: select
+        if: steps.guard.outputs.enabled == 'true'
+        run: |
+          requested="${{ github.event.inputs.ros_distro }}"
+          if [ -n "${requested}" ] && [ "${requested}" != "${{ matrix.ros2_distro }}" ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install bloom
+        if: steps.guard.outputs.enabled == 'true' && steps.select.outputs.run == 'true'
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends python3-bloom git ca-certificates
+
+      - name: Configure git identity
+        if: steps.guard.outputs.enabled == 'true' && steps.select.outputs.run == 'true'
+        run: |
+          git config --global user.name "${{ vars.RELEASE_BOT_NAME || 'px4-ros2 release bot' }}"
+          git config --global user.email "${{ vars.RELEASE_BOT_EMAIL || 'bot@auterion.com' }}"
+
+      - name: Open rosdistro release pull requests
+        if: steps.guard.outputs.enabled == 'true' && steps.select.outputs.run == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.BLOOM_GITHUB_TOKEN }}
+        run: |
+          # The tracks + the rosdistro release blocks must already be seeded for
+          # this distro (see header). This automates subsequent releases. The two
+          # packages are released in dependency order: px4_ros2_cpp before
+          # px4_ros2_py (the Python bindings depend on the C++ library).
+          for pkg in px4_ros2_cpp px4_ros2_py; do
+            echo "[*] bloom-release ${pkg} for ${{ matrix.ros2_distro }}"
+            bloom-release \
+              --rosdistro "${{ matrix.ros2_distro }}" \
+              --track "${{ matrix.ros2_distro }}" \
+              --non-interactive \
+              "${pkg}"
+          done

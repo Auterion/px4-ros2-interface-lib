@@ -1,0 +1,91 @@
+name: Bug report
+description: Report a problem with px4-ros2-interface-lib (px4_ros2_cpp or px4_ros2_py)
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report!
+
+        **Note:** The message and service definitions consumed by this library
+        (`px4_msgs`) are generated from PX4-Autopilot. If a *field* or *message*
+        is wrong or missing, please open the issue against
+        [PX4-Autopilot](https://github.com/PX4/PX4-Autopilot/issues) instead.
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: To Reproduce
+      description: Steps to reproduce the behavior (commands, branch, etc.).
+      placeholder: |
+        1. Checkout branch '...'
+        2. Run `colcon build --packages-up-to px4_ros2_cpp`
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What you expected to happen.
+    validations:
+      required: true
+  - type: dropdown
+    id: package
+    attributes:
+      label: Affected package
+      options:
+        - px4_ros2_cpp (C++ library)
+        - px4_ros2_py (Python bindings)
+        - both
+        - not sure
+    validations:
+      required: true
+  - type: input
+    id: ros-distro
+    attributes:
+      label: ROS 2 distribution
+      placeholder: "e.g. Humble, Jazzy, Kilted, Rolling"
+    validations:
+      required: true
+  - type: input
+    id: px4-version
+    attributes:
+      label: PX4 version / branch
+      placeholder: "e.g. v1.17.0, main"
+    validations:
+      required: true
+  - type: input
+    id: px4-msgs-version
+    attributes:
+      label: px4_msgs version / branch
+      placeholder: "e.g. 1.17.0, release/1.17, main"
+    validations:
+      required: true
+  - type: textarea
+    id: mode-context
+    attributes:
+      label: Mode / setpoint context
+      description: Which mode, setpoint type, or API were you using (e.g. custom ModeBase, GotoSetpoint, TrajectorySetpoint, goto_global)? Was an FMU connected (SITL or hardware)?
+    validations:
+      required: false
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: "e.g. Ubuntu 24.04"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / error output
+      description: Paste any relevant build or runtime logs. This will be rendered as code.
+      render: shell

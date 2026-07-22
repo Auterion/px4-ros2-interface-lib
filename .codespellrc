@@ -1,0 +1,6 @@
+[codespell]
+# Skip vendored third-party code and the generated RST changelogs.
+skip = ./.git,*/third_party/*,*.rst
+# ned = NED frame; empy = the empy tool; sitl = software in the loop;
+# positionned = the positionNed() NED-frame API method; readyness = a test-local identifier.
+ignore-words-list = ned,empy,sitl,positionned,readyness

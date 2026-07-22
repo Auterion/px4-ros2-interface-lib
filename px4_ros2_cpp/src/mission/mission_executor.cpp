@@ -3,8 +3,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
+#if defined(_WIN32)
+#include <io.h>
+
+#include <cstdio>
+#else
 #include <fcntl.h>
 #include <unistd.h>
+#endif
 
 #include <filesystem>
 #include <fstream>
@@ -351,15 +357,32 @@ void MissionExecutor::savePersistentState()
     RCLCPP_DEBUG(_node.get_logger(), "Saving persistent state to file '%s'",
                  _persistence_filename.c_str());
 
+    nlohmann::json j;
+    _state.toJson(j);
+    const std::string json_str = j.dump();
+#if defined(_WIN32)
+    // Durable write on Windows: CRT stream + _commit() (the fsync equivalent).
+    // NTFS exposes no user-facing directory-entry flush; the file flush suffices.
+    FILE* f = nullptr;
+    if (fopen_s(&f, _persistence_filename.c_str(), "wb") != 0 || f == nullptr) {
+      RCLCPP_ERROR(_node.get_logger(), "Failed to open file '%s' for writing (%s)",
+                   _persistence_filename.c_str(), strerror(errno));
+      return;
+    }
+    if (fwrite(json_str.c_str(), 1, json_str.size(), f) != json_str.size()) {
+      RCLCPP_ERROR(_node.get_logger(), "Failed to write JSON to file '%s'",
+                   _persistence_filename.c_str());
+    }
+    fflush(f);
+    _commit(_fileno(f));
+    fclose(f);
+#else
     int fd = open(_persistence_filename.c_str(), O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
     if (fd < 0) {
       RCLCPP_ERROR(_node.get_logger(), "Failed to open file '%s' for writing (%s)",
                    _persistence_filename.c_str(), strerror(errno));
       return;
     }
-    nlohmann::json j;
-    _state.toJson(j);
-    const std::string json_str = j.dump();
     if (write(fd, json_str.c_str(), json_str.size()) != static_cast<ssize_t>(json_str.size())) {
       RCLCPP_ERROR(_node.get_logger(), "Failed to write JSON to file '%s'",
                    _persistence_filename.c_str());
@@ -373,6 +396,7 @@ void MissionExecutor::savePersistentState()
       fsync(fd);
       close(fd);
     }
+#endif
   }
 }
 
@@ -382,6 +406,7 @@ void MissionExecutor::clearPersistentState() const
     RCLCPP_DEBUG(_node.get_logger(), "Removing persistent state file '%s'",
                  _persistence_filename.c_str());
     std::remove(_persistence_filename.c_str());
+#if !defined(_WIN32)
     // Call fsync on the parent directory to ensure it's flushed to disk
     const int fd =
         open(std::filesystem::path(_persistence_filename).parent_path().c_str(), O_RDONLY);
@@ -389,6 +414,7 @@ void MissionExecutor::clearPersistentState() const
       fsync(fd);
       close(fd);
     }
+#endif
   }
 }
 void MissionExecutor::PersistentState::toJson(nlohmann::json& j) const

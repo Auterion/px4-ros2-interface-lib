@@ -14,6 +14,11 @@
 #include <utility>
 #include <variant>
 
+#if !defined(__linux__)
+#include <condition_variable>
+#include <mutex>
+#endif
+
 namespace px4_ros2 {
 /** \ingroup mission
  *  @{
@@ -192,7 +197,14 @@ class MissionFileMonitor {
   const std::filesystem::path _filename;
   const std::function<void(std::shared_ptr<Mission>)> _on_mission_update;
   std::thread _thread;
+#if defined(__linux__)
   int _event_fd{-1};
+#else
+  // Shutdown signaling for the portable (mtime-polling) monitor implementation
+  std::mutex _shutdown_mutex;
+  std::condition_variable _shutdown_cv;
+  bool _shutdown{false};
+#endif
   rclcpp::TimerBase::SharedPtr _update_timer;
 };
 

@@ -20,6 +20,13 @@ find_package(rclcpp REQUIRED)
 find_package(px4_msgs REQUIRED)
 find_package(eigen3_cmake_module REQUIRED)
 find_package(Eigen3 REQUIRED)
+# Some Eigen3 configs (e.g. on Windows) do not define the imported target;
+# synthesize it so the -Werror build and the links below work everywhere.
+if(NOT TARGET Eigen3::Eigen)
+    add_library(Eigen3::Eigen INTERFACE IMPORTED)
+    set_target_properties(Eigen3::Eigen PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES "${Eigen3_INCLUDE_DIRS}")
+endif()
 find_package(ament_index_cpp REQUIRED)
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
@@ -176,6 +183,10 @@ add_library(px4_ros2_cpp
         src/utils/map_projection_impl.cpp
 )
 add_dependencies(px4_ros2_cpp generate_px4_header)
+# The sources carry no __declspec export annotations, so on MSVC the DLL would
+# otherwise export nothing and no import library is produced, which breaks
+# linking the test executables (LNK1181). No effect on other platforms.
+set_target_properties(px4_ros2_cpp PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
 target_include_directories(px4_ros2_cpp PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
 target_link_libraries(px4_ros2_cpp PUBLIC ament_index_cpp::ament_index_cpp Eigen3::Eigen rclcpp::rclcpp ${px4_msgs_TARGETS})
 target_compile_definitions(px4_ros2_cpp PUBLIC HAS_RCLCPP_PRE_SHUTDOWN=$<BOOL:${HAS_RCLCPP_PRE_SHUTDOWN}>)
@@ -204,12 +215,19 @@ if(BUILD_TESTING)
     find_package(ament_lint_auto REQUIRED)
     find_package(ament_cmake_gtest REQUIRED)
     ament_lint_auto_find_test_dependencies()
+    # Resolve the gtest headers for the test helper libraries below: they are
+    # compiled outside ament_add_gtest, and platforms without a system-wide
+    # gtest (e.g. Windows) only have the vendored copy this macro locates.
+    ament_find_gtest()
 
     # Integration tests
-    add_library(integration_utils
+    # STATIC so gtest symbol resolution defers to the test executable (a shared
+    # helper leaves them unresolved at link time on macOS).
+    add_library(integration_utils STATIC
             test/integration/util.cpp
     )
     include_directories(include)
+    target_include_directories(integration_utils PRIVATE ${GTEST_INCLUDE_DIRS})
     target_link_libraries(integration_utils PUBLIC rclcpp::rclcpp ${px4_msgs_TARGETS})
 
     ament_add_gtest(integration_tests
@@ -229,10 +247,13 @@ if(BUILD_TESTING)
 
 
     # Unit tests
-    add_library(unit_utils
+    # STATIC so gtest symbol resolution defers to the test executable (a shared
+    # unit_utils leaves them unresolved at link time on macOS).
+    add_library(unit_utils STATIC
             test/unit/utils/util.cpp
     )
     include_directories(include)
+    target_include_directories(unit_utils PRIVATE ${GTEST_INCLUDE_DIRS})
     target_link_libraries(unit_utils PUBLIC Eigen3::Eigen)
 
     ament_add_gtest(${PROJECT_NAME}_unit_tests

@@ -5,11 +5,11 @@
 
 #include "registration.hpp"
 
-#include <unistd.h>
-
 #include <cassert>
+#include <chrono>
 #include <px4_ros2/utils/message_version.hpp>
 #include <random>
+#include <thread>
 
 static constexpr uint16_t kLatestPX4ROS2ApiVersion = 2;
 
@@ -105,7 +105,7 @@ bool Registration::doRegister(const RegistrationSettings& settings)
       break;
     }
 
-    usleep(100000);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
 
   // send request and wait for response
@@ -125,7 +125,7 @@ bool Registration::doRegister(const RegistrationSettings& settings)
         break;
       }
 
-      usleep(100000);
+      std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 
     const auto start_time = std::chrono::steady_clock::now();

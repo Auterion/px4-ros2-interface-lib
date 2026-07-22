@@ -81,7 +81,7 @@ Eigen::Matrix<Type, 3, 1> yawBodyToWorld(Type yaw, const Eigen::Matrix<Type, 3, 
 template <typename T>
 static inline T yawNedToEnu(const T yaw_ned_rad)
 {
-  return wrapPi(static_cast<T>(M_PI / 2.0) - yaw_ned_rad);
+  return wrapPi(static_cast<T>(kPi / 2.0) - yaw_ned_rad);
 }
 
 /**
@@ -93,7 +93,7 @@ static inline T yawNedToEnu(const T yaw_ned_rad)
 template <typename T>
 static inline T yawEnuToNed(const T yaw_enu_rad)
 {
-  return wrapPi(static_cast<T>(M_PI / 2.0) - yaw_enu_rad);
+  return wrapPi(static_cast<T>(kPi / 2.0) - yaw_enu_rad);
 }
 
 /**

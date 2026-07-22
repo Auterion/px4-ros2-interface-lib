@@ -1,34 +1,42 @@
 #! /bin/bash
 set -e
 
-THIS_DIR="$(dirname $(readlink -f $0))"
+THIS_DIR="$(dirname "$(readlink -f "$0")")"
 ROOT_DIR="$(dirname "$THIS_DIR")"
 # Find all ROS package names in this repo
 PACKAGES=()
-for package_xml in $(find "$ROOT_DIR" -name package.xml); do
-  package_name=$(cat "$package_xml" | sed -n 's/.*<name>\(.*\)<\/name>.*/\1/p')
+while IFS= read -r package_xml; do
+  package_name=$(sed -n 's/.*<name>\(.*\)<\/name>.*/\1/p' "$package_xml")
   package_dir="$(dirname "$package_xml")"
   # Only include C++ packages
   if [ -f "$package_dir/CMakeLists.txt" ]; then
-    PACKAGES+=($package_name)
+    PACKAGES+=("$package_name")
   else
     echo "Skipping package $package_name in $package_dir (not C++)"
   fi
-done
+done < <(find "$ROOT_DIR" -name package.xml)
 
-if [ "$1" == "--help" -o "$1" == "-h" ]; then
+if [ "$1" == "--help" ] || [ "$1" == "-h" ]; then
   echo "Usage: $0 [<ros2-build-dir>]"
   exit 0
 fi
 
 if [ $# -gt 0 ]; then # Optionally set the build dir from CLI
-  BUILD_DIR="$(readlink -f $1)"
+  BUILD_DIR="$(readlink -f "$1")"
 else
-  PACKAGE_INSTALL_DIR="$(ros2 pkg prefix ${PACKAGES[0]})"
+  PACKAGE_INSTALL_DIR="$(ros2 pkg prefix "${PACKAGES[0]}")"
   BUILD_DIR="$PACKAGE_INSTALL_DIR/../../build"
 fi
 
 for PACKAGE in "${PACKAGES[@]}"; do
+  # Skip packages that were not built in this workspace and packages that
+  # produce no compile database (e.g. rosidl/interface-only packages): there
+  # is nothing for clang-tidy to analyze, and a silent pushd failure would
+  # otherwise abort the whole run under set -e.
+  if [ ! -f "$BUILD_DIR/$PACKAGE/compile_commands.json" ]; then
+    echo "Skipping $PACKAGE (no compile_commands.json in $BUILD_DIR/$PACKAGE)"
+    continue
+  fi
   pushd "$BUILD_DIR/$PACKAGE" &>/dev/null
   echo "Checking $BUILD_DIR/$PACKAGE"
   # For some reason we explicitly have to specify c++17 in ROS CI.

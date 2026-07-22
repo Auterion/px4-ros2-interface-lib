@@ -1,0 +1,162 @@
+name: Create GitHub release
+
+# Turns a px4_msgs release into a matching px4-ros2-interface-lib release, which
+# in turn drives the packaging (.deb) and rosdistro (bloom) release workflows.
+#
+# WHY px4_msgs drives this: px4_ros2_cpp wraps a specific px4_msgs message set and
+# checks compatibility against it at runtime, so a px4_ros2 release is only
+# meaningful relative to a concrete px4_msgs version. Chaining the release off
+# px4_msgs also enforces the required ordering (px4_msgs must be released, and on
+# the build farm, before px4_ros2_cpp can be).
+#
+# Triggers:
+#   * repository_dispatch `px4_msgs_release` (PRIMARY): dispatched by px4_msgs
+#     when it publishes vX.Y.Z. client_payload.version = "X.Y.Z". This syncs both
+#     package.xml versions on the release/X.Y branch, tags vX.Y.Z and publishes.
+#   * push of a `vX.Y.Z` tag, or a `release/**` branch whose px4_ros2_cpp
+#     package.xml version has no matching tag yet (manual / maintainer path).
+#   * workflow_dispatch (manual, optional version input).
+#
+# The version-sync commit and the tag are pushed with the default GITHUB_TOKEN,
+# which does NOT re-trigger workflows, so there is no trigger loop. The GitHub
+# release is created with RELEASE_TOKEN (a PAT) so that the `release: published`
+# event cascades into package.yml and release.yml. Without RELEASE_TOKEN the
+# release is still created (with the default token) but the cascade does not run.
+on:
+  repository_dispatch:
+    types: [px4_msgs_release]
+  push:
+    branches:
+      - 'release/**'
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, e.g. 1.17.0 (blank = read from package.xml)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Determine version, tag and target ref
+        id: ver
+        run: |
+          event="${{ github.event_name }}"
+          version=""
+          if [ "${event}" = "repository_dispatch" ]; then
+            version="${{ github.event.client_payload.version }}"
+          elif [ "${event}" = "workflow_dispatch" ]; then
+            version="${{ github.event.inputs.version }}"
+          elif [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            tag="${GITHUB_REF#refs/tags/}"
+            version="${tag#v}"
+          fi
+          # Fall back to the in-tree version (branch push or blank dispatch input).
+          if [ -z "${version}" ]; then
+            version="$(sed -n 's:.*<version>\(.*\)</version>.*:\1:p' px4_ros2_cpp/package.xml | head -n1)"
+          fi
+          if [ -z "${version}" ]; then
+            echo "Could not determine version" >&2
+            exit 1
+          fi
+          # Strip a leading v if a bare version already carries one.
+          version="${version#v}"
+          minor="$(echo "${version}" | cut -d. -f1-2)"
+          {
+            echo "version=${version}"
+            echo "tag=v${version}"
+            echo "branch=release/${minor}"
+            echo "event=${event}"
+          } >> "$GITHUB_OUTPUT"
+          echo "version=${version} tag=v${version} branch=release/${minor} event=${event}"
+
+      - name: Skip if release already exists
+        id: exists
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "${{ steps.ver.outputs.tag }}" >/dev/null 2>&1; then
+            echo "Release ${{ steps.ver.outputs.tag }} already exists; nothing to do."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # For a px4_msgs-driven or manual release, sync the version onto the matching
+      # release/X.Y branch (created upstream by create_release_branch.yml, or from
+      # main if absent). Pushed with GITHUB_TOKEN so it does not re-trigger.
+      - name: Sync version onto release branch
+        id: sync
+        if: >-
+          steps.exists.outputs.skip == 'false' &&
+          (steps.ver.outputs.event == 'repository_dispatch' || steps.ver.outputs.event == 'workflow_dispatch')
+        run: |
+          version="${{ steps.ver.outputs.version }}"
+          branch="${{ steps.ver.outputs.branch }}"
+          if git ls-remote --exit-code --heads origin "${branch}" >/dev/null 2>&1; then
+            git checkout -B "${branch}" "origin/${branch}"
+          else
+            echo "Release branch ${branch} not found; creating it from the current ref."
+            git checkout -B "${branch}"
+          fi
+          for manifest in px4_ros2_cpp/package.xml px4_ros2_py/package.xml; do
+            sed -i "s:<version>[^<]*</version>:<version>${version}</version>:" "${manifest}"
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet; then
+            git add px4_ros2_cpp/package.xml px4_ros2_py/package.xml
+            git commit -m "release: set version ${version}"
+            git push origin "${branch}"
+          fi
+          echo "target=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Determine release target commit
+        id: target
+        if: steps.exists.outputs.skip == 'false'
+        run: |
+          if [ -n "${{ steps.sync.outputs.target }}" ]; then
+            echo "sha=${{ steps.sync.outputs.target }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "sha=${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create and push tag
+        if: steps.exists.outputs.skip == 'false'
+        run: |
+          tag="${{ steps.ver.outputs.tag }}"
+          if ! git rev-parse "${tag}" >/dev/null 2>&1; then
+            git tag "${tag}" "${{ steps.target.outputs.sha }}"
+            git push origin "${tag}"
+          fi
+
+      - name: Generate release notes
+        if: steps.exists.outputs.skip == 'false'
+        run: |
+          tag="${{ steps.ver.outputs.tag }}"
+          ./scripts/generate_release_notes.sh "${tag}" > notes.md || true
+          if [ ! -s notes.md ]; then
+            echo "Automated release of px4-ros2-interface-lib ${tag}." > notes.md
+          fi
+
+      - name: Create GitHub release
+        if: steps.exists.outputs.skip == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
+        run: |
+          tag="${{ steps.ver.outputs.tag }}"
+          gh release create "${tag}" \
+            --title "${tag}" \
+            --notes-file notes.md \
+            --target "${{ steps.target.outputs.sha }}"
