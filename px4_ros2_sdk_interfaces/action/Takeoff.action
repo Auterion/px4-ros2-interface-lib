@@ -1,9 +1,12 @@
 # Goal: take off to a target altitude.
 float32 altitude_amsl_m     # target altitude [m AMSL]; NaN uses PX4's default
 ---
-# Result.
+# Result. In the P0 scaffold the action completes on the FMU command
+# acknowledgement, not on physical arrival at the target altitude;
+# mode_completed-based completion lands with the ModeExecutorBase path (RFC).
 bool success                # true if PX4 accepted the takeoff command
 string message              # human-readable outcome (the SDK result string)
 ---
-# Feedback.
+# Feedback. Reserved: progress feedback is published once the telemetry hub
+# lands (RFC); the P0 scaffold does not populate it.
 float32 current_altitude_m  # current altitude estimate [m AMSL]

@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
+#include <atomic>
 #include <cmath>
 #include <memory>
+#include <mutex>
 #include <px4_msgs/msg/vehicle_command.hpp>
 #include <px4_ros2/components/wait_for_fmu.hpp>
 #include <px4_ros2_sdk/flight_server.hpp>
@@ -23,6 +25,12 @@ FlightServer::FlightServer(const rclcpp::NodeOptions& options)
   _topic_namespace_prefix = declare_parameter<std::string>("topic_namespace_prefix", "");
   _discovery_timeout_s = declare_parameter<double>("discovery_timeout_s", 5.0);
   _heartbeat_timeout_s = declare_parameter<double>("heartbeat_timeout_s", 5.0);
+}
+
+FlightServer::~FlightServer()
+{
+  _shutting_down = true;
+  stopTakeoff();
 }
 
 CallbackReturn FlightServer::on_configure(const rclcpp_lifecycle::State& /*state*/)
@@ -48,6 +56,7 @@ CallbackReturn FlightServer::on_configure(const rclcpp_lifecycle::State& /*state
 
 CallbackReturn FlightServer::on_activate(const rclcpp_lifecycle::State& /*state*/)
 {
+  _shutting_down = false;
   _arm_service = create_service<SetArmed>(
       "~/arm", [this](const std::shared_ptr<SetArmed::Request>& req,
                       const std::shared_ptr<SetArmed::Response>& resp) { handleArm(req, resp); });
@@ -69,6 +78,8 @@ CallbackReturn FlightServer::on_activate(const rclcpp_lifecycle::State& /*state*
 
 CallbackReturn FlightServer::on_deactivate(const rclcpp_lifecycle::State& /*state*/)
 {
+  _shutting_down = true;
+  stopTakeoff();  // wait for an in-flight takeoff to finish before dropping the servers
   _arm_service.reset();
   _takeoff_action.reset();
   return CallbackReturn::SUCCESS;
@@ -76,11 +87,21 @@ CallbackReturn FlightServer::on_deactivate(const rclcpp_lifecycle::State& /*stat
 
 CallbackReturn FlightServer::on_cleanup(const rclcpp_lifecycle::State& /*state*/)
 {
+  _shutting_down = true;
+  stopTakeoff();  // on_deactivate already joined; defensive for the error path
   _arm_service.reset();
   _takeoff_action.reset();
   _command_sender.reset();
   _l1_node.reset();
   return CallbackReturn::SUCCESS;
+}
+
+void FlightServer::stopTakeoff()
+{
+  const std::lock_guard<std::mutex> lock(_takeoff_thread_mutex);
+  if (_takeoff_thread.joinable()) {
+    _takeoff_thread.join();
+  }
 }
 
 VehicleCommand FlightServer::makeArmCommand(bool arm, bool force)
@@ -134,6 +155,9 @@ void FlightServer::handleArm(const std::shared_ptr<SetArmed::Request>& request,
 rclcpp_action::GoalResponse FlightServer::handleTakeoffGoal(
     const rclcpp_action::GoalUUID& /*uuid*/, const std::shared_ptr<const Takeoff::Goal>& /*goal*/)
 {
+  if (_shutting_down.load() || _takeoff_in_flight.load()) {
+    return rclcpp_action::GoalResponse::REJECT;
+  }
   return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
 }
 
@@ -145,27 +169,32 @@ rclcpp_action::CancelResponse FlightServer::handleTakeoffCancel(
 
 void FlightServer::handleTakeoffAccepted(const std::shared_ptr<GoalHandleTakeoff>& handle)
 {
-  // Run the blocking command off the executor thread.
-  std::thread{[this, handle]() { executeTakeoff(handle); }}.detach();
+  // Run the blocking command off the executor thread. Only one takeoff is ever
+  // in flight (handleTakeoffGoal rejects a second), so joining here only reaps
+  // the previous, already-finished worker before the handle is reassigned.
+  const std::lock_guard<std::mutex> lock(_takeoff_thread_mutex);
+  if (_takeoff_thread.joinable()) {
+    _takeoff_thread.join();
+  }
+  _takeoff_in_flight = true;
+  _takeoff_thread = std::thread{[this, handle]() { executeTakeoff(handle); }};
 }
 
 void FlightServer::executeTakeoff(const std::shared_ptr<GoalHandleTakeoff>& handle)
 {
   const auto goal = handle->get_goal();
-  auto feedback = std::make_shared<Takeoff::Feedback>();
-  feedback->current_altitude_m = NAN;
-  handle->publish_feedback(feedback);
-
   const Result result = sendVehicleCommand(makeTakeoffCommand(goal->altitude_amsl_m));
 
   auto action_result = std::make_shared<Takeoff::Result>();
-  action_result->success = result == Result::Success;
-  action_result->message = resultToString(result);
-  if (result == Result::Success) {
+  const bool accepted = result == Result::Success && !_shutting_down.load();
+  action_result->success = accepted;
+  action_result->message = _shutting_down.load() ? "server deactivating" : resultToString(result);
+  if (accepted) {
     handle->succeed(action_result);
   } else {
     handle->abort(action_result);
   }
+  _takeoff_in_flight = false;
 }
 
 }  // namespace px4_ros2::sdk

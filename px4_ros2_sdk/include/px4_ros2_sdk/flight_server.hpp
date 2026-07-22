@@ -5,9 +5,11 @@
 
 #pragma once
 
+#include <atomic>
 #include <cmath>
 #include <cstdint>
 #include <memory>
+#include <mutex>
 #include <px4_msgs/msg/vehicle_command.hpp>
 #include <px4_ros2/utils/vehicle_command_sender.hpp>
 #include <px4_ros2_sdk/result.hpp>
@@ -17,6 +19,7 @@
 #include <rclcpp_action/rclcpp_action.hpp>
 #include <rclcpp_lifecycle/lifecycle_node.hpp>
 #include <string>
+#include <thread>
 
 namespace px4_ros2::sdk {
 /** \ingroup sdk
@@ -31,12 +34,15 @@ namespace px4_ros2::sdk {
  * bringup and the non-streaming "safe core". on_configure runs the L1 discovery
  * (waitForFMU) and fails closed if the FMU is absent; on_activate starts the
  * arm service and the takeoff action server. Arm is a one-shot service; takeoff
- * is a long-running action with feedback and cancellation.
+ * is an action whose result is the FMU command acknowledgement: this slice
+ * publishes no progress feedback and succeeds once PX4 accepts the command, so
+ * the action is effectively single-shot for now.
  *
  * The maneuver here is driven directly through VehicleCommandSender (the
  * acknowledgement is the result). The RFC's full design routes takeoff/land/rtl
- * through ModeExecutorBase so completion rides mode_completed; that is deferred
- * to a later slice and noted in the RFC.
+ * through ModeExecutorBase so completion rides mode_completed, and adds
+ * altitude progress feedback; that is deferred to a later slice and noted in
+ * the RFC.
  *
  * px4_ros2_cpp's helpers take an rclcpp::Node&, so the server owns a plain L1
  * node for the device-driver interactions while itself remaining a LifecycleNode
@@ -50,6 +56,7 @@ class FlightServer : public rclcpp_lifecycle::LifecycleNode {
   using GoalHandleTakeoff = rclcpp_action::ServerGoalHandle<Takeoff>;
 
   explicit FlightServer(const rclcpp::NodeOptions& options = rclcpp::NodeOptions());
+  ~FlightServer() override;
 
   CallbackReturn on_configure(const rclcpp_lifecycle::State& state) override;
   CallbackReturn on_activate(const rclcpp_lifecycle::State& state) override;
@@ -80,6 +87,10 @@ class FlightServer : public rclcpp_lifecycle::LifecycleNode {
 
   Result sendVehicleCommand(const px4_msgs::msg::VehicleCommand& command);
 
+  // Join the takeoff worker (if any). Called before every teardown that resets
+  // _command_sender, so the worker never outlives the sender it uses.
+  void stopTakeoff();
+
   std::string _topic_namespace_prefix;
   double _discovery_timeout_s{5.0};
   double _heartbeat_timeout_s{5.0};
@@ -89,6 +100,15 @@ class FlightServer : public rclcpp_lifecycle::LifecycleNode {
 
   rclcpp::Service<SetArmed>::SharedPtr _arm_service;
   rclcpp_action::Server<Takeoff>::SharedPtr _takeoff_action;
+
+  // The takeoff action runs its blocking command on _takeoff_thread. _shutting_down
+  // makes an in-flight goal abort and rejects new goals during teardown;
+  // _takeoff_in_flight rejects a second concurrent takeoff; the mutex guards the
+  // thread handle against the accept callback racing teardown.
+  std::atomic<bool> _shutting_down{false};
+  std::atomic<bool> _takeoff_in_flight{false};
+  std::mutex _takeoff_thread_mutex;
+  std::thread _takeoff_thread;
 };
 
 /** @}*/
