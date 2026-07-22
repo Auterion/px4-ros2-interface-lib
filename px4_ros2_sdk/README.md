@@ -1,6 +1,6 @@
 # px4_ros2_sdk (experimental)
 
-A ROS 2-native flight SDK layered strictly on top of the `px4_ros2_cpp` device-driver core (it adds no new DDS traffic). It exposes PX4 flight capabilities as an idiomatic ROS 2 graph and provides a thin ergonomic commander over that graph, following the design in [doc/API_EXPANSION_RFC.md](../doc/API_EXPANSION_RFC.md).
+A ROS 2-native flight SDK layered strictly on top of the `px4_ros2_cpp` device-driver core (it adds no new `/fmu` endpoints beyond `px4_ros2_cpp`). It exposes PX4 flight capabilities as an idiomatic ROS 2 graph and provides a thin ergonomic commander over that graph, following the design in [doc/API_EXPANSION_RFC.md](../doc/API_EXPANSION_RFC.md).
 
 This package is the P0 slice of that RFC: the bringup and the non-streaming "safe core".
 

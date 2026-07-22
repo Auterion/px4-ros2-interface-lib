@@ -26,8 +26,9 @@ namespace px4_ros2::sdk {
  *
  * SimpleFlight is a thin action-plus-service client: its blocking verbs send a
  * request or goal to the FlightServer and spin the borrowed node until the
- * outcome is known. It is the easy path for scripts and does not open any DDS
- * endpoint of its own; all vehicle I/O stays inside the FlightServer.
+ * outcome is known. It is the easy path for scripts and opens no `/fmu`
+ * endpoint of its own; its service/action clients are companion-side, and all
+ * FMU I/O stays inside the FlightServer (and, beneath it, px4_ros2_cpp).
  *
  * The borrowed node must not be spun concurrently by another executor while a
  * SimpleFlight call is in progress.
