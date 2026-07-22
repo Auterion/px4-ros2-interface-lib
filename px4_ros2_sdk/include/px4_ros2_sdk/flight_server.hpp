@@ -8,6 +8,7 @@
 #include <cmath>
 #include <cstdint>
 #include <memory>
+#include <px4_msgs/msg/vehicle_command.hpp>
 #include <px4_ros2/utils/vehicle_command_sender.hpp>
 #include <px4_ros2_sdk/result.hpp>
 #include <px4_ros2_sdk_interfaces/action/takeoff.hpp>
@@ -55,6 +56,17 @@ class FlightServer : public rclcpp_lifecycle::LifecycleNode {
   CallbackReturn on_deactivate(const rclcpp_lifecycle::State& state) override;
   CallbackReturn on_cleanup(const rclcpp_lifecycle::State& state) override;
 
+  // Command builders. Unused params are NaN, matching px4_ros2::ModeExecutorBase:
+  // PX4 then reads only the params a command defines, and a value-initialized
+  // (finite zero) field is never mistaken for a real setpoint. Static and pure
+  // so the emitted command is unit-testable without an FMU.
+  static px4_msgs::msg::VehicleCommand makeArmCommand(bool arm, bool force);
+
+  /// param5/param6 (lat/lon) are NaN so Navigator targets the current position;
+  /// a finite value there commands that literal coordinate (see NAV_TAKEOFF).
+  static px4_msgs::msg::VehicleCommand makeTakeoffCommand(float altitude_amsl_m,
+                                                          float heading = NAN);
+
  private:
   void handleArm(const std::shared_ptr<SetArmed::Request>& request,
                  const std::shared_ptr<SetArmed::Response>& response);
@@ -66,8 +78,7 @@ class FlightServer : public rclcpp_lifecycle::LifecycleNode {
   void handleTakeoffAccepted(const std::shared_ptr<GoalHandleTakeoff>& handle);
   void executeTakeoff(const std::shared_ptr<GoalHandleTakeoff>& handle);
 
-  Result sendVehicleCommand(uint32_t command, float param1 = 0.f, float param2 = 0.f,
-                            float param7 = NAN);
+  Result sendVehicleCommand(const px4_msgs::msg::VehicleCommand& command);
 
   std::string _topic_namespace_prefix;
   double _discovery_timeout_s{5.0};

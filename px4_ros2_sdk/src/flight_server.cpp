@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
+#include <cmath>
 #include <memory>
 #include <px4_msgs/msg/vehicle_command.hpp>
 #include <px4_ros2/components/wait_for_fmu.hpp>
@@ -82,28 +83,50 @@ CallbackReturn FlightServer::on_cleanup(const rclcpp_lifecycle::State& /*state*/
   return CallbackReturn::SUCCESS;
 }
 
-Result FlightServer::sendVehicleCommand(uint32_t command, float param1, float param2, float param7)
+VehicleCommand FlightServer::makeArmCommand(bool arm, bool force)
+{
+  VehicleCommand cmd{};
+  cmd.command = VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM;
+  cmd.param1 = arm ? 1.f : 0.f;
+  cmd.param2 = force ? 21196.f : NAN;  // force magic value, else run preflight checks
+  cmd.param3 = NAN;
+  cmd.param4 = NAN;
+  cmd.param5 = NAN;
+  cmd.param6 = NAN;
+  cmd.param7 = NAN;
+  cmd.target_system = 0;
+  cmd.target_component = 1;
+  return cmd;
+}
+
+VehicleCommand FlightServer::makeTakeoffCommand(float altitude_amsl_m, float heading)
+{
+  VehicleCommand cmd{};
+  cmd.command = VehicleCommand::VEHICLE_CMD_NAV_TAKEOFF;
+  cmd.param1 = NAN;
+  cmd.param2 = NAN;
+  cmd.param3 = NAN;
+  cmd.param4 = heading;
+  cmd.param5 = NAN;  // latitude
+  cmd.param6 = NAN;  // longitude
+  cmd.param7 = altitude_amsl_m;
+  cmd.target_system = 0;
+  cmd.target_component = 1;
+  return cmd;
+}
+
+Result FlightServer::sendVehicleCommand(const VehicleCommand& command)
 {
   if (!_command_sender) {
     return Result::NotConnected;
   }
-  VehicleCommand cmd{};
-  cmd.command = command;
-  cmd.param1 = param1;
-  cmd.param2 = param2;
-  cmd.param7 = param7;
-  cmd.target_system = 0;
-  cmd.target_component = 1;
-  return fromCoreResult(_command_sender->sendCommandSync(cmd));
+  return fromCoreResult(_command_sender->sendCommandSync(command));
 }
 
 void FlightServer::handleArm(const std::shared_ptr<SetArmed::Request>& request,
                              const std::shared_ptr<SetArmed::Response>& response)
 {
-  const float arm = request->arm ? 1.f : 0.f;
-  const float force = request->force ? 21196.f : 0.f;
-  const Result result =
-      sendVehicleCommand(VehicleCommand::VEHICLE_CMD_COMPONENT_ARM_DISARM, arm, force);
+  const Result result = sendVehicleCommand(makeArmCommand(request->arm, request->force));
   response->accepted = result == Result::Success;
   response->message = resultToString(result);
 }
@@ -133,8 +156,7 @@ void FlightServer::executeTakeoff(const std::shared_ptr<GoalHandleTakeoff>& hand
   feedback->current_altitude_m = NAN;
   handle->publish_feedback(feedback);
 
-  const Result result =
-      sendVehicleCommand(VehicleCommand::VEHICLE_CMD_NAV_TAKEOFF, NAN, 0.f, goal->altitude_amsl_m);
+  const Result result = sendVehicleCommand(makeTakeoffCommand(goal->altitude_amsl_m));
 
   auto action_result = std::make_shared<Takeoff::Result>();
   action_result->success = result == Result::Success;
