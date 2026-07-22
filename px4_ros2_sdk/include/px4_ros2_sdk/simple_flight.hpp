@@ -30,8 +30,9 @@ namespace px4_ros2::sdk {
  * endpoint of its own; its service/action clients are companion-side, and all
  * FMU I/O stays inside the FlightServer (and, beneath it, px4_ros2_cpp).
  *
- * The borrowed node must not be spun concurrently by another executor while a
- * SimpleFlight call is in progress.
+ * The borrowed node must not already be owned by another executor while a
+ * SimpleFlight call is in progress; if it is, the blocking verbs return
+ * Result::ConnectionError instead of throwing.
  */
 class SimpleFlight {
  public:
