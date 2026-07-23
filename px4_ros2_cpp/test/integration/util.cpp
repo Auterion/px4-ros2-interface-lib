@@ -114,7 +114,7 @@ void VehicleState::setForceLowBattery(bool enabled)
 {
   sendCommand(px4_msgs::msg::VehicleCommand::VEHICLE_CMD_INJECT_FAILURE,
               px4_msgs::msg::VehicleCommand::FAILURE_UNIT_SYSTEM_BATTERY,
-              enabled ? px4_msgs::msg::VehicleCommand::FAILURE_TYPE_OFF
+              enabled ? px4_msgs::msg::VehicleCommand::FAILURE_TYPE_WRONG
                       : px4_msgs::msg::VehicleCommand::FAILURE_TYPE_OK,
               0);
 }
