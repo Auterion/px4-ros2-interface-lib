@@ -185,6 +185,11 @@ class ModeBase : public Context {
 
   void disableWatchdogTimer() { _health_and_arming_checks.disableWatchdogTimer(); }
 
+  void setWatchdogTimeoutCallback(HealthAndArmingChecks::WatchdogTimeoutCallback callback)
+  {
+    _health_and_arming_checks.setWatchdogTimeoutCallback(std::move(callback));
+  }
+
   bool defaultMessageCompatibilityCheck();
 
  private:

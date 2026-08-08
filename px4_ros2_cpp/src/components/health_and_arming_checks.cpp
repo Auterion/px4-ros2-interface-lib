@@ -83,13 +83,27 @@ bool HealthAndArmingChecks::doRegister(const std::string& name)
   return _registration->doRegister(settings);
 }
 
+void HealthAndArmingChecks::setWatchdogTimeoutCallback(WatchdogTimeoutCallback callback)
+{
+  _watchdog_timeout_callback = std::move(callback);
+}
+
 void HealthAndArmingChecks::watchdogTimerUpdate()
 {
   if (_registration->registered()) {
-    if (!_check_triggered && _shutdown_on_timeout) {
-      rclcpp::shutdown();
-      throw Exception(
-          "Timeout, no request received from FMU, exiting (this can happen on FMU reboots)");
+    if (!_check_triggered) {
+      if (_watchdog_timeout_callback) {
+        _watchdog_timer->cancel();
+        const auto callback = _watchdog_timeout_callback;
+        callback();
+        return;
+      }
+
+      if (_shutdown_on_timeout) {
+        rclcpp::shutdown();
+        throw Exception(
+            "Timeout, no request received from FMU, exiting (this can happen on FMU reboots)");
+      }
     }
 
     _check_triggered = false;

@@ -81,6 +81,7 @@ inline void HealthAndArmingCheckReporter::setHealth(uint8_t health_component_ind
 class HealthAndArmingChecks {
  public:
   using CheckCallback = std::function<void(HealthAndArmingCheckReporter&)>;
+  using WatchdogTimeoutCallback = std::function<void()>;
 
   HealthAndArmingChecks(rclcpp::Node& node, CheckCallback check_callback,
                         const std::string& topic_namespace_prefix = "");
@@ -103,6 +104,14 @@ class HealthAndArmingChecks {
 
   void disableWatchdogTimer() { _watchdog_timer = nullptr; }
 
+  /**
+   * Install a callback that is invoked instead of shutting down the ROS context and throwing when
+   * the FMU watchdog times out. The watchdog timer is cancelled before the callback is invoked.
+   * The callback should schedule re-creation of the health checks or mode object after the current
+   * timer callback returns; the new object will resume watchdog monitoring.
+   */
+  void setWatchdogTimeoutCallback(WatchdogTimeoutCallback callback);
+
  private:
   friend class ModeBase;
   friend class ModeExecutorBase;
@@ -122,6 +131,7 @@ class HealthAndArmingChecks {
   RequirementFlags _mode_requirements{};
   rclcpp::TimerBase::SharedPtr _watchdog_timer;
   bool _shutdown_on_timeout{true};
+  WatchdogTimeoutCallback _watchdog_timeout_callback;
 };
 
 }  // namespace px4_ros2
