@@ -105,6 +105,9 @@ Public Types</h2></td></tr>
 <tr class="memitem:ad731ac494d4f7576efb84489737b9a9c" id="r_ad731ac494d4f7576efb84489737b9a9c"><td class="memItemLeft" align="right" valign="top"><a id="ad731ac494d4f7576efb84489737b9a9c" name="ad731ac494d4f7576efb84489737b9a9c"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>CheckCallback</b> = std::function&lt; void(<a class="el" href="classpx4__ros2_1_1HealthAndArmingCheckReporter.html">HealthAndArmingCheckReporter</a> &amp;)&gt;</td></tr>
 <tr class="separator:ad731ac494d4f7576efb84489737b9a9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28c84275e112be44daff164d14dc5238" id="r_a28c84275e112be44daff164d14dc5238"><td class="memItemLeft" align="right" valign="top"><a id="a28c84275e112be44daff164d14dc5238" name="a28c84275e112be44daff164d14dc5238"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>WatchdogTimeoutCallback</b> = std::function&lt; void()&gt;</td></tr>
+<tr class="separator:a28c84275e112be44daff164d14dc5238"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -125,6 +128,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setModeRequirements</
 <tr class="memitem:a91ccdc1231c39f253e99ac4ecde86796" id="r_a91ccdc1231c39f253e99ac4ecde86796"><td class="memItemLeft" align="right" valign="top"><a id="a91ccdc1231c39f253e99ac4ecde86796" name="a91ccdc1231c39f253e99ac4ecde86796"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>disableWatchdogTimer</b> ()</td></tr>
 <tr class="separator:a91ccdc1231c39f253e99ac4ecde86796"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b546f860a4df0d85d4a32ccbbd3baa7" id="r_a1b546f860a4df0d85d4a32ccbbd3baa7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1HealthAndArmingChecks.html#a1b546f860a4df0d85d4a32ccbbd3baa7">setWatchdogTimeoutCallback</a> (WatchdogTimeoutCallback callback)</td></tr>
+<tr class="separator:a1b546f860a4df0d85d4a32ccbbd3baa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -158,6 +163,25 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ModeExecutorBase</b>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success </dd></dl>
+
+</div>
+</div>
+<a id="a1b546f860a4df0d85d4a32ccbbd3baa7" name="a1b546f860a4df0d85d4a32ccbbd3baa7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b546f860a4df0d85d4a32ccbbd3baa7">&#9670;&#160;</a></span>setWatchdogTimeoutCallback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void px4_ros2::HealthAndArmingChecks::setWatchdogTimeoutCallback </td>
+          <td>(</td>
+          <td class="paramtype">WatchdogTimeoutCallback&#160;</td>
+          <td class="paramname"><em>callback</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Install a callback that is invoked instead of shutting down the ROS context and throwing when the FMU watchdog times out. The watchdog timer is cancelled before the callback is invoked. The callback should schedule re-creation of the health checks or mode object after the current timer callback returns; the new object will resume watchdog monitoring. </p>
 
 </div>
 </div>
