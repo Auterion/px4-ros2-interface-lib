@@ -23,10 +23,11 @@ bool waitForFMU(rclcpp::Node& node, const rclcpp::Duration& discovery_timeout,
           topic, rclcpp::QoS(1).best_effort(), [](px4_msgs::msg::VehicleStatus::UniquePtr msg) {});
 
   // Phase 1: wait for the FMU's vehicle_status publisher to appear on the graph.
+  // RCL_STEADY_TIME: DDS matching is wall time, independent of /clock.
   using namespace std::chrono_literals;  // NOLINT
-  const auto discovery_start = node.now();
+  const auto discovery_start = rclcpp::Clock(RCL_STEADY_TIME).now();
   while (node.count_publishers(topic) == 0) {
-    if (node.now() >= discovery_start + discovery_timeout) {
+    if (rclcpp::Clock(RCL_STEADY_TIME).now() >= discovery_start + discovery_timeout) {
       RCLCPP_DEBUG(node.get_logger(), "timeout while waiting for FMU publisher discovery");
       return false;
     }
@@ -38,10 +39,10 @@ bool waitForFMU(rclcpp::Node& node, const rclcpp::Duration& discovery_timeout,
   wait_set.add_subscription(vehicle_status_sub);
 
   bool got_message = false;
-  const auto heartbeat_start = node.now();
+  const auto heartbeat_start = rclcpp::Clock(RCL_STEADY_TIME).now();
 
   while (!got_message) {
-    const auto now = node.now();
+    const auto now = rclcpp::Clock(RCL_STEADY_TIME).now();
 
     if (now >= heartbeat_start + heartbeat_timeout) {
       break;
