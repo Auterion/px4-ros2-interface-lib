@@ -150,6 +150,13 @@ bool Registration::doRegister(const RegistrationSettings& settings)
           if (strcmp(reinterpret_cast<const char*>(reply.name.data()), settings.name.c_str()) ==
                   0 &&
               request.request_id == reply.request_id) {
+            if (_debug_replies_to_drop > 0) {
+              --_debug_replies_to_drop;
+              RCLCPP_WARN(_node.get_logger(), "TEST: dropping reply for request_id %lu (%i left to drop)",
+                          request.request_id, _debug_replies_to_drop);
+              continue;
+            }
+
             RCLCPP_DEBUG(_node.get_logger(), "Got RegisterExtComponentReply");
 
             if (reply.success) {

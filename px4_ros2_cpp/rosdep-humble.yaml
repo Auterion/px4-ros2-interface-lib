@@ -1,3 +1,4 @@
 px4_msgs:
   ubuntu:
     - ros-humble-px4-msgs=3.5.1-0jammy
+# trigger CI deb build for dedup testing
