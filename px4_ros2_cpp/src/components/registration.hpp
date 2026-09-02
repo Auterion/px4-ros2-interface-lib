@@ -59,6 +59,8 @@ class Registration {
   bool _registered{false};
   px4_msgs::msg::UnregisterExtComponent _unregister_ext_component{};
   rclcpp::Node& _node;
+  // TEST-ONLY: drop the first N replies to simulate a lost reply and exercise PX4's dedup logic. Revert before merging.
+  int _debug_replies_to_drop{2};
 #if HAS_RCLCPP_PRE_SHUTDOWN
   rclcpp::PreShutdownCallbackHandle _shutdown_callback_handle{};
   bool _shutdown_callback_registered{false};
