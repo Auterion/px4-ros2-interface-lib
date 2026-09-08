@@ -18,12 +18,17 @@ using namespace std::chrono_literals;
 Registration::Registration(rclcpp::Node& node, const std::string& topic_namespace_prefix)
     : _node(node)
 {
+  // Only doRegister's wait set may take replies, even when the node's executor is spinning.
+  _registration_callback_group =
+      node.create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive, false);
+  rclcpp::SubscriptionOptions options;
+  options.callback_group = _registration_callback_group;
   _register_ext_component_reply_sub =
       node.create_subscription<px4_msgs::msg::RegisterExtComponentReply>(
           topic_namespace_prefix + "fmu/out/register_ext_component_reply" +
               px4_ros2::getMessageNameVersion<px4_msgs::msg::RegisterExtComponentReply>(),
           rclcpp::QoS(1).best_effort(),
-          [](px4_msgs::msg::RegisterExtComponentReply::UniquePtr msg) {});
+          [](px4_msgs::msg::RegisterExtComponentReply::UniquePtr msg) {}, options);
 
   _register_ext_component_request_pub =
       node.create_publisher<px4_msgs::msg::RegisterExtComponentRequest>(

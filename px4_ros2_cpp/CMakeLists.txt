@@ -241,6 +241,7 @@ if(BUILD_TESTING)
             test/unit/main.cpp
             test/unit/mission_execution.cpp
             test/unit/modes.cpp
+            test/unit/registration.cpp
             test/unit/shared_subscription.cpp
             test/unit/vehicle_command_sender.cpp
             test/unit/vtol.cpp

@@ -50,6 +50,7 @@ class Registration {
                               int mode_executor_id, const std::string& name);
 
  private:
+  rclcpp::CallbackGroup::SharedPtr _registration_callback_group;
   rclcpp::Subscription<px4_msgs::msg::RegisterExtComponentReply>::SharedPtr
       _register_ext_component_reply_sub;
   rclcpp::Publisher<px4_msgs::msg::RegisterExtComponentRequest>::SharedPtr
