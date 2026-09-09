@@ -273,13 +273,16 @@ bool messageCompatibilityCheck(rclcpp::Node& node,
     }
 #endif
   } else {
+    rclcpp::SubscriptionOptions subscription_options;
+    subscription_options.callback_group =
+        node.create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive, false);
     const rclcpp::Subscription<px4_msgs::msg::MessageFormatResponse>::SharedPtr
         message_format_response_sub =
             node.create_subscription<px4_msgs::msg::MessageFormatResponse>(
                 topic_namespace_prefix + "fmu/out/message_format_response" +
                     px4_ros2::getMessageNameVersion<px4_msgs::msg::MessageFormatResponse>(),
                 rclcpp::QoS(1).best_effort(),
-                [](px4_msgs::msg::MessageFormatResponse::UniquePtr msg) {});
+                [](px4_msgs::msg::MessageFormatResponse::UniquePtr msg) {}, subscription_options);
 
     const rclcpp::Publisher<px4_msgs::msg::MessageFormatRequest>::SharedPtr
         message_format_request_pub = node.create_publisher<px4_msgs::msg::MessageFormatRequest>(

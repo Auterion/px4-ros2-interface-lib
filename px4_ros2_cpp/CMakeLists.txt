@@ -245,6 +245,7 @@ if(BUILD_TESTING)
             test/unit/shared_subscription.cpp
             test/unit/vehicle_command_sender.cpp
             test/unit/vtol.cpp
+            test/unit/wait_set.cpp
             test/unit/utils/frame_conversion.cpp
             test/unit/utils/geodesic.cpp
             test/unit/utils/geometry.cpp

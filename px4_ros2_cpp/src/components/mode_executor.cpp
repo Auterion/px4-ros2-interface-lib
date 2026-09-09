@@ -329,11 +329,15 @@ bool ModeExecutorBase::deferFailsafesSync(bool enabled, int timeout_s)
   // To avoid race conditions we wait until the FMU sets it if the executor is in charge
   if (enabled && _is_in_charge && _registration->registered() &&
       _prev_failsafe_defer_state == px4_msgs::msg::VehicleStatus::FAILSAFE_DEFER_STATE_DISABLED) {
-    rclcpp::WaitSet wait_set;
+    rclcpp::SubscriptionOptions subscription_options;
+    subscription_options.callback_group =
+        _node.create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive, false);
     const auto vehicle_status_sub = _node.create_subscription<px4_msgs::msg::VehicleStatus>(
         _topic_namespace_prefix + "fmu/out/vehicle_status" +
             px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>(),
-        rclcpp::QoS(1).best_effort(), [](px4_msgs::msg::VehicleStatus::UniquePtr) {});
+        rclcpp::QoS(1).best_effort(), [](px4_msgs::msg::VehicleStatus::UniquePtr) {},
+        subscription_options);
+    rclcpp::WaitSet wait_set;
     wait_set.add_subscription(vehicle_status_sub);
 
     bool got_message = false;

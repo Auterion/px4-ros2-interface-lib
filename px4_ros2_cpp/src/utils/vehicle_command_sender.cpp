@@ -26,11 +26,15 @@ Result VehicleCommandSender::sendCommandSync(px4_msgs::msg::VehicleCommand cmd)
   Result result{Result::Rejected};
   cmd.timestamp = 0;  // Let PX4 set the timestamp
 
-  // Create a fresh subscription each call to avoid ROS Jazzy WaitSet conflicts
+  // A fresh subscription must also be excluded from the executor's wait set.
+  rclcpp::SubscriptionOptions subscription_options;
+  subscription_options.callback_group =
+      _node.create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive, false);
   const auto vehicle_command_ack_sub = _node.create_subscription<px4_msgs::msg::VehicleCommandAck>(
       _topic_namespace_prefix + "fmu/out/vehicle_command_ack" +
           px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleCommandAck>(),
-      rclcpp::QoS(1).best_effort(), [](px4_msgs::msg::VehicleCommandAck::UniquePtr) {});
+      rclcpp::QoS(1).best_effort(), [](px4_msgs::msg::VehicleCommandAck::UniquePtr) {},
+      subscription_options);
 
   // Wait until DDS discovery has matched both directions so that the very
   // first publish is not silently dropped (BEST_EFFORT QoS provides no

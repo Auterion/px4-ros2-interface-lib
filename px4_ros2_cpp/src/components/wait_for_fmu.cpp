@@ -18,9 +18,13 @@ bool waitForFMU(rclcpp::Node& node, const rclcpp::Duration& discovery_timeout,
   RCLCPP_DEBUG(node.get_logger(), "Waiting for FMU...");
   const std::string topic = topic_namespace_prefix + "fmu/out/vehicle_status" +
                             px4_ros2::getMessageNameVersion<px4_msgs::msg::VehicleStatus>();
+  rclcpp::SubscriptionOptions subscription_options;
+  subscription_options.callback_group =
+      node.create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive, false);
   const rclcpp::Subscription<px4_msgs::msg::VehicleStatus>::SharedPtr vehicle_status_sub =
       node.create_subscription<px4_msgs::msg::VehicleStatus>(
-          topic, rclcpp::QoS(1).best_effort(), [](px4_msgs::msg::VehicleStatus::UniquePtr msg) {});
+          topic, rclcpp::QoS(1).best_effort(), [](px4_msgs::msg::VehicleStatus::UniquePtr msg) {},
+          subscription_options);
 
   // Phase 1: wait for the FMU's vehicle_status publisher to appear on the graph.
   // RCL_STEADY_TIME: DDS matching is wall time, independent of /clock.

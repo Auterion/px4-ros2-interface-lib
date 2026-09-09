@@ -178,12 +178,16 @@ void ModeBase::checkSetpointCompatibilityAndRequirements()
 {
   // Check setpoint types compatibility with current vehicle type
 
-  // Create a fresh subscription to avoid ROS Jazzy WaitSet conflicts
+  // A fresh subscription must also be excluded from the executor's wait set.
+  rclcpp::SubscriptionOptions subscription_options;
+  subscription_options.callback_group =
+      node().create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive, false);
   const auto setpoint_config_reply_sub =
       node().create_subscription<px4_msgs::msg::SetpointConfigReply>(
           topicNamespacePrefix() + "fmu/out/setpoint_config_reply" +
               px4_ros2::getMessageNameVersion<px4_msgs::msg::SetpointConfigReply>(),
-          rclcpp::QoS(1).best_effort(), [](px4_msgs::msg::SetpointConfigReply::UniquePtr) {});
+          rclcpp::QoS(1).best_effort(), [](px4_msgs::msg::SetpointConfigReply::UniquePtr) {},
+          subscription_options);
 
   // Wait until DDS discovery has matched both directions so that the very
   // first publish is not silently dropped
