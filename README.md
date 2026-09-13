@@ -9,7 +9,7 @@ The library is written in C++, with Python bindings provided as well (not yet co
 Documentation:
 - High-level: https://docs.px4.io/main/en/ros2/px4_ros2_interface_lib.html
 - API:
-  - C++: https://auterion.github.io/px4-ros2-interface-lib/topics.html
+  - C++: https://auterion.github.io/px4-ros2-interface-lib
   - Python: https://auterion.github.io/px4-ros2-interface-lib/python/px4_ros2_py.html
 
 ## Compatibility with PX4
