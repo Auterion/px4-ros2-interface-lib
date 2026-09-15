@@ -29,6 +29,11 @@ class PyModeBase : public px4_ros2::ModeBase {
     PYBIND11_OVERRIDE_NAME(void, px4_ros2::ModeBase, "on_deactivate", onDeactivate, );
   }
 
+  void onFailsafeDeferred() override
+  {
+    PYBIND11_OVERRIDE_NAME(void, px4_ros2::ModeBase, "on_failsafe_deferred", onFailsafeDeferred, );
+  }
+
   void updateSetpoint(float dt_s) override
   {
     PYBIND11_OVERRIDE_PURE_NAME(void, px4_ros2::ModeBase, "update_setpoint", updateSetpoint, dt_s);
@@ -56,6 +61,9 @@ void bindMode(py::module& m)
   mode_base.def("register", &px4_ros2::ModeBase::doRegister)
       .def("on_activate", &px4_ros2::ModeBase::onActivate)
       .def("on_deactivate", &px4_ros2::ModeBase::onDeactivate)
+      .def("on_failsafe_deferred", &px4_ros2::ModeBase::onFailsafeDeferred)
+      .def("defer_failsafes", &px4_ros2::ModeBase::deferFailsafes, py::arg("enabled"),
+           py::arg("timeout_s") = 0)
       .def("update_setpoint", &px4_ros2::ModeBase::updateSetpoint)
       .def("id", &px4_ros2::ModeBase::id)
       .def("completed", &px4_ros2::ModeBase::completed,

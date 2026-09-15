@@ -147,6 +147,12 @@ class ModeBase : public Context {
   virtual void onDeactivate() {}
 
   /**
+   * Called when failsafes are currently being deferred, and the FMU wants to trigger a failsafe.
+   * @see deferFailsafes()
+   */
+  virtual void onFailsafeDeferred() {}
+
+  /**
    * Set the update rate when the mode is active. This is set automatically from the configured
    * setpoints, but can be set as needed.
    * @param rate_hz set to 0 to disable
@@ -171,6 +177,26 @@ class ModeBase : public Context {
   bool isActive() const { return _is_active; }
 
   ConfigOverrides& configOverrides() { return _config_overrides; }
+
+  /**
+   * Enable/disable deferring failsafes. While enabled (and the mode is active), most failsafes are
+   * prevented from being triggered until the given timeout is exceeded.
+   * Some failsafes that cannot be prevented:
+   * - the mode cannot run (some mode requirements are not met, such as no position estimate)
+   * - vehicle exceeds attitude limits (can be disabled via PX4 parameters)
+   * - geofence breach, wind limit and flight time limit exceeded
+   *
+   * The FMU stores the setting per mode and applies it while the mode is active. It persists
+   * across activations until changed, i.e. it is not cleared automatically on deactivation.
+   *
+   * Unlike ModeExecutorBase::deferFailsafesSync() this does not wait for the FMU to acknowledge,
+   * the request is resent until it is confirmed. Use onFailsafeDeferred() to get notified when the
+   * FMU wants to trigger a failsafe while it is being deferred.
+   *
+   * @param enabled
+   * @param timeout_s 0=system default, -1=no timeout
+   */
+  void deferFailsafes(bool enabled, int timeout_s = 0);
 
   /**
    * Get / modify mode requirements. These are generally automatically set based on selected
@@ -238,6 +264,7 @@ class ModeBase : public Context {
   rclcpp::Time _last_setpoint_update{};
 
   ConfigOverrides _config_overrides;
+  uint8_t _prev_failsafe_defer_state{px4_msgs::msg::VehicleStatus::FAILSAFE_DEFER_STATE_DISABLED};
 
   std::vector<std::shared_ptr<SetpointBase>> _setpoint_types;
   std::vector<SetpointBase*>

@@ -325,6 +325,20 @@ void ModeBase::vehicleStatusUpdated(const px4_msgs::msg::VehicleStatus::UniquePt
       callOnDeactivate();
     }
   }
+
+  if (_is_active && _prev_failsafe_defer_state != msg->failsafe_defer_state &&
+      msg->failsafe_defer_state ==
+          px4_msgs::msg::VehicleStatus::FAILSAFE_DEFER_STATE_WOULD_FAILSAFE) {
+    // FMU wants to failsafe, but got deferred -> notify the mode
+    onFailsafeDeferred();
+  }
+
+  _prev_failsafe_defer_state = msg->failsafe_defer_state;
+}
+
+void ModeBase::deferFailsafes(bool enabled, int timeout_s)
+{
+  _config_overrides.deferFailsafes(enabled, timeout_s);
 }
 
 void ModeBase::completed(Result result)
