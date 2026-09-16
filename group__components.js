@@ -21,10 +21,12 @@ var group__components =
       [ "ModeID", "classpx4__ros2_1_1ModeBase.html#a49de7d1d3872f1c7531abfe870483fb2", null ],
       [ "checkArmingAndRunConditions", "classpx4__ros2_1_1ModeBase.html#a0ade69096e84ecd7e805c0b2a5f3ef80", null ],
       [ "completed", "classpx4__ros2_1_1ModeBase.html#aeaf45e63d78cdcf8d558152755c764c7", null ],
+      [ "deferFailsafes", "classpx4__ros2_1_1ModeBase.html#ad5430cb2b6f451abdfb2ece2cd8a98a0", null ],
       [ "doRegister", "classpx4__ros2_1_1ModeBase.html#a80f5091b038153c411945a60d22e2e9e", null ],
       [ "modeRequirements", "classpx4__ros2_1_1ModeBase.html#a17b113bb5b177240cb270d0d0c0b501f", null ],
       [ "onActivate", "classpx4__ros2_1_1ModeBase.html#ae6162686d64b89a1f3a1e7b8ec3d8e52", null ],
       [ "onDeactivate", "classpx4__ros2_1_1ModeBase.html#a0b58be1410b9d883675f44df7b9f7dbb", null ],
+      [ "onFailsafeDeferred", "classpx4__ros2_1_1ModeBase.html#ad57ddac27632b0d0a108b9e3c2c18e65", null ],
       [ "setSetpointUpdateRate", "classpx4__ros2_1_1ModeBase.html#a3d8ba94373de2a1c5bf0edaac7263ab1", null ]
     ] ],
     [ "px4_ros2::ModeExecutorBase", "classpx4__ros2_1_1ModeExecutorBase.html", [

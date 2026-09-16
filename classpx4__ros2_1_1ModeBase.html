@@ -146,6 +146,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae6162686d64b89a1f3a1e7b8ec3d8e52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b58be1410b9d883675f44df7b9f7dbb" id="r_a0b58be1410b9d883675f44df7b9f7dbb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1ModeBase.html#a0b58be1410b9d883675f44df7b9f7dbb">onDeactivate</a> ()</td></tr>
 <tr class="separator:a0b58be1410b9d883675f44df7b9f7dbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad57ddac27632b0d0a108b9e3c2c18e65" id="r_ad57ddac27632b0d0a108b9e3c2c18e65"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1ModeBase.html#ad57ddac27632b0d0a108b9e3c2c18e65">onFailsafeDeferred</a> ()</td></tr>
+<tr class="separator:ad57ddac27632b0d0a108b9e3c2c18e65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d8ba94373de2a1c5bf0edaac7263ab1" id="r_a3d8ba94373de2a1c5bf0edaac7263ab1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1ModeBase.html#a3d8ba94373de2a1c5bf0edaac7263ab1">setSetpointUpdateRate</a> (float rate_hz)</td></tr>
 <tr class="separator:a3d8ba94373de2a1c5bf0edaac7263ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7b84d608e1dfbb1343406233e566ccb" id="r_aa7b84d608e1dfbb1343406233e566ccb"><td class="memItemLeft" align="right" valign="top"><a id="aa7b84d608e1dfbb1343406233e566ccb" name="aa7b84d608e1dfbb1343406233e566ccb"></a>
@@ -165,6 +167,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isActive</b> () const
 <tr class="memitem:ac462be9d7b63fd155aa73b5ba550d03c" id="r_ac462be9d7b63fd155aa73b5ba550d03c"><td class="memItemLeft" align="right" valign="top"><a id="ac462be9d7b63fd155aa73b5ba550d03c" name="ac462be9d7b63fd155aa73b5ba550d03c"></a>
 <a class="el" href="classpx4__ros2_1_1ConfigOverrides.html">ConfigOverrides</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>configOverrides</b> ()</td></tr>
 <tr class="separator:ac462be9d7b63fd155aa73b5ba550d03c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5430cb2b6f451abdfb2ece2cd8a98a0" id="r_ad5430cb2b6f451abdfb2ece2cd8a98a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1ModeBase.html#ad5430cb2b6f451abdfb2ece2cd8a98a0">deferFailsafes</a> (bool enabled, int timeout_s=0)</td></tr>
+<tr class="separator:ad5430cb2b6f451abdfb2ece2cd8a98a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17b113bb5b177240cb270d0d0c0b501f" id="r_a17b113bb5b177240cb270d0d0c0b501f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structpx4__ros2_1_1RequirementFlags.html">RequirementFlags</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpx4__ros2_1_1ModeBase.html#a17b113bb5b177240cb270d0d0c0b501f">modeRequirements</a> ()</td></tr>
 <tr class="separator:a17b113bb5b177240cb270d0d0c0b501f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classpx4__ros2_1_1Context"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classpx4__ros2_1_1Context')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></td></tr>
@@ -285,6 +289,48 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ModeExecutorBase</b>
 
 </div>
 </div>
+<a id="ad5430cb2b6f451abdfb2ece2cd8a98a0" name="ad5430cb2b6f451abdfb2ece2cd8a98a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5430cb2b6f451abdfb2ece2cd8a98a0">&#9670;&#160;</a></span>deferFailsafes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void px4_ros2::ModeBase::deferFailsafes </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enabled</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>timeout_s</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable/disable deferring failsafes. While enabled (and the mode is active), most failsafes are prevented from being triggered until the given timeout is exceeded. Some failsafes that cannot be prevented:</p><ul>
+<li>the mode cannot run (some mode requirements are not met, such as no position estimate)</li>
+<li>vehicle exceeds attitude limits (can be disabled via PX4 parameters)</li>
+<li>geofence breach, wind limit and flight time limit exceeded</li>
+</ul>
+<p>The FMU stores the setting per mode and applies it while the mode is active. It persists across activations until changed, i.e. it is not cleared automatically on deactivation.</p>
+<p>Unlike <a class="el" href="classpx4__ros2_1_1ModeExecutorBase.html#a16ec5be6ebe70e1d0625bf696c3e29ae">ModeExecutorBase::deferFailsafesSync()</a> this does not wait for the FMU to acknowledge, the request is resent until it is confirmed. Use <a class="el" href="classpx4__ros2_1_1ModeBase.html#ad57ddac27632b0d0a108b9e3c2c18e65">onFailsafeDeferred()</a> to get notified when the FMU wants to trigger a failsafe while it is being deferred.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enabled</td><td></td></tr>
+    <tr><td class="paramname">timeout_s</td><td>0=system default, -1=no timeout </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a80f5091b038153c411945a60d22e2e9e" name="a80f5091b038153c411945a60d22e2e9e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a80f5091b038153c411945a60d22e2e9e">&#9670;&#160;</a></span>doRegister()</h2>
 
@@ -378,6 +424,32 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ModeExecutorBase</b>
 </table>
 </div><div class="memdoc">
 <p>Called whenever the mode is deactivated, also if the vehicle is disarmed </p>
+
+</div>
+</div>
+<a id="ad57ddac27632b0d0a108b9e3c2c18e65" name="ad57ddac27632b0d0a108b9e3c2c18e65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad57ddac27632b0d0a108b9e3c2c18e65">&#9670;&#160;</a></span>onFailsafeDeferred()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void px4_ros2::ModeBase::onFailsafeDeferred </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Called when failsafes are currently being deferred, and the FMU wants to trigger a failsafe. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="classpx4__ros2_1_1ModeBase.html#ad5430cb2b6f451abdfb2ece2cd8a98a0">deferFailsafes()</a> </dd></dl>
 
 </div>
 </div>
