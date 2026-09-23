@@ -140,9 +140,9 @@ $(document).ready(function(){initNavTree('frame__conversion_8hpp_source.html',''
 <div class="foldopen" id="foldopen00068" data-start="{" data-end="}">
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="group__frame__conversion.html#gafc627c857fc3c265b128d13a0e32717c">   68</a></span>Eigen::Matrix&lt;Type, 3, 1&gt; <a class="code hl_function" href="group__frame__conversion.html#gafc627c857fc3c265b128d13a0e32717c">yawBodyToWorld</a>(Type yaw, <span class="keyword">const</span> Eigen::Matrix&lt;Type, 3, 1&gt;&amp; point_body)</div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>{</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  <span class="keyword">const</span> Eigen::Quaternion&lt;Type&gt; q_z(</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>      Eigen::AngleAxis&lt;Type&gt;(yaw, Eigen::Matrix&lt;Type, 3, 1&gt;::UnitZ()));</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <span class="keywordflow">return</span> q_z * point_body;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  <span class="keyword">const</span> Eigen::Matrix&lt;Type, 2, 1&gt; horizontal_world =</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>      Eigen::Rotation2D&lt;Type&gt;(yaw) * point_body.head(2);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <span class="keywordflow">return</span> {horizontal_world.x(), horizontal_world.y(), point_body.z()};</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
 </div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
