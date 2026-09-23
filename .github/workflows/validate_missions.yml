@@ -19,7 +19,7 @@ jobs:
 
       - name: Setup jsonschema
         run: |
-          pip install check-jsonschema
+          pip install check-jsonschema "click>=8.2"
 
       - name: Validate
         shell: bash
