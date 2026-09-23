@@ -67,9 +67,9 @@ Eigen::Quaternion<Type> attitudeEnuToNed(const Eigen::Quaternion<Type>& q_enu)
 template <typename Type>
 Eigen::Matrix<Type, 3, 1> yawBodyToWorld(Type yaw, const Eigen::Matrix<Type, 3, 1>& point_body)
 {
-  const Eigen::Quaternion<Type> q_z(
-      Eigen::AngleAxis<Type>(yaw, Eigen::Matrix<Type, 3, 1>::UnitZ()));
-  return q_z * point_body;
+  const Eigen::Matrix<Type, 2, 1> horizontal_world =
+      Eigen::Rotation2D<Type>(yaw) * point_body.head(2);
+  return {horizontal_world.x(), horizontal_world.y(), point_body.z()};
 }
 
 /**

@@ -258,3 +258,20 @@ TEST(FrameConversion, yawBodyToWorld)
                       std::sin(yaw) * point_body.x() + std::cos(yaw) * point_body.y(), 3.f);
   vectorsApproxEqualTest(point_world, px4_ros2::yawBodyToWorld(yaw, point_body));
 }
+
+TEST(FrameConversion, yawBodyToWorldKeepsNanAxesIndependent)
+{
+  const float yaw = 0.3f;
+
+  const Eigen::Vector3f horizontal_nan =
+      px4_ros2::yawBodyToWorld(yaw, Eigen::Vector3f(NAN, NAN, 0.1f));
+  EXPECT_TRUE(std::isnan(horizontal_nan.x()));
+  EXPECT_TRUE(std::isnan(horizontal_nan.y()));
+  EXPECT_FLOAT_EQ(0.1f, horizontal_nan.z());
+
+  const Eigen::Vector3f vertical_nan =
+      px4_ros2::yawBodyToWorld(yaw, Eigen::Vector3f(0.f, 0.f, NAN));
+  EXPECT_FLOAT_EQ(0.f, vertical_nan.x());
+  EXPECT_FLOAT_EQ(0.f, vertical_nan.y());
+  EXPECT_TRUE(std::isnan(vertical_nan.z()));
+}
