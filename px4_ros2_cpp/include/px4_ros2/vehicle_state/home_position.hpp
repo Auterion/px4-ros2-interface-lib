@@ -26,7 +26,7 @@ class HomePosition : public Subscription<px4_msgs::msg::HomePosition> {
   explicit HomePosition(Context& context)
       : Subscription<px4_msgs::msg::HomePosition>(
             context, "fmu/out/home_position" +
-                         +px4_ros2::getMessageNameVersion<px4_msgs::msg::HomePosition>())
+                         px4_ros2::getMessageNameVersion<px4_msgs::msg::HomePosition>())
   {
   }
 
