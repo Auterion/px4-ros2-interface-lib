@@ -119,7 +119,7 @@ $(document).ready(function(){initNavTree('home__position_8hpp_source.html',''); 
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classpx4__ros2_1_1HomePosition.html">HomePosition</a>(<a class="code hl_class" href="classpx4__ros2_1_1Context.html">Context</a>&amp; context)</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>      : <a class="code hl_class" href="classpx4__ros2_1_1Subscription.html">Subscription&lt;px4_msgs::msg::HomePosition&gt;</a>(</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            context, <span class="stringliteral">&quot;fmu/out/home_position&quot;</span> +</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>                         +px4_ros2::getMessageNameVersion&lt;px4_msgs::msg::HomePosition&gt;())</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>                         px4_ros2::getMessageNameVersion&lt;px4_msgs::msg::HomePosition&gt;())</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  {</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  }</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
