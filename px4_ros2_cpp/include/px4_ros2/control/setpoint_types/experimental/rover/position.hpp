@@ -33,7 +33,7 @@ class RoverPositionSetpointType : public SetpointBase {
   /**
    * @brief Send a rover position setpoint to the flight controller.
    *
-   * @param position_ned [m] Target position in NED frame. Takes values in [-inf, inf].
+   * @param target_ned [m] Target position in NED frame. Takes values in [-inf, inf].
    * @param start_ned [m] Start position which specifies a line for the rover to track (Optional,
    * defaults to vehicle position). Takes values in [-inf, inf].
    * @param cruising_speed [m/s] Cruising speed (Optional, defaults to maximum speed). Takes values
@@ -45,10 +45,10 @@ class RoverPositionSetpointType : public SetpointBase {
    * @param course [rad] Course over ground to hold along the line through start_ned, takes
    * precedence over target_ned (Optional, defaults to NaN). Takes values in [-pi,pi].
    */
-  void update(const Eigen::Vector2f& position_ned,
+  void update(const Eigen::Vector2f& target_ned,
               const std::optional<Eigen::Vector2f>& start_ned = {},
               std::optional<float> cruising_speed = {}, std::optional<float> arrival_speed = {},
-              std::optional<float> yaw = {}, std::optional<float> course);
+              std::optional<float> yaw = {}, std::optional<float> course = {});
 
  private:
   rclcpp::Node& _node;
