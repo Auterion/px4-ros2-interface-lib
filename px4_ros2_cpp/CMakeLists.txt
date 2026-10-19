@@ -210,7 +210,7 @@ if(BUILD_TESTING)
             test/integration/util.cpp
     )
     include_directories(include)
-    target_link_libraries(integration_utils PUBLIC rclcpp::rclcpp ${px4_msgs_TARGETS})
+    target_link_libraries(integration_utils PUBLIC ${PROJECT_NAME} rclcpp::rclcpp ${px4_msgs_TARGETS})
 
     ament_add_gtest(integration_tests
             test/integration/arming_check.cpp

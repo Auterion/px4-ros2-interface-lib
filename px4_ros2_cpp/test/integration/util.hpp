@@ -9,6 +9,7 @@
 
 #include <px4_msgs/msg/vehicle_command.hpp>
 #include <px4_msgs/msg/vehicle_status.hpp>
+#include <px4_ros2/utils/vehicle_command_sender.hpp>
 #include <rclcpp/rclcpp.hpp>
 
 std::shared_ptr<rclcpp::Node> initNode();
@@ -42,8 +43,10 @@ class VehicleState {
 
   void callbackOnModeSet(const ModeSetCallback& callback, uint8_t nav_state);
 
-  void sendCommand(uint32_t command, float param1 = NAN, float param2 = NAN, float param3 = NAN,
-                   float param4 = NAN, float param5 = NAN, float param6 = NAN, float param7 = NAN);
+  // Send a command and wait for the ack, retrying if none arrives
+  px4_ros2::Result sendCommand(uint32_t command, float param1 = NAN, float param2 = NAN,
+                               float param3 = NAN, float param4 = NAN, float param5 = NAN,
+                               float param6 = NAN, float param7 = NAN);
 
   // Methods to trigger failsafes
   void setGPSFailure(bool failure);
@@ -52,7 +55,7 @@ class VehicleState {
  private:
   rclcpp::Node& _node;
   rclcpp::Subscription<px4_msgs::msg::VehicleStatus>::SharedPtr _vehicle_status_sub;
-  rclcpp::Publisher<px4_msgs::msg::VehicleCommand>::SharedPtr _vehicle_command_pub;
+  px4_ros2::VehicleCommandSender _vehicle_command_sender;
   VehicleStatusUpdateCallback _on_vehicle_status_update;
   ModeSetCallback _on_mode_set_callback;
   uint8_t _waiting_for_nav_state{};
