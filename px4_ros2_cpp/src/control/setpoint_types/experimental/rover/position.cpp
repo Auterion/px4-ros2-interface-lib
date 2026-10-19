@@ -19,22 +19,24 @@ RoverPositionSetpointType::RoverPositionSetpointType(Context& context)
           1);
 }
 
-void RoverPositionSetpointType::update(const Eigen::Vector2f& position_ned,
+void RoverPositionSetpointType::update(const Eigen::Vector2f& target_ned,
                                        const std::optional<Eigen::Vector2f>& start_ned,
                                        std::optional<float> cruising_speed,
-                                       std::optional<float> arrival_speed, std::optional<float> yaw)
+                                       std::optional<float> arrival_speed, std::optional<float> yaw,
+                                       std::optional<float> course)
 {
   onUpdate();
 
   px4_msgs::msg::RoverPositionSetpoint sp{};
-  sp.position_ned[0] = position_ned[0];
-  sp.position_ned[1] = position_ned[1];
+  sp.target_ned[0] = target_ned[0];
+  sp.target_ned[1] = target_ned[1];
   const auto start_ned_vector = start_ned.value_or(Eigen::Vector2f(NAN, NAN));
   sp.start_ned[0] = start_ned_vector[0];
   sp.start_ned[1] = start_ned_vector[1];
   sp.cruising_speed = cruising_speed.value_or(NAN);
   sp.arrival_speed = arrival_speed.value_or(NAN);
   sp.yaw = yaw.value_or(NAN);
+  sp.course = course.value_or(NAN);
   sp.timestamp = 0;  // Let PX4 set the timestamp
   _rover_position_setpoint_pub->publish(sp);
 }
