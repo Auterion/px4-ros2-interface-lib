@@ -160,7 +160,7 @@ var NAVTREEINDEX0 =
 "classpx4__ros2_1_1RatesSetpointType.html":[4,1,0,0,1],
 "classpx4__ros2_1_1RatesSetpointType.html#a0f12017d755e795e51e7e7658be02b06":[4,1,0,0,1,0],
 "classpx4__ros2_1_1RoverPositionSetpointType.html":[4,1,0,1,0],
-"classpx4__ros2_1_1RoverPositionSetpointType.html#a6b75c25a3a5a808d42bc935dfa8161a6":[4,1,0,1,0,1],
+"classpx4__ros2_1_1RoverPositionSetpointType.html#a31756a6c50615040a27280a2127c65eb":[4,1,0,1,0,1],
 "classpx4__ros2_1_1RoverPositionSetpointType.html#a6b8cd7e5a66313b86a92f4c9aef108b6":[4,1,0,1,0,0],
 "classpx4__ros2_1_1RoverSpeedAttitudeSetpointType.html":[4,1,0,1,1],
 "classpx4__ros2_1_1RoverSpeedAttitudeSetpointType.html#a72dfd4115428f895928d461dd9278512":[4,1,0,1,1,1],
