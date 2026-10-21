@@ -48,7 +48,7 @@ class RoverPositionSetpointType : public SetpointBase {
   void update(const Eigen::Vector2f& target_ned,
               const std::optional<Eigen::Vector2f>& start_ned = {},
               std::optional<float> cruising_speed = {}, std::optional<float> arrival_speed = {},
-              std::optional<float> yaw = {}, std::optional<float> course = {});
+              std::optional<float> yaw = {});
 
  private:
   rclcpp::Node& _node;

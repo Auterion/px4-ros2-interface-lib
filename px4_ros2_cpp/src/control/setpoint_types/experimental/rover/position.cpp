@@ -22,14 +22,13 @@ RoverPositionSetpointType::RoverPositionSetpointType(Context& context)
 void RoverPositionSetpointType::update(const Eigen::Vector2f& target_ned,
                                        const std::optional<Eigen::Vector2f>& start_ned,
                                        std::optional<float> cruising_speed,
-                                       std::optional<float> arrival_speed, std::optional<float> yaw,
-                                       std::optional<float> course)
+                                       std::optional<float> arrival_speed, std::optional<float> yaw)
 {
   onUpdate();
 
   px4_msgs::msg::RoverPositionSetpoint sp{};
-  sp.position_ned[0] = target_ned[0];
-  sp.position_ned[1] = target_ned[1];
+  sp.target_ned[0] = target_ned[0];
+  sp.target_ned[1] = target_ned[1];
   const auto start_ned_vector = start_ned.value_or(Eigen::Vector2f(NAN, NAN));
   sp.start_ned[0] = start_ned_vector[0];
   sp.start_ned[1] = start_ned_vector[1];
