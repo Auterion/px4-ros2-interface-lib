@@ -42,13 +42,11 @@ class RoverPositionSetpointType : public SetpointBase {
    * to zero). Takes values in [0, inf].
    * @param yaw [rad] Mecanum only: Specify vehicle yaw during travel (Optional, defaults to vehicle
    * yaw). Takes values in [-pi,pi].
-   * @param course [rad] Course over ground to hold along the line through start_ned, takes
-   * precedence over target_ned (Optional, defaults to NaN). Takes values in [-pi,pi].
    */
   void update(const Eigen::Vector2f& target_ned,
               const std::optional<Eigen::Vector2f>& start_ned = {},
               std::optional<float> cruising_speed = {}, std::optional<float> arrival_speed = {},
-              std::optional<float> yaw = {}, std::optional<float> course = {});
+              std::optional<float> yaw = {});
 
  private:
   rclcpp::Node& _node;
