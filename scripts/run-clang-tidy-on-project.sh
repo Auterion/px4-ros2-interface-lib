@@ -29,11 +29,20 @@ else
 fi
 
 for PACKAGE in "${PACKAGES[@]}"; do
+  # Skip packages that were not built in this workspace and packages that
+  # produce no compile database (e.g. rosidl/interface-only packages): there
+  # is nothing for clang-tidy to analyze, and a silent pushd failure would
+  # otherwise abort the whole run under set -e.
+  if [ ! -f "$BUILD_DIR/$PACKAGE/compile_commands.json" ]; then
+    echo "Skipping $PACKAGE (no compile_commands.json in $BUILD_DIR/$PACKAGE)"
+    continue
+  fi
   pushd "$BUILD_DIR/$PACKAGE" &>/dev/null
   echo "Checking $BUILD_DIR/$PACKAGE"
   # For some reason we explicitly have to specify c++17 in ROS CI.
   # Also suppresses the 'optimization flag '-fno-fat-lto-objects' is not supported' error
   "$THIS_DIR"/run-clang-tidy.py -p . -use-color -header-filter="$ROOT_DIR/.*" -quiet \
+    -ignore="$ROOT_DIR/.clang-tidy-ignore" \
     -extra-arg=-std=c++17 -extra-arg="-Wno-unknown-warning-option" -extra-arg="-Wno-ignored-optimization-argument"
   popd &>/dev/null
 done
