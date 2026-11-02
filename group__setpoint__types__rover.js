@@ -2,7 +2,7 @@ var group__setpoint__types__rover =
 [
     [ "px4_ros2::RoverPositionSetpointType", "classpx4__ros2_1_1RoverPositionSetpointType.html", [
       [ "getSetpointType", "classpx4__ros2_1_1RoverPositionSetpointType.html#a6b8cd7e5a66313b86a92f4c9aef108b6", null ],
-      [ "update", "classpx4__ros2_1_1RoverPositionSetpointType.html#a31756a6c50615040a27280a2127c65eb", null ]
+      [ "update", "classpx4__ros2_1_1RoverPositionSetpointType.html#ae0fae7e64bd6a8efcfb238737c002ebb", null ]
     ] ],
     [ "px4_ros2::RoverSpeedAttitudeSetpointType", "classpx4__ros2_1_1RoverSpeedAttitudeSetpointType.html", [
       [ "getSetpointType", "classpx4__ros2_1_1RoverSpeedAttitudeSetpointType.html#a79a724dff078e60cdd113d75f2ab63f8", null ],
