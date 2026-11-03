@@ -12,14 +12,16 @@ namespace px4_ros2 {
 RoverSpeedRateSetpointType::RoverSpeedRateSetpointType(Context& context)
     : SetpointBase(context), _node(context.node())
 {
-  _rover_speed_setpoint_pub = context.node().create_publisher<px4_msgs::msg::RoverSpeedSetpoint>(
-      context.topicNamespacePrefix() + "fmu/in/rover_speed_setpoint" +
-          px4_ros2::getMessageNameVersion<px4_msgs::msg::RoverSpeedSetpoint>(),
-      1);
-  _rover_rate_setpoint_pub = context.node().create_publisher<px4_msgs::msg::RoverRateSetpoint>(
-      context.topicNamespacePrefix() + "fmu/in/rover_rate_setpoint" +
-          px4_ros2::getMessageNameVersion<px4_msgs::msg::RoverRateSetpoint>(),
-      1);
+  _rover_speed_setpoint_pub =
+      context.node().create_publisher<px4_msgs::msg::SurfaceVehicleSpeedSetpoint>(
+          context.topicNamespacePrefix() + "fmu/in/surface_vehicle_speed_setpoint" +
+              px4_ros2::getMessageNameVersion<px4_msgs::msg::SurfaceVehicleSpeedSetpoint>(),
+          1);
+  _rover_rate_setpoint_pub =
+      context.node().create_publisher<px4_msgs::msg::SurfaceVehicleRateSetpoint>(
+          context.topicNamespacePrefix() + "fmu/in/surface_vehicle_rate_setpoint" +
+              px4_ros2::getMessageNameVersion<px4_msgs::msg::SurfaceVehicleRateSetpoint>(),
+          1);
 }
 
 void RoverSpeedRateSetpointType::update(const float speed_body_x, const float yaw_rate_setpoint,
@@ -27,13 +29,13 @@ void RoverSpeedRateSetpointType::update(const float speed_body_x, const float ya
 {
   onUpdate();
 
-  px4_msgs::msg::RoverSpeedSetpoint sp_speed{};
+  px4_msgs::msg::SurfaceVehicleSpeedSetpoint sp_speed{};
   sp_speed.speed_body_x = speed_body_x;
   sp_speed.speed_body_y = speed_body_y.value_or(NAN);
   sp_speed.timestamp = 0;  // Let PX4 set the timestamp
   _rover_speed_setpoint_pub->publish(sp_speed);
 
-  px4_msgs::msg::RoverRateSetpoint sp_rate{};
+  px4_msgs::msg::SurfaceVehicleRateSetpoint sp_rate{};
   sp_rate.yaw_rate_setpoint = yaw_rate_setpoint;
   sp_rate.timestamp = 0;  // Let PX4 set the timestamp
   _rover_rate_setpoint_pub->publish(sp_rate);

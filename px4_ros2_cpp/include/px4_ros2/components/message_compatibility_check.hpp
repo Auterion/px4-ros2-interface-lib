@@ -23,13 +23,13 @@ using namespace std::chrono_literals;  // NOLINT
   {"fmu/in/longitudinal_control_configuration"}, \
   {"fmu/in/mode_completed"}, \
   {"fmu/in/register_ext_component_request"}, \
-  {"fmu/in/rover_attitude_setpoint"}, \
-  {"fmu/in/rover_position_setpoint"}, \
-  {"fmu/in/rover_rate_setpoint"}, \
-  {"fmu/in/rover_speed_setpoint"}, \
-  {"fmu/in/rover_steering_setpoint"}, \
   {"fmu/in/rover_throttle_setpoint"}, \
   {"fmu/in/setpoint_config"}, \
+  {"fmu/in/surface_vehicle_attitude_setpoint"}, \
+  {"fmu/in/surface_vehicle_position_setpoint"}, \
+  {"fmu/in/surface_vehicle_rate_setpoint"}, \
+  {"fmu/in/surface_vehicle_speed_setpoint"}, \
+  {"fmu/in/surface_vehicle_steering_setpoint"}, \
   {"fmu/in/trajectory_setpoint"}, \
   {"fmu/in/unregister_ext_component"}, \
   {"fmu/in/vehicle_attitude_setpoint"}, \

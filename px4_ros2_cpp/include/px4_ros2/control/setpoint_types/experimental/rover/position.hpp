@@ -6,7 +6,7 @@
 #pragma once
 
 #include <Eigen/Eigen>
-#include <px4_msgs/msg/rover_position_setpoint.hpp>
+#include <px4_msgs/msg/surface_vehicle_position_setpoint.hpp>
 #include <px4_ros2/common/setpoint_base.hpp>
 
 namespace px4_ros2 {
@@ -25,7 +25,7 @@ class RoverPositionSetpointType : public SetpointBase {
 
   SetpointType getSetpointType() override
   {
-    return px4_msgs::msg::SetpointConfig::TYPE_ROVER_POSITION;
+    return px4_msgs::msg::SetpointConfig::TYPE_SURFACE_VEHICLE_POSITION;
   }
 
   float desiredUpdateRateHz() override { return 30.f; }
@@ -50,7 +50,8 @@ class RoverPositionSetpointType : public SetpointBase {
 
  private:
   rclcpp::Node& _node;
-  rclcpp::Publisher<px4_msgs::msg::RoverPositionSetpoint>::SharedPtr _rover_position_setpoint_pub;
+  rclcpp::Publisher<px4_msgs::msg::SurfaceVehiclePositionSetpoint>::SharedPtr
+      _rover_position_setpoint_pub;
 };
 
 /** @}*/

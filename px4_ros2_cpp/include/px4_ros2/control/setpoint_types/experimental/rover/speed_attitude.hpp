@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include <px4_msgs/msg/rover_attitude_setpoint.hpp>
-#include <px4_msgs/msg/rover_speed_setpoint.hpp>
+#include <px4_msgs/msg/surface_vehicle_attitude_setpoint.hpp>
+#include <px4_msgs/msg/surface_vehicle_speed_setpoint.hpp>
 #include <px4_ros2/common/setpoint_base.hpp>
 
 namespace px4_ros2 {
@@ -25,7 +25,7 @@ class RoverSpeedAttitudeSetpointType : public SetpointBase {
 
   SetpointType getSetpointType() override
   {
-    return px4_msgs::msg::SetpointConfig::TYPE_ROVER_SPEED_ATTITUDE;
+    return px4_msgs::msg::SetpointConfig::TYPE_SURFACE_VEHICLE_SPEED_ATTITUDE;
   }
 
   float desiredUpdateRateHz() override { return 30.f; }
@@ -43,8 +43,10 @@ class RoverSpeedAttitudeSetpointType : public SetpointBase {
 
  private:
   rclcpp::Node& _node;
-  rclcpp::Publisher<px4_msgs::msg::RoverSpeedSetpoint>::SharedPtr _rover_speed_setpoint_pub;
-  rclcpp::Publisher<px4_msgs::msg::RoverAttitudeSetpoint>::SharedPtr _rover_attitude_setpoint_pub;
+  rclcpp::Publisher<px4_msgs::msg::SurfaceVehicleSpeedSetpoint>::SharedPtr
+      _rover_speed_setpoint_pub;
+  rclcpp::Publisher<px4_msgs::msg::SurfaceVehicleAttitudeSetpoint>::SharedPtr
+      _rover_attitude_setpoint_pub;
 };
 
 /** @}*/

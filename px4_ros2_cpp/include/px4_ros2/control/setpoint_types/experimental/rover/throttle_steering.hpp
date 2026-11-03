@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include <px4_msgs/msg/rover_steering_setpoint.hpp>
 #include <px4_msgs/msg/rover_throttle_setpoint.hpp>
+#include <px4_msgs/msg/surface_vehicle_steering_setpoint.hpp>
 #include <px4_ros2/common/setpoint_base.hpp>
 
 namespace px4_ros2 {
@@ -47,7 +47,8 @@ class RoverThrottleSteeringSetpointType : public SetpointBase {
  private:
   rclcpp::Node& _node;
   rclcpp::Publisher<px4_msgs::msg::RoverThrottleSetpoint>::SharedPtr _rover_throttle_setpoint_pub;
-  rclcpp::Publisher<px4_msgs::msg::RoverSteeringSetpoint>::SharedPtr _rover_steering_setpoint_pub;
+  rclcpp::Publisher<px4_msgs::msg::SurfaceVehicleSteeringSetpoint>::SharedPtr
+      _rover_steering_setpoint_pub;
 };
 
 /** @}*/

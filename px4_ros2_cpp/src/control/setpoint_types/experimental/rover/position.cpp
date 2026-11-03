@@ -13,9 +13,9 @@ RoverPositionSetpointType::RoverPositionSetpointType(Context& context)
     : SetpointBase(context), _node(context.node())
 {
   _rover_position_setpoint_pub =
-      context.node().create_publisher<px4_msgs::msg::RoverPositionSetpoint>(
-          context.topicNamespacePrefix() + "fmu/in/rover_position_setpoint" +
-              px4_ros2::getMessageNameVersion<px4_msgs::msg::RoverPositionSetpoint>(),
+      context.node().create_publisher<px4_msgs::msg::SurfaceVehiclePositionSetpoint>(
+          context.topicNamespacePrefix() + "fmu/in/surface_vehicle_position_setpoint" +
+              px4_ros2::getMessageNameVersion<px4_msgs::msg::SurfaceVehiclePositionSetpoint>(),
           1);
 }
 
@@ -26,7 +26,7 @@ void RoverPositionSetpointType::update(const Eigen::Vector2f& target_ned,
 {
   onUpdate();
 
-  px4_msgs::msg::RoverPositionSetpoint sp{};
+  px4_msgs::msg::SurfaceVehiclePositionSetpoint sp{};
   sp.target_ned[0] = target_ned[0];
   sp.target_ned[1] = target_ned[1];
   const auto start_ned_vector = start_ned.value_or(Eigen::Vector2f(NAN, NAN));
