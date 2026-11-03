@@ -44,9 +44,9 @@ class RoverSpeedAttitudeSetpointType : public SetpointBase {
  private:
   rclcpp::Node& _node;
   rclcpp::Publisher<px4_msgs::msg::SurfaceVehicleSpeedSetpoint>::SharedPtr
-      _rover_speed_setpoint_pub;
+      _surface_vehicle_speed_setpoint_pub;
   rclcpp::Publisher<px4_msgs::msg::SurfaceVehicleAttitudeSetpoint>::SharedPtr
-      _rover_attitude_setpoint_pub;
+      _surface_vehicle_attitude_setpoint_pub;
 };
 
 /** @}*/

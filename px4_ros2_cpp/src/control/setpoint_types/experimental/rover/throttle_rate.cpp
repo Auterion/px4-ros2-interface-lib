@@ -17,7 +17,7 @@ RoverThrottleRateSetpointType::RoverThrottleRateSetpointType(Context& context)
           context.topicNamespacePrefix() + "fmu/in/rover_throttle_setpoint" +
               px4_ros2::getMessageNameVersion<px4_msgs::msg::RoverThrottleSetpoint>(),
           1);
-  _rover_rate_setpoint_pub =
+  _surface_vehicle_rate_setpoint_pub =
       context.node().create_publisher<px4_msgs::msg::SurfaceVehicleRateSetpoint>(
           context.topicNamespacePrefix() + "fmu/in/surface_vehicle_rate_setpoint" +
               px4_ros2::getMessageNameVersion<px4_msgs::msg::SurfaceVehicleRateSetpoint>(),
@@ -39,7 +39,7 @@ void RoverThrottleRateSetpointType::update(const float throttle_body_x,
   px4_msgs::msg::SurfaceVehicleRateSetpoint sp_rate{};
   sp_rate.yaw_rate_setpoint = yaw_rate_setpoint;
   sp_rate.timestamp = 0;  // Let PX4 set the timestamp
-  _rover_rate_setpoint_pub->publish(sp_rate);
+  _surface_vehicle_rate_setpoint_pub->publish(sp_rate);
 }
 
 }  // namespace px4_ros2

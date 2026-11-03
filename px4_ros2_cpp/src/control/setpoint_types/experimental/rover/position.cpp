@@ -12,7 +12,7 @@ namespace px4_ros2 {
 RoverPositionSetpointType::RoverPositionSetpointType(Context& context)
     : SetpointBase(context), _node(context.node())
 {
-  _rover_position_setpoint_pub =
+  _surface_vehicle_position_setpoint_pub =
       context.node().create_publisher<px4_msgs::msg::SurfaceVehiclePositionSetpoint>(
           context.topicNamespacePrefix() + "fmu/in/surface_vehicle_position_setpoint" +
               px4_ros2::getMessageNameVersion<px4_msgs::msg::SurfaceVehiclePositionSetpoint>(),
@@ -36,7 +36,7 @@ void RoverPositionSetpointType::update(const Eigen::Vector2f& target_ned,
   sp.arrival_speed = arrival_speed.value_or(NAN);
   sp.yaw = yaw.value_or(NAN);
   sp.timestamp = 0;  // Let PX4 set the timestamp
-  _rover_position_setpoint_pub->publish(sp);
+  _surface_vehicle_position_setpoint_pub->publish(sp);
 }
 
 }  // namespace px4_ros2

@@ -17,7 +17,7 @@ RoverThrottleSteeringSetpointType::RoverThrottleSteeringSetpointType(Context& co
           context.topicNamespacePrefix() + "fmu/in/rover_throttle_setpoint" +
               px4_ros2::getMessageNameVersion<px4_msgs::msg::RoverThrottleSetpoint>(),
           1);
-  _rover_steering_setpoint_pub =
+  _surface_vehicle_steering_setpoint_pub =
       context.node().create_publisher<px4_msgs::msg::SurfaceVehicleSteeringSetpoint>(
           context.topicNamespacePrefix() + "fmu/in/surface_vehicle_steering_setpoint" +
               px4_ros2::getMessageNameVersion<px4_msgs::msg::SurfaceVehicleSteeringSetpoint>(),
@@ -39,7 +39,7 @@ void RoverThrottleSteeringSetpointType::update(const float throttle_body_x,
   px4_msgs::msg::SurfaceVehicleSteeringSetpoint sp_steering{};
   sp_steering.normalized_steering_setpoint = normalized_steering_setpoint;
   sp_steering.timestamp = 0;  // Let PX4 set the timestamp
-  _rover_steering_setpoint_pub->publish(sp_steering);
+  _surface_vehicle_steering_setpoint_pub->publish(sp_steering);
 }
 
 }  // namespace px4_ros2

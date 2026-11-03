@@ -48,7 +48,7 @@ class RoverThrottleSteeringSetpointType : public SetpointBase {
   rclcpp::Node& _node;
   rclcpp::Publisher<px4_msgs::msg::RoverThrottleSetpoint>::SharedPtr _rover_throttle_setpoint_pub;
   rclcpp::Publisher<px4_msgs::msg::SurfaceVehicleSteeringSetpoint>::SharedPtr
-      _rover_steering_setpoint_pub;
+      _surface_vehicle_steering_setpoint_pub;
 };
 
 /** @}*/

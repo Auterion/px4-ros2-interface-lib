@@ -51,7 +51,7 @@ class RoverPositionSetpointType : public SetpointBase {
  private:
   rclcpp::Node& _node;
   rclcpp::Publisher<px4_msgs::msg::SurfaceVehiclePositionSetpoint>::SharedPtr
-      _rover_position_setpoint_pub;
+      _surface_vehicle_position_setpoint_pub;
 };
 
 /** @}*/

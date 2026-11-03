@@ -45,7 +45,7 @@ class RoverThrottleAttitudeSetpointType : public SetpointBase {
   rclcpp::Node& _node;
   rclcpp::Publisher<px4_msgs::msg::RoverThrottleSetpoint>::SharedPtr _rover_throttle_setpoint_pub;
   rclcpp::Publisher<px4_msgs::msg::SurfaceVehicleAttitudeSetpoint>::SharedPtr
-      _rover_attitude_setpoint_pub;
+      _surface_vehicle_attitude_setpoint_pub;
 };
 
 /** @}*/
