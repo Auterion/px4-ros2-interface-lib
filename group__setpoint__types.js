@@ -1,6 +1,7 @@
 var group__setpoint__types =
 [
     [ "Experimental", "group__setpoint__types__experimental.html", "group__setpoint__types__experimental" ],
+    [ "Surface Vehicle", "group__setpoint__types__surface__vehicle.html", "group__setpoint__types__surface__vehicle" ],
     [ "Rover", "group__setpoint__types__rover.html", "group__setpoint__types__rover" ],
     [ "px4_ros2::DirectActuatorsSetpointType", "classpx4__ros2_1_1DirectActuatorsSetpointType.html", [
       [ "getSetpointType", "classpx4__ros2_1_1DirectActuatorsSetpointType.html#aaadf1f8c0f7c003963550ddcdc1d47a6", null ],

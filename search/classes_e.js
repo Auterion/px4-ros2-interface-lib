@@ -14,5 +14,9 @@ var searchData=
   ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avehiclelocalposition_20_3e_11',['Subscription&lt; px4_msgs::msg::VehicleLocalPosition &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
   ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avehicleodometry_20_3e_12',['Subscription&lt; px4_msgs::msg::VehicleOdometry &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
   ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avehiclestatus_20_3e_13',['Subscription&lt; px4_msgs::msg::VehicleStatus &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
-  ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avtolvehiclestatus_20_3e_14',['Subscription&lt; px4_msgs::msg::VtolVehicleStatus &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]]
+  ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avtolvehiclestatus_20_3e_14',['Subscription&lt; px4_msgs::msg::VtolVehicleStatus &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
+  ['surfacevehiclepositionsetpointtype_15',['SurfaceVehiclePositionSetpointType',['../classpx4__ros2_1_1SurfaceVehiclePositionSetpointType.html',1,'px4_ros2']]],
+  ['surfacevehiclespeedattitudesetpointtype_16',['SurfaceVehicleSpeedAttitudeSetpointType',['../classpx4__ros2_1_1SurfaceVehicleSpeedAttitudeSetpointType.html',1,'px4_ros2']]],
+  ['surfacevehiclespeedratesetpointtype_17',['SurfaceVehicleSpeedRateSetpointType',['../classpx4__ros2_1_1SurfaceVehicleSpeedRateSetpointType.html',1,'px4_ros2']]],
+  ['surfacevehiclespeedsteeringsetpointtype_18',['SurfaceVehicleSpeedSteeringSetpointType',['../classpx4__ros2_1_1SurfaceVehicleSpeedSteeringSetpointType.html',1,'px4_ros2']]]
 ];

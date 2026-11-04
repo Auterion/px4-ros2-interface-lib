@@ -33,5 +33,10 @@ var searchData=
   ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avehicleodometry_20_3e_30',['Subscription&lt; px4_msgs::msg::VehicleOdometry &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
   ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avehiclestatus_20_3e_31',['Subscription&lt; px4_msgs::msg::VehicleStatus &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
   ['subscription_3c_20px4_5fmsgs_3a_3amsg_3a_3avtolvehiclestatus_20_3e_32',['Subscription&lt; px4_msgs::msg::VtolVehicleStatus &gt;',['../classpx4__ros2_1_1Subscription.html',1,'px4_ros2']]],
-  ['supportsresumefromlanded_33',['supportsResumeFromLanded',['../classpx4__ros2_1_1ActionInterface.html#ae6a1a31a96023ab34946ef3afa8b6019',1,'px4_ros2::ActionInterface']]]
+  ['supportsresumefromlanded_33',['supportsResumeFromLanded',['../classpx4__ros2_1_1ActionInterface.html#ae6a1a31a96023ab34946ef3afa8b6019',1,'px4_ros2::ActionInterface']]],
+  ['surface_20vehicle_34',['Surface Vehicle',['../group__setpoint__types__surface__vehicle.html',1,'']]],
+  ['surfacevehiclepositionsetpointtype_35',['SurfaceVehiclePositionSetpointType',['../classpx4__ros2_1_1SurfaceVehiclePositionSetpointType.html',1,'px4_ros2']]],
+  ['surfacevehiclespeedattitudesetpointtype_36',['SurfaceVehicleSpeedAttitudeSetpointType',['../classpx4__ros2_1_1SurfaceVehicleSpeedAttitudeSetpointType.html',1,'px4_ros2']]],
+  ['surfacevehiclespeedratesetpointtype_37',['SurfaceVehicleSpeedRateSetpointType',['../classpx4__ros2_1_1SurfaceVehicleSpeedRateSetpointType.html',1,'px4_ros2']]],
+  ['surfacevehiclespeedsteeringsetpointtype_38',['SurfaceVehicleSpeedSteeringSetpointType',['../classpx4__ros2_1_1SurfaceVehicleSpeedSteeringSetpointType.html',1,'px4_ros2']]]
 ];

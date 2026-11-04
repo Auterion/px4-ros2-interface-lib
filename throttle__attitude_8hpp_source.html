@@ -106,8 +106,8 @@ $(document).ready(function(){initNavTree('throttle__attitude_8hpp_source.html','
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;px4_msgs/msg/rover_attitude_setpoint.hpp&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;px4_msgs/msg/rover_throttle_setpoint.hpp&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;px4_msgs/msg/rover_throttle_setpoint.hpp&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;px4_msgs/msg/surface_vehicle_attitude_setpoint.hpp&gt;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;px4_ros2/common/setpoint_base.hpp&gt;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span>px4_ros2 {</div>
@@ -132,11 +132,12 @@ $(document).ready(function(){initNavTree('throttle__attitude_8hpp_source.html','
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  rclcpp::Node&amp; _node;</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  rclcpp::Publisher&lt;px4_msgs::msg::RoverThrottleSetpoint&gt;::SharedPtr _rover_throttle_setpoint_pub;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  rclcpp::Publisher&lt;px4_msgs::msg::RoverAttitudeSetpoint&gt;::SharedPtr _rover_attitude_setpoint_pub;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>};</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  rclcpp::Publisher&lt;px4_msgs::msg::SurfaceVehicleAttitudeSetpoint&gt;::SharedPtr</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>      _surface_vehicle_attitude_setpoint_pub;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>};</div>
 </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition</b> context.hpp:18</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1RoverThrottleAttitudeSetpointType_html"><div class="ttname"><a href="classpx4__ros2_1_1RoverThrottleAttitudeSetpointType.html">px4_ros2::RoverThrottleAttitudeSetpointType</a></div><div class="ttdoc">Setpoint type for rover throttle and attitude control.</div><div class="ttdef"><b>Definition</b> throttle_attitude.hpp:20</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1RoverThrottleAttitudeSetpointType_html_a432ef38b00f6d4a162240da82b85d161"><div class="ttname"><a href="classpx4__ros2_1_1RoverThrottleAttitudeSetpointType.html#a432ef38b00f6d4a162240da82b85d161">px4_ros2::RoverThrottleAttitudeSetpointType::getSetpointType</a></div><div class="ttdeci">SetpointType getSetpointType() override</div><div class="ttdef"><b>Definition</b> throttle_attitude.hpp:26</div></div>
