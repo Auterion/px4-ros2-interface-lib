@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
-#include <px4_ros2/control/setpoint_types/experimental/rover/speed_attitude.hpp>
+#include <px4_ros2/control/setpoint_types/experimental/surface_vehicle/speed_steering.hpp>
 #include <px4_ros2/utils/geometry.hpp>
 #include <px4_ros2/utils/message_version.hpp>
 
 namespace px4_ros2 {
 
-RoverSpeedAttitudeSetpointType::RoverSpeedAttitudeSetpointType(Context& context)
+SurfaceVehicleSpeedSteeringSetpointType::SurfaceVehicleSpeedSteeringSetpointType(Context& context)
     : SetpointBase(context), _node(context.node())
 {
   _surface_vehicle_speed_setpoint_pub =
@@ -17,15 +17,16 @@ RoverSpeedAttitudeSetpointType::RoverSpeedAttitudeSetpointType(Context& context)
           context.topicNamespacePrefix() + "fmu/in/surface_vehicle_speed_setpoint" +
               px4_ros2::getMessageNameVersion<px4_msgs::msg::SurfaceVehicleSpeedSetpoint>(),
           1);
-  _surface_vehicle_attitude_setpoint_pub =
-      context.node().create_publisher<px4_msgs::msg::SurfaceVehicleAttitudeSetpoint>(
-          context.topicNamespacePrefix() + "fmu/in/surface_vehicle_attitude_setpoint" +
-              px4_ros2::getMessageNameVersion<px4_msgs::msg::SurfaceVehicleAttitudeSetpoint>(),
+  _surface_vehicle_steering_setpoint_pub =
+      context.node().create_publisher<px4_msgs::msg::SurfaceVehicleSteeringSetpoint>(
+          context.topicNamespacePrefix() + "fmu/in/surface_vehicle_steering_setpoint" +
+              px4_ros2::getMessageNameVersion<px4_msgs::msg::SurfaceVehicleSteeringSetpoint>(),
           1);
 }
 
-void RoverSpeedAttitudeSetpointType::update(const float speed_body_x, const float yaw_setpoint,
-                                            std::optional<float> speed_body_y)
+void SurfaceVehicleSpeedSteeringSetpointType::update(const float speed_body_x,
+                                                     const float normalized_steering_setpoint,
+                                                     std::optional<float> speed_body_y)
 {
   onUpdate();
 
@@ -35,10 +36,10 @@ void RoverSpeedAttitudeSetpointType::update(const float speed_body_x, const floa
   sp_speed.timestamp = 0;  // Let PX4 set the timestamp
   _surface_vehicle_speed_setpoint_pub->publish(sp_speed);
 
-  px4_msgs::msg::SurfaceVehicleAttitudeSetpoint sp_att{};
-  sp_att.yaw_setpoint = yaw_setpoint;
-  sp_att.timestamp = 0;  // Let PX4 set the timestamp
-  _surface_vehicle_attitude_setpoint_pub->publish(sp_att);
+  px4_msgs::msg::SurfaceVehicleSteeringSetpoint sp_steering{};
+  sp_steering.normalized_steering_setpoint = normalized_steering_setpoint;
+  sp_steering.timestamp = 0;  // Let PX4 set the timestamp
+  _surface_vehicle_steering_setpoint_pub->publish(sp_steering);
 }
 
 }  // namespace px4_ros2

@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ****************************************************************************/
 
-#include <px4_ros2/control/setpoint_types/experimental/rover/position.hpp>
+#include <px4_ros2/control/setpoint_types/experimental/surface_vehicle/position.hpp>
 #include <px4_ros2/utils/geometry.hpp>
 #include <px4_ros2/utils/message_version.hpp>
 
 namespace px4_ros2 {
 
-RoverPositionSetpointType::RoverPositionSetpointType(Context& context)
+SurfaceVehiclePositionSetpointType::SurfaceVehiclePositionSetpointType(Context& context)
     : SetpointBase(context), _node(context.node())
 {
   _surface_vehicle_position_setpoint_pub =
@@ -19,10 +19,11 @@ RoverPositionSetpointType::RoverPositionSetpointType(Context& context)
           1);
 }
 
-void RoverPositionSetpointType::update(const Eigen::Vector2f& target_ned,
-                                       const std::optional<Eigen::Vector2f>& start_ned,
-                                       std::optional<float> cruising_speed,
-                                       std::optional<float> arrival_speed, std::optional<float> yaw)
+void SurfaceVehiclePositionSetpointType::update(const Eigen::Vector2f& target_ned,
+                                                const std::optional<Eigen::Vector2f>& start_ned,
+                                                std::optional<float> cruising_speed,
+                                                std::optional<float> arrival_speed,
+                                                std::optional<float> yaw)
 {
   onUpdate();
 

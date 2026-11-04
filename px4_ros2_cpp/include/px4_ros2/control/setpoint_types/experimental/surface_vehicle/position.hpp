@@ -10,18 +10,20 @@
 #include <px4_ros2/common/setpoint_base.hpp>
 
 namespace px4_ros2 {
-/** \ingroup setpoint_types_rover
+/** \ingroup setpoint_types_surface_vehicle
  *  @{
  */
 
 /**
- * @brief Setpoint type for rover position control
+ * @brief Setpoint type for surface vehicle position control
+ *
+ * Can be used for surface vehicles, i.e. rovers and boats.
  */
-class RoverPositionSetpointType : public SetpointBase {
+class SurfaceVehiclePositionSetpointType : public SetpointBase {
  public:
-  explicit RoverPositionSetpointType(Context& context);
+  explicit SurfaceVehiclePositionSetpointType(Context& context);
 
-  ~RoverPositionSetpointType() override = default;
+  ~SurfaceVehiclePositionSetpointType() override = default;
 
   SetpointType getSetpointType() override
   {
@@ -31,17 +33,17 @@ class RoverPositionSetpointType : public SetpointBase {
   float desiredUpdateRateHz() override { return 30.f; }
 
   /**
-   * @brief Send a rover position setpoint to the flight controller.
+   * @brief Send a position setpoint to the flight controller.
    *
    * @param target_ned [m] Target position in NED frame. Takes values in [-inf, inf].
-   * @param start_ned [m] Start position which specifies a line for the rover to track (Optional,
+   * @param start_ned [m] Start position which specifies a line for the vehicle to track (Optional,
    * defaults to vehicle position). Takes values in [-inf, inf].
    * @param cruising_speed [m/s] Cruising speed (Optional, defaults to maximum speed). Takes values
    * in [0, inf].
-   * @param arrival_speed [m/s] Speed the rover should arrive at the target with (Optional, defaults
-   * to zero). Takes values in [0, inf].
-   * @param yaw [rad] Mecanum only: Specify vehicle yaw during travel (Optional, defaults to vehicle
-   * yaw). Takes values in [-pi,pi].
+   * @param arrival_speed [m/s] Speed the vehicle should arrive at the target with (Optional,
+   * defaults to zero). Takes values in [0, inf].
+   * @param yaw [rad] Mecanum rovers only: Specify vehicle yaw during travel (Optional, defaults to
+   * vehicle yaw). Takes values in [-pi,pi].
    */
   void update(const Eigen::Vector2f& target_ned,
               const std::optional<Eigen::Vector2f>& start_ned = {},

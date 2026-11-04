@@ -10,18 +10,20 @@
 #include <px4_ros2/common/setpoint_base.hpp>
 
 namespace px4_ros2 {
-/** \ingroup setpoint_types_rover
+/** \ingroup setpoint_types_surface_vehicle
  *  @{
  */
 
 /**
- * @brief Setpoint type for rover speed and rate control
+ * @brief Setpoint type for surface vehicle speed and rate control
+ *
+ * Can be used for surface vehicles, i.e. rovers and boats.
  */
-class RoverSpeedRateSetpointType : public SetpointBase {
+class SurfaceVehicleSpeedRateSetpointType : public SetpointBase {
  public:
-  explicit RoverSpeedRateSetpointType(Context& context);
+  explicit SurfaceVehicleSpeedRateSetpointType(Context& context);
 
-  ~RoverSpeedRateSetpointType() override = default;
+  ~SurfaceVehicleSpeedRateSetpointType() override = default;
 
   SetpointType getSetpointType() override
   {
@@ -31,13 +33,13 @@ class RoverSpeedRateSetpointType : public SetpointBase {
   float desiredUpdateRateHz() override { return 30.f; }
 
   /**
-   * @brief Send a rover speed setpoint and a rover rate setpoint to the flight controller.
+   * @brief Send a speed setpoint and a yaw rate setpoint to the flight controller.
    *
    * @param speed_body_x [m/s] Speed setpoint in body x direction. Takes values in [-inf
    * (Backwards), inf (Forwards)].
    * @param yaw_rate_setpoint [rad/s] Yaw rate setpoint in NED frame. Takes values in [-inf, inf].
-   * @param speed_body_y [m/s] Mecanum only: Speed setpoint in body y direction (Only relevant for
-   * mecanum rovers). Takes values in [-inf (Left), inf (Right)].
+   * @param speed_body_y [m/s] Speed setpoint in body y direction (Optional, only relevant for
+   * mecanum rovers, ignored by all other vehicles). Takes values in [-inf (Left), inf (Right)].
    */
   void update(float speed_body_x, float yaw_rate_setpoint, std::optional<float> speed_body_y = {});
 

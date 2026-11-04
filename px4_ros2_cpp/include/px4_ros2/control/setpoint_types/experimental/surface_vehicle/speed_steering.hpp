@@ -10,18 +10,20 @@
 #include <px4_ros2/common/setpoint_base.hpp>
 
 namespace px4_ros2 {
-/** \ingroup setpoint_types_rover
+/** \ingroup setpoint_types_surface_vehicle
  *  @{
  */
 
 /**
- * @brief Setpoint type for rover speed and steering control
+ * @brief Setpoint type for surface vehicle speed and steering control
+ *
+ * Can be used for surface vehicles, i.e. rovers and boats.
  */
-class RoverSpeedSteeringSetpointType : public SetpointBase {
+class SurfaceVehicleSpeedSteeringSetpointType : public SetpointBase {
  public:
-  explicit RoverSpeedSteeringSetpointType(Context& context);
+  explicit SurfaceVehicleSpeedSteeringSetpointType(Context& context);
 
-  ~RoverSpeedSteeringSetpointType() override = default;
+  ~SurfaceVehicleSpeedSteeringSetpointType() override = default;
 
   SetpointType getSetpointType() override
   {
@@ -31,15 +33,16 @@ class RoverSpeedSteeringSetpointType : public SetpointBase {
   float desiredUpdateRateHz() override { return 30.f; }
 
   /**
-   * @brief Send a rover speed setpoint and a rover steering setpoint to the flight controller.
+   * @brief Send a speed setpoint and a steering setpoint to the flight controller.
    *
    * @param speed_body_x [m/s] Speed setpoint in body x direction. Takes values in [-inf
    * (Backwards), inf (Forwards)].
-   * @param normalized_steering_setpoint [-] Ackermann: Normalized steering angle,
-   * Differential/Mecanum: Normalized speed difference between the left and right wheels. Takes
-   * values in [-1 (Left), 1 (Right)].
-   * @param speed_body_y [m/s] Mecanum only: Speed setpoint in body y direction (Only relevant for
-   * mecanum rovers). Takes values in [-inf (Left), inf (Right)].
+   * @param normalized_steering_setpoint [-] Normalized steering setpoint. Ackermann rovers:
+   * Normalized steering angle, Differential/Mecanum rovers: Normalized speed difference between
+   * the left and right wheels, Boats: Normalized steering command. Takes values in [-1 (Left), 1
+   * (Right)].
+   * @param speed_body_y [m/s] Speed setpoint in body y direction (Optional, only relevant for
+   * mecanum rovers, ignored by all other vehicles). Takes values in [-inf (Left), inf (Right)].
    */
   void update(float speed_body_x, float normalized_steering_setpoint,
               std::optional<float> speed_body_y = {});
