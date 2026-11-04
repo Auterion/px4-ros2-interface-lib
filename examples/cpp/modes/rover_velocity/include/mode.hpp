@@ -5,7 +5,7 @@
 #pragma once
 
 #include <px4_ros2/components/mode.hpp>
-#include <px4_ros2/control/setpoint_types/experimental/rover/speed_rate.hpp>
+#include <px4_ros2/control/setpoint_types/experimental/surface_vehicle/speed_rate.hpp>
 #include <px4_ros2/utils/geometry.hpp>
 #include <rclcpp/rclcpp.hpp>
 
@@ -18,7 +18,8 @@ class RoverVelocityMode : public px4_ros2::ModeBase {
   explicit RoverVelocityMode(rclcpp::Node& node) : ModeBase(node, kName)
   {
     _manual_control_input = std::make_shared<px4_ros2::ManualControlInput>(*this);
-    _rover_speed_rate_setpoint = std::make_shared<px4_ros2::RoverSpeedRateSetpointType>(*this);
+    _rover_speed_rate_setpoint =
+        std::make_shared<px4_ros2::SurfaceVehicleSpeedRateSetpointType>(*this);
   }
 
   void updateSetpoint(float dt_s) override
@@ -30,5 +31,5 @@ class RoverVelocityMode : public px4_ros2::ModeBase {
 
  private:
   std::shared_ptr<px4_ros2::ManualControlInput> _manual_control_input;
-  std::shared_ptr<px4_ros2::RoverSpeedRateSetpointType> _rover_speed_rate_setpoint;
+  std::shared_ptr<px4_ros2::SurfaceVehicleSpeedRateSetpointType> _rover_speed_rate_setpoint;
 };

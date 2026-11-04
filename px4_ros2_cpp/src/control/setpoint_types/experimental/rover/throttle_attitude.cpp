@@ -17,10 +17,10 @@ RoverThrottleAttitudeSetpointType::RoverThrottleAttitudeSetpointType(Context& co
           context.topicNamespacePrefix() + "fmu/in/rover_throttle_setpoint" +
               px4_ros2::getMessageNameVersion<px4_msgs::msg::RoverThrottleSetpoint>(),
           1);
-  _rover_attitude_setpoint_pub =
-      context.node().create_publisher<px4_msgs::msg::RoverAttitudeSetpoint>(
-          context.topicNamespacePrefix() + "fmu/in/rover_attitude_setpoint" +
-              px4_ros2::getMessageNameVersion<px4_msgs::msg::RoverAttitudeSetpoint>(),
+  _surface_vehicle_attitude_setpoint_pub =
+      context.node().create_publisher<px4_msgs::msg::SurfaceVehicleAttitudeSetpoint>(
+          context.topicNamespacePrefix() + "fmu/in/surface_vehicle_attitude_setpoint" +
+              px4_ros2::getMessageNameVersion<px4_msgs::msg::SurfaceVehicleAttitudeSetpoint>(),
           1);
 }
 
@@ -36,10 +36,10 @@ void RoverThrottleAttitudeSetpointType::update(const float throttle_body_x,
   sp_throttle.timestamp = 0;  // Let PX4 set the timestamp
   _rover_throttle_setpoint_pub->publish(sp_throttle);
 
-  px4_msgs::msg::RoverAttitudeSetpoint sp_att{};
+  px4_msgs::msg::SurfaceVehicleAttitudeSetpoint sp_att{};
   sp_att.yaw_setpoint = yaw_setpoint;
   sp_att.timestamp = 0;  // Let PX4 set the timestamp
-  _rover_attitude_setpoint_pub->publish(sp_att);
+  _surface_vehicle_attitude_setpoint_pub->publish(sp_att);
 }
 
 }  // namespace px4_ros2
