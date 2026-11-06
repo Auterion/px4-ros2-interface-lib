@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>px4_ros2_sdk</name>
+  <version>0.0.1</version>
+  <description>Experimental ROS 2-native flight SDK facade over the PX4 ROS 2 interface library (px4_ros2_cpp)</description>
+  <maintainer email="beat-kueng@gmx.net">Beat Kueng</maintainer>
+  <license>BSD-3-Clause</license>
+
+  <url type="repository">https://github.com/Auterion/px4-ros2-interface-lib</url>
+  <url type="bugtracker">https://github.com/Auterion/px4-ros2-interface-lib/issues</url>
+
+  <author email="nmarques@riis.com">Nuno Marques (RIIS, LLC)</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_action</depend>
+  <depend>rclcpp_components</depend>
+  <depend>rclcpp_lifecycle</depend>
+  <depend>lifecycle_msgs</depend>
+  <depend>px4_msgs</depend>
+  <depend>px4_ros2_cpp</depend>
+  <depend>px4_ros2_sdk_interfaces</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
