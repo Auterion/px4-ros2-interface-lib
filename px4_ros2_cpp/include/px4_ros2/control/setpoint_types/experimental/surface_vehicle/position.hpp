@@ -5,6 +5,10 @@
 
 #pragma once
 
+#if defined(PX4_ROS2_HAS_SURFACE_VEHICLE_MSGS) && !PX4_ROS2_HAS_SURFACE_VEHICLE_MSGS
+#error "This setpoint type requires a px4_msgs version that provides the SurfaceVehicle* messages"
+#endif
+
 #include <Eigen/Eigen>
 #include <px4_msgs/msg/surface_vehicle_position_setpoint.hpp>
 #include <px4_ros2/common/setpoint_base.hpp>
