@@ -31,8 +31,8 @@ void SurfaceVehicleSpeedAttitudeSetpointType::update(const float speed_body_x,
   onUpdate();
 
   px4_msgs::msg::SurfaceVehicleSpeedSetpoint sp_speed{};
-  sp_speed.speed_body_x = speed_body_x;
-  sp_speed.speed_body_y = speed_body_y.value_or(NAN);
+  sp_speed.x = speed_body_x;
+  sp_speed.y = speed_body_y.value_or(NAN);
   sp_speed.timestamp = 0;  // Let PX4 set the timestamp
   _surface_vehicle_speed_setpoint_pub->publish(sp_speed);
 

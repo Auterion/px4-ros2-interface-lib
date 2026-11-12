@@ -39,7 +39,8 @@ class SurfaceVehicleSpeedRateSetpointType : public SetpointBase {
    * (Backwards), inf (Forwards)].
    * @param yaw_rate_setpoint [rad/s] Yaw rate setpoint in NED frame. Takes values in [-inf, inf].
    * @param speed_body_y [m/s] Speed setpoint in body y direction (Optional, only relevant for
-   * mecanum rovers, ignored by all other vehicles). Takes values in [-inf (Left), inf (Right)].
+   * omnidirectional vehicles, ignored by all other vehicles). Takes values in [-inf (Left), inf
+   * (Right)].
    */
   void update(float speed_body_x, float yaw_rate_setpoint, std::optional<float> speed_body_y = {});
 
