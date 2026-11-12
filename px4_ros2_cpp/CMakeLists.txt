@@ -203,10 +203,20 @@ ament_export_dependencies(
         eigen3_cmake_module
         Eigen3
 )
-install(
-        DIRECTORY include/px4_ros2
-        DESTINATION include
-)
+if(HAS_SURFACE_VEHICLE_MSGS)
+    install(
+            DIRECTORY include/px4_ros2
+            DESTINATION include
+    )
+else()
+    # Do not install the surface vehicle headers, so that consumers can detect their
+    # availability with __has_include
+    install(
+            DIRECTORY include/px4_ros2
+            DESTINATION include
+            PATTERN "surface_vehicle" EXCLUDE
+    )
+endif()
 install(
         TARGETS px4_ros2_cpp
         EXPORT px4_ros2_cpp

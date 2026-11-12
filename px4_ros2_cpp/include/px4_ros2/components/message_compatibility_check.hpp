@@ -50,7 +50,6 @@ using namespace std::chrono_literals;  // NOLINT
   {"fmu/out/vtol_vehicle_status"}, \
   {"fmu/out/vehicle_odometry"} \
   PX4_ROS2_SURFACE_VEHICLE_MESSAGES
-
 // Messages only available in px4_msgs versions that provide the SurfaceVehicle* messages
 #if !defined(PX4_ROS2_HAS_SURFACE_VEHICLE_MSGS) || PX4_ROS2_HAS_SURFACE_VEHICLE_MSGS
 #define PX4_ROS2_SURFACE_VEHICLE_MESSAGES \
