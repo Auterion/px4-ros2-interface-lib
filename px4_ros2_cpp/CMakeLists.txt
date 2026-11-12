@@ -98,9 +98,9 @@ set(HEADER_FILES
         include/px4_ros2/control/setpoint_types/experimental/surface_vehicle/speed_attitude.hpp
         include/px4_ros2/control/setpoint_types/experimental/surface_vehicle/speed_rate.hpp
         include/px4_ros2/control/setpoint_types/experimental/surface_vehicle/speed_steering.hpp
-        include/px4_ros2/control/setpoint_types/experimental/surface_vehicle/throttle_attitude.hpp
-        include/px4_ros2/control/setpoint_types/experimental/surface_vehicle/throttle_rate.hpp
-        include/px4_ros2/control/setpoint_types/experimental/surface_vehicle/throttle_steering.hpp
+        include/px4_ros2/control/setpoint_types/experimental/surface_vehicle/thrust_attitude.hpp
+        include/px4_ros2/control/setpoint_types/experimental/surface_vehicle/thrust_rate.hpp
+        include/px4_ros2/control/setpoint_types/experimental/surface_vehicle/thrust_steering.hpp
         include/px4_ros2/control/vtol.hpp
         include/px4_ros2/mission/actions/action.hpp
         include/px4_ros2/mission/actions/default_actions.hpp
@@ -151,9 +151,9 @@ add_library(px4_ros2_cpp
         src/control/setpoint_types/experimental/surface_vehicle/speed_attitude.cpp
         src/control/setpoint_types/experimental/surface_vehicle/speed_rate.cpp
         src/control/setpoint_types/experimental/surface_vehicle/speed_steering.cpp
-        src/control/setpoint_types/experimental/surface_vehicle/throttle_attitude.cpp
-        src/control/setpoint_types/experimental/surface_vehicle/throttle_rate.cpp
-        src/control/setpoint_types/experimental/surface_vehicle/throttle_steering.cpp
+        src/control/setpoint_types/experimental/surface_vehicle/thrust_attitude.cpp
+        src/control/setpoint_types/experimental/surface_vehicle/thrust_rate.cpp
+        src/control/setpoint_types/experimental/surface_vehicle/thrust_steering.cpp
         src/control/setpoint_types/experimental/trajectory.cpp
         src/control/setpoint_types/fixedwing/lateral_longitudinal.cpp
         src/control/setpoint_types/multicopter/goto.cpp

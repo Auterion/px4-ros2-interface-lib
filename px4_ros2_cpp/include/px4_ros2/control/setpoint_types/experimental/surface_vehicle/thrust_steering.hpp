@@ -6,7 +6,7 @@
 #pragma once
 
 #include <px4_msgs/msg/surface_vehicle_steering_setpoint.hpp>
-#include <px4_msgs/msg/surface_vehicle_throttle_setpoint.hpp>
+#include <px4_msgs/msg/surface_vehicle_thrust_setpoint.hpp>
 #include <px4_ros2/common/setpoint_base.hpp>
 
 namespace px4_ros2 {
@@ -15,42 +15,42 @@ namespace px4_ros2 {
  */
 
 /**
- * @brief Setpoint type for surface vehicle throttle and steering control
+ * @brief Setpoint type for surface vehicle thrust and steering control
  *
  * Can be used for surface vehicles, i.e. rovers and boats.
  */
-class SurfaceVehicleThrottleSteeringSetpointType : public SetpointBase {
+class SurfaceVehicleThrustSteeringSetpointType : public SetpointBase {
  public:
-  explicit SurfaceVehicleThrottleSteeringSetpointType(Context& context);
+  explicit SurfaceVehicleThrustSteeringSetpointType(Context& context);
 
-  ~SurfaceVehicleThrottleSteeringSetpointType() override = default;
+  ~SurfaceVehicleThrustSteeringSetpointType() override = default;
 
   SetpointType getSetpointType() override
   {
-    return px4_msgs::msg::SetpointConfig::TYPE_SURFACE_VEHICLE_THROTTLE_STEERING;
+    return px4_msgs::msg::SetpointConfig::TYPE_SURFACE_VEHICLE_THRUST_STEERING;
   }
 
   float desiredUpdateRateHz() override { return 30.f; }
 
   /**
-   * @brief Send a throttle setpoint and a steering setpoint to the flight controller.
+   * @brief Send a thrust setpoint and a steering setpoint to the flight controller.
    *
-   * @param throttle_body_x [-] Throttle setpoint along body X axis. Takes values in [-1
+   * @param thrust_body_x [-] Normalized thrust setpoint along body X axis. Takes values in [-1
    * (Backwards), 1 (Forwards)].
    * @param normalized_steering_setpoint [-] Ackermann: Normalized steering angle,
    * Differential/Mecanum: Normalized speed difference between the left and right wheels. Takes
    * values in [-1 (Left), 1 (Right)].
-   * @param throttle_body_y [-] Throttle setpoint along body Y axis (Optional, only relevant for
-   * omnidirectional vehicles, ignored by all other vehicles). Takes values in [-1 (Left), 1
+   * @param thrust_body_y [-] Normalized thrust setpoint along body Y axis (Optional, only relevant
+   * for omnidirectional vehicles, ignored by all other vehicles). Takes values in [-1 (Left), 1
    * (Right)].
    */
-  void update(float throttle_body_x, float normalized_steering_setpoint,
-              std::optional<float> throttle_body_y = {});
+  void update(float thrust_body_x, float normalized_steering_setpoint,
+              std::optional<float> thrust_body_y = {});
 
  private:
   rclcpp::Node& _node;
-  rclcpp::Publisher<px4_msgs::msg::SurfaceVehicleThrottleSetpoint>::SharedPtr
-      _surface_vehicle_throttle_setpoint_pub;
+  rclcpp::Publisher<px4_msgs::msg::SurfaceVehicleThrustSetpoint>::SharedPtr
+      _surface_vehicle_thrust_setpoint_pub;
   rclcpp::Publisher<px4_msgs::msg::SurfaceVehicleSteeringSetpoint>::SharedPtr
       _surface_vehicle_steering_setpoint_pub;
 };

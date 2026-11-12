@@ -29,7 +29,7 @@ using namespace std::chrono_literals;  // NOLINT
   {"fmu/in/surface_vehicle_rate_setpoint"}, \
   {"fmu/in/surface_vehicle_speed_setpoint"}, \
   {"fmu/in/surface_vehicle_steering_setpoint"}, \
-  {"fmu/in/surface_vehicle_throttle_setpoint"}, \
+  {"fmu/in/surface_vehicle_thrust_setpoint"}, \
   {"fmu/in/trajectory_setpoint"}, \
   {"fmu/in/unregister_ext_component"}, \
   {"fmu/in/vehicle_attitude_setpoint"}, \
