@@ -39,7 +39,8 @@ class SurfaceVehicleThrottleAttitudeSetpointType : public SetpointBase {
    * (Backwards), 1 (Forwards)].
    * @param yaw_setpoint [rad] Yaw setpoint in NED frame. Takes values in [-pi, pi].
    * @param throttle_body_y [-] Throttle setpoint along body Y axis (Optional, only relevant for
-   * mecanum rovers, ignored by all other vehicles). Takes values in [-1 (Left), 1 (Right)].
+   * omnidirectional vehicles, ignored by all other vehicles). Takes values in [-1 (Left), 1
+   * (Right)].
    */
   void update(float throttle_body_x, float yaw_setpoint, std::optional<float> throttle_body_y = {});
 

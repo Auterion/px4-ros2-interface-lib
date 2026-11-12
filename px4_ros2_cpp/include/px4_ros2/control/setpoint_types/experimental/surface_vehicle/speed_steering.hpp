@@ -42,7 +42,8 @@ class SurfaceVehicleSpeedSteeringSetpointType : public SetpointBase {
    * the left and right wheels, Boats: Normalized steering command. Takes values in [-1 (Left), 1
    * (Right)].
    * @param speed_body_y [m/s] Speed setpoint in body y direction (Optional, only relevant for
-   * mecanum rovers, ignored by all other vehicles). Takes values in [-inf (Left), inf (Right)].
+   * omnidirectional vehicles, ignored by all other vehicles). Takes values in [-inf (Left), inf
+   * (Right)].
    */
   void update(float speed_body_x, float normalized_steering_setpoint,
               std::optional<float> speed_body_y = {});

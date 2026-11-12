@@ -42,8 +42,8 @@ class SurfaceVehiclePositionSetpointType : public SetpointBase {
    * in [0, inf].
    * @param arrival_speed [m/s] Speed the vehicle should arrive at the target with (Optional,
    * defaults to zero). Takes values in [0, inf].
-   * @param yaw [rad] Mecanum rovers only: Specify vehicle yaw during travel (Optional, defaults to
-   * vehicle yaw). Takes values in [-pi,pi].
+   * @param yaw [rad] Omnidirectional vehicles only: Specify vehicle yaw during travel (Optional,
+   * defaults to vehicle yaw). Takes values in [-pi,pi].
    */
   void update(const Eigen::Vector2f& target_ned,
               const std::optional<Eigen::Vector2f>& start_ned = {},

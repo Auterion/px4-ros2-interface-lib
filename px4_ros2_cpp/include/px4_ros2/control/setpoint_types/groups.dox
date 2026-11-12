@@ -14,6 +14,6 @@
 \brief Setpoint types for surface vehicles, i.e. rovers and boats.
 
 These setpoint types are shared between all surface vehicle types (rovers and boats).
-Some parameters only apply to a subset of vehicles (e.g. lateral speed to mecanum rovers),
+Some parameters only apply to a subset of vehicles (e.g. lateral speed to omnidirectional vehicles),
 which is noted in the parameter description.
 */

@@ -41,7 +41,8 @@ class SurfaceVehicleThrottleSteeringSetpointType : public SetpointBase {
    * Differential/Mecanum: Normalized speed difference between the left and right wheels. Takes
    * values in [-1 (Left), 1 (Right)].
    * @param throttle_body_y [-] Throttle setpoint along body Y axis (Optional, only relevant for
-   * mecanum rovers, ignored by all other vehicles). Takes values in [-1 (Left), 1 (Right)].
+   * omnidirectional vehicles, ignored by all other vehicles). Takes values in [-1 (Left), 1
+   * (Right)].
    */
   void update(float throttle_body_x, float normalized_steering_setpoint,
               std::optional<float> throttle_body_y = {});
