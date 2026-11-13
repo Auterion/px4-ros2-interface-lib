@@ -15,5 +15,17 @@ var group__setpoint__types__surface__vehicle =
     [ "px4_ros2::SurfaceVehicleSpeedSteeringSetpointType", "classpx4__ros2_1_1SurfaceVehicleSpeedSteeringSetpointType.html", [
       [ "getSetpointType", "classpx4__ros2_1_1SurfaceVehicleSpeedSteeringSetpointType.html#aee42444199a743157a92e61be05ef31b", null ],
       [ "update", "classpx4__ros2_1_1SurfaceVehicleSpeedSteeringSetpointType.html#a406f46a6803034b1fdb23f05d7ea0805", null ]
+    ] ],
+    [ "px4_ros2::SurfaceVehicleThrustAttitudeSetpointType", "classpx4__ros2_1_1SurfaceVehicleThrustAttitudeSetpointType.html", [
+      [ "getSetpointType", "classpx4__ros2_1_1SurfaceVehicleThrustAttitudeSetpointType.html#a12ecbf0da2e2129ad1c65b2433485e5f", null ],
+      [ "update", "classpx4__ros2_1_1SurfaceVehicleThrustAttitudeSetpointType.html#a31fa673912fce1da7113ec0a9e41977c", null ]
+    ] ],
+    [ "px4_ros2::SurfaceVehicleThrustRateSetpointType", "classpx4__ros2_1_1SurfaceVehicleThrustRateSetpointType.html", [
+      [ "getSetpointType", "classpx4__ros2_1_1SurfaceVehicleThrustRateSetpointType.html#ac2bc603b78f17bc8b21c5f4bf181ed5a", null ],
+      [ "update", "classpx4__ros2_1_1SurfaceVehicleThrustRateSetpointType.html#a9d9a5ecfc9231291483e78d644a8303c", null ]
+    ] ],
+    [ "px4_ros2::SurfaceVehicleThrustSteeringSetpointType", "classpx4__ros2_1_1SurfaceVehicleThrustSteeringSetpointType.html", [
+      [ "getSetpointType", "classpx4__ros2_1_1SurfaceVehicleThrustSteeringSetpointType.html#a0a4f76399fe00d82d75e7cefb0003175", null ],
+      [ "update", "classpx4__ros2_1_1SurfaceVehicleThrustSteeringSetpointType.html#a06581309c68a1591c24ba08ec13f5b8b", null ]
     ] ]
 ];

@@ -32,13 +32,13 @@ var hierarchy =
         [ "px4_ros2::FwLateralLongitudinalSetpointType", "classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html", null ],
         [ "px4_ros2::MulticopterGotoSetpointType", "classpx4__ros2_1_1MulticopterGotoSetpointType.html", null ],
         [ "px4_ros2::RatesSetpointType", "classpx4__ros2_1_1RatesSetpointType.html", null ],
-        [ "px4_ros2::RoverThrottleAttitudeSetpointType", "classpx4__ros2_1_1RoverThrottleAttitudeSetpointType.html", null ],
-        [ "px4_ros2::RoverThrottleRateSetpointType", "classpx4__ros2_1_1RoverThrottleRateSetpointType.html", null ],
-        [ "px4_ros2::RoverThrottleSteeringSetpointType", "classpx4__ros2_1_1RoverThrottleSteeringSetpointType.html", null ],
         [ "px4_ros2::SurfaceVehiclePositionSetpointType", "classpx4__ros2_1_1SurfaceVehiclePositionSetpointType.html", null ],
         [ "px4_ros2::SurfaceVehicleSpeedAttitudeSetpointType", "classpx4__ros2_1_1SurfaceVehicleSpeedAttitudeSetpointType.html", null ],
         [ "px4_ros2::SurfaceVehicleSpeedRateSetpointType", "classpx4__ros2_1_1SurfaceVehicleSpeedRateSetpointType.html", null ],
         [ "px4_ros2::SurfaceVehicleSpeedSteeringSetpointType", "classpx4__ros2_1_1SurfaceVehicleSpeedSteeringSetpointType.html", null ],
+        [ "px4_ros2::SurfaceVehicleThrustAttitudeSetpointType", "classpx4__ros2_1_1SurfaceVehicleThrustAttitudeSetpointType.html", null ],
+        [ "px4_ros2::SurfaceVehicleThrustRateSetpointType", "classpx4__ros2_1_1SurfaceVehicleThrustRateSetpointType.html", null ],
+        [ "px4_ros2::SurfaceVehicleThrustSteeringSetpointType", "classpx4__ros2_1_1SurfaceVehicleThrustSteeringSetpointType.html", null ],
         [ "px4_ros2::TrajectorySetpointType", "classpx4__ros2_1_1TrajectorySetpointType.html", null ]
       ] ]
     ] ],

@@ -127,19 +127,19 @@ $(document).ready(function(){initNavTree('speed__steering_8hpp_source.html','');
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  <span class="keywordtype">float</span> desiredUpdateRateHz()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> 30.f; }</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1SurfaceVehicleSpeedSteeringSetpointType.html#a406f46a6803034b1fdb23f05d7ea0805">   47</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpx4__ros2_1_1SurfaceVehicleSpeedSteeringSetpointType.html#a406f46a6803034b1fdb23f05d7ea0805">update</a>(<span class="keywordtype">float</span> speed_body_x, <span class="keywordtype">float</span> normalized_steering_setpoint,</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>              std::optional&lt;float&gt; speed_body_y = {});</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  rclcpp::Node&amp; _node;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  rclcpp::Publisher&lt;px4_msgs::msg::SurfaceVehicleSpeedSetpoint&gt;::SharedPtr</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>      _surface_vehicle_speed_setpoint_pub;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  rclcpp::Publisher&lt;px4_msgs::msg::SurfaceVehicleSteeringSetpoint&gt;::SharedPtr</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>      _surface_vehicle_steering_setpoint_pub;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>};</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classpx4__ros2_1_1SurfaceVehicleSpeedSteeringSetpointType.html#a406f46a6803034b1fdb23f05d7ea0805">   48</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpx4__ros2_1_1SurfaceVehicleSpeedSteeringSetpointType.html#a406f46a6803034b1fdb23f05d7ea0805">update</a>(<span class="keywordtype">float</span> speed_body_x, <span class="keywordtype">float</span> normalized_steering_setpoint,</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>              std::optional&lt;float&gt; speed_body_y = {});</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  rclcpp::Node&amp; _node;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  rclcpp::Publisher&lt;px4_msgs::msg::SurfaceVehicleSpeedSetpoint&gt;::SharedPtr</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>      _surface_vehicle_speed_setpoint_pub;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  rclcpp::Publisher&lt;px4_msgs::msg::SurfaceVehicleSteeringSetpoint&gt;::SharedPtr</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>      _surface_vehicle_steering_setpoint_pub;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>};</div>
 </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>} <span class="comment">/* namespace px4_ros2 */</span></div>
 <div class="ttc" id="aclasspx4__ros2_1_1Context_html"><div class="ttname"><a href="classpx4__ros2_1_1Context.html">px4_ros2::Context</a></div><div class="ttdef"><b>Definition</b> context.hpp:18</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1SetpointBase_html"><div class="ttname"><a href="classpx4__ros2_1_1SetpointBase.html">px4_ros2::SetpointBase</a></div><div class="ttdef"><b>Definition</b> setpoint_base.hpp:20</div></div>
 <div class="ttc" id="aclasspx4__ros2_1_1SurfaceVehicleSpeedSteeringSetpointType_html"><div class="ttname"><a href="classpx4__ros2_1_1SurfaceVehicleSpeedSteeringSetpointType.html">px4_ros2::SurfaceVehicleSpeedSteeringSetpointType</a></div><div class="ttdoc">Setpoint type for surface vehicle speed and steering control.</div><div class="ttdef"><b>Definition</b> speed_steering.hpp:22</div></div>

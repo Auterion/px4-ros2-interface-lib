@@ -11,10 +11,6 @@ var searchData=
   ['resuming_8',['resuming',['../classpx4__ros2_1_1ActionArguments.html#a083a76c4b84e9510d5d792fe18de1acd',1,'px4_ros2::ActionArguments']]],
   ['roll_9',['roll',['../classpx4__ros2_1_1ManualControlInput.html#a377da17ccfb46fc042d5b1a98f9e4398',1,'px4_ros2::ManualControlInput::roll()'],['../classpx4__ros2_1_1OdometryAttitude.html#af40100c5121b4c584d347ccc4f6c95ac',1,'px4_ros2::OdometryAttitude::roll()'],['../classpx4__ros2_1_1Odometry.html#a8220856fb2c2d48c400642dffae51593',1,'px4_ros2::Odometry::roll()']]],
   ['ros_202_20interface_20library_10',['PX4 ROS 2 Interface Library',['../index.html',1,'']]],
-  ['rover_11',['Rover',['../group__setpoint__types__rover.html',1,'']]],
-  ['roverthrottleattitudesetpointtype_12',['RoverThrottleAttitudeSetpointType',['../classpx4__ros2_1_1RoverThrottleAttitudeSetpointType.html',1,'px4_ros2']]],
-  ['roverthrottleratesetpointtype_13',['RoverThrottleRateSetpointType',['../classpx4__ros2_1_1RoverThrottleRateSetpointType.html',1,'px4_ros2']]],
-  ['roverthrottlesteeringsetpointtype_14',['RoverThrottleSteeringSetpointType',['../classpx4__ros2_1_1RoverThrottleSteeringSetpointType.html',1,'px4_ros2']]],
-  ['rtl_15',['Rtl',['../classpx4__ros2_1_1default__actions_1_1Rtl.html',1,'px4_ros2::default_actions']]],
-  ['runmodetakeoff_16',['runModeTakeoff',['../classpx4__ros2_1_1ActionHandler.html#a96cb4d2a246b77d417329f67f4cc1f4f',1,'px4_ros2::ActionHandler']]]
+  ['rtl_11',['Rtl',['../classpx4__ros2_1_1default__actions_1_1Rtl.html',1,'px4_ros2::default_actions']]],
+  ['runmodetakeoff_12',['runModeTakeoff',['../classpx4__ros2_1_1ActionHandler.html#a96cb4d2a246b77d417329f67f4cc1f4f',1,'px4_ros2::ActionHandler']]]
 ];

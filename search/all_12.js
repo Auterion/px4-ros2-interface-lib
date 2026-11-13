@@ -38,5 +38,8 @@ var searchData=
   ['surfacevehiclepositionsetpointtype_35',['SurfaceVehiclePositionSetpointType',['../classpx4__ros2_1_1SurfaceVehiclePositionSetpointType.html',1,'px4_ros2']]],
   ['surfacevehiclespeedattitudesetpointtype_36',['SurfaceVehicleSpeedAttitudeSetpointType',['../classpx4__ros2_1_1SurfaceVehicleSpeedAttitudeSetpointType.html',1,'px4_ros2']]],
   ['surfacevehiclespeedratesetpointtype_37',['SurfaceVehicleSpeedRateSetpointType',['../classpx4__ros2_1_1SurfaceVehicleSpeedRateSetpointType.html',1,'px4_ros2']]],
-  ['surfacevehiclespeedsteeringsetpointtype_38',['SurfaceVehicleSpeedSteeringSetpointType',['../classpx4__ros2_1_1SurfaceVehicleSpeedSteeringSetpointType.html',1,'px4_ros2']]]
+  ['surfacevehiclespeedsteeringsetpointtype_38',['SurfaceVehicleSpeedSteeringSetpointType',['../classpx4__ros2_1_1SurfaceVehicleSpeedSteeringSetpointType.html',1,'px4_ros2']]],
+  ['surfacevehiclethrustattitudesetpointtype_39',['SurfaceVehicleThrustAttitudeSetpointType',['../classpx4__ros2_1_1SurfaceVehicleThrustAttitudeSetpointType.html',1,'px4_ros2']]],
+  ['surfacevehiclethrustratesetpointtype_40',['SurfaceVehicleThrustRateSetpointType',['../classpx4__ros2_1_1SurfaceVehicleThrustRateSetpointType.html',1,'px4_ros2']]],
+  ['surfacevehiclethruststeeringsetpointtype_41',['SurfaceVehicleThrustSteeringSetpointType',['../classpx4__ros2_1_1SurfaceVehicleThrustSteeringSetpointType.html',1,'px4_ros2']]]
 ];
