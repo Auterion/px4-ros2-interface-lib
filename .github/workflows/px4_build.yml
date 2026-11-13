@@ -61,6 +61,9 @@ jobs:
           # Ignore python packages due to compilation issue (can be enabled when updating ROS)
           touch px4-ros2-interface-lib/px4_ros2_py/COLCON_IGNORE
           touch px4-ros2-interface-lib/examples/python/COLCON_IGNORE
+          # The experimental SDK targets the maintained distributions, not this
+          # legacy Galactic build.
+          touch px4-ros2-interface-lib/px4_ros2_sdk/COLCON_IGNORE
           git clone --recursive https://github.com/PX4/px4_msgs.git
           cd ..
           colcon build --symlink-install
