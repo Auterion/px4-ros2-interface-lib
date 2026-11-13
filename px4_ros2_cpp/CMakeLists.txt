@@ -54,6 +54,17 @@ foreach(file ${msg_file_list})
   endif()
 endforeach()
 
+# Older px4_msgs versions do not provide the SurfaceVehicle* messages (renamed from Rover*).
+# In that case, the surface vehicle setpoint types are not built.
+# SurfaceVehicleThrustSetpoint was the last one to be renamed, so it implies all others.
+if("SurfaceVehicleThrustSetpoint.msg" IN_LIST PX4_MSG_FILES)
+    set(HAS_SURFACE_VEHICLE_MSGS ON)
+else()
+    set(HAS_SURFACE_VEHICLE_MSGS OFF)
+    message(WARNING "px4_msgs does not provide the SurfaceVehicle* messages, "
+        "disabling the surface vehicle setpoint types")
+endif()
+
 # Convert list to Python-style list string
 string(REPLACE ";" "','" MESSAGE_NAMES_QUOTED "${PX4_MSG_FILES}")
 set(MESSAGE_NAMES_PYTHON "[\'${MESSAGE_NAMES_QUOTED}\']")
@@ -147,13 +158,6 @@ add_library(px4_ros2_cpp
         src/control/setpoint_types/direct_actuators.cpp
         src/control/setpoint_types/experimental/attitude.cpp
         src/control/setpoint_types/experimental/rates.cpp
-        src/control/setpoint_types/experimental/surface_vehicle/position.cpp
-        src/control/setpoint_types/experimental/surface_vehicle/speed_attitude.cpp
-        src/control/setpoint_types/experimental/surface_vehicle/speed_rate.cpp
-        src/control/setpoint_types/experimental/surface_vehicle/speed_steering.cpp
-        src/control/setpoint_types/experimental/surface_vehicle/thrust_attitude.cpp
-        src/control/setpoint_types/experimental/surface_vehicle/thrust_rate.cpp
-        src/control/setpoint_types/experimental/surface_vehicle/thrust_steering.cpp
         src/control/setpoint_types/experimental/trajectory.cpp
         src/control/setpoint_types/fixedwing/lateral_longitudinal.cpp
         src/control/setpoint_types/multicopter/goto.cpp
@@ -175,10 +179,22 @@ add_library(px4_ros2_cpp
         src/utils/geodesic.cpp
         src/utils/map_projection_impl.cpp
 )
+if(HAS_SURFACE_VEHICLE_MSGS)
+    target_sources(px4_ros2_cpp PRIVATE
+            src/control/setpoint_types/experimental/surface_vehicle/position.cpp
+            src/control/setpoint_types/experimental/surface_vehicle/speed_attitude.cpp
+            src/control/setpoint_types/experimental/surface_vehicle/speed_rate.cpp
+            src/control/setpoint_types/experimental/surface_vehicle/speed_steering.cpp
+            src/control/setpoint_types/experimental/surface_vehicle/thrust_attitude.cpp
+            src/control/setpoint_types/experimental/surface_vehicle/thrust_rate.cpp
+            src/control/setpoint_types/experimental/surface_vehicle/thrust_steering.cpp
+    )
+endif()
 add_dependencies(px4_ros2_cpp generate_px4_header)
 target_include_directories(px4_ros2_cpp PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
 target_link_libraries(px4_ros2_cpp PUBLIC ament_index_cpp::ament_index_cpp Eigen3::Eigen rclcpp::rclcpp ${px4_msgs_TARGETS})
 target_compile_definitions(px4_ros2_cpp PUBLIC HAS_RCLCPP_PRE_SHUTDOWN=$<BOOL:${HAS_RCLCPP_PRE_SHUTDOWN}>)
+target_compile_definitions(px4_ros2_cpp PUBLIC PX4_ROS2_HAS_SURFACE_VEHICLE_MSGS=$<BOOL:${HAS_SURFACE_VEHICLE_MSGS}>)
 
 ament_export_targets(px4_ros2_cpp HAS_LIBRARY_TARGET)
 ament_export_dependencies(
@@ -187,10 +203,20 @@ ament_export_dependencies(
         eigen3_cmake_module
         Eigen3
 )
-install(
-        DIRECTORY include/px4_ros2
-        DESTINATION include
-)
+if(HAS_SURFACE_VEHICLE_MSGS)
+    install(
+            DIRECTORY include/px4_ros2
+            DESTINATION include
+    )
+else()
+    # Do not install the surface vehicle headers, so that consumers can detect their
+    # availability with __has_include
+    install(
+            DIRECTORY include/px4_ros2
+            DESTINATION include
+            PATTERN "surface_vehicle" EXCLUDE
+    )
+endif()
 install(
         TARGETS px4_ros2_cpp
         EXPORT px4_ros2_cpp

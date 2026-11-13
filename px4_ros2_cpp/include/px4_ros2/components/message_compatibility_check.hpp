@@ -24,12 +24,6 @@ using namespace std::chrono_literals;  // NOLINT
   {"fmu/in/mode_completed"}, \
   {"fmu/in/register_ext_component_request"}, \
   {"fmu/in/setpoint_config"}, \
-  {"fmu/in/surface_vehicle_attitude_setpoint"}, \
-  {"fmu/in/surface_vehicle_position_setpoint"}, \
-  {"fmu/in/surface_vehicle_rate_setpoint"}, \
-  {"fmu/in/surface_vehicle_speed_setpoint"}, \
-  {"fmu/in/surface_vehicle_steering_setpoint"}, \
-  {"fmu/in/surface_vehicle_thrust_setpoint"}, \
   {"fmu/in/trajectory_setpoint"}, \
   {"fmu/in/unregister_ext_component"}, \
   {"fmu/in/vehicle_attitude_setpoint"}, \
@@ -54,7 +48,20 @@ using namespace std::chrono_literals;  // NOLINT
   {"fmu/out/vehicle_local_position"}, \
   {"fmu/out/vehicle_status"}, \
   {"fmu/out/vtol_vehicle_status"}, \
-  {"fmu/out/vehicle_odometry"}
+  {"fmu/out/vehicle_odometry"} \
+  PX4_ROS2_SURFACE_VEHICLE_MESSAGES
+// Messages only available in px4_msgs versions that provide the SurfaceVehicle* messages
+#if !defined(PX4_ROS2_HAS_SURFACE_VEHICLE_MSGS) || PX4_ROS2_HAS_SURFACE_VEHICLE_MSGS
+#define PX4_ROS2_SURFACE_VEHICLE_MESSAGES \
+  , {"fmu/in/surface_vehicle_attitude_setpoint"} \
+  , {"fmu/in/surface_vehicle_position_setpoint"} \
+  , {"fmu/in/surface_vehicle_rate_setpoint"} \
+  , {"fmu/in/surface_vehicle_speed_setpoint"} \
+  , {"fmu/in/surface_vehicle_steering_setpoint"} \
+  , {"fmu/in/surface_vehicle_thrust_setpoint"}
+#else
+#define PX4_ROS2_SURFACE_VEHICLE_MESSAGES
+#endif
 // clang-format on
 
 namespace px4_ros2 {
