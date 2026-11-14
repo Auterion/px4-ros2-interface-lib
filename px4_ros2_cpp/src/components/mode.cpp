@@ -146,6 +146,8 @@ void ModeBase::callOnDeactivate()
   RCLCPP_DEBUG(node().get_logger(), "Mode '%s' deactivated", _registration->name().c_str());
   _is_active = false;
   deactivateAllSetpointTypes();
+  // A reply that only arrives now must not mark a setpoint type active for the next activation
+  _current_activating_setpoint.reset();
   onDeactivate();
   updateSetpointUpdateTimer();
 }
