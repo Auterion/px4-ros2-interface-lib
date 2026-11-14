@@ -74,16 +74,19 @@ void bindMode(py::module& m)
       py::init([](NodeWrapper& node, const std::string& mode_name,
                   bool activate_even_while_disarmed = false,
                   int replace_internal_mode = px4_ros2::ModeBase::kModeIDInvalid,
-                  bool prevent_arming = false, bool user_selectable = true) {
+                  bool prevent_arming = false, bool user_selectable = true,
+                  int setpoint_timeout_ms = 0) {
         px4_ros2::ModeBase::Settings settings(mode_name);
         settings.activate_even_while_disarmed = activate_even_while_disarmed;
         settings.replace_internal_mode =
             static_cast<px4_ros2::ModeBase::ModeID>(replace_internal_mode);
         settings.prevent_arming = prevent_arming;
         settings.user_selectable = user_selectable;
+        settings.setpoint_timeout = std::chrono::milliseconds(setpoint_timeout_ms);
         return std::make_shared<PyModeBase>(*node.node(), settings);
       }),
       py::arg("node"), py::arg("mode_name"), py::arg("activate_even_while_disarmed") = false,
       py::arg("replace_internal_mode") = static_cast<int>(px4_ros2::ModeBase::kModeIDInvalid),
-      py::arg("prevent_arming") = false, py::arg("user_selectable") = true);
+      py::arg("prevent_arming") = false, py::arg("user_selectable") = true,
+      py::arg("setpoint_timeout_ms") = 0);
 }

@@ -5,6 +5,7 @@
 
 #include <gtest/gtest.h>
 
+#include <optional>
 #include <px4_msgs/msg/setpoint_config.hpp>
 #include <px4_msgs/msg/setpoint_config_reply.hpp>
 #include <px4_ros2/components/mode.hpp>
@@ -82,11 +83,19 @@ class SetpointTestMode : public px4_ros2::ModeBase {
 
   void updateSetpoint(float dt_s) override
   {
-    _rates_setpoint->update(Eigen::Vector3f::Zero(), Eigen::Vector3f{0.f, 0.f, -0.5f});
+    ++_num_updates;
+    if (_send_setpoints) {
+      _rates_setpoint->update(Eigen::Vector3f::Zero(), Eigen::Vector3f{0.f, 0.f, -0.5f});
+    }
   }
+
+  void setSendSetpoints(bool send_setpoints) { _send_setpoints = send_setpoints; }
+  int numUpdates() const { return _num_updates; }
 
  private:
   std::shared_ptr<px4_ros2::RatesSetpointType> _rates_setpoint;
+  bool _send_setpoints{true};
+  int _num_updates{0};
 };
 
 /**
@@ -154,4 +163,126 @@ TEST(modes, setpointConfigReplyAfterDeactivation)
   fmu.reply = true;
   fake_autopilot.setModeAndArm(mode->id());
   EXPECT_TRUE(waitFor(node, [&fmu] { return !fmu.configs.empty(); }));
+}
+
+namespace {
+
+px4_msgs::msg::SetpointConfig setpointConfigOnActivation(
+    const px4_ros2::ModeBase::Settings& settings)
+{
+  auto node = std::make_shared<rclcpp::Node>("test_node");
+  std::optional<px4_msgs::msg::SetpointConfig> setpoint_config;
+  const auto setpoint_config_sub = node->create_subscription<px4_msgs::msg::SetpointConfig>(
+      "fmu/in/setpoint_config" + px4_ros2::getMessageNameVersion<px4_msgs::msg::SetpointConfig>(),
+      rclcpp::QoS(10), [&setpoint_config](px4_msgs::msg::SetpointConfig::UniquePtr msg) {
+        if (msg->should_apply) {
+          setpoint_config = *msg;
+        }
+      });
+
+  auto mode = std::make_shared<SetpointTestMode>(*node, settings);
+  EXPECT_TRUE(mode->doRegister());
+
+  FakeAutopilot fake_autopilot(node, "");
+  fake_autopilot.setModeAndArm(mode->id());
+  EXPECT_TRUE(waitFor(node, [&setpoint_config] { return setpoint_config.has_value(); }));
+  return setpoint_config.value_or(px4_msgs::msg::SetpointConfig{});
+}
+
+/**
+ * Wait for a number of setpoint updates of the mode, sent or not
+ */
+bool waitForUpdates(const std::shared_ptr<rclcpp::Node>& node, const SetpointTestMode& mode,
+                    int num_updates)
+{
+  const int end = mode.numUpdates() + num_updates;
+  return waitFor(node, [&mode, end] { return mode.numUpdates() >= end; });
+}
+
+}  // namespace
+
+TEST(modes, setpointTimeoutDefault)
+{
+  const auto setpoint_config = setpointConfigOnActivation(px4_ros2::ModeBase::Settings{"test"});
+  EXPECT_EQ(setpoint_config.type, px4_msgs::msg::SetpointConfig::TYPE_RATES);
+  EXPECT_EQ(setpoint_config.timeout_ms, 0);
+}
+
+TEST(modes, setpointTimeout)
+{
+  const auto setpoint_config = setpointConfigOnActivation(
+      px4_ros2::ModeBase::Settings{"test"}.setpointTimeout(std::chrono::milliseconds(150)));
+  EXPECT_EQ(setpoint_config.type, px4_msgs::msg::SetpointConfig::TYPE_RATES);
+  EXPECT_EQ(setpoint_config.timeout_ms, 150);
+}
+
+TEST(modes, setpointTimeoutLimited)
+{
+  const auto setpoint_config = setpointConfigOnActivation(
+      px4_ros2::ModeBase::Settings{"test"}.setpointTimeout(std::chrono::minutes(2)));
+  EXPECT_EQ(setpoint_config.timeout_ms, 65535);
+}
+
+TEST(modes, setpointTimeoutCompleted)
+{
+  auto node = std::make_shared<rclcpp::Node>("test_node");
+  SetpointConfigResponder fmu(node);
+  auto mode = std::make_shared<SetpointTestMode>(
+      *node, px4_ros2::ModeBase::Settings{"test"}.setpointTimeout(std::chrono::milliseconds(150)));
+  ASSERT_TRUE(mode->doRegister());
+  FakeAutopilot fake_autopilot(node, "");
+
+  // Activated: the configured timeout, sent until the FMU replied
+  fake_autopilot.setModeAndArm(mode->id());
+  ASSERT_TRUE(waitFor(node, [&fmu] { return !fmu.configs.empty(); }));
+  EXPECT_EQ(fmu.configs.front().timeout_ms, 150);
+  ASSERT_TRUE(waitForUpdates(node, *mode, 10));
+  fmu.configs.clear();
+  ASSERT_TRUE(waitForUpdates(node, *mode, 10));
+  EXPECT_TRUE(fmu.configs.empty());
+
+  // Completed, and no setpoints anymore: the same setpoint type with timeout 0, resent until the
+  // FMU replied
+  fmu.reply = false;
+  mode->setSendSetpoints(false);
+  mode->completed(px4_ros2::Result::Success);
+  ASSERT_TRUE(waitFor(node, [&fmu] { return fmu.configs.size() >= 3; }));
+  for (const auto& setpoint_config : fmu.configs) {
+    EXPECT_EQ(setpoint_config.type, px4_msgs::msg::SetpointConfig::TYPE_RATES);
+    EXPECT_EQ(setpoint_config.source_id, mode->id());
+    EXPECT_EQ(setpoint_config.timeout_ms, 0);
+  }
+  fmu.reply = true;
+  ASSERT_TRUE(waitForUpdates(node, *mode, 10));
+  fmu.configs.clear();
+  mode->completed(px4_ros2::Result::Success);  // modes may call it repeatedly
+  ASSERT_TRUE(waitForUpdates(node, *mode, 10));
+  EXPECT_TRUE(fmu.configs.empty());
+
+  // Activated again: the configured timeout again
+  fake_autopilot.setModeAndArm(0);
+  ASSERT_TRUE(waitFor(node, [&mode] { return !mode->isActive(); }));
+  mode->setSendSetpoints(true);
+  fake_autopilot.setModeAndArm(mode->id());
+  ASSERT_TRUE(waitFor(node, [&fmu] { return !fmu.configs.empty(); }));
+  EXPECT_EQ(fmu.configs.front().timeout_ms, 150);
+}
+
+TEST(modes, setpointTimeoutDefaultCompleted)
+{
+  // Without a setpoint timeout completed() sends no configuration
+  auto node = std::make_shared<rclcpp::Node>("test_node");
+  SetpointConfigResponder fmu(node);
+  auto mode = std::make_shared<SetpointTestMode>(*node, px4_ros2::ModeBase::Settings{"test"});
+  ASSERT_TRUE(mode->doRegister());
+  FakeAutopilot fake_autopilot(node, "");
+
+  fake_autopilot.setModeAndArm(mode->id());
+  ASSERT_TRUE(waitFor(node, [&fmu] { return !fmu.configs.empty(); }));
+  ASSERT_TRUE(waitForUpdates(node, *mode, 10));
+  fmu.configs.clear();
+  mode->setSendSetpoints(false);
+  mode->completed(px4_ros2::Result::Success);
+  ASSERT_TRUE(waitForUpdates(node, *mode, 20));
+  EXPECT_TRUE(fmu.configs.empty());
 }
