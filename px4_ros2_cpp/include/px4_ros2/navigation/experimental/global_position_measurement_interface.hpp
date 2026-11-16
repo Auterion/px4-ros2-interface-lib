@@ -27,6 +27,7 @@ enum class GlobalPositionSource : uint8_t {
   Terrain = px4_msgs::msg::AuxGlobalPosition::SOURCE_TERRAIN,
   Magnetic = px4_msgs::msg::AuxGlobalPosition::SOURCE_MAGNETIC,
   Estimator = px4_msgs::msg::AuxGlobalPosition::SOURCE_ESTIMATOR,
+  Leo = px4_msgs::msg::AuxGlobalPosition::SOURCE_LEO,
 };
 
 /**
