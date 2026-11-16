@@ -28,14 +28,14 @@ jobs:
             ros2: humble
           - ubuntu: noble
             ros2: jazzy
-          - ubuntu: noble
-            ros2: rolling
+          # No rolling: px4_msgs builds no marine rolling packages
 
-    uses: Auterion/ros-debian-workflow/.github/workflows/build-ros-debian.yml@main
+    uses: Auterion/ros-debian-workflow/.github/workflows/build-ros-debian.yml@frigi/feat/deb_version_suffix
     with:
       platform: ${{ matrix.platform.platform }}
       ubuntu-distro: ${{ matrix.distro.ubuntu }}
       ros2-distro: ${{ matrix.distro.ros2 }}
       runner: ${{ matrix.platform.runner }}
       source-prefix: px4_ros2_cpp
+      workflow-ref: frigi/feat/deb_version_suffix
     secrets: inherit
