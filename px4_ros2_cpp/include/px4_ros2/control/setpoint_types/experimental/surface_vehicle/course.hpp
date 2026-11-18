@@ -40,7 +40,7 @@ class SurfaceVehicleCourseSetpointType : public SetpointBase {
    * @param course [rad] Course over ground to hold in NED frame. Takes values in [-pi, pi].
    * @param speed [m/s] Cruising speed (Optional, defaults to maximum speed). A negative value
    * drives the vehicle in reverse along the course. Takes values in [-inf, inf].
-   * @param yaw [rad] Vehicles that can move sideways (e.g. mecanum rovers) only: vehicle yaw while
+   * @param yaw [rad] Only for omnidirectional vehicles: vehicle yaw setpoint (in NED) while
    * holding the course (Optional, currently unused by PX4). Takes values in [-pi, pi].
    */
   void update(float course, std::optional<float> speed = {}, std::optional<float> yaw = {});
