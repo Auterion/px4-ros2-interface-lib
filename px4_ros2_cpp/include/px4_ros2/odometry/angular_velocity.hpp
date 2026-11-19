@@ -17,6 +17,11 @@ namespace px4_ros2 {
 
 /**
  * @brief Provides access to the vehicle's angular velocity estimate
+ *
+ * @note PX4 does not publish `/fmu/out/vehicle_angular_velocity` to ROS 2 by default, to save
+ * bandwidth. Enable it in PX4's `src/modules/uxrce_dds_client/dds_topics.yaml`, ideally with a
+ * `rate_limit`, since PX4 publishes it at up to `IMU_GYRO_RATEMAX`. Without it, no message is
+ * received and angularVelocityFrd() throws.
  */
 class OdometryAngularVelocity : public Subscription<px4_msgs::msg::VehicleAngularVelocity> {
  public:
