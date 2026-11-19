@@ -54,6 +54,7 @@ using namespace std::chrono_literals;  // NOLINT
 #if !defined(PX4_ROS2_HAS_SURFACE_VEHICLE_MSGS) || PX4_ROS2_HAS_SURFACE_VEHICLE_MSGS
 #define PX4_ROS2_SURFACE_VEHICLE_MESSAGES \
   , {"fmu/in/surface_vehicle_attitude_setpoint"} \
+  , {"fmu/in/surface_vehicle_course_setpoint"} \
   , {"fmu/in/surface_vehicle_position_setpoint"} \
   , {"fmu/in/surface_vehicle_rate_setpoint"} \
   , {"fmu/in/surface_vehicle_speed_setpoint"} \

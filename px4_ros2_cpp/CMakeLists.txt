@@ -105,6 +105,7 @@ set(HEADER_FILES
         include/px4_ros2/control/setpoint_types/experimental/attitude.hpp
         include/px4_ros2/control/setpoint_types/experimental/rates.hpp
         include/px4_ros2/control/setpoint_types/experimental/trajectory.hpp
+        include/px4_ros2/control/setpoint_types/experimental/surface_vehicle/course.hpp
         include/px4_ros2/control/setpoint_types/experimental/surface_vehicle/position.hpp
         include/px4_ros2/control/setpoint_types/experimental/surface_vehicle/speed_attitude.hpp
         include/px4_ros2/control/setpoint_types/experimental/surface_vehicle/speed_rate.hpp
@@ -181,6 +182,7 @@ add_library(px4_ros2_cpp
 )
 if(HAS_SURFACE_VEHICLE_MSGS)
     target_sources(px4_ros2_cpp PRIVATE
+            src/control/setpoint_types/experimental/surface_vehicle/course.cpp
             src/control/setpoint_types/experimental/surface_vehicle/position.cpp
             src/control/setpoint_types/experimental/surface_vehicle/speed_attitude.cpp
             src/control/setpoint_types/experimental/surface_vehicle/speed_rate.cpp
