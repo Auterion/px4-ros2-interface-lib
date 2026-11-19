@@ -71,6 +71,7 @@ var annotated_dup =
       [ "RequirementFlags", "structpx4__ros2_1_1RequirementFlags.html", "structpx4__ros2_1_1RequirementFlags" ],
       [ "SetpointBase", "classpx4__ros2_1_1SetpointBase.html", "classpx4__ros2_1_1SetpointBase" ],
       [ "Subscription", "classpx4__ros2_1_1Subscription.html", "classpx4__ros2_1_1Subscription" ],
+      [ "SurfaceVehicleCourseSetpointType", "classpx4__ros2_1_1SurfaceVehicleCourseSetpointType.html", "classpx4__ros2_1_1SurfaceVehicleCourseSetpointType" ],
       [ "SurfaceVehiclePositionSetpointType", "classpx4__ros2_1_1SurfaceVehiclePositionSetpointType.html", "classpx4__ros2_1_1SurfaceVehiclePositionSetpointType" ],
       [ "SurfaceVehicleSpeedAttitudeSetpointType", "classpx4__ros2_1_1SurfaceVehicleSpeedAttitudeSetpointType.html", "classpx4__ros2_1_1SurfaceVehicleSpeedAttitudeSetpointType" ],
       [ "SurfaceVehicleSpeedRateSetpointType", "classpx4__ros2_1_1SurfaceVehicleSpeedRateSetpointType.html", "classpx4__ros2_1_1SurfaceVehicleSpeedRateSetpointType" ],

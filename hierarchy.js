@@ -32,6 +32,7 @@ var hierarchy =
         [ "px4_ros2::FwLateralLongitudinalSetpointType", "classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html", null ],
         [ "px4_ros2::MulticopterGotoSetpointType", "classpx4__ros2_1_1MulticopterGotoSetpointType.html", null ],
         [ "px4_ros2::RatesSetpointType", "classpx4__ros2_1_1RatesSetpointType.html", null ],
+        [ "px4_ros2::SurfaceVehicleCourseSetpointType", "classpx4__ros2_1_1SurfaceVehicleCourseSetpointType.html", null ],
         [ "px4_ros2::SurfaceVehiclePositionSetpointType", "classpx4__ros2_1_1SurfaceVehiclePositionSetpointType.html", null ],
         [ "px4_ros2::SurfaceVehicleSpeedAttitudeSetpointType", "classpx4__ros2_1_1SurfaceVehicleSpeedAttitudeSetpointType.html", null ],
         [ "px4_ros2::SurfaceVehicleSpeedRateSetpointType", "classpx4__ros2_1_1SurfaceVehicleSpeedRateSetpointType.html", null ],
