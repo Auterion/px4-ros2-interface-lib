@@ -1,0 +1,7 @@
+# Request: arm or disarm the vehicle.
+bool arm            # true to arm, false to disarm
+bool force false    # bypass PX4 preflight checks (maps to the force magic value)
+---
+# Response.
+bool accepted       # true if PX4 acknowledged the command as accepted
+string message      # human-readable outcome (the SDK result string)
