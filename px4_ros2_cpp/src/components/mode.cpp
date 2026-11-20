@@ -5,8 +5,10 @@
 
 #include "px4_ros2/components/mode.hpp"
 
+#include <algorithm>
 #include <cassert>
 #include <cfloat>
+#include <limits>
 #include <px4_msgs/msg/vehicle_status.hpp>
 #include <utility>
 
@@ -131,6 +133,7 @@ void ModeBase::callOnActivate()
   RCLCPP_DEBUG(node().get_logger(), "Mode '%s' activated", _registration->name().c_str());
   _is_active = true;
   _completed = false;
+  _setpoint_timeout_disabled = false;
   _last_setpoint_update = node().get_clock()->now();
   onActivate();
 
@@ -146,6 +149,9 @@ void ModeBase::callOnDeactivate()
   RCLCPP_DEBUG(node().get_logger(), "Mode '%s' deactivated", _registration->name().c_str());
   _is_active = false;
   deactivateAllSetpointTypes();
+  // A reply that only arrives now must not mark a setpoint type active for the next activation
+  _current_activating_setpoint.reset();
+  _configured_setpoint.reset();
   onDeactivate();
   updateSetpointUpdateTimer();
 }
@@ -163,7 +169,15 @@ void ModeBase::updateSetpointUpdateTimer()
             const auto now = node().get_clock()->now();
             const float dt_s = (now - _last_setpoint_update).seconds();
             _last_setpoint_update = now;
+            _setpoint_config_sent = false;
             updateSetpoint(dt_s);
+
+            // Setpoint updates resend the configuration until the FMU replied. After completed()
+            // the mode might not send setpoints anymore, so resend it from here.
+            if (_setpoint_timeout_disabled && _current_activating_setpoint &&
+                !_setpoint_config_sent) {
+              activateSetpointType(_current_activating_setpoint);
+            }
           });
     }
 
@@ -349,6 +363,18 @@ void ModeBase::completed(Result result)
     // Continue to publish the topic, in case the previous one got lost
   }
 
+  // The mode might stop sending setpoints now, while it stays selected until another mode takes
+  // over. Set the setpoint timeout back to 0 for the rest of the activation, resent like a
+  // setpoint type activation until the FMU replied.
+  if (_is_active && !_setpoint_timeout_disabled && _settings.setpoint_timeout.count() > 0) {
+    _setpoint_timeout_disabled = true;
+
+    if (_configured_setpoint) {
+      _configured_setpoint->setActive(false);
+      activateSetpointType(_configured_setpoint);
+    }
+  }
+
   px4_msgs::msg::ModeCompleted mode_completed{};
   mode_completed.nav_state = static_cast<uint8_t>(id());
   mode_completed.result = static_cast<uint8_t>(result);
@@ -416,12 +442,19 @@ void ModeBase::setSetpointUpdateRateFromSetpointTypes()
 void ModeBase::activateSetpointType(const std::shared_ptr<SetpointBase>& setpoint)
 {
   _current_activating_setpoint = setpoint;
+  _configured_setpoint = setpoint;
   px4_msgs::msg::SetpointConfig setpoint_config{};
   setpoint_config.source_id = static_cast<uint8_t>(id());
   setpoint_config.should_apply = true;
   setpoint_config.type = setpoint->getSetpointType();
+  setpoint_config.timeout_ms =
+      _setpoint_timeout_disabled
+          ? 0
+          : static_cast<uint16_t>(std::clamp<std::chrono::milliseconds::rep>(
+                _settings.setpoint_timeout.count(), 0, std::numeric_limits<uint16_t>::max()));
   setpoint_config.timestamp = 0;  // Let PX4 set the timestamp
   _setpoint_config_pub->publish(setpoint_config);
+  _setpoint_config_sent = true;
   // setActive() will be called when we get a matching reply from PX4. If not (e.g. on message
   // drop), the next setpoint update triggers another setpoint activation request.
 }
