@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cfloat>
+#include <chrono>
 #include <limits>
 #include <px4_msgs/msg/vehicle_status.hpp>
 #include <utility>
@@ -18,6 +19,16 @@
 #include "registration.hpp"
 
 namespace px4_ros2 {
+
+namespace {
+
+uint16_t setpointTimeoutMs(const SetpointBase& setpoint)
+{
+  return static_cast<uint16_t>(std::clamp<std::chrono::milliseconds::rep>(
+      setpoint.timeout().count(), 0, std::numeric_limits<uint16_t>::max()));
+}
+
+}  // namespace
 
 ModeBase::ModeBase(rclcpp::Node& node, ModeBase::Settings settings,
                    const std::string& topic_namespace_prefix)
@@ -134,6 +145,7 @@ void ModeBase::callOnActivate()
   _is_active = true;
   _completed = false;
   _setpoint_timeout_disabled = false;
+  _setpoint_timeout_warned = false;
   _last_setpoint_update = node().get_clock()->now();
   onActivate();
 
@@ -361,15 +373,16 @@ void ModeBase::completed(Result result)
     RCLCPP_DEBUG_ONCE(node().get_logger(), "Mode '%s': completed was already called",
                       _registration->name().c_str());
     // Continue to publish the topic, in case the previous one got lost
-  }
 
-  // The mode might stop sending setpoints now, while it stays selected until another mode takes
-  // over. Set the setpoint timeout back to 0 for the rest of the activation, resent like a
-  // setpoint type activation until the FMU replied.
-  if (_is_active && !_setpoint_timeout_disabled && _settings.setpoint_timeout.count() > 0) {
-    _setpoint_timeout_disabled = true;
+  } else {
+    _completed = true;
 
-    if (_configured_setpoint) {
+    // The mode might stop sending setpoints now, while it stays selected until another mode takes
+    // over: the rest of the activation uses no setpoint timeout (see activateSetpointType()). If
+    // the setpoint type in use has one, configure it again, resent like a setpoint type activation
+    // until the FMU replied.
+    if (_is_active && _configured_setpoint && setpointTimeoutMs(*_configured_setpoint) > 0) {
+      _setpoint_timeout_disabled = true;
       _configured_setpoint->setActive(false);
       activateSetpointType(_configured_setpoint);
     }
@@ -380,7 +393,6 @@ void ModeBase::completed(Result result)
   mode_completed.result = static_cast<uint8_t>(result);
   mode_completed.timestamp = 0;  // Let PX4 set the timestamp
   _mode_completed_pub->publish(mode_completed);
-  _completed = true;
 }
 
 void ModeBase::onAboutToRegister()
@@ -447,11 +459,19 @@ void ModeBase::activateSetpointType(const std::shared_ptr<SetpointBase>& setpoin
   setpoint_config.source_id = static_cast<uint8_t>(id());
   setpoint_config.should_apply = true;
   setpoint_config.type = setpoint->getSetpointType();
-  setpoint_config.timeout_ms =
-      _setpoint_timeout_disabled
-          ? 0
-          : static_cast<uint16_t>(std::clamp<std::chrono::milliseconds::rep>(
-                _settings.setpoint_timeout.count(), 0, std::numeric_limits<uint16_t>::max()));
+  setpoint_config.timeout_ms = _completed ? 0 : setpointTimeoutMs(*setpoint);
+
+  if (!_setpoint_timeout_warned && setpoint_config.timeout_ms > 0 &&
+      _setpoint_update_rate_hz > FLT_EPSILON &&
+      1000.f / _setpoint_update_rate_hz > static_cast<float>(setpoint_config.timeout_ms)) {
+    _setpoint_timeout_warned = true;  // Once per activation, the configuration might get resent
+    RCLCPP_WARN(node().get_logger(),
+                "Mode '%s': the setpoint timeout (%u ms) is shorter than the setpoint update "
+                "interval (%.0f ms)",
+                _registration->name().c_str(), static_cast<unsigned>(setpoint_config.timeout_ms),
+                1000. / _setpoint_update_rate_hz);
+  }
+
   setpoint_config.timestamp = 0;  // Let PX4 set the timestamp
   _setpoint_config_pub->publish(setpoint_config);
   _setpoint_config_sent = true;

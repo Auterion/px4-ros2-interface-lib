@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include <chrono>
 #include <cstdint>
 #include <px4_msgs/msg/mode_completed.hpp>
 #include <px4_msgs/msg/setpoint_config.hpp>
@@ -98,15 +97,6 @@ class ModeBase : public Context {
     ModeID replace_internal_mode{kModeIDInvalid};  ///< Can be used to replace an fmu-internal mode
     bool prevent_arming{false};                    ///< Prevent arming while in this mode
     bool user_selectable{true};                    ///< If true, the mode is selectable by the user
-    /**
-     * Setpoint timeout. If the mode is active, the vehicle is armed and not landed, and the FMU
-     * receives no setpoint for longer than this, the FMU handles the mode like an unresponsive
-     * one (a failsafe, or the internal mode for a replacement). Use several setpoint update
-     * periods. 0 or a negative value disables it (default), values above 65535 ms are limited to
-     * that. FMU versions without support ignore it. completed() sets it back to 0 until the mode
-     * gets activated again, so the mode can stop sending setpoints once it completed.
-     */
-    std::chrono::milliseconds setpoint_timeout{0};
 
     Settings& activateEvenWhileDisarmed(bool activate)
     {
@@ -126,11 +116,6 @@ class ModeBase : public Context {
     Settings& userSelectable(bool selectable)
     {
       user_selectable = selectable;
-      return *this;
-    }
-    Settings& setpointTimeout(std::chrono::milliseconds timeout)
-    {
-      setpoint_timeout = timeout;
       return *this;
     }
   };
@@ -179,7 +164,8 @@ class ModeBase : public Context {
   /**
    * Mode completed signal. Call this when the mode is finished. A mode might never call this, but
    * modes like RTL, Land or Takeoff are expected to signal their completion.
-   * If a setpoint timeout is set, it is set back to 0 until the mode gets activated again.
+   * The setpoint timeouts of the mode (SetpointBase::setTimeout()) are set back to 0 until the
+   * mode gets activated again.
    * @param result
    */
   void completed(Result result);
@@ -287,8 +273,9 @@ class ModeBase : public Context {
       _new_setpoint_types;  ///< This stores new setpoints during initialization, until registration
   std::shared_ptr<SetpointBase> _current_activating_setpoint;  ///< Setpoint waiting for a reply
   std::shared_ptr<SetpointBase> _configured_setpoint;  ///< Setpoint last configured while active
-  bool _setpoint_timeout_disabled{false};  ///< Set by completed(), until the next activation
+  bool _setpoint_timeout_disabled{false};  ///< completed() set the timeout of the type in use to 0
   bool _setpoint_config_sent{false};       ///< A SetpointConfig was sent in this setpoint update
+  bool _setpoint_timeout_warned{false};    ///< Warned about a short timeout in this activation
 };
 
 /** @}*/

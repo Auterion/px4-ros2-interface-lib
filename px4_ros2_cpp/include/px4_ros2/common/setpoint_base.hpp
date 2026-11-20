@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <chrono>
 #include <cstdint>
 #include <functional>
 #include <memory>
@@ -54,6 +55,27 @@ class SetpointBase : public std::enable_shared_from_this<SetpointBase> {
 
   virtual float desiredUpdateRateHz() { return 50.f; }
 
+  /**
+   * Setpoint timeout. If the mode is active with this setpoint type, the vehicle is armed and not
+   * landed, and the FMU receives no setpoint for longer than this, the FMU handles the mode like
+   * an unresponsive one (a failsafe, or the internal mode for a replacement). Use several update
+   * periods of the setpoint (a timeout shorter than the update interval of the mode logs a
+   * warning). 0 or a negative value disables it (default), values above 65535 ms are limited to
+   * that. FMU versions without support ignore it.
+   *
+   * A change while the setpoint type is in use is sent with the next setpoint update.
+   * ModeBase::completed() sets the timeout back to 0 until the mode gets activated again, so the
+   * mode can stop sending setpoints once it completed.
+   */
+  void setTimeout(std::chrono::milliseconds timeout)
+  {
+    if (timeout != _timeout) {
+      _timeout = timeout;
+      _active = false;  // The next update sends the configuration again
+    }
+  }
+  std::chrono::milliseconds timeout() const { return _timeout; }
+
   void setShouldActivateCallback(const ShouldActivateCB& should_activate_cb)
   {
     _should_activate_cb = should_activate_cb;
@@ -71,6 +93,7 @@ class SetpointBase : public std::enable_shared_from_this<SetpointBase> {
  private:
   ShouldActivateCB _should_activate_cb;
   bool _active{false};
+  std::chrono::milliseconds _timeout{0};
 };
 
 } /* namespace px4_ros2 */

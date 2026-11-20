@@ -8,6 +8,7 @@
 #include <pybind11/eigen.h>
 #include <pybind11/stl.h>
 
+#include <chrono>
 #include <px4_ros2/control/setpoint_types/multicopter/goto.hpp>
 #include <rclcpp/rclcpp.hpp>
 
@@ -22,6 +23,13 @@ void bindSetpointMulticopterGoto(py::module& m)
       "update", &px4_ros2::MulticopterGotoSetpointType::update, py::arg("position"),
       py::arg("heading") = std::nullopt, py::arg("max_horizontal_speed") = std::nullopt,
       py::arg("max_vertical_speed") = std::nullopt, py::arg("max_heading_speed") = std::nullopt);
+
+  goto_setpoint.def(
+      "set_timeout_ms",
+      [](px4_ros2::MulticopterGotoSetpointType& self, int timeout_ms) {
+        self.setTimeout(std::chrono::milliseconds(timeout_ms));
+      },
+      py::arg("timeout_ms"));
 
   // Constructor
   goto_setpoint.def(py::init<px4_ros2::Context&>(), py::arg("context"));
