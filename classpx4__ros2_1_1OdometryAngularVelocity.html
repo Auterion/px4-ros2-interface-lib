@@ -146,6 +146,7 @@ rclcpp::Node &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_node</
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides access to the vehicle's angular velocity estimate. </p>
+<dl class="section note"><dt>Note</dt><dd>PX4 does not publish <code>/fmu/out/vehicle_angular_velocity</code> to ROS 2 by default, to save bandwidth. Enable it in PX4's <code>src/modules/uxrce_dds_client/dds_topics.yaml</code>, ideally with a <code>rate_limit</code>, since PX4 publishes it at up to <code>IMU_GYRO_RATEMAX</code>. Without it, no message is received and <a class="el" href="classpx4__ros2_1_1OdometryAngularVelocity.html#a25760647e0964b91a4ef4f1ca23a0c47" title="Get the vehicle&#39;s angular velocity in FRD frame.">angularVelocityFrd()</a> throws. </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a25760647e0964b91a4ef4f1ca23a0c47" name="a25760647e0964b91a4ef4f1ca23a0c47"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a25760647e0964b91a4ef4f1ca23a0c47">&#9670;&#160;</a></span>angularVelocityFrd()</h2>
