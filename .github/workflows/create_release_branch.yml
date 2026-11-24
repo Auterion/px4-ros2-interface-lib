@@ -62,6 +62,17 @@ jobs:
           SHA=$(git rev-parse HEAD)
           echo "Creating branch '$BRANCH' from main ($SHA)"
           git checkout -b "$BRANCH"
+
+          # main pins px4_msgs to main; point the release branch at the matching px4_msgs branch
+          if git ls-remote --exit-code --heads https://github.com/PX4/px4_msgs.git "$BRANCH" > /dev/null; then
+            sed -i -E "/^  px4_msgs:/,/^  [a-z]/ s|^(    version: ).*|\1$BRANCH|" dependencies.repos
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "chore(deps): pin px4_msgs to $BRANCH" dependencies.repos
+          else
+            echo "::warning::PX4/px4_msgs has no branch '$BRANCH' yet; dependencies.repos still pins px4_msgs to main"
+          fi
+
           git push origin "$BRANCH"
           echo "Branch '$BRANCH' created successfully"
 
