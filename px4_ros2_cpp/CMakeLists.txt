@@ -212,11 +212,12 @@ if(HAS_SURFACE_VEHICLE_MSGS)
     )
 else()
     # Do not install the surface vehicle headers, so that consumers can detect their
-    # availability with __has_include
+    # availability with __has_include. The pattern has to match the files, not the directory:
+    # a symlink install (colcon build --symlink-install) only excludes matching files.
     install(
             DIRECTORY include/px4_ros2
             DESTINATION include
-            PATTERN "surface_vehicle" EXCLUDE
+            PATTERN "control/setpoint_types/experimental/surface_vehicle/*" EXCLUDE
     )
 endif()
 install(
