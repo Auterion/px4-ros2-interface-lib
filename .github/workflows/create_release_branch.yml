@@ -1,13 +1,14 @@
 name: Create Release Branch
 
 on:
-  repository_dispatch:
-    types: [px4_release_branch]
+  # PX4 release branches are picked up within a day of being created
+  schedule:
+    - cron: '17 6 * * *'
   workflow_dispatch:
     inputs:
       branch:
-        description: 'Release branch name (e.g. release/1.18)'
-        required: true
+        description: 'Release branch to create (e.g. release/1.19). Leave empty to check PX4 for a new one'
+        required: false
         type: string
 
 permissions:
@@ -15,37 +16,24 @@ permissions:
 
 jobs:
   create-branch:
+    # the daily check only runs in this repository, a manual run also works in a fork
+    if: github.event_name != 'schedule' || github.repository == 'Auterion/px4-ros2-interface-lib'
     runs-on: ubuntu-latest
     steps:
-      - name: Determine branch name
-        id: params
-        run: |
-          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
-            BRANCH="${{ github.event.client_payload.branch }}"
-          else
-            BRANCH="${{ inputs.branch }}"
-          fi
-
-          if [ -z "$BRANCH" ]; then
-            echo "::error::Branch name is required"
-            exit 1
-          fi
-
-          # Validate branch name format
-          if ! echo "$BRANCH" | grep -qE '^release/[0-9]+\.[0-9]+$'; then
-            echo "::error::Branch name must match 'release/X.Y' format, got: $BRANCH"
-            exit 1
-          fi
-
-          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           ref: main
 
+      - name: Determine branch name
+        id: params
+        env:
+          REQUESTED: ${{ inputs.branch }}
+        run: scripts/find-px4-release-branch.sh "$REQUESTED"
+
       - name: Check if branch already exists
         id: check
+        if: steps.params.outputs.branch != ''
         run: |
           BRANCH="${{ steps.params.outputs.branch }}"
           if git ls-remote --heads origin "$BRANCH" | grep -q "$BRANCH"; then
@@ -66,6 +54,7 @@ jobs:
           echo "Branch '$BRANCH' created successfully"
 
       - name: Summary
+        if: steps.params.outputs.branch != ''
         run: |
           BRANCH="${{ steps.params.outputs.branch }}"
           if [ "${{ steps.check.outputs.exists }}" = "true" ]; then
