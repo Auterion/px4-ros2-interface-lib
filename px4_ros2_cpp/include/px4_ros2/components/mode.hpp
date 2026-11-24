@@ -164,6 +164,8 @@ class ModeBase : public Context {
   /**
    * Mode completed signal. Call this when the mode is finished. A mode might never call this, but
    * modes like RTL, Land or Takeoff are expected to signal their completion.
+   * The setpoint timeouts of the mode (SetpointBase::setTimeout()) are set back to 0 until the
+   * mode gets activated again.
    * @param result
    */
   void completed(Result result);
@@ -270,6 +272,10 @@ class ModeBase : public Context {
   std::vector<SetpointBase*>
       _new_setpoint_types;  ///< This stores new setpoints during initialization, until registration
   std::shared_ptr<SetpointBase> _current_activating_setpoint;  ///< Setpoint waiting for a reply
+  std::shared_ptr<SetpointBase> _configured_setpoint;  ///< Setpoint last configured while active
+  bool _setpoint_timeout_disabled{false};  ///< completed() set the timeout of the type in use to 0
+  bool _setpoint_config_sent{false};       ///< A SetpointConfig was sent in this setpoint update
+  bool _setpoint_timeout_warned{false};    ///< Warned about a short timeout in this activation
 };
 
 /** @}*/
