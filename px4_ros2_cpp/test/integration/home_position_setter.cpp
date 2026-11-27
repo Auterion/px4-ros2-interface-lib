@@ -27,8 +27,15 @@ TEST_F(ModesTest, HomePositionSetter)
   EXPECT_EQ(result, px4_ros2::Result::Success)
       << "setGpsGlobalOrigin failed: " << px4_ros2::resultToString(result);
 
-  // Set home to current vehicle position
+  // Set home to current vehicle position. PX4 rejects it until a position is available.
+  const auto deadline = test_node->now() + rclcpp::Duration(10s);
   result = setter.setHomeToCurrentPosition();
+
+  while (result == px4_ros2::Result::Rejected && test_node->now() < deadline) {
+    rclcpp::sleep_for(100ms);
+    result = setter.setHomeToCurrentPosition();
+  }
+
   EXPECT_EQ(result, px4_ros2::Result::Success)
       << "setHomeToCurrentPosition failed: " << px4_ros2::resultToString(result);
 
